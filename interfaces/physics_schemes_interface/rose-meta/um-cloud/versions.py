@@ -20,26 +20,29 @@ class UpgradeError(Exception):
 
 """
 Copy this template and complete to add your macro
+
 class vnXX_txxx(MacroUpgrade):
     # Upgrade macro for <TICKET> by <Author>
+
     BEFORE_TAG = "vnX.X"
     AFTER_TAG = "vnX.X_txxx"
+
     def upgrade(self, config, meta_config=None):
         # Add settings
         return config, self.reports
 """
 
-
 class vn31_t243(MacroUpgrade):
-    """Upgrade macro for ticket #243 by Mike Whitall."""
+    # Upgrade macro for Issue #243 by Mike Whitall
 
     BEFORE_TAG = "vn3.1"
     AFTER_TAG = "vn3.1_t243"
 
     def upgrade(self, config, meta_config=None):
-        # Commands From: rose-meta/um-cloud
+        # Add settings
+
         nml = "namelist:cloud"
-        self.add_setting(config, [nml, "l_ensure_max_in_cloud_pc2"], ".false.")
-        self.add_setting(config, [nml, "l_pc2_checks_cfffix"], ".false.")
+        self.add_setting(config, [nml,"l_ensure_max_in_cloud_pc2"], ".false.")
+        self.add_setting(config, [nml,"l_pc2_checks_cfffix"], ".false.")
 
         return config, self.reports
