@@ -3610,7 +3610,7 @@ is basic equations
    & = & {\overline{Q}}_{\rm{par}} -
    {\overline{Q}}_{\rm{reset}} - PPN
    - \frac{1}{\overline{\rho}} \, \frac{\partial \, \overline{\rho w^{'}
-     l_{\rm{ }}^{\rm{E'}}}}{\partial \, z} 
+     l_{\rm{ }}^{\rm{E'}}}}{\partial \, z}
    \\
    & = &
    \mu \, M^{\rm{P}} \, l_{\rm{ }}^{\rm{P}} + \delta \, M^{\rm{P}} \, l_{\rm{
@@ -6348,7 +6348,7 @@ similar way to above gives
 
    \begin{aligned}
    SD = \int_{-b_s}^{-Q_c} G(s) (-Q_c + b_s) ds + \int_{-b_s}^{-Q_c}
-   G(s) (-s - b_s) ds 
+   G(s) (-s - b_s) ds
    \\
    = (-Q_c + b_s) (1 - C_l) - I1 ,
    \end{aligned}
