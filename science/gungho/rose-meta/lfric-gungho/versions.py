@@ -18,16 +18,13 @@ class UpgradeError(Exception):
     __str__ = __repr__
 
 
-"""
-Copy this template and complete to add your macro
+class vn31_t218(MacroUpgrade):
+    """Upgrade macro for issue #218 by Chris Smith."""
 
-class vnXX_txxx(MacroUpgrade):
-    # Upgrade macro for <TICKET> by <Author>
-
-    BEFORE_TAG = "vnX.X"
-    AFTER_TAG = "vnX.X_txxx"
+    BEFORE_TAG = "vn3.1_t135"
+    AFTER_TAG = "vn3.1_t218"
 
     def upgrade(self, config, meta_config=None):
-        # Add settings
+        self.add_setting(config, ["namelist:initialization", "regravitate"], "'isotherm1'")
         return config, self.reports
-"""
+
