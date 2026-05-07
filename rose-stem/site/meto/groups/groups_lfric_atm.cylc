@@ -19,6 +19,7 @@
     "lfric_atm_nwp_azspice_extra": [
         "lfric_atm_nwp_gal9-C48_MG_azspice_gnu_fast-debug-32bit",
         "lfric_atm_nwp_gal9_debug-C48_MG_azspice_gnu_full-debug-32bit",
+        "lfric_atm_nwp_gal9_regrav-C48_MG_azspice_gnu_full-debug-64bit",
         "lfric_atm_nwp_gal9_coarse_aero-C48_MG_azspice_gnu_fast-debug-32bit",
         "lfric_atm_nwp_gal9_da-C12_azspice_gnu_fast-debug-32bit",
         "lfric_atm_nwp_gal9_eda-C12_azspice_gnu_fast-debug-32bit",
