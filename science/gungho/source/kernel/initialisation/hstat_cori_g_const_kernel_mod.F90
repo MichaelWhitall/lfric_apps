@@ -70,10 +70,6 @@ contains
 !! @param[in]  moist_dyn_tot Total mass factor 1 + sum m_x
 !! @param[in]  height_w3     Height coordinate in w3
 !! @param[in]  w3_mask       LBC mask or Dummy mask for w3 space
-!! @param[in]  p_zero        Reference surface pressure
-!! @param[in]  kappa         Ratio of Rd and cp
-!! @param[in]  rd            Gas constant for dry air
-!! @param[in]  cp            Specific heat of dry air at constant pressure
 !! @param[in]  eos_index     Vertical level at which the equation of state
 !!                           is satisfied
 !! @param[in]  ndf_w3        Number of degrees of freedom per cell for w3
@@ -93,10 +89,6 @@ subroutine hstat_cori_g_const_code( nlayers,       &
                                     moist_dyn_tot, &
                                     height_w3,     &
                                     w3_mask,       &
-                                    p_zero,        &
-                                    kappa,         &
-                                    rd,            &
-                                    cp,            &
                                     eos_index,     &
                                     ndf_w3,        &
                                     undf_w3,       &
@@ -129,10 +121,6 @@ subroutine hstat_cori_g_const_code( nlayers,       &
   real(kind=r_def), dimension(undf_wt),         intent(in) :: coriolis_term
   real(kind=r_def), dimension(1,ndf_w3,ndf_w3), intent(in) :: basis_w3
   real(kind=r_def), dimension(1,ndf_wt,ndf_w3), intent(in) :: basis_wt
-  real(kind=r_def),                             intent(in) :: p_zero
-  real(kind=r_def),                             intent(in) :: kappa
-  real(kind=r_def),                             intent(in) :: rd
-  real(kind=r_def),                             intent(in) :: cp
 
   ! Internal variables
   integer(kind=i_def)                  :: k, df, dft, df3, eos_index_m1
