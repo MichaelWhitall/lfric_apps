@@ -22,7 +22,7 @@ use argument_mod,               only : arg_type, func_type,      &
 use constants_mod,              only : r_def, i_def
 use fs_continuity_mod,          only : Wtheta, W3
 use kernel_mod,                 only : kernel_type
-use planet_config_mod,          only : gravity
+use planet_config_mod,          only : gravity, p_zero, kappa, rd, cp
 
 implicit none
 
@@ -33,7 +33,7 @@ private
 !-------------------------------------------------------------------------------
 type, public, extends(kernel_type) :: hstat_cori_g_const_kernel_type
   private
-  type(arg_type) :: meta_args(13) = (/                    &
+  type(arg_type) :: meta_args(9) = (/                     &
        arg_type(GH_FIELD,  GH_REAL,    GH_WRITE, W3),     &
        arg_type(GH_FIELD,  GH_REAL,    GH_READ,  W3),     &
        arg_type(GH_FIELD,  GH_REAL,    GH_READ,  Wtheta), &
@@ -42,10 +42,6 @@ type, public, extends(kernel_type) :: hstat_cori_g_const_kernel_type
        arg_type(GH_FIELD,  GH_REAL,    GH_READ,  Wtheta), &
        arg_type(GH_FIELD,  GH_REAL,    GH_READ,  W3),     &
        arg_type(GH_FIELD,  GH_REAL,    GH_READ,  W3),     &
-       arg_type(GH_SCALAR, GH_REAL,    GH_READ),          &
-       arg_type(GH_SCALAR, GH_REAL,    GH_READ),          &
-       arg_type(GH_SCALAR, GH_REAL,    GH_READ),          &
-       arg_type(GH_SCALAR, GH_REAL,    GH_READ),          &
        arg_type(GH_SCALAR, GH_INTEGER, GH_READ)           &
        /)
   type(func_type) :: meta_funcs(2) = (/ &

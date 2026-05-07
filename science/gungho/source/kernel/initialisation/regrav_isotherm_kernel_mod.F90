@@ -32,15 +32,16 @@ private
 !-------------------------------------------------------------------------------
 type, public, extends(kernel_type) :: regrav_isotherm_kernel_type
   private
-  type(arg_type) :: meta_args(8) = (/                          &
-       arg_type(GH_FIELD,   GH_REAL,    GH_READWRITE, W3),      &
-       arg_type(GH_FIELD,   GH_REAL,    GH_READ,      Wtheta),  &
-       arg_type(GH_FIELD,   GH_REAL,    GH_READ,      Wtheta),  &
-       arg_type(GH_FIELD*3, GH_REAL,    GH_READ,      Wtheta),  &
-       arg_type(GH_FIELD,   GH_REAL,    GH_READ,      W3),      &
-       arg_type(GH_FIELD,   GH_REAL,    GH_READ,      W3),      &
-       arg_type(GH_FIELD,   GH_REAL,    GH_READ,      Wtheta),  &
-       arg_type(GH_FIELD,   GH_REAL,    GH_READ,      W3)       &
+  type(arg_type) :: meta_args(9) = (/                      &
+       arg_type(GH_FIELD, GH_REAL, GH_READWRITE, W3),      &
+       arg_type(GH_FIELD, GH_REAL, GH_READ,      Wtheta),  &
+       arg_type(GH_FIELD, GH_REAL, GH_READ,      Wtheta),  &
+       arg_type(GH_FIELD, GH_REAL, GH_READ,      Wtheta),  &
+       arg_type(GH_FIELD, GH_REAL, GH_READ,      Wtheta),  &
+       arg_type(GH_FIELD, GH_REAL, GH_READ,      W3),      &
+       arg_type(GH_FIELD, GH_REAL, GH_READ,      W3),      &
+       arg_type(GH_FIELD, GH_REAL, GH_READ,      Wtheta),  &
+       arg_type(GH_FIELD, GH_REAL, GH_READ,      W3)       &
        /)
   integer :: operates_on = CELL_COLUMN
 contains
@@ -60,7 +61,6 @@ contains
 !> @param[in]  coriolis_term Vertical component of the coriolis term
 !> @param[in]  moist_dyn_gas Gas factor 1+ m_v/epsilon
 !> @param[in]  moist_dyn_tot Total mass factor 1 + sum m_x
-!> @param[in]  moist_dyn_fac Water factor
 !> @param[in]  phi           Geopotential field
 !> @param[in]  height_w3     Height coordinate in w3
 !> @param[in]  height_wth    Height coordinate in wth
@@ -78,7 +78,6 @@ subroutine regrav_isotherm_code( &
                                       coriolis_term, &
                                       moist_dyn_gas, &
                                       moist_dyn_tot, &
-                                      moist_dyn_fac, &
                                       phi,           &
                                       height_w3,     &
                                       height_wth,    &
@@ -108,8 +107,7 @@ subroutine regrav_isotherm_code( &
                                                               w3_mask,       &
                                                               phi
   real(kind=r_def), dimension(undf_wt),         intent(in) :: moist_dyn_gas, &
-                                                              moist_dyn_tot, &
-                                                              moist_dyn_fac
+                                                              moist_dyn_tot
   real(kind=r_def), dimension(undf_wt),         intent(in) :: temperature, &
                                                               height_wth
   real(kind=r_def), dimension(undf_wt),         intent(in) :: coriolis_term
