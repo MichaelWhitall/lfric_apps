@@ -17,6 +17,7 @@ module geo_on_pres_kernel_mod
   use fs_continuity_mod,    only: WTHETA
   use constants_mod,        only: r_def, i_def
   use kernel_mod,           only: kernel_type
+  use planet_constants_mod, only: planet_radius
 
   implicit none
 
@@ -116,6 +117,7 @@ contains
     ! Internal variables
     integer(kind=i_def) :: k, level_above, top_df, kp, level_extrap
     real(kind=r_def) :: desired_ex, h_ref_lev
+    real(kind=r_def) :: geo_ht_extrap, geo_ht_lowest
     real(kind=r_def), parameter:: extrap_height = 2000.0_r_def
 
     do kp = 1, nplev
@@ -138,9 +140,9 @@ contains
 
       if (level_above == -1_i_def) then
         ! Desired level is above model top, extrapolate up
-        data_out(map_out(1)+kp-1) = data_in(map_in(1)+top_df) - &
-                                   (desired_ex - ex_at_data(map_in(1)+top_df)) &
-                                    * cp * theta(map_wth(1)+nlayers) / gravity
+        data_out(map_out(1)+kp-1) = ( data_in(map_in(1)+top_df) - &
+                                      (desired_ex - ex_at_data(map_in(1)+top_df)) &
+                                      * cp * theta(map_wth(1)+nlayers) ) / gravity
       else if (level_above == 0_i_def) then
         ! Desired level is below surface, extrapolate down
         do k = 1, nlayers
@@ -150,10 +152,14 @@ contains
             exit
           end if
         end do
-        h_ref_lev = (height_wth(map_wth(1)+level_extrap) - data_in(map_in(1))) &
+        geo_ht_extrap = height_wth(map_wth(1)+level_extrap) / &
+                        ( 1.0_r_def + height_wth(map_wth(1)+level_extrap) / &
+                                      planet_radius )
+        geo_ht_lowest = data_in(map_in(1)) / gravity
+        h_ref_lev = ( geo_ht_extrap - geo_ht_lowest ) &
                    / (1.0_r_def - (exner_wth(map_wth(1)+level_extrap) / &
                                    ex_at_data(map_in(1)))**ex_power )
-        data_out(map_out(1)+kp-1) = data_in(map_in(1)+level_above) &
+        data_out(map_out(1)+kp-1) = geo_ht_lowest &
                                    + h_ref_lev * (1.0_r_def - &
                                   (desired_ex/ex_at_data(map_in(1)))**ex_power)
       else
@@ -165,7 +171,7 @@ contains
                                        ex_at_data(map_in(1)+level_above)) * &
                                       data_in(map_in(1)+level_above-1) ) / &
                                     (ex_at_data(map_in(1)+level_above) - &
-                                     ex_at_data(map_in(1)+level_above-1))
+                                     ex_at_data(map_in(1)+level_above-1)) / gravity
       end if
 
     end do

@@ -12,6 +12,7 @@ module pres_lev_diags_alg_mod
   use io_config_mod,           only: write_diag, use_xios_io
   use timing_mod,              only: start_timing, stop_timing, tik, LPROF
   use constants_mod,           only: r_def, i_def, l_def, str_def
+  use dycore_constants_mod,    only: get_geopotential
   use initialise_diagnostics_mod, only: init_diag => init_diagnostic_field, &
                                         diag_samp => diagnostic_to_be_sampled
   use lfric_xios_diag_mod, only: get_axis_dimension, get_axis_values
@@ -65,8 +66,8 @@ contains
     type( field_type ), pointer     :: v_in_w3
     type( field_type ), pointer     :: w_in_wth
     type( field_type ), pointer     :: wetrho_in_wth
-    type( field_type ), pointer     :: height_w3
     type( field_type ), pointer     :: height_wth
+    type( field_type ), pointer     :: geopotential
 
     ! Define fields
     type( field_type ) :: plev_heaviside, plev_temp, plev_u, plev_v, &
@@ -261,11 +262,11 @@ contains
     plev_geopot_flag = init_diag(plev_geopot, 'plev__geopot', activate=plev_geopot_clim_flag)
     if ((plev_geopot_flag .or. plev_geopot_clim_flag) .and. use_xios_io) then
 
-      height_w3 => get_height_fv(W3, exner_w3%get_mesh_id())
-      call invoke_geo_on_pres_kernel_type(height_w3, exner_w3, theta_wth, &
-                                          height_wth, exner_wth,          &
-                                          nplev, plevs, plev_geopot,      &
-                                          p_zero, kappa, cp, gravity,     &
+      geopotential => get_geopotential( exner_w3%get_mesh_id() )
+      call invoke_geo_on_pres_kernel_type(geopotential, exner_w3, theta_wth, &
+                                          height_wth, exner_wth,             &
+                                          nplev, plevs, plev_geopot,         &
+                                          p_zero, kappa, cp, gravity,        &
                                           ex_power)
       if (plev_geopot_flag) call plev_geopot%write_field()
 
