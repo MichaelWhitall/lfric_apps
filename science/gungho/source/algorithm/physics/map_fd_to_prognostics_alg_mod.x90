@@ -51,7 +51,9 @@ module map_fd_to_prognostics_alg_mod
   use random_perturb_field_alg_mod,    only: random_perturb_field
     use mr_indices_mod,                only: imr_v, imr_cl, imr_ci, imr_r, &
                                              imr_s, imr_g
-  use moist_dyn_mod,                   only: num_moist_factors, gas_law
+  use moist_dyn_mod,                   only: num_moist_factors, &
+                                             gas_law,           &
+                                             total_mass
   use moist_dyn_factors_alg_mod,       only: moist_dyn_factors_alg
 
   ! Configuration modules
