@@ -71,51 +71,51 @@ contains
 !> @param[in]  ndf_wt        Number of degrees of freedom per cell for wtheta
 !> @param[in]  undf_wt       Total number of degrees of freedom for wtheta
 !> @param[in]  map_wt        Dofmap for the cell at column base for wt
-subroutine regrav_isotherm_code( &
-                                      nlayers,       &
-                                      exner,         &
-                                      temperature,   &
-                                      coriolis_term, &
-                                      moist_dyn_gas, &
-                                      moist_dyn_tot, &
-                                      phi,           &
-                                      height_w3,     &
-                                      height_wth,    &
-                                      w3_mask,       &
-                                      ndf_w3,        &
-                                      undf_w3,       &
-                                      map_w3,        &
-                                      ndf_wt,        &
-                                      undf_wt,       &
-                                      map_wt )
+subroutine regrav_isotherm_code( nlayers,       &
+                                 exner,         &
+                                 temperature,   &
+                                 coriolis_term, &
+                                 moist_dyn_gas, &
+                                 moist_dyn_tot, &
+                                 phi,           &
+                                 height_w3,     &
+                                 height_wth,    &
+                                 w3_mask,       &
+                                 ndf_w3,        &
+                                 undf_w3,       &
+                                 map_w3,        &
+                                 ndf_wt,        &
+                                 undf_wt,       &
+                                 map_wt )
 
-  use planet_config_mod,         only: gravity, cp
+  use planet_config_mod, only: gravity, cp
 
   implicit none
 
   ! Arguments
-  integer(kind=i_def),                          intent(in) :: nlayers, &
-                                                              ndf_w3,  &
-                                                              undf_w3, &
-                                                              ndf_wt,  &
-                                                              undf_wt
-  integer(kind=i_def), dimension(ndf_w3),       intent(in) :: map_w3
-  integer(kind=i_def), dimension(ndf_wt),       intent(in) :: map_wt
+  real(kind=r_def), dimension(undf_w3), intent(inout) :: exner
 
-  real(kind=r_def), dimension(undf_w3),      intent(inout) :: exner
-  real(kind=r_def), dimension(undf_w3),         intent(in) :: height_w3,     &
-                                                              w3_mask,       &
-                                                              phi
-  real(kind=r_def), dimension(undf_wt),         intent(in) :: moist_dyn_gas, &
-                                                              moist_dyn_tot
-  real(kind=r_def), dimension(undf_wt),         intent(in) :: temperature, &
-                                                              height_wth
-  real(kind=r_def), dimension(undf_wt),         intent(in) :: coriolis_term
+  integer(kind=i_def),                    intent(in) :: nlayers, &
+                                                        ndf_w3,  &
+                                                        undf_w3, &
+                                                        ndf_wt,  &
+                                                        undf_wt
+  integer(kind=i_def), dimension(ndf_w3), intent(in) :: map_w3
+  integer(kind=i_def), dimension(ndf_wt), intent(in) :: map_wt
+
+  real(kind=r_def), dimension(undf_w3),   intent(in) :: height_w3,     &
+                                                        w3_mask,       &
+                                                        phi
+  real(kind=r_def), dimension(undf_wt),   intent(in) :: moist_dyn_gas, &
+                                                        moist_dyn_tot
+  real(kind=r_def), dimension(undf_wt),   intent(in) :: temperature, &
+                                                        height_wth
+  real(kind=r_def), dimension(undf_wt),   intent(in) :: coriolis_term
 
   ! Internal variables
-  integer(kind=i_def)                  :: k
-  real(kind=r_def)                     :: temp_virtual
-  real(kind=r_def)                     :: dz, weight1, weight2
+  integer(kind=i_def) :: k
+  real(kind=r_def)    :: temp_virtual
+  real(kind=r_def)    :: dz, weight1, weight2
 
   ! Return if the mask is 0 (with tolerance of 0.5 as mask is real, 0 or 1)
   ! setting exner to 1

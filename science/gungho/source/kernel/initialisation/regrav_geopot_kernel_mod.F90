@@ -27,16 +27,16 @@ private
 !-------------------------------------------------------------------------------
 type, public, extends(kernel_type) :: regrav_geopot_kernel_type
   private
-  type(arg_type) :: meta_args(9) = (/                          &
-       arg_type(GH_FIELD,   GH_REAL,    GH_READWRITE, Wtheta), &
-       arg_type(GH_FIELD,   GH_REAL,    GH_READWRITE, Wtheta), &
-       arg_type(GH_FIELD,   GH_REAL,    GH_READ,      Wtheta), &
-       arg_type(GH_FIELD,   GH_REAL,    GH_READWRITE, W3),     &
-       arg_type(GH_FIELD,   GH_REAL,    GH_READ,      Wtheta), &
-       arg_type(GH_FIELD*3, GH_REAL,    GH_READ,      Wtheta), &
-       arg_type(GH_FIELD,   GH_REAL,    GH_READ,      W3),     &
-       arg_type(GH_FIELD,   GH_REAL,    GH_READ,      Wtheta), &
-       arg_type(GH_FIELD,   GH_REAL,    GH_READ,      W3)      &
+  type(arg_type) :: meta_args(9) = (/                     &
+       arg_type(GH_FIELD, GH_REAL, GH_READWRITE, Wtheta), &
+       arg_type(GH_FIELD, GH_REAL, GH_READWRITE, Wtheta), &
+       arg_type(GH_FIELD, GH_REAL, GH_READWRITE, W3),     &
+       arg_type(GH_FIELD, GH_REAL, GH_READ,      Wtheta), &
+       arg_type(GH_FIELD, GH_REAL, GH_READ,      Wtheta), &
+       arg_type(GH_FIELD, GH_REAL, GH_READ,      Wtheta), &
+       arg_type(GH_FIELD, GH_REAL, GH_READ,      W3),     &
+       arg_type(GH_FIELD, GH_REAL, GH_READ,      Wtheta), &
+       arg_type(GH_FIELD, GH_REAL, GH_READ,      W3)      &
        /)
   integer :: operates_on = CELL_COLUMN
 contains
@@ -50,73 +50,65 @@ public :: regrav_geopot_code
 
 contains
 
-!> @param[in]  nlayers       Number of layers
-!> @param[in,out] theta         Potential temperature field
-!> @param[in,out] exner      Exner pressure field
-!> @param[in]     exner_in_wth The Exner pressure in Wtheta
-!> @param[in]  coriolis_term Vertical component of the coriolis term
-!> @param[in]  moist_dyn_gas Gas factor 1+ m_v/epsilon
-!> @param[in]  moist_dyn_tot Total mass factor 1 + sum m_x
-!> @param[in]  moist_dyn_fac Water factor
-!> @param[in]  height_w3     Height coordinate in w3
-!> @param[in]  height_wth    Height coordinate in wth
-!> @param[in]  w3_mask       LBC mask or Dummy mask for w3 space
-!> @param[in]  ndf_wt        Number of degrees of freedom per cell for wtheta
-!> @param[in]  undf_wt       Total number of degrees of freedom for wtheta
-!> @param[in]  map_wt        Dofmap for the cell at column base for wt
-!> @param[in]  ndf_w3        Number of degrees of freedom per cell for w3
-!> @param[in]  undf_w3       Total number of degrees of freedom for w3
-!> @param[in]  map_w3        Dofmap for the cell at column base for w3
-subroutine regrav_geopot_code( &
-                                      nlayers,       &
-                                      temperature,   &
-                                      theta,         &
-                                      exner_in_wth,  &
-                                      exner,         &
-                                      coriolis_term, &
-                                      moist_dyn_gas, &
-                                      moist_dyn_tot, &
-                                      moist_dyn_fac, &
-                                      height_w3,     &
-                                      height_wth,    &
-                                      w3_mask,       &
-                                      ndf_wt,        &
-                                      undf_wt,       &
-                                      map_wt,        &
-                                      ndf_w3,        &
-                                      undf_w3,       &
-                                      map_w3 )
+!> @param[in]  nlayers        Number of layers
+!> @param[in,out] temperature Absolute temperature field
+!> @param[in,out] theta       Potential temperature field
+!> @param[in,out] exner       Exner pressure field
+!> @param[in]  coriolis_term  Vertical component of the coriolis term
+!> @param[in]  moist_dyn_gas  Gas factor 1+ m_v/epsilon
+!> @param[in]  moist_dyn_tot  Total mass factor 1 + sum m_x
+!> @param[in]  height_w3      Height coordinate in w3
+!> @param[in]  height_wth     Height coordinate in wth
+!> @param[in]  w3_mask        LBC mask or Dummy mask for w3 space
+!> @param[in]  ndf_wt         Number of degrees of freedom per cell for wtheta
+!> @param[in]  undf_wt        Total number of degrees of freedom for wtheta
+!> @param[in]  map_wt         Dofmap for the cell at column base for wt
+!> @param[in]  ndf_w3         Number of degrees of freedom per cell for w3
+!> @param[in]  undf_w3        Total number of degrees of freedom for w3
+!> @param[in]  map_w3         Dofmap for the cell at column base for w3
+subroutine regrav_geopot_code( nlayers,       &
+                               temperature,   &
+                               theta,         &
+                               exner,         &
+                               coriolis_term, &
+                               moist_dyn_gas, &
+                               moist_dyn_tot, &
+                               height_w3,     &
+                               height_wth,    &
+                               w3_mask,       &
+                               ndf_wt,        &
+                               undf_wt,       &
+                               map_wt,        &
+                               ndf_w3,        &
+                               undf_w3,       &
+                               map_w3 )
 
   implicit none
 
   ! Arguments
-  integer(kind=i_def),                          intent(in) :: nlayers, &
-                                                              ndf_w3,  &
-                                                              undf_w3, &
-                                                              ndf_wt,  &
-                                                              undf_wt
-  integer(kind=i_def), dimension(ndf_w3),       intent(in) :: map_w3
-  integer(kind=i_def), dimension(ndf_wt),       intent(in) :: map_wt
+  real(kind=r_def), dimension(undf_wt),   intent(inout) :: theta, temperature
+  real(kind=r_def), dimension(undf_w3),   intent(inout) :: exner
 
-  real(kind=r_def), dimension(undf_wt),         intent(inout) :: theta, temperature
-  real(kind=r_def), dimension(undf_w3),      intent(inout) :: exner
-  real(kind=r_def), dimension(undf_w3),         intent(in) :: height_w3,     &
-                                                              w3_mask
-  real(kind=r_def), dimension(undf_wt),         intent(in) :: moist_dyn_gas, &
-                                                              moist_dyn_tot, &
-                                                              moist_dyn_fac
-  real(kind=r_def), dimension(undf_wt),         intent(in) :: exner_in_wth,  &
-                                                              height_wth
-  real(kind=r_def), dimension(undf_wt),         intent(in) :: coriolis_term
+  integer(kind=i_def),                    intent(in) :: nlayers, &
+                                                        ndf_w3,  &
+                                                        undf_w3, &
+                                                        ndf_wt,  &
+                                                        undf_wt
+  integer(kind=i_def), dimension(ndf_w3), intent(in) :: map_w3
+  integer(kind=i_def), dimension(ndf_wt), intent(in) :: map_wt
+
+  real(kind=r_def), dimension(undf_w3),   intent(in) :: height_w3,     &
+                                                        w3_mask
+  real(kind=r_def), dimension(undf_wt),   intent(in) :: moist_dyn_gas, &
+                                                        moist_dyn_tot
+  real(kind=r_def), dimension(undf_wt),   intent(in) :: height_wth
+  real(kind=r_def), dimension(undf_wt),   intent(in) :: coriolis_term
 
   ! Internal variables
-  integer(kind=i_def)                  :: k
-  real(kind=r_def)                     :: temp_virt
-
-  integer(kind=i_def) :: itn, nitns
-  real(kind=r_def)    :: ht_wt(0:nlayers), ht_w3(nlayers)
-  real(kind=r_def)    :: g_wt
-  real(kind=r_def)    :: th(0:nlayers), ex(nlayers)
+  integer(kind=i_def) :: k
+  real(kind=r_def)    :: temp_virt
+  real(kind=r_def)    :: ht_wt(0:nlayers)
+  real(kind=r_def)    :: th(0:nlayers)
   real(kind=r_def)    :: exner_surf
   real(kind=r_def)    :: weight1
 
@@ -129,6 +121,7 @@ subroutine regrav_geopot_code( &
     return
   end if
 
+  ! Geopotential height
   do k = 0, nlayers
     ht_wt(k) = planet_radius * height_wth(map_wt(1)+k) / &
               ( planet_radius - height_wth(map_wt(1)+k) )
@@ -150,18 +143,6 @@ subroutine regrav_geopot_code( &
   ! Map temperature from newly computed grid back onto current model grid
   call interp( nlayers+1, ht_wt, th, nlayers+1, height_wth(map_wt(1)), &
                temperature(map_wt(1)) )
-
-  ! Once T has been interpolated, exner needs recalculating for hydrostatic
-  ! balance on the current model grid.
-!  temp_virt = moist_dyn_gas( map_wt(1) ) * temperature( map_wt(1) ) / &
-!              moist_dyn_tot( map_wt(1) )
-!  weight1 = height_w3( map_w3(1) ) - height_wth( map_wt(1) )
-!  g_wt = gravity * ( planet_radius / ( planet_radius + height_wth(map_wt(1)) ) )**2 &
-!                - coriolis_term( map_wt(1) )
-!
-!  exner( map_w3(1) ) = exner_surf * &
-!                       ( cp * temp_virt - g_wt * weight1 ) / &
-!                       ( cp * temp_virt )
 
 end subroutine regrav_geopot_code
 

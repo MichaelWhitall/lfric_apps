@@ -538,9 +538,10 @@ contains
              ! Compute absolute temperature T = theta * exner
              X_times_Y( temperature, exner_in_wth, theta),     &
              regrav_geopot_kernel_type( temperature, theta,    &
-                                        exner_in_wth, exner,   &
+                                        exner,                 &
                                         c_vert_term,           &
-                                        moist_dyn,             &
+                                        moist_dyn(gas_law),    &
+                                        moist_dyn(total_mass), &
                                         height_w3, height_wth, &
                                         mask ),                &
              regrav_isotherm_kernel_type( exner, temperature,    &
