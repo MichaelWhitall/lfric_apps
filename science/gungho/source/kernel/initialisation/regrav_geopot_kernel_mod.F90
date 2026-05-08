@@ -4,8 +4,8 @@
 ! under which the code may be used.
 !-----------------------------------------------------------------------------
 
-!> @brief 
-!> @details 
+!> @brief   Need to say something here
+!> @details More to be said here
 module regrav_geopot_kernel_mod
 
 use argument_mod,         only: arg_type,              &
