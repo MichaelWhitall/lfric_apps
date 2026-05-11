@@ -565,7 +565,7 @@ do k = 1, nlevels
   if ( i_pc2_init_logic >= pc2init_logic_smooth ) then
     ! Smooth initiation logic...
 
-    ! First update cloud-fractions
+    ! A) Update cloud-fractions (using either fixed or original code):
     if ( i_pc2_init_logic == pc2init_logic_smooth_fix ) then
       ! Bug-fix; update cloud-fractions even if not updating qcl
 
@@ -628,7 +628,7 @@ do k = 1, nlevels
 
     end if  ! ( i_pc2_init_logic == pc2init_logic_smooth )
 
-    ! Update qcl, q, T
+    ! B) Update qcl, q, T (same for both fixed and original code)
     do i = 1, npti
       if ( qcl_c(i) > qcl(ni(i),nj(i),k) ) then
         ! Use the updated q, qcl and T at these points
