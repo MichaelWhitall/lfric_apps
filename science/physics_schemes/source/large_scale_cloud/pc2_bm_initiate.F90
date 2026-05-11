@@ -1005,7 +1005,7 @@ do k = nlevels, 1, -1   ! need to work down for cfl_max
     if ( i_pc2_init_logic >= pc2init_logic_smooth ) then
       ! Smooth initiation logic...
 
-      ! First update cloud-fractions
+      ! A) Update cloud-fractions (using either fixed or original code):
       if ( i_pc2_init_logic == pc2init_logic_smooth_fix ) then
         ! Bug-fix; update cloud-fractions even if not updating qcl
 
@@ -1076,7 +1076,7 @@ do k = nlevels, 1, -1   ! need to work down for cfl_max
 
       end if  ! ( i_pc2_init_logic == pc2init_logic_smooth )
 
-      ! Update qcl, q, T
+      ! B) Update qcl, q, T (same for both fixed and original code)
 !DIR$ IVDEP
       do i = 1, qc_points
         if ( deltaql_c(i) > 0.0 ) then
