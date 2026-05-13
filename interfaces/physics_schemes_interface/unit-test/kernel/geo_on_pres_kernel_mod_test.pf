@@ -89,6 +89,7 @@ contains
   real(r_def), parameter :: ex_power = 1.0_r_def
   real(r_def), parameter :: cp = 1000.0_r_def
   real(r_def), parameter :: gravity = 10.0_r_def
+  real(r_def), parameter :: planet_radius = 6.4e6_r_def
 
   ! Input arrays
   this%map_in = 1_i_def
@@ -129,6 +130,7 @@ contains
                          kappa,          &
                          cp,             &
                          gravity,        &
+                         planet_radius,  &
                          ex_power,       &
                          ndf_in,         &
                          undf_in,        &
