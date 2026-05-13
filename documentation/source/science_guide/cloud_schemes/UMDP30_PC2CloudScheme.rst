@@ -14,8 +14,12 @@
 The PC2 Cloud Scheme
 ====================
 
-:Author: D. Wilson, A. Bushell, C. Morcrette, V. Varma\ :math:`^{1}`,
+:Author: D. Wilson, A. Bushell, C. Morcrette, V. Varma\ [#affil1]_,
          M. Whitall
+
+
+.. [#affil1] National Institute of Water and Atmospheric Research, Wellington,
+   New Zealand
 
 .. role:: raw-latex(raw)
    :format: latex
