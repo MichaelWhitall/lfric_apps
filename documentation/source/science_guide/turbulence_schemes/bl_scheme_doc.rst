@@ -5667,22 +5667,16 @@ coefficients :math:`A_{1},\; A_{2},B_{1},\; B_{2}` are given by
 
 .. math:: :label: ab_coeffs
 
-   \begin{equation}
-       A_1=-\gamma_1\sum_j \nu_j RK_{PMj}
-            [LD_j\psi_jRK_H(1)_j+A_{*j}],
-     \end{equation}
-     \begin{equation}
-       A_2=\gamma_1\sum_j \nu_j RK_{PMj}
-           L\psi_jRK_H(1)_j,
-     \end{equation}
-     \begin{equation}
-       B_1=\gamma_1c_p\sum_j \nu_j RK_{PMj}
-           D_j\psi_jRK_H(1)_j
-     \end{equation}
-     \begin{equation}
-       B_2=-\gamma_1\sum_j \nu_j RK_{PMj}
-            \psi_j[c_pRK_H(1)_j+A_{*j}].
-     \end{equation}
+   \begin{aligned}
+   A_1=-\gamma_1\sum_j \nu_j RK_{PMj}
+               [LD_j\psi_jRK_H(1)_j+A_{*j}], \\
+   A_2=\gamma_1\sum_j \nu_j RK_{PMj}
+              L\psi_jRK_H(1)_j, \\
+   B_1=\gamma_1c_p\sum_j \nu_j RK_{PMj}
+              D_j\psi_jRK_H(1)_j \\
+   B_2=-\gamma_1\sum_j \nu_j RK_{PMj}
+               \psi_j[c_pRK_H(1)_j+A_{*j}].
+   \end{aligned}
 
 but with :math:`\gamma_{1}={\mathcal{I}}_{1}`. Here
 :math:`RK_H(1) =\rho C_H U_1`,
