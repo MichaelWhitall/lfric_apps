@@ -664,22 +664,24 @@ order :math:`\hat{n}` and :math:`T_c` is the temperature in degrees
 Celsius. The parameters :math:`\hat{a}` and :math:`\hat{b}` are
 determined using the formulae
 
-.. math::
+.. math:: :label: eq:fielda
 
    \begin{aligned}
-   \label{eq:fielda}
-   \log_{10} \hat{a}(\hat{n}, T_c) &=& \hat{a}1 + \hat{a}_2 T_c + \hat{a}_3 \hat{n} 
-   + \hat{a}_4 T_C \hat{n} \nonumber \\
-   & & + \hat{a}_5 T_C^2 + \hat{a}_6 \hat{n}^2 + \hat{a}_7 T_c^2 \hat{n} \nonumber \\
-   & & + \hat{a}_8 T_c \hat{n}^2 + \hat{a}_9 T_C^3 + \hat{a}_{10} \hat{n}^3 
+   \log_{10} \hat{a}(\hat{n}, T_c) &=& \hat{a}1 + \hat{a}_2 T_c + \hat{a}_3 \hat{n}
+   + \hat{a}_4 T_C \hat{n}
+   \\
+   & & + \hat{a}_5 T_C^2 + \hat{a}_6 \hat{n}^2 + \hat{a}_7 T_c^2 \hat{n}
+   \\
+   & & + \hat{a}_8 T_c \hat{n}^2 + \hat{a}_9 T_C^3 + \hat{a}_{10} \hat{n}^3
    \end{aligned}
 
-.. math::
+.. math:: :label: eq:fieldb
 
    \begin{aligned}
-   \label{eq:fieldb}
-   b(\hat{n}, T_c) &=& b_1 + b_2 T_c + b_3 \hat{n} + b_4 T_c \hat{n} \nonumber \\
-   & & + b_5 T_c^2 + b_6 \hat{n}^2 + b_7 T_c^2 \hat{n} \nonumber \\
+   b(\hat{n}, T_c) &=& b_1 + b_2 T_c + b_3 \hat{n} + b_4 T_c \hat{n}
+   \\
+   & & + b_5 T_c^2 + b_6 \hat{n}^2 + b_7 T_c^2 \hat{n}
+   \\
    & & + b_8 T_c \hat{n}^2 + b_9 T_c^3 + b_{10}\hat{n}^3
    \end{aligned}
 
@@ -729,12 +731,13 @@ where the parameters :math:`\hat{d}`, :math:`\hat{e}` and
 :math:`\hat{f}` can be determined as exponential and quadratic functions
 of :math:`\hat{n}` as follows:
 
-.. math::
+.. math:: :label: eq:field2d
 
    \begin{aligned}
-   \label{eq:field2d}
-   \hat{d}(\hat{n})=\exp(~13.6-7.76\hat{n}+0.479\hat{n}^2~) \nonumber \\
-   \hat{e}(\hat{n})=-0.0361 + 0.0151\hat{n}+0.00149\hat{n}^2 \nonumber \\
+   \hat{d}(\hat{n})=\exp(~13.6-7.76\hat{n}+0.479\hat{n}^2~)
+   \\
+   \hat{e}(\hat{n})=-0.0361 + 0.0151\hat{n}+0.00149\hat{n}^2
+   \\
    \hat{f}(\hat{n})=0.807 + 0.00581\hat{n} + 0.0457\hat{n}^2 .
    \end{aligned}
 
@@ -925,24 +928,24 @@ Two different :math:`V_t-D` relations can be specified and these are
 used individually to calculate two candidate mass-weighted mean
 fallspeeds in each grid box. Denoting the two relations by
 
+.. math:: :label: eq:split_vtd
+
+   V_t = c_1 D^{d_1},
+
 .. math::
 
-   \begin{aligned}
-   \label{eq:split_vtd}
-   V_t = c_1 D^{d_1}, \\
    V_t = c_2 D^{d_2}
-   \end{aligned}
 
 (neglecting the associated factors of air density), the two candidate
 mass-weighted mean fallspeeds are given by
 
+.. math:: :label: eq:split_vm
+
+   \rho q_{cf} [V]^{(1)}_{q_{cf}} = a{\cal M}_{b+d_1}(q_{cf},T_c),
+
 .. math::
 
-   \begin{aligned}
-   \label{eq:split_vm}
-   \rho q_{cf} [V]^{(1)}_{q_{cf}} = a{\cal M}_{b+d_1}(q_{cf},T_c),\\
    \rho q_{cf} [V]^{(2)}_{q_{cf}} = a{\cal M}_{b+d_2}(q_{cf},T_c).
-   \end{aligned}
 
 In each grid box the :math:`V_t-D` relation is selected which gives the
 *least* mass-weighted mean fallspeed. The selected fallspeed is then
@@ -1845,7 +1848,7 @@ fall-flux of precipitation :math:`P`:
                                    { \frac{\Delta t}{\rho \Delta z} P + {q_p}_k }
                        \right)^2 }
                    - {{C_R}_k}_n \right)
-   \nonumber \\
+   \\
     & \; = \; \frac{{{C_R}_k}_n}{\Delta t} \left(
                     \frac{ 1 }
                          { 1 + \left( \frac{{{C_R}_k}_n}{{C_R}_{fall}} - 1 \right)
@@ -1854,7 +1857,6 @@ fall-flux of precipitation :math:`P`:
                        { 1 + \frac{\Delta t}{\rho \Delta z} \frac{P}{{q_p}_k} }
                        \right)^2 }
                                       - 1 \right)
-   \nonumber
    \end{aligned}
 
 Now take the limit of small :math:`\Delta t` to express this in terms of
@@ -1869,16 +1871,15 @@ continuous calculus:
                          { 1 + \left( \frac{{C_R}_k}{{C_R}_{fall}} - 1 \right)
                \left( \frac{\Delta t}{\rho \Delta z} \frac{P}{{q_p}_k} \right)^2 }
                                       - 1 \right)
-   \nonumber \\
+   \\
     & \; = \; \frac{{C_R}_k}{\Delta t} \left(
                    1 - \left( \frac{{C_R}_k}{{C_R}_{fall}} - 1 \right)
                \left( \frac{\Delta t}{\rho \Delta z} \frac{P}{{q_p}_k} \right)^2
                                       - 1 \right)
-   \nonumber \\
+   \\
     & \; = \; - {C_R}_k \left( \frac{{C_R}_k}{{C_R}_{fall}} - 1 \right)
                \left( \frac{1}{\rho \Delta z} \frac{P}{{q_p}_k} \right)^2
                \Delta t
-   \nonumber
    \end{aligned}
 
 The tendency scales with :math:`\Delta t` and therefore goes to zero in
@@ -1914,15 +1915,14 @@ Update of precipitation fraction from precip mass sources
 
 For the first moment, we have:
 
-.. math::
+.. math:: :label: eq:q_p_np1
 
    \begin{aligned}
    \overline{{q_p}_{n+1}}
     & \;= \; \overline{ {q_p}_n + \frac{\partial q_p}{\partial t} \Delta t }
-   \nonumber \\
+   \\
     & \; = \; \overline{ {q_p}_n }
       \; + \; \overline{ \frac{\partial q_p}{\partial t} } \; \Delta t
-   \label{eq:q_p_np1}
    \end{aligned}
 
 where :math:`{q_p}_n` is the precip mass before the process,
@@ -1932,17 +1932,16 @@ and :math:`\Delta t` is the microphysics timestep length.
 
 For the 2nd moment:
 
-.. math::
+.. math:: :label: eq:q_p_np1_sq_1
 
    \begin{aligned}
    \overline{{q_p}_{n+1}^2}
     & \; = \; \overline{ \left( {q_p}_n + \frac{\partial q_p}{\partial t} \Delta t
                   \right)^2 }
-   \nonumber \\
+   \\
     & \; = \; \overline{ {q_p}_n^2 }
       \; + \; 2 \; \overline{ {q_p}_n \frac{\partial q_p}{\partial t} } \; \Delta t
       \; + \; \overline{ \frac{\partial q_p}{\partial t}^2 } \; \Delta t^2
-   \label{eq:q_p_np1_sq_1}
    \end{aligned}
 
 Rearranging our definition of :math:`C_R`
@@ -1995,22 +1994,23 @@ values, converted to a grid-mean by scaling by a representative average
 area-fraction for the two fields, taken to be the geometric mean of
 :math:`{C_R}_n` and :math:`C_{proc}`:
 
-.. math::
+.. math:: :label: eq:cross_term_correl
 
    \begin{aligned}
    \overline{ {q_p}_n \frac{\partial q_p}{\partial t} }
     & \; = \; \frac{ \overline{ {q_p}_n } }{ {C_R}_n } \;
               \frac{ \overline{ \frac{\partial q_p}{\partial t} } }{ C_{proc} } \;
               \sqrt{ {C_R}_n C_{proc} }
-   \nonumber \\
+   \\
     & \; = \; \frac{ \overline{ {q_p}_n } \;
                      \overline{ \frac{\partial q_p}{\partial t} } }
                    { \sqrt{ {C_R}_n C_{proc} } }
-   \label{eq:cross_term_correl} \\
-    & \; = \; \sqrt{ \overline{ {q_p}_n^2 } \;
-                     \overline{ \frac{\partial q_p}{\partial t}^2 } }
-   \nonumber
    \end{aligned}
+
+.. math::
+
+   \; = \; \sqrt{ \overline{ {q_p}_n^2 } \;
+                   \overline{ \frac{\partial q_p}{\partial t}^2 } }
 
 The last line above is derived by noting that
 (`[eq:cross_term_correl] <#eq:cross_term_correl>`__) is the product of
@@ -2022,7 +2022,7 @@ Substituting (`[eq:qpn_sq] <#eq:qpn_sq>`__),
 (`[eq:cross_term_correl] <#eq:cross_term_correl>`__) into
 (`[eq:q_p_np1_sq_1] <#eq:q_p_np1_sq_1>`__), we obtain:
 
-.. math::
+.. math:: :label: eq:q_p_np1_sq_2
 
    \begin{aligned}
    \overline{{q_p}_{n+1}^2}
@@ -2032,12 +2032,11 @@ Substituting (`[eq:qpn_sq] <#eq:qpn_sq>`__),
                         { \sqrt{ {C_R}_n C_{proc} } } \; \Delta t
       \; + \; \frac{ \overline{\frac{\partial q_p}{\partial t}}^2 }{ C_{proc} }
            \; \Delta t^2
-   \nonumber \\
+   \\
    & \; = \; \left( \frac{ \overline{{q_p}_n} }{ \sqrt{ {C_R}_n } }
              \; + \; \frac{ \overline{\frac{\partial q_p}{\partial t}} }
                           { \sqrt{ C_{proc} } } \; \Delta t
              \right)^2
-   \label{eq:q_p_np1_sq_2}
    \end{aligned}
 
 Now substituting (`[eq:q_p_np1] <#eq:q_p_np1>`__) for
@@ -2083,7 +2082,7 @@ Taking 1st order Taylor expansions in the limit of small
 :math:`\Delta t`, we can also write (`[eq:cr_np1] <#eq:cr_np1>`__) as a
 continuous differential equation for :math:`C_R`:
 
-.. math::
+.. math:: :label: eq:dcr_dt
 
    \begin{aligned}
    \frac{\partial C_R}{\partial t}
@@ -2097,7 +2096,7 @@ continuous differential equation for :math:`C_R`:
                           { \sqrt{ C_{proc} } } \; \Delta t
              \right)^2 }
     \; - \; C_R \right)
-   \nonumber \\
+   \\
    & \; = \;
    \frac{1}{\Delta t} \left(
      \frac{ \overline{ q_p }^2 \left( 1
@@ -2110,7 +2109,7 @@ continuous differential equation for :math:`C_R`:
                             { \sqrt{ C_{proc} } } \; \Delta t
              \right) }
     \; - \; C_R \right)
-   \nonumber \\
+   \\
    & \; = \;
    \frac{C_R}{\Delta t} \left(
      \left( 1 \; + \; 2 \frac{1}{\overline{ q_p }}
@@ -2121,7 +2120,7 @@ continuous differential equation for :math:`C_R`:
                              { \sqrt{ C_{proc} } } \; \Delta t
      \right)
     \; - \; 1 \right)
-   \nonumber \\
+   \\
    & \; = \;
    \frac{C_R}{\Delta t} \left(
      \left( 1 \; + \; 2 \frac{1}{\overline{ q_p }}
@@ -2129,11 +2128,10 @@ continuous differential equation for :math:`C_R`:
                         \left( 1 - \sqrt{\frac{ C_R }{ C_{proc} }} \right)
      \right)
     \; - \; 1 \right)
-   \nonumber \\
+   \\
    & \; = \; 2 \frac{C_R}{\overline{ q_p }}
              \overline{ \frac{\partial q_p}{\partial t} }
              \left( 1 - \sqrt{\frac{ C_R }{ C_{proc} }} \right)
-   \label{eq:dcr_dt}
    \end{aligned}
 
 However it is important that we use the time-integrated solution
@@ -2232,12 +2230,11 @@ evaporation takes place only outside the liquid-cloud:
    \begin{aligned}
    {C_R}_{n+1}
    & \; = \; \left( 1 - \frac{rain\_ice + rain\_clear}{C_R} \right) {C_R}_n
-   \nonumber \\
+   \\
    & \; + \; \frac{rain\_ice + rain\_clear}{C_R} {C_R}_n
                 \sqrt{ 1 + \frac{C_R}{rain\_ice + rain\_clear}
                            \frac{1}{\overline{q_p}}
                            \overline{\frac{\partial q_p}{\partial t}} \Delta t }
-   \nonumber
    \end{aligned}
 
 where :math:`\Delta t` is the microphysics timestep length. Note that in
@@ -2404,34 +2401,71 @@ can be written as follows:
 
    \begin{aligned}
    \frac{D q}{Dt}&=&P_{SSUB}+P_{REVP}+P_{ISUB}
-         +P_{SMLTEV}+P_{IMLTEV}     \nonumber \\
+         +P_{SMLTEV}+P_{IMLTEV}
+   \\
          & & +P_{LSET2} -(P_{SDEP2}+P_{IDEP2}+P_{IPRM2} )
-                                                              \\[0.6cm]
-   \frac{D q_{cl}}{Dt}&=&\frac{1}{\rho}\frac{\partial}{\partial z}
-          (\rho q_{cl} [V]_{q_{cl}}) \nonumber \\
-   && -(P_{LSET2} + P_{RAUT}+P_{SACW}+P_{RACW}+P_{GACW}\nonumber\\
-         & & + P_{SDEP1}+ P_{IDEP1} + P_{IACW} + P_{IPRM1}+P_{IFRW} )
-                                                              \\[0.6cm]
-   \frac{D q_R}{Dt}&=&\frac{1}{\rho}\frac{\partial}{\partial z}
-          (\rho q_R [V]_{q_R})                              \nonumber\\
-          &&+P_{RAUT}+P_{RACW}+P_{SMLT}+P_{IMLT}+P_{GMLT} \nonumber \\
-         & &     -(P_{REVP}+P_{SACR-A}+P_{SACR-G}+P_{IACR-C} \nonumber \\
-         & &     + P_{IACR-G}+P_{IFRR})
-                                                              \\[0.6cm]
-   \frac{D q_{cfa}}{Dt}&=&\frac{1}{\rho}\frac{\partial}{\partial z}
-          (\rho q_{cfa} [V]_{q_{cfa}})  \nonumber    \\
-         & &+P_{SAUT}+ P_{SDEP}+P_{SACI}+P_{SACR-A}+P_{SACW} \nonumber   \\
-         & &      -(P_{GAUT}+P_{GACS}+P_{SSUB}+P_{SMLT}+P_{SMLTEV})
-                                                              \\[0.6cm]
-   \frac{D q_{cfc}}{Dt}&=&\frac{1}{\rho}\frac{\partial}{\partial z}
-          (\rho q_{cfc} [V]_{q_{cfc}})     \nonumber    \\
-        & &+P_{IDEP}+P_{IACR-C}+P_{IPRM}+P_{IACW} + P_{IFRW} +P_{IFRR} \nonumber    \\
-       & & -(P_{ISUB} +  P_{IMLT} + P_{IMLTEV} + P_{SAUT} + P_{SACI})
-                                                              \\[0.6cm]
-   \frac{D q_{graup}}{Dt} &=& \frac{1}{\rho}\frac{\partial}{\partial z}
-          (\rho q_{graup} [V]_{q_{graup}} ) \nonumber \\
-       & &+P_{GAUT}+P_{GACW}+P_{GACS}+P_{SACR-G}+P_{IACR-G} \nonumber \\
-       & &- P_{GMLT}
+   \end{aligned}
+
+.. math::
+
+   \begin{aligned}
+   [0.6cm]
+      \frac{D q_{cl}}{Dt}&=&\frac{1}{\rho}\frac{\partial}{\partial z}
+             (\rho q_{cl} [V]_{q_{cl}})
+   \\
+      && -(P_{LSET2} + P_{RAUT}+P_{SACW}+P_{RACW}+P_{GACW}
+   \\
+            & & + P_{SDEP1}+ P_{IDEP1} + P_{IACW} + P_{IPRM1}+P_{IFRW} )
+   \end{aligned}
+
+.. math::
+
+   \begin{aligned}
+   [0.6cm]
+      \frac{D q_R}{Dt}&=&\frac{1}{\rho}\frac{\partial}{\partial z}
+             (\rho q_R [V]_{q_R})
+   \\
+             &&+P_{RAUT}+P_{RACW}+P_{SMLT}+P_{IMLT}+P_{GMLT}
+   \\
+            & &     -(P_{REVP}+P_{SACR-A}+P_{SACR-G}+P_{IACR-C}
+   \\
+            & &     + P_{IACR-G}+P_{IFRR})
+   \end{aligned}
+
+.. math::
+
+   \begin{aligned}
+   [0.6cm]
+      \frac{D q_{cfa}}{Dt}&=&\frac{1}{\rho}\frac{\partial}{\partial z}
+             (\rho q_{cfa} [V]_{q_{cfa}})
+   \\
+            & &+P_{SAUT}+ P_{SDEP}+P_{SACI}+P_{SACR-A}+P_{SACW}
+   \\
+            & &      -(P_{GAUT}+P_{GACS}+P_{SSUB}+P_{SMLT}+P_{SMLTEV})
+   \end{aligned}
+
+.. math::
+
+   \begin{aligned}
+   [0.6cm]
+      \frac{D q_{cfc}}{Dt}&=&\frac{1}{\rho}\frac{\partial}{\partial z}
+             (\rho q_{cfc} [V]_{q_{cfc}})
+   \\
+           & &+P_{IDEP}+P_{IACR-C}+P_{IPRM}+P_{IACW} + P_{IFRW} +P_{IFRR}
+   \\
+          & & -(P_{ISUB} +  P_{IMLT} + P_{IMLTEV} + P_{SAUT} + P_{SACI})
+   \end{aligned}
+
+.. math::
+
+   \begin{aligned}
+   [0.6cm]
+      \frac{D q_{graup}}{Dt} &=& \frac{1}{\rho}\frac{\partial}{\partial z}
+             (\rho q_{graup} [V]_{q_{graup}} )
+   \\
+          & &+P_{GAUT}+P_{GACW}+P_{GACS}+P_{SACR-G}+P_{IACR-G}
+   \\
+          & &- P_{GMLT}
    \end{aligned}
 
 where each of the transfer terms above are defined in table
@@ -2988,15 +3022,16 @@ This term provides a small ‘seed’ ice content for ice free clouds in
 order that the other microphysical terms can grow it. The term acts if
 all the following criteria are satisfied:
 
-.. math::
+.. math:: :label: eq:mic_um_hetnuc
 
    \begin{aligned}
-   T_c   <& -10 \deg C    &   \nonumber\\
-   RH  >& RH_{inuc}   & RH_{inuc}=\mbox{\footnotesize \sf MIN} \left[~0.01(188.92+2.81 T_c +0.013336~{T_c}^2), 1.0~\right]   
-   - 0.1 \nonumber \\
+   T_c   <& -10 \deg C    &
+   \\
+   RH  >& RH_{inuc}   & RH_{inuc}=\mbox{\footnotesize \sf MIN} \left[~0.01(188.92+2.81 T_c +0.013336~{T_c}^2), 1.0~\right]
+   - 0.1
+   \\
    q_i <& q_{inuc}    & q_{inuc} = \frac{m_0}{\rho} ~\mbox{\footnotesize \sf MIN} \left[~0.01~\exp (-0.6~T_c), 1
-   \times 10^5~\right]  
-   \label{eq:mic_um_hetnuc}
+   \times 10^5~\right]
    \end{aligned}
 
 where :math:`m_0=1 \times 10^{-12}` represents the mass of a single,
@@ -3212,15 +3247,19 @@ equation. This gives :raw-latex:`\citep{Rogers:Yau:1989}`:
 
 .. math::
 
-   \begin{aligned}
    c =  \frac{  {\left(1 - \left( {\frac{1}{r_a}} \right)^2 \right) }^{ \frac{1}{2}} }
              {\mathrm{log} \left( r_a + {\left( {r_a}^2 -1 \right)}^{\frac{1}{2}} \right)},
-             ~~r_a > 1 (prolates) \\
-   c = 1,~~r_a = 1 (spherical) \\
+             ~~r_a > 1 (prolates)
+
+.. math::
+
+   c = 1,~~r_a = 1 (spherical)
+
+.. math::
+
    c = \frac{ {\left( 1 - {r_a}^2 \right)}^{\frac{1}{2}}}
             {\mathrm{sin}^{-1} \left( {\left( 1 - {r_a}^2 \right)}^{\frac{1}{2}} \right) },
-             ~~r_a < 1 (oblates) 
-   \end{aligned}
+             ~~r_a < 1 (oblates)
 
 where :math:`r_a` is the axial ratio [3]_
 
@@ -3314,12 +3353,16 @@ kg kg\ :math:`^{-1}`) and :math:`f_{HM}` is a function of temperature
 
 .. math::
 
-   \begin{aligned}
-   f_{HM} = \frac{1}{HM_{norm}} \left( 1 - \exp \left( \frac{ T - T_{HM2} }{T_{HM3}} 
-   \right) \right),~~T_{HM2}>T>T_{HM1} \\
-   f_{HM} = \exp \left( \frac{ T - T_{HM1} }{T_{HM3}} \right), ~~T<T_{HM1} \\
+   f_{HM} = \frac{1}{HM_{norm}} \left( 1 - \exp \left( \frac{ T - T_{HM2} }{T_{HM3}}
+   \right) \right),~~T_{HM2}>T>T_{HM1}
+
+.. math::
+
+   f_{HM} = \exp \left( \frac{ T - T_{HM1} }{T_{HM3}} \right), ~~T<T_{HM1}
+
+.. math::
+
    f_{HM} = 0, ~~T>T_{HM2}
-   \end{aligned}
 
 where
 
@@ -3369,15 +3412,14 @@ parametrized as a double integration, to take into account the spectrum
 of sizes of particles of each category. The general result for the rate
 that mass from category :math:`y` is collected by category :math:`x` is
 
-.. math::
+.. math:: :label: eq:mic_pyacx1
 
    \begin{aligned}
-    P_{YACX}=\frac{1}{\rho}
-             \int_0^\infty\int_0^\infty E_{xy}\frac{\pi}{4}(D_x+D_y)^2
-            | V_x(D_x) - V_y(D_y)|
-                            \nonumber \\
-             \hspace{0.5cm}M_x(D_x) n_x(D_x) n_y(D_y) dD_x dD_y
-   \label{eq:mic_pyacx1}
+   P_{YACX}=\frac{1}{\rho}
+            \int_0^\infty\int_0^\infty E_{xy}\frac{\pi}{4}(D_x+D_y)^2
+           | V_x(D_x) - V_y(D_y)|
+   \\
+            \hspace{0.5cm}M_x(D_x) n_x(D_x) n_y(D_y) dD_x dD_y
    \end{aligned}
 
 Where :math:`E_{xy}` is a collection efficiency defined following
@@ -3415,34 +3457,34 @@ parameters have been defined earlier in section
 `5 <#tab:mic_consts_fallspeed>`__.) Specifically now for the collection
 of ice by snow we have:
 
-.. math::
+.. math:: :label: eq:mic_pyacx2
 
    \begin{aligned}
-    P_{SACI}&=&\frac{\pi}{4\rho} E_{xy}a_a n_{0c}\mbox{\footnotesize \sf MAX} \left[(V_a+V_c)/8,| V_a -V_c |\right]  
-             \nonumber \\
-            & &\times\int_0^\infty\int_0^\infty (D_a+D_c)^2
-             D_a^{b_a}n_a(D_a) n_c(D_c) dD_a dD_c
-             \nonumber \\[0.5cm]
-              &=&\frac{\pi}{4\rho}E_{xy}a_a n_{0c}\mbox{\footnotesize \sf MAX} \left[(V_a+V_c)/8,| V_a -V_c |\right]  
-             \nonumber \\
-              & & \times  \int_0^\infty D_a^{b_a} n_a(D_a)
-                 \left(D_a^2\frac{\Gamma(1+\alpha_c)}{\lambda_c^{(1+\alpha_c)}}
-                      +2D_a\frac{\Gamma(2+\alpha_c)}{\lambda_c^{(2+\alpha_c)}}
-                   +\frac{\Gamma(3+\alpha_c)}{\lambda_c^{(3+\alpha_c)}}\right)dD_a
-             \nonumber \\[0.5cm]
-             &=&\frac{\pi}{4\rho}E_{xy}a_an_{0a}n_{0c}
-                                     \mbox{\footnotesize \sf MAX} \left[(V_a+V_c)/8,| V_a -V_c |\right]  
-             \nonumber \\
-              & &\times
-              \left(\frac{\Gamma(1+\alpha_c)}{\lambda_c^{(1+\alpha_c)}}
-                    \frac{\Gamma(3+\alpha_a+b_a)}{\lambda_a^{(3+\alpha_a+b_a)}}
-                  +2\frac{\Gamma(2+\alpha_c)}{\lambda_c^{(2+\alpha_c)}}
-                    \frac{\Gamma(2+\alpha_a+b_a)}{\lambda_a^{(2+\alpha_a+b_a)}}
-    \right. \nonumber \\ & & \left. \hspace{1.5cm}
-                   +\frac{\Gamma(3+\alpha_c)}{\lambda_c^{(3+\alpha_c)}}
-                    \frac{\Gamma(1+\alpha_a+b_a)}{\lambda_a^{(1+\alpha_a+b_a)}}
-                                                              \right)
-   \label{eq:mic_pyacx2}
+   P_{SACI}&=&\frac{\pi}{4\rho} E_{xy}a_a n_{0c}\mbox{\footnotesize \sf MAX} \left[(V_a+V_c)/8,| V_a -V_c |\right]
+   \\
+           & &\times\int_0^\infty\int_0^\infty (D_a+D_c)^2
+            D_a^{b_a}n_a(D_a) n_c(D_c) dD_a dD_c
+   \\[0.5cm]
+             &=&\frac{\pi}{4\rho}E_{xy}a_a n_{0c}\mbox{\footnotesize \sf MAX} \left[(V_a+V_c)/8,| V_a -V_c |\right]
+   \\
+             & & \times  \int_0^\infty D_a^{b_a} n_a(D_a)
+                \left(D_a^2\frac{\Gamma(1+\alpha_c)}{\lambda_c^{(1+\alpha_c)}}
+                     +2D_a\frac{\Gamma(2+\alpha_c)}{\lambda_c^{(2+\alpha_c)}}
+                  +\frac{\Gamma(3+\alpha_c)}{\lambda_c^{(3+\alpha_c)}}\right)dD_a
+   \\[0.5cm]
+            &=&\frac{\pi}{4\rho}E_{xy}a_an_{0a}n_{0c}
+                                    \mbox{\footnotesize \sf MAX} \left[(V_a+V_c)/8,| V_a -V_c |\right]
+   \\
+             & &\times
+             \left(\frac{\Gamma(1+\alpha_c)}{\lambda_c^{(1+\alpha_c)}}
+                   \frac{\Gamma(3+\alpha_a+b_a)}{\lambda_a^{(3+\alpha_a+b_a)}}
+                 +2\frac{\Gamma(2+\alpha_c)}{\lambda_c^{(2+\alpha_c)}}
+                   \frac{\Gamma(2+\alpha_a+b_a)}{\lambda_a^{(2+\alpha_a+b_a)}}
+   \right.
+   \\ & & \left. \hspace{1.5cm}
+                  +\frac{\Gamma(3+\alpha_c)}{\lambda_c^{(3+\alpha_c)}}
+                   \frac{\Gamma(1+\alpha_a+b_a)}{\lambda_a^{(1+\alpha_a+b_a)}}
+                                                             \right)
    \end{aligned}
 
 .. _`sec:PSACW`:
@@ -3615,23 +3657,23 @@ particle fall speed, following equation
 Equation `[eq:mic_pyacx2] <#eq:mic_pyacx2>`__ is then modified as
 follows:
 
-.. math::
+.. math:: :label: eq:pgacs_psd
 
    \begin{aligned}
    P_{GACS}  &=&\frac{\pi}{4\rho}E_{xy}a_gn_{0g}
-                                     \mbox{\footnotesize \sf MAX} \left[(\overline{v_g}+\overline{v_a})/8,| 
-   \overline{v_g} -\overline{v_a} |\right]  
-             \nonumber \\
+                                     \mbox{\footnotesize \sf MAX} \left[(\overline{v_g}+\overline{v_a})/8,|
+   \overline{v_g} -\overline{v_a} |\right]
+   \\
               & &\times
               \left(\mathcal{M}_0
                     \frac{\Gamma(3+\alpha_g+b_g)}{\lambda_g^{(3+\alpha_g+b_g)}}
                   +2\mathcal{M}_1
                     \frac{\Gamma(2+\alpha_g+b_g)}{\lambda_g^{(2+\alpha_g+b_g)}}
-    \right. \nonumber \\ & & \left. \hspace{1.5cm}
+    \right.
+   \\ & & \left. \hspace{1.5cm}
                    +\mathcal{M}_2
                     \frac{\Gamma(1+\alpha_g+b_g)}{\lambda_g^{(1+\alpha_g+b_g)}}
                                                               \right)
-   \label{eq:pgacs_psd}
    \end{aligned}
 
 **With the increased graupel production option and the improved graupel
@@ -3672,21 +3714,22 @@ is used and the collision and collection coefficients are now assumed to
 be 1. Integrating leads to terms in :math:`\lambda_R` and
 :math:`\lambda_a` which can then be solved:
 
-.. math::
+.. math:: :label: eq:psacr
 
    \begin{aligned}
-   P_{SACR}& =& 
-   \frac { \pi^{2} \rho_w f_V } {24 \rho } n_{aa} \lambda_a^{n_{ba}} n_{aR} 
-   \lambda_R^{n_{bR}} \nonumber \\
+   P_{SACR}& =&
+   \frac { \pi^{2} \rho_w f_V } {24 \rho } n_{aa} \lambda_a^{n_{ba}} n_{aR}
+   \lambda_R^{n_{bR}}
+   \\
    & & \times
-   \left(\frac{\Gamma(3+\alpha_a) \Gamma(4+\alpha_R)} 
+   \left(\frac{\Gamma(3+\alpha_a) \Gamma(4+\alpha_R)}
    {\lambda_a^{3+\alpha_a} \lambda_R^{4+\alpha_R}}
-   + \frac{ 2 \Gamma(2+\alpha_a) \Gamma(5+\alpha_R) } 
-   {\lambda_a^{2+\alpha_a} \lambda_R^{5+\alpha_R}} \right. \nonumber \\
-   & & \left. \hspace{1.5cm}+ \frac{\Gamma(1+\alpha_a) 
+   + \frac{ 2 \Gamma(2+\alpha_a) \Gamma(5+\alpha_R) }
+   {\lambda_a^{2+\alpha_a} \lambda_R^{5+\alpha_R}} \right.
+   \\
+   & & \left. \hspace{1.5cm}+ \frac{\Gamma(1+\alpha_a)
    \Gamma(6+\alpha_R)} { \lambda_a^{1+\alpha_a} \lambda_R^{6+\alpha_R} }
    \right)
-   \label{eq:psacr}
    \end{aligned}
 
 Note that equation `[eq:psacr] <#eq:psacr>`__ is formulated slightly
@@ -3735,18 +3778,17 @@ aggregate fall speed, following equation
 
 Equation `[eq:psacr] <#eq:psacr>`__ can be modified as follows
 
-.. math::
+.. math:: :label: eq:psacr_psd
 
    \begin{aligned}
-   P_{SACR}& =& \frac { \pi^{2} \rho_w f_V } {24 \rho }  n_{aR} \lambda_R^{n_{bR}} 
-   \nonumber \\
+   P_{SACR}& =& \frac { \pi^{2} \rho_w f_V } {24 \rho }  n_{aR} \lambda_R^{n_{bR}}
+   \\
    & & \times
    \left(\frac{\mathcal{M}_2 \Gamma(4+\alpha_R)} {\lambda_R^{4+\alpha_R}}
-   + \frac{ 2 \mathcal{M}_1 \Gamma(5+\alpha_R) } {\lambda_R^{5+\alpha_R}} \right. 
-   \nonumber \\
+   + \frac{ 2 \mathcal{M}_1 \Gamma(5+\alpha_R) } {\lambda_R^{5+\alpha_R}} \right.
+   \\
    & & \left. \hspace{1.5cm}+ \frac{\mathcal{M}_0 \Gamma(6+\alpha_R)}
    {\lambda_R^{6+\alpha_R} } \right)
-   \label{eq:psacr_psd}
    \end{aligned}
 
 where, as usual the moments replace the aggregate terms.
@@ -3759,29 +3801,31 @@ the mean diameters of each of the species involved in the collision.
 
 For rain, we can derive the mass-mean diameter as
 
-.. math::
+.. math:: :label: rain:mmd
 
    \begin{aligned}
-   \label{rain:mmd}
-   \bar{D_R}& = & \frac{\int_0^{\infty} n_{aR} \lambda_R^{n_{bR}} \frac{\pi}{6} \rho_w D_R^3 
+   \bar{D_R}& = & \frac{\int_0^{\infty} n_{aR} \lambda_R^{n_{bR}} \frac{\pi}{6} \rho_w D_R^3
    \exp(-\lambda_R D) D dD }
-   {\int_0^{\infty} n_{aR} \lambda_R^{n_{bR}} \frac{\pi}{6} \rho_w D_R^3 
-   \exp(-\lambda_R D) dD } \nonumber \\
+   {\int_0^{\infty} n_{aR} \lambda_R^{n_{bR}} \frac{\pi}{6} \rho_w D_R^3
+   \exp(-\lambda_R D) dD }
+   \\
             & = & \frac{\int_0^{\infty} D^4 \exp(-\lambda D) dD }
-                       {\int_0^{\infty} D^3 \exp(-\lambda D) dD } \nonumber \\
-            & = & \frac{\Gamma(5)}{\lambda_R^5} \frac{\lambda_R^4}{\Gamma(4)} \nonumber \\
-            & = & \frac{4}{\lambda_R} 
+                       {\int_0^{\infty} D^3 \exp(-\lambda D) dD }
+   \\
+            & = & \frac{\Gamma(5)}{\lambda_R^5} \frac{\lambda_R^4}{\Gamma(4)}
+   \\
+            & = & \frac{4}{\lambda_R}
    \end{aligned}
 
 The value of :math:`\lambda_R` can then be derived as in section
 `4.6 <#mr2psd>`__. A similar approach can be used to define
 4.0/:math:`\lambda_R` for aggregates. This is simply as follows
 
-.. math::
+.. math:: :label: ice:mmd
 
    \begin{aligned}
-   \label{ice:mmd}
-   \bar{D_a}& = & \frac{4}{\lambda_a}\nonumber \\
+   \bar{D_a}& = & \frac{4}{\lambda_a}
+   \\
             & = & \frac{\mathcal{M}_{ba + 1}}{\mathcal{M}_{ba}}
    \end{aligned}
 
@@ -4018,9 +4062,12 @@ where
 .. math::
 
    \begin{aligned}
-   E(f_{cl},f_R,\rho)=\qquad\qquad\qquad\qquad\nonumber\\
-   (1+f_{cl}^2)^{-1.15/2}(1+f_{cl}^2)^{1.15^2/2}\nonumber\\
-   \times (1+f_R^2)^{-1.15/2}(1+f_R^2)^{1.15^2/2}\nonumber\\
+   E(f_{cl},f_R,\rho)=\qquad\qquad\qquad\qquad
+   \\
+   (1+f_{cl}^2)^{-1.15/2}(1+f_{cl}^2)^{1.15^2/2}
+   \\
+   \times (1+f_R^2)^{-1.15/2}(1+f_R^2)^{1.15^2/2}
+   \\
    \times \exp\left(\rho 1.15^2 \sqrt{\ln(1+f_{cl}^2)\ln(1+f_R^2)}\right),
    \end{aligned}
 
@@ -4094,13 +4141,12 @@ This can be inverted for a threshold radius of 20 :math:`\mu`\ m and a
 threshold concentration of 1000 m\ :math:`^{-3}` using the following
 numerical approximation (from Andy Jones):
 
-.. math::
+.. math:: :label: eq:jones_nd
 
    \begin{aligned}
-   \label{eq:jones_nd}
-   q_{cl0} &=& \frac{1}{\rho} \left(6.20\times10^{-31} n_d^3 - 5.53\times10^{-22} n_d^2 
-   \right. 
-   \nonumber \\
+   q_{cl0} &=& \frac{1}{\rho} \left(6.20\times10^{-31} n_d^3 - 5.53\times10^{-22} n_d^2
+   \right.
+   \\
    & & \left. + ~4.54\times10^{-13} n_d + 3.71\times10^{-6} - \frac{7.59}{n_d} \right)
    \end{aligned}
 
@@ -4953,7 +4999,8 @@ of its volume and density:
 .. math::
 
    \begin{aligned}
-   m(D)&=&\frac{4}{3}\pi r^{3} \rho_{w}\nonumber \\
+   m(D)&=&\frac{4}{3}\pi r^{3} \rho_{w}
+   \\
    &=&\frac{\pi}{6} D^{3} \rho_{w}
    \end{aligned}
 
@@ -4973,8 +5020,10 @@ for :math:`n(D)`, :math:`m(D)` and :math:`v(D)` in eqn.
 .. math::
 
    \begin{aligned}
-   R&=&\int_{0}^{\infty} x_{1} \lambda^{x_{2}} D^{x_{4}} exp(- \lambda D) \frac{\pi}{6} D^{3} \rho_{w} c_{R} D^{d_{R}} \ dD \nonumber \\ 
-   &=& x_{1} \lambda^{x_{2}} \frac{\pi}{6} \rho_{w} c_{R} \int_{0}^{\infty}  D^{x_{4}} exp(- \lambda D) D^{3} D^{d_{R}} \ dD \nonumber \\
+   R&=&\int_{0}^{\infty} x_{1} \lambda^{x_{2}} D^{x_{4}} exp(- \lambda D) \frac{\pi}{6} D^{3} \rho_{w} c_{R} D^{d_{R}} \ dD
+   \\
+   &=& x_{1} \lambda^{x_{2}} \frac{\pi}{6} \rho_{w} c_{R} \int_{0}^{\infty}  D^{x_{4}} exp(- \lambda D) D^{3} D^{d_{R}} \ dD
+   \\
    &=& x_{1} \lambda^{x_{2}} \frac{\pi}{6} \rho_{w} c_{R} \int_{0}^{\infty}  D^{(x_{4}+3+d_{R})} exp(- \lambda D) \ dD
    \end{aligned}
 
@@ -4988,8 +5037,9 @@ to write
 .. math::
 
    \begin{aligned}
-   R&=&x_{1} \lambda^{x_{2}} \frac{\pi}{6} \rho_{w} c_{R} 
-   \frac{\Gamma(x_{4}+3+d_{R}+1)}{\lambda^{(x_{4}+3+d_{R}+1)}} \nonumber \\
+   R&=&x_{1} \lambda^{x_{2}} \frac{\pi}{6} \rho_{w} c_{R}
+   \frac{\Gamma(x_{4}+3+d_{R}+1)}{\lambda^{(x_{4}+3+d_{R}+1)}}
+   \\
    &=&x_{1} \frac{\pi}{6} \rho_{w} c_{R} \frac{\Gamma(x_{4}+4+d_{R})}{\lambda^{(x_{4}+4+d_{R}-x_{2})}}
    \end{aligned}
 
