@@ -42,7 +42,7 @@ the UM.
 
 Several options for higher order closures are available in the 1A
 version of the UM boundary layer scheme and these are documented
-separately in .
+separately in :umdp:'025'.
 
 .. _sec_closure:
 
@@ -1942,16 +1942,16 @@ The blended scheme
 ==================
 
 For high resolution simulations, the UM has a Smagorinsky-type subgrid
-turbulence scheme, described in . However, this scheme is only truly
-applicable for horizontal grid-lengths of order :math:`10` m, and any
-real-world simulation run at lower resolution than this will inevitably
-have unresolved scales somewhere in the domain. Rather than force the
-user to make an ad-hoc decision about the scales they are interested in,
-and thus grid-length at which to switch from using the boundary-layer
-parametrization (1D BL) to the subgrid turbulence scheme (3D Smag), a
-method for blending the two parametrizations has been developed. This
-blend is regime and scale dependent, allowing a single parametrization
-to be used across resolutions, including the completely
+turbulence scheme, described in :umdp:'028'. However, this scheme is
+only truly applicable for horizontal grid-lengths of order :math:`10` m,
+and any real-world simulation run at lower resolution than this will
+inevitably have unresolved scales somewhere in the domain. Rather than
+force the user to make an ad-hoc decision about the scales they are
+interested in, and thus grid-length at which to switch from using the
+boundary-layer parametrization (1D BL) to the subgrid turbulence scheme
+(3D Smag), a method for blending the two parametrizations has been
+developed. This blend is regime and scale dependent, allowing a single
+parametrization to be used across resolutions, including the completely
 unresolved/resolved extremes. This blending process is described in
 `Boutle et al. (2014)`_, which gives some examples of its use
 and comparison to simulations using either the 1D BL or 3D Smag schemes
@@ -2183,14 +2183,15 @@ in :eq:`zturb_dsc`.
 For current operational convection-permitting model grid sizes (1.5 km
 in the UKV), the representation of cumulus convection remains a
 challenge. One option is to include a grey-zone convection
-parametrization, described in the documentation of that scheme (see ).
-Tests in the UKV, though, showed some detriment to the spin-up of
-resolved scale convection (as well as somewhat poor discrimination of
-precipitating versus non-precipitating parametrized convection) that led
-to the development of an alternative strategy, namely to abandon the
-blended turbulence scheme when pure cumulus convection was diagnosed and
-leave the representation of cumulus entirely to the resolved scales.
-This option (``blending_option``\ :math:`=`\ 2) is also now discouraged.
+parametrization, described in the documentation of that scheme (see
+:umdp:'027'). Tests in the UKV, though, showed some detriment to the
+spin-up of resolved scale convection (as well as somewhat poor
+discrimination of precipitating versus non-precipitating parametrized
+convection) that led to the development of an alternative strategy,
+namely to abandon the blended turbulence scheme when pure cumulus
+convection was diagnosed and leave the representation of cumulus
+entirely to the resolved scales. This option
+(``blending_option``\ :math:`=`\ 2) is also now discouraged.
 
 .. _sec_entr:
 
@@ -6132,12 +6133,13 @@ budget to give
 where :math:`C_{e}=A_{2N}^{3/2}`. Initial tests found that the MONC
 value of :math:`A_{2N}=0.23` gave rather large values of :math:`e_{loc}`
 and so :math:`C_e=0.41` is used. Note that this is an optional value
-used in the higher order closure scheme (see section 2.8.5 of ). It
-could also be worth testing the suggested parametrization in (2.300)
-there, of :math:`C_e=0.19+0.74 \lambda/\Delta z` but this has not yet
-been attempted. The total non-local TKE is computed by adding the TKE
-from each non-local component, as is done for the diffusion
-coefficients, i.e.,
+used in the higher order closure scheme (see section 2.8.5 of
+:umdp:'025'). It could also be worth testing the suggested
+parametrization in (2.300) there, of
+:math:`C_e=0.19+0.74 \lambda/\Delta z` but this has not yet been
+attempted. The total non-local TKE is computed by adding the TKE from
+each non-local component, as is done for the diffusion coefficients,
+i.e.,
 
 .. math:: :label: tke_diag_nl
 
@@ -6176,7 +6178,7 @@ also corrects a bug in the level indexing of this diagnostic when passed
 to UKCA.
 
 Note that additional diagnostics of the scalar variances are also made
-and those are documented in .
+and those are documented in :umdp:'029'.
 
 .. _app_neutwind:
 
