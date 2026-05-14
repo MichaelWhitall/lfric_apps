@@ -6253,7 +6253,7 @@ included in :math:`\zeta_r` and :math:`\tilde{\alpha_t}` (in
 where there is no buoyancy reversal (:math:`D \leq 0`) and the feedback
 seen in LES of stratocumulus :raw-latex:`\cite[]{lock98}` with
 significant buoyancy reversal
-(:math:`D \raisebox{-.4ex}{$\ \stackrel{>}{{\scriptstyle \sim}} \ $}0.1`).
+(:math:`D \gtrsim 0.1`).
 Furthermore, the LES of `Lock (2009)`_ indicated the
 presence of cumulus penetrating up into stratocumulus could be
 sufficient to enhance the feedback for small :math:`D`. Thus the option
