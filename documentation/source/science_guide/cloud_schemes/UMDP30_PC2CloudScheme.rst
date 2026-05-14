@@ -93,7 +93,7 @@ valid structures to use in this respect.*
 
 - One may diagnose cloud fractions and condensate contents from
   knowledge of gridbox mean variables. This forms the basis of the
-  `Smith (1990)`_ scheme, which is described in .
+  `Smith (1990)`_ scheme, which is described in :umdp:'029'.
 
 - A mixed scheme, such as `Sundqvist (1978)`_ uses a
   prediction of condensate contents, but a diagnostic cloud fraction.
@@ -310,8 +310,8 @@ three-dimensional distribution in terms of three separate variables
 :math:`q_T`, :math:`T_L` and :math:`p`. This is the method used by
 `Smith (1990)`_, where a symmetric triangular distribution
 function is used. For further information on the
-`Smith (1990)`_ scheme, please refer to . Physics and
-dynamics schemes hence only need to provide increments to
+`Smith (1990)`_ scheme, please refer to :umdp:'029'. Physics
+and dynamics schemes hence only need to provide increments to
 :math:`\overline{q_T}` and :math:`\overline{T_L}`, provided that a
 diagnostic scheme (such as `Smith (1990)`_) is called at
 some point in the timestep to partition :math:`\overline{q_T}` into
@@ -768,8 +768,8 @@ choose the dry-bulb temperature :math:`\overline{T}`, and not the
 liquid-temperature (:math:`\overline{T_L}`), since :math:`q_{sat}`
 locally is defined by the local dry-bulb temperature (:math:`T`) and we
 need to consider *changes* in the condensate. This has been confirmed
-using simulations using a single gridbox model. contains a longer
-discussion of this issue, but we note here that the
+using simulations using a single gridbox model. :umdp:'029' contains a
+longer discussion of this issue, but we note here that the
 `Smith (1990)`_ scheme performs best when it does not use
 :math:`T` to calculate :math:`\alpha` but the gradient of the chord
 between :math:`(\overline{T_L}, q_{sat}(\overline{T_L}))` and
@@ -1011,8 +1011,8 @@ discussion of an
 equivalent width in the deposition / sublimation relationship for ice
 cloud). We still choose to define :math:`b_s` in terms of a critical
 relative humidity parameter, :math:`RH_{crit}`. Like the
-`Smith (1990)`_ scheme (see ), we define the value of
-:math:`b_s` as
+`Smith (1990)`_ scheme (see :umdp:'029'), we define the
+value of :math:`b_s` as
 
 .. math:: :label: eq:bs
 
@@ -1097,8 +1097,9 @@ value :math:`(2-RH_t)` (which is equivalent to the replacing of
 respectively.
 
 We then solve for the initiated cloud fraction :math:`C_l'`, using the
-similar methods as described in , except that we allow the solution to
-vary with the PDF shape :math:`n`. We first write :math:`Q_N` as
+similar methods as described in :umdp:'029', except that we allow the
+solution to vary with the PDF shape :math:`n`. We first write
+:math:`Q_N` as
 
 .. math:: :label: eq:qn_def
 
@@ -2152,7 +2153,8 @@ Large-scale precipitation
 Precipitation processes have a large effect on cloud fractions. Here we
 present the simple physical models that are applied to the transfer
 terms included in the large-scale precipitation scheme. They are also
-presented within the large-scale precipitation documentation ().
+presented within the large-scale precipitation documentation
+(:umdp:'026').
 
 The basis of the physical model is that microphysical transfer processes
 can be calculated separately in different partitions of the model cloud
@@ -2162,10 +2164,10 @@ consider here separately each process that is modelled in the
 large-scale precipitation scheme. The changes in
 :math:`\overline{q_{cl}}`, :math:`\overline{q_{cf}}` and
 :math:`\overline{q}` remain mathematically the same as in the non-PC2
-version of the code (), we only need to introduce calculations for the
-changes in cloud fractions. We will see that many of these changes can
-be well modelled by assuming no change to the cloud fractions, and the
-others by using simple assumptions.
+version of the code (:umdp:'026'), we only need to introduce
+calculations for the changes in cloud fractions. We will see that many
+of these changes can be well modelled by assuming no change to the cloud
+fractions, and the others by using simple assumptions.
 
 Although the model may use two ice prognostic ice categories, only a
 single ice cloud fraction is stored, the assumption being that the two
@@ -2297,17 +2299,19 @@ framework (section :ref:`The 's' distribution <sec_s_dist>`). However, since
 the same instantaneous condensation framework. It would be useful to
 investigate in the future whether the two descriptions of the moisture
 variability could be brought together. Because of its importance, we
-describe the method below, although we note it is also described in .
+describe the method below, although we note it is also described in
+:umdp:'026'.
 
 We can calculate the local rate of change of :math:`q_{cf}`, given local
 :math:`T` and :math:`q` etc. using the standard microphysical growth
-equations (see ). However, it is critical to know the way in which the
-moisture is correlated with the ice in the gridbox. We will assume there
-exists a distribution of vapour in the gridbox. We know that the regions
-where liquid cloud exists must be saturated with respect to liquid
-water, hence we need only consider the part of the gridbox that does not
-have liquid water present. The average value, :math:`q_a`, of :math:`q`
-within the liquid-free part of the gridbox is thus
+equations (see :umdp:'026'). However, it is critical to know the way in
+which the moisture is correlated with the ice in the gridbox. We will
+assume there exists a distribution of vapour in the gridbox. We know
+that the regions where liquid cloud exists must be saturated with
+respect to liquid water, hence we need only consider the part of the
+gridbox that does not have liquid water present. The average value,
+:math:`q_a`, of :math:`q` within the liquid-free part of the gridbox is
+thus
 
 .. math:: :label: eq:qa
 
@@ -2556,7 +2560,7 @@ use the values at the start of the microphysics (this includes the
 values of :math:`C_i` used in the calculation of 'in-cloud' water
 contents above. However, we do update the cloud fractions themselves
 sequentially. We also recalculate after each process the overlaps
-between the rain fraction (see ) and the cloud fractions.
+between the rain fraction (see :umdp:'026') and the cloud fractions.
 
 There is also a final set of checks that :math:`C_l` and :math:`C_i` lie
 between 0 and 1 and that :math:`C_t` is bounded between
@@ -3535,8 +3539,8 @@ discretized form of :eq:`eq:chimassflux`, setting
 
 where the initial parcel value :math:`{\chi}_{\mathrm{i,cb}}^{\mathrm{P}}` may
 be chosen to produce a fixed increment or place a closure condition on
-the cloud base flux. In fact, the convection equations (see ) differ
-from :eq:`eq:chidisck` and
+the cloud base flux. In fact, the convection equations (see :umdp:'027')
+differ from :eq:`eq:chidisck` and
 :eq:`eq:chidisccb` because a different discretization is
 used, but the principle is unaltered.
 
@@ -3602,8 +3606,8 @@ gradient equations based upon :eq:`eq:gradchipar`
    l_{\mathrm{ }}^{\mathrm{E}} } \right)
    - {\overline{Q}}_{\mathrm{par}} + PPN
 
-The final calculation of rates in the current condensation scheme (,
-section 10) assumes a further condensation term,
+The final calculation of rates in the current condensation scheme
+(:umdp:'027', section 10) assumes a further condensation term,
 :math:`{\overline{Q}}_{\mathrm{reset}}`, which acts to make the net rate of
 change of condensate equal zero, and a final assumption is made that the
 environment values of condensate remain zero (and also that
@@ -3709,7 +3713,8 @@ condensate is calculated as
    \frac{{\overline{Q}}_{\mathrm{f, par}}}{M^{\mathrm{P}}} -
    \frac{SNOW}{M^{\mathrm{P}}}
 
-Following , equations :eq:`eq:dbydpmassflux`,
+Following :umdp:'027', equations
+:eq:`eq:dbydpmassflux`,
 :eq:`eq:vertparl` and :eq:`eq:vertparf`
 are discretized:
 
@@ -3899,8 +3904,8 @@ based upon eqn :eq:`eq:basiclold`:
    l_{\mathrm{f}}^{\mathrm{E}}(\mathrm{k}) } \right)-
    {\overline{Q}}_{\mathrm{f, reset}}
 
-Note that, as a side-effect, the environment equations for potential
-temperature and specific humidity are also altered because the
+Note that, as a side-effect, the :umdp:'027' environment equations for
+potential temperature and specific humidity are also altered because the
 condensate is no longer re-evaporated at the end
 (:math:`{\overline{Q}}_{\rm{l, reset}} = 0
 = {\overline{Q}}_{\rm{f, reset}}`):
@@ -4395,18 +4400,19 @@ A prognostic dust approach is implemented in the micro-physics scheme
 under large-sale-precipitation where by the heterogeneous nucleation
 temperature can be defined to vary three dimensionally globally as an
 arc-tangent function of the mineral dust distribution in the model
-(documented in ). By default, both liquid and ice are detrained
-simultaneously at the same height, and the fraction of condensate that
-is ice linearly ramps as a function of temperature. i.e. condensate is
-assumed to be all-liquid when T is greater than one tuneable threshold;
-all-ice when T is less than another tuneable threshold, and vary
-linearly in-between (the threshold values are given by starticeTkelvin
-and alliceTdegC in the UM cloud-scheme namelist. The new heterogeneous
-nucleation temperatures calculated in the large-scale-precipitation are
-passed to the convection scheme and are used as the above detrainment
-temperature thresholds by maintaining a similar linear ramp. For e.g.,
-condensate is assumed to be all-liquid for T :math:`\geq` :math:`tnuc_n`
-and all-ice for T :math:`\leq` :math:`tnuc_n` - 10.0
+(documented in :umdp:'026'). By default, both liquid and ice are
+detrained simultaneously at the same height, and the fraction of
+condensate that is ice linearly ramps as a function of temperature. i.e.
+condensate is assumed to be all-liquid when T is greater than one
+tuneable threshold; all-ice when T is less than another tuneable
+threshold, and vary linearly in-between (the threshold values are given
+by starticeTkelvin and alliceTdegC in the UM cloud-scheme namelist. The
+new heterogeneous nucleation temperatures calculated in the
+large-scale-precipitation are passed to the convection scheme and are
+used as the above detrainment temperature thresholds by maintaining a
+similar linear ramp. For e.g., condensate is assumed to be all-liquid
+for T :math:`\geq` :math:`tnuc_n` and all-ice for T :math:`\leq`
+:math:`tnuc_n` - 10.0
 
 .. _sec_conv_input_profs:
 
@@ -5255,10 +5261,10 @@ Area cloud fraction
 
 Two area cloud fraction parametrizations are available for use with PC2.
 
-The area cloud fraction of Cusack (documented in ) has been adapted by
-`Boutle and Morcrette (2010)`_ so it can be used with PC2 (and
-is available from the UMUI as the "Cusack" option from version 7.6
-onwards). This method aims to reproduce some of the detail of the
+The area cloud fraction of Cusack (documented in :umdp:'029') has been
+adapted by `Boutle and Morcrette (2010)`_ so it can be used with
+PC2 (and is available from the UMUI as the "Cusack" option from version
+7.6 onwards). This method aims to reproduce some of the detail of the
 thermodynamic profile lost due to the coarseness of the grid. The
 interpolation/extrapolation technique is used prior to PC2 initiation
 (which is then called with three times as many levels) and it is used,
