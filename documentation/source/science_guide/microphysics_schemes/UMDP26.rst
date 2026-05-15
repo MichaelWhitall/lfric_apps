@@ -531,14 +531,14 @@ constants for the large-scale precipitation scheme.
      - 2
      - 2
      - 0.0
-     - :raw -latex:`\cite{Abel:Boutle:2012}`
+     - :raw-latex:`\cite{Abel:Boutle:2012}`
 
    * - Ag gregates
      - :math:`2.0 \times10^{6}F_{n_{ax}}(T_c)`
      - 0
      - 0
      - 0.0
-     - :raw -latex:`\cite{Cox:1988}`
+     - :raw-latex:`\cite{Cox:1988}`
 
    * - Crystals
      - :math:`40.0 \times10^{6}F_{n_{ax}}(T_c)`
@@ -552,7 +552,7 @@ constants for the large-scale precipitation scheme.
      - :math:`-4`
      - :math:`0`
      - 2.5
-     - :raw-lat ex:`\cite{Ferrier:1994}`
+     - :raw-latex:`\cite{Ferrier:1994}`
 
    * - Graupel (ii)
      - :math:`7.9 \times10^{9}`
@@ -877,7 +877,7 @@ where parameters are given in tables `5 <#tab:mic_consts_fallspeed>`__,
      - 0.734
      - 0.4
      - 0.0
-     - :raw-lat ex:`\cite{Ferrier:1994}`
+     - :raw-latex:`\cite{Ferrier:1994}`
 
 .. list-table:: Constants used in the calculation of ice crystal and aggregate fall speed relationships. Graupel, like rain is assumed to be spherical; hence it is not possible to set values for the constants in this table for these quantities.
    :name: tab:mic_consts_fallspeed2
@@ -1100,7 +1100,7 @@ microphysical transfer rates to be solved easily.
    * - Crystals
      - 0.587
      - 2.45
-     - Similar to table 1 of :raw-late x:`\cite{Mitchell:1996}`
+     - Similar to table 1 of :raw-latex:`\cite{Mitchell:1996}`
 
 .. _`sec:bf95`:
 
@@ -2691,7 +2691,7 @@ literature.
      - :math:`3.0\times 10^8~m^{-3}`
      - :math:`1.0\times 10^8~m^{-3}`
 
-   * - : raw-latex:`\cite{Bower:Choularton:1992}`
+   * - :raw-latex:`\cite{Bower:Choularton:1992}`
      - :math:`6.0\times 10^8~m^{-3}`
      - :math:`1.5\times 10^8~m^{-3}`
 
