@@ -614,19 +614,15 @@ microphysics routine the final values of :math:`q_{cfa}` and
 :math:`q_{cfc}` are added together to reform :math:`q_{cf}` which is
 then used as a single quantity in the rest of the model.
 
-.. container:: center
+.. list-table:: Parameters for the splitting of ice into crystals and aggregates.
+   :name: tab:mic_split
 
-   .. container::
-      :name: tab:mic_split
 
-      .. table:: Parameters for the splitting of ice into crystals and
-      aggregates.
+   * - :math:`T_{scaling}`
+     - 0.0384 K\ :math:`^{-1}`
 
-         =================== ===============================================
-         :math:`T_{scaling}` 0.0384 K\ :math:`^{-1}`
-         =================== ===============================================
-         :math:`q_{cf0}`     :math:`1.0 \times 10^{-4}` kg kg\ :math:`^{-1}`
-         =================== ===============================================
+   * - :math:`q_{cf0}`
+     - :math:`1.0 \times 10^{-4}` kg kg\ :math:`^{-1}`
 
 .. _`sec:field_psd`:
 
@@ -683,28 +679,75 @@ determined using the formulae
 with the values of :math:`a_z` and :math:`b_z` where :math:`z`
 represents the subscripts 1 to 10 are given in table `4 <#tab:field>`__.
 
-.. container:: center
+.. list-table:: Coefficients and exponents of moment for equations `[eq:fielda] <#eq:fielda>`__ and `[eq:fieldb] <#eq:fieldb>`__.
+   :name: tab:field
 
-   .. container::
-      :name: tab:field
 
-      .. table:: Coefficients and exponents of moment for equations
-      `[eq:fielda] <#eq:fielda>`__ and `[eq:fieldb] <#eq:fieldb>`__.
+   * - :math:`z`
+     - :math:`a_z`
+     - 
+     - :math:`b_z`
+     - 
 
-         ========= ============ ====== ============ ======
-         :math:`z` :math:`a_z`         :math:`b_z`  
-         ========= ============ ====== ============ ======
-         1         5            065339 0            476221
-         2         :math:`-`\ 0 062659 :math:`-`\ 0 015896
-         3         :math:`-`\ 3 032362 0            165977
-         4         0            029469 0            007468
-         5         :math:`-`\ 0 000285 :math:`-`\ 0 000141
-         6         0            312550 0            060366
-         7         0            000204 0            000079
-         8         0            003199 0            000594
-         9         0            000000 0            000000
-         10        :math:`-`\ 0 015951 :math:`-`\ 0 003577
-         ========= ============ ====== ============ ======
+   * - 1
+     - 5
+     - 065339
+     - 0
+     - 476221
+
+   * - 2
+     - :math:`-`\ 0
+     - 062659
+     - :math:`-`\ 0
+     - 015896
+
+   * - 3
+     - :math:`-`\ 3
+     - 032362
+     - 0
+     - 165977
+
+   * - 4
+     - 0
+     - 029469
+     - 0
+     - 007468
+
+   * - 5
+     - :math:`-`\ 0
+     - 000285
+     - :math:`-`\ 0
+     - 000141
+
+   * - 6
+     - 0
+     - 312550
+     - 0
+     - 060366
+
+   * - 7
+     - 0
+     - 000204
+     - 0
+     - 000079
+
+   * - 8
+     - 0
+     - 003199
+     - 0
+     - 000594
+
+   * - 9
+     - 0
+     - 000000
+     - 0
+     - 000000
+
+   * - 10
+     - :math:`-`\ 0
+     - 015951
+     - :math:`-`\ 0
+     - 003577
 
 .. _`sec:field_psd_gl`:
 
@@ -5520,21 +5563,25 @@ should be noted that item 275 is often entirely zero, unless there is a
 significant amount of graupel in the model simulation or the freezing
 level is close to the surface.
 
-.. container:: center
+.. list-table:: Maximum hail size diagnostics available from section 4 of the microphysics scheme.
+   :name: tab:max_hail_size
 
-   .. container::
-      :name: tab:max_hail_size
 
-      .. table:: Maximum hail size diagnostics available from section 4
-      of the microphysics scheme.
+   * - Item
+     - Description
+     - 2D/3D
 
-         ==== ======================================== =====
-         Item Description                              2D/3D
-         ==== ======================================== =====
-         275  Surface maximum predicted hail size [mm] 2D
-         276  Maximum hail size in model column [mm]   2D
-         277  Maximum hail size on model levels [mm]   3D
-         ==== ======================================== =====
+   * - 275
+     - Surface maximum predicted hail size [mm]
+     - 2D
+
+   * - 276
+     - Maximum hail size in model column [mm]
+     - 2D
+
+   * - 277
+     - Maximum hail size on model levels [mm]
+     - 3D
 
 .. [1]
    This should not be confused with the exponent of the fallspeed air
