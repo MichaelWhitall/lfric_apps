@@ -10,8 +10,6 @@ index 5b373b68..8ff32c06 100644
  
  
     * - Formulation
---- a/documentation/source/science_guide/turbulence_schemes/bl_scheme_doc.rst
-+++ b/documentation/source/science_guide/turbulence_schemes/bl_scheme_doc.rst
 @@ -6253,7 +6253,7 @@ included in :math:`\zeta_r` and :math:`\tilde{\alpha_t}` (in
  where there is no buoyancy reversal (:math:`D \leq 0`) and the feedback
  seen in LES of stratocumulus :raw-latex:`\cite[]{lock98}` with
@@ -21,8 +19,75 @@ index 5b373b68..8ff32c06 100644
  Furthermore, the LES of `Lock (2009)`_ indicated the
  presence of cumulus penetrating up into stratocumulus could be
  sufficient to enhance the feedback for small :math:`D`. Thus the option
---- a/documentation/source/science_guide/turbulence_schemes/bl_scheme_doc.rst
-+++ b/documentation/source/science_guide/turbulence_schemes/bl_scheme_doc.rst
+@@ -760,10 +760,10 @@ expected to occur) and :math:`z_{\mathrm{ \mathrm{NTML}}-1}`.
+ .. figure:: blank.svg
+    :name: fig:inv_integ
+ 
+-   Subgrid (lines) and model (symbols) fluxes of :math:`\thetal`: turbulent
+-   flux (dash-dotted, crosses), radiative flux (dashed, triangles) and total
+-   flux (solid). The shaded area illustrates the integrated turbulent flux that
+-   would be obtained were (\protect\mbox{\protect:eq:`eq:wx_std`}) used.
++   Subgrid (lines) and model (symbols) fluxes of :math:`\theta_{\ell}`:
++   turbulent flux (dash-dotted, crosses), radiative flux (dashed, triangles)
++   and total flux (solid). The shaded area illustrates the integrated turbulent
++   flux that would be obtained were :eq:`eq:wx_std` used.
+ 
+    .. list-table::
+       :align: center
+@@ -1926,9 +1926,9 @@ removed since the entrainment flux is now carried via the explicit
+ .. figure:: blank.svg
+    :name: fig:new_ksc
+ 
+-   Standard UM :math:`\khtop` (solid) and revised (dotted), both scaled by
+-   :math:`k z_h \vtopo`. An upside-down version of :math:`\khsurf` is also
+-   shown (dashed) for comparison.
++   Standard UM :math:`K_h^{\rm Sc}` (solid) and revised (dotted), both scaled
++   by :math:`k z_h V_{\rm Sc}`. An upside-down version of
++   :math:`K_h^{\rm surf}` is also shown (dashed) for comparison.
+ 
+    .. list-table::
+       :align: center
+@@ -2072,10 +2072,10 @@ turbulence scheme.
+ 
+    (a) Weighting for the 1D boundary-layer scheme as a function of
+    :math:`\Delta x/z_{\mathrm{turb}}`, showing the function of
+-   Equation~:eq:`eq-tanh` (blue solid), the equation in `Boutle et al. (2014)`_
++   Equation :eq:`eq-tanh` (blue solid), the equation in `Boutle et al. (2014)`_
+    (black solid) and the TKE partitioning of `Honnert et al. (2011)`_ (mean
+    thick dashed, 5th/95th percentiles thin dashed). (b) Schematic showing the
+-   calculation of :math:`z_{\mathrm{turb}}` used in Eq.~:eq:`eq-tanh` for a
++   calculation of :math:`z_{\mathrm{turb}}` used in Eq. :eq:`eq-tanh` for a
+    well-mixed layer (black dotted) and a decoupled cloud layer (black solid).
+ 
+    .. list-table::
+@@ -2384,10 +2384,10 @@ illustrated for a SML in :numref:`Fig. %s <fig:fluxinterp>`.
+ .. figure:: blank.svg
+    :name: fig:fluxinterp
+ 
+-   Idealised profiles of (a) :math:`\wqt` (dash-dotted line) and (b)
+-   :math:`{\mathcal{H}}` (dotted line), :math:`\wthl` (dash-dotted) and
+-   :math:`F` (dashed). The continuous lines are the turbulent fluxes on the
+-   model grid indicated by the dashed horizontal lines.
++   Idealised profiles of (a) :math:`\overline{w'q_t'}` (dash-dotted line) and
++   (b) :math:`{\mathcal{H}}` (dotted line), :math:`\overline{w'\theta_{\ell}'}`
++   (dash-dotted) and :math:`F` (dashed). The continuous lines are the turbulent
++   fluxes on the model grid indicated by the dashed horizontal lines.
+ 
+    .. list-table::
+       :align: center
+@@ -2649,9 +2649,9 @@ large-scale vertical velocity evaluated at the inversion,
+    :name: fig:rev_fluxes
+ 
+    Subgrid (lines) and model (symbols) profiles and fluxes of, top row,
+-   :math:`q_t` and, bottom row, :math:`\thetal`: turbulent fluxes (dash-dotted,
+-   crosses), subsidence fluxes (dotted, diamonds), radiative flux (dashed,
+-   triangles) and total flux (solid, squares).
++   :math:`q_t` and, bottom row, :math:`\theta_{\ell}`: turbulent fluxes
++   (dash-dotted, crosses), subsidence fluxes (dotted, diamonds), radiative flux
++   (dashed, triangles) and total flux (solid, squares).
+ 
+    .. list-table::
+       :align: center
 @@ -6520,10 +6520,10 @@ therefore zero entrainment and turbulent mixing).
  .. figure:: blank.svg
     :name: fig:dradts
