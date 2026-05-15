@@ -6520,10 +6520,10 @@ therefore zero entrainment and turbulent mixing).
 .. figure:: blank.svg
    :name: fig:dradts
 
-   Time series from LES of :math:`\Delta_\radf` (solid),
-   :math:`\Delta_\radf^{LW}` (dotted), :math:`-\Delta_\radf^{SW}` (dashed) and
+   Time series from LES of :math:`\Delta_F` (solid),
+   :math:`\Delta_F^{LW}` (dotted), :math:`-\Delta_F^{SW}` (dashed) and
    the 8A (dash-dot) and 9B (dash-dot-dot-dot) parametrizations of
-   :math:`\Delta_\radf`.
+   :math:`\Delta_F`.
 
    .. list-table::
       :align: center
