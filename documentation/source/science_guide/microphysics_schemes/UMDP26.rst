@@ -3116,12 +3116,17 @@ an arbitrary reference total dust number density value. In the event
 that no dust is present, the heterogeneous freezing temperature relaxes
 to the homogeneous nucleation temperature, :math:`t_{homo}`.
 
-.. container:: float
+.. figure:: blank.svg
    :name: fig:tnucnew
 
-   .. container:: centering
+   Representation of :math:`tnuc_n` vs :math:`dust` (:math:`log_{10}` scale) following (`[eqn:progtnuc] <#eqn:progtnuc>`__). The dotted line represents the arbitrary reference dust value which can be adjusted for testing
 
-      |image1|
+   .. list-table::
+      :align: center
+      :widths: 70
+
+      * - .. image:: tnuc_new.svg
+                     :width: 70%
 
 In order to implement this approach, the logical switch l which appears
 under Mixed phase processes in Section 04 in rose GUI needs to be set to
@@ -4207,10 +4212,16 @@ where
 
 and :math:`f_{cl}` is given in Equation `[eq-fsdqcl] <#eq-fsdqcl>`__.
 
-.. container:: float
+.. figure:: blank.svg
    :name: fig:fall_speeds
 
-   .. container:: center
+   \footnotesize {Autoconversion Thresholds for the default scheme (black line; equation `[eq:jones_nd] <#eq:jones_nd>`__) and the :raw-latex:`\cite{Tripoli:Cotton:1980}` formula (red line; equation `[eq:tc_act] <#eq:tc_act>`__), shown as a function of cloud droplet number. }
+
+   .. list-table::
+      :align: center
+      :widths: 100
+
+      * - .. image:: autoc_thr.svg
 
 **Cloud and rain fractions**. The rain fraction is increased to
 :math:`C_l` if :math:`C_l` is greater than the current rain fraction. If
@@ -5607,5 +5618,3 @@ level is close to the surface.
    In practice, the rain fall-flux does eventually get forced to zero
    but only because the sedimentation code removes fluxes below a tiny
    numerical tolerance for computational efficiency.
-
-.. |image1| image:: tnuc_new
