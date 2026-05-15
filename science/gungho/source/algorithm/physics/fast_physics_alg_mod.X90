@@ -177,8 +177,6 @@ contains
 
     ! Local fields...
     type( field_type ) :: theta_latest, u_latest
-    ! ...for boundary layer
-    type( field_type ) :: dtheta_bl, du_bl
     ! ...for evaporation condensation
     type( field_type ) :: dtheta_cld
     type( field_type ) :: dmr_cld(nummr)
