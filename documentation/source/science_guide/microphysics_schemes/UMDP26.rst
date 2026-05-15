@@ -388,7 +388,7 @@ freezing point of water, :math:`p` is the pressure and
 
 .. list-table:: Values and definitions of physical constants used in the microphysics parametrization.
    :name: tab:mic_phys
-
+   :header-rows: 1
 
    * - Symbol
      - Definition
@@ -517,7 +517,7 @@ constants for the large-scale precipitation scheme.
 
 .. list-table:: Default values of constants used in the particle size-spectra relations. The rain parameters were selected specifically in order to produce smaller drop sizes for lighter rain, as demonstrated from radar data. The parametrization of the crystal size distribution follows the form of :raw-latex:`\cite{Cox:1988}` but uses aircraft data from :raw-latex:`\cite{Field:1999}` to influence the choice of the values of the parameters.
    :name: tab:mic_consts_psd
-
+   :header-rows: 1
 
    * - Model
      - :math:`n_{ax}`
@@ -617,7 +617,6 @@ then used as a single quantity in the rest of the model.
 .. list-table:: Parameters for the splitting of ice into crystals and aggregates.
    :name: tab:mic_split
 
-
    * - :math:`T_{scaling}`
      - 0.0384 K\ :math:`^{-1}`
 
@@ -681,7 +680,7 @@ represents the subscripts 1 to 10 are given in table `4 <#tab:field>`__.
 
 .. list-table:: Coefficients and exponents of moment for equations `[eq:fielda] <#eq:fielda>`__ and `[eq:fieldb] <#eq:fieldb>`__.
    :name: tab:field
-
+   :header-rows: 1
 
    * - :math:`z`
      - :math:`a_z`
@@ -843,7 +842,7 @@ where parameters are given in tables `5 <#tab:mic_consts_fallspeed>`__,
 
 .. list-table:: Default values of constants used in the fall speed relations. The :raw-latex:`\cite{Sachidananda:Zrnic:1986}` relationship does not asymptote to a fixed value for large diameters and better representations exist; these are discussed further in section `4.4.3 <#sec:as07>`__. The ice fall speeds are selected so as to agree with the values calculated using the :raw-latex:`\cite{Mitchell:1996}` relationships.
    :name: tab:mic_consts_fallspeed
-
+   :header-rows: 1
 
    * - Model
      - :math:`c_x`
@@ -882,7 +881,7 @@ where parameters are given in tables `5 <#tab:mic_consts_fallspeed>`__,
 
 .. list-table:: Constants used in the calculation of ice crystal and aggregate fall speed relationships. Graupel, like rain is assumed to be spherical; hence it is not possible to set values for the constants in this table for these quantities.
    :name: tab:mic_consts_fallspeed2
-
+   :header-rows: 1
 
    * - Species
      - :math:`e_x`
@@ -924,7 +923,7 @@ be replaced by that in table `7 <#tab:mit_2nd_rex>`__.
 
 .. list-table:: Parameters for use in the 2nd Re-X (:math:`R_e`\ :math:`B_e` in this document) relation (Eq.19) of :raw-latex:`\cite{Mitchell:1996}`; now operational in the NWP suite.
    :name: tab:mit_2nd_rex
-
+   :header-rows: 1
 
    * - Species
      - :math:`e_x`
@@ -1009,7 +1008,6 @@ the UM, as defined in table `5 <#tab:mic_consts_fallspeed>`__.
 .. list-table:: Parameters used in the :raw-latex:`\cite{Abel:Shipway:2007}` rain fall velocity (equation `[eq:as07] <#eq:as07>`__) as set-up for the UM. Note that parameter :math:`c_{2R}` differs from :raw-latex:`\cite{Abel:Shipway:2007}` as there is a mistake in their paper where they give this term the wrong sign. The version used here and in the UM is correct.
    :name: tab:as07
 
-
    * - Para meter
      - :math:`c_{1R}`
      - :math:`d_{1R}`
@@ -1087,7 +1085,7 @@ microphysical transfer rates to be solved easily.
 
 .. list-table:: Default values of constants used in the density relations.
    :name: tab:mic_consts_density
-
+   :header-rows: 1
 
    * - Species
      - :math:`a_x`
@@ -1122,7 +1120,7 @@ given in table `10 <#tab:bf95>`__.
 
 .. list-table:: Values of density relations used by :raw-latex:`\cite{Brown:Francis:1995}`
    :name: tab:bf95
-
+   :header-rows: 1
 
    * - Species
      - :math:`a_x`
@@ -1579,7 +1577,7 @@ graupel mass is assumed to act within.
 
 .. list-table:: Processes affecting precipitation mass within the sub-grid precipitation fraction area partitions, when using i_update_precfrac = 1. “+” signs denote sources of preipitation mass, whereas “-” signs denote sinks.
    :name: tab:precfrac_processes
-
+   :header-rows: 1
 
    * - 
      - **ra in_liq**
@@ -2263,7 +2261,7 @@ of the square-root term, all of the factors of
 
 .. list-table:: Method, equation and process-fraction :math:`C_{proc}` used to update the prognostic precipitation fraction consistent with precip mass for each process, when using i_update_precfrac = 2.
    :name: tab:precfrac_processes_2
-
+   :header-rows: 1
 
    * - 
      - Source(+) or sink(-)
@@ -2491,7 +2489,7 @@ as ilustrated by the subscript.
 
 .. list-table:: Details of the process conversion terms that are modelled in the UM microphysics parametrizations. :math:`q` is vapour mixing ratio, :math:`q_{cl}` liquid water mixing ratio, :math:`q_{cfa}` ice aggregate mixing ratio, :math:`q_R` rain mixing ratio, :math:`q_{cfc}` ice crystal mixing ratio and :math:`q_{graup}` is graupel mixing ratio. Sedimentation processes are ignored as they do not change the microphysical category.
    :name: tab:rates
-
+   :header-rows: 1
 
    * - Code
      - Sink
@@ -2683,7 +2681,7 @@ literature.
 
 .. list-table:: Land-sea droplet number concentrations
    :name: tab:drop_num
-
+   :header-rows: 1
 
    * - 
      - :math:`n_d(land)`
@@ -2778,7 +2776,7 @@ are given in table `15 <#tab:haycla>`__
 
 .. list-table:: MURK aerosol parameters used in equation `[eq:new_murk] <#eq:new_murk>`__
    :name: tab:haycla
-
+   :header-rows: 1
 
    * - 
      - :math:`n_{0_{murk}}`
@@ -5089,7 +5087,7 @@ discuss them with the UKCA code owner before lodging the change.
 
 .. list-table:: Precipitation Diagnostics which are used by UKCA
    :name: tab:ukca
-
+   :header-rows: 2
 
    * - Precipitation inputs to UKCA
      - 
@@ -5144,7 +5142,7 @@ purposes and for data assimilation.
 
 .. list-table:: Available radar reflectivity diagnostics (all diagnostics are contained in section 4).
    :name: tab:radar
-
+   :header-rows: 1
 
    * - Item
      - Description
@@ -5272,7 +5270,7 @@ with the only two unknowns now being :math:`|K_x|^2` and :math:`\rho_x`.
 
 .. list-table:: Constants used in the Radar Reflectivity Calculations.
    :name: tab:rad_param
-
+   :header-rows: 1
 
    * - Category
      - :math:`|K_x|^2`
@@ -5361,7 +5359,7 @@ those diagnostics. The following guidance points should be noted:
 
 .. list-table:: Precipitation Rate and Amount Diagnostics currently available from the large-scale precipitation scheme. In the units column, ‘ts’ denotes the model timestep.
    :name: tab:precip_diag
-
+   :header-rows: 1
 
    * - Item
      - Description
@@ -5565,7 +5563,7 @@ level is close to the surface.
 
 .. list-table:: Maximum hail size diagnostics available from section 4 of the microphysics scheme.
    :name: tab:max_hail_size
-
+   :header-rows: 1
 
    * - Item
      - Description
