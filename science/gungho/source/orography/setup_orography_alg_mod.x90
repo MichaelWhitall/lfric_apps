@@ -231,7 +231,12 @@ contains
         ! -------------------------------------------------------------------- !
         ! Restrict/prolong
         ! -------------------------------------------------------------------- !
-        ! If orography_order > 1 need to first map this to lower-order W0
+        ! If orography_order > 1, need to first map this to lower-order W0,
+        ! since we can currently only map W0 fields between meshes for the
+        ! lowest-order W0 space.
+        ! Note that this means the representation of the orography on other
+        ! (generally multigrid) meshes will be lower-order than that of the
+        ! orography mesh.
         if (orography_order > 1 .and.                                          &
             source_mesh_names(i) == orography_mesh_name) then
 
@@ -264,6 +269,9 @@ contains
         surf_alt_w0_ptr => surf_alt_list(i+1)
 
       else  ! W3 mapping
+        ! Surface altitude fields are mapped between meshes via the lowest-order
+        ! W3 space, but note that we can still recover a higher-order W0
+        ! representation of the surface altitude field if desired
         ! -------------------------------------------------------------------- !
         ! Restrict/prolong W3 field
         ! -------------------------------------------------------------------- !
