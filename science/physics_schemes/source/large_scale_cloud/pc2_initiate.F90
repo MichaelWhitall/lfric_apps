@@ -100,7 +100,7 @@ real(kind=real_umphys) ::                                                      &
 !       Ice cloud fraction (no units)
 
 real(kind=real_umphys) ::                                                      &
-                      !, intent(in out)
+                      !, intent(inout)
  t(             tdims%i_start:tdims%i_end,                                     &
                 tdims%j_start:tdims%j_end,                                     &
                 nlevels),                                                      &
