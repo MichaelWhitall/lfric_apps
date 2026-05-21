@@ -344,7 +344,7 @@ applies for rain.
 Physical constants and equations of state
 =========================================
 
-Table `1 <#tab:mic_phys>`__ shows the values of the physical constants
+:numref:`Table %s <tab:mic_phys>` shows the values of the physical constants
 used in the microphysics parametrization. The UM includes a temperature
 dependence for the thermal conductivity, dynamic viscosity and
 diffusivity terms and an additional pressure dependence for the
@@ -508,7 +508,7 @@ function of :math:`\lambda_x`
    n_{0x}=n_{ax} \lambda_x^{n_{bx}}
 
 where :math:`n_{ax}` and :math:`n_{bx}` are constants.
-Table `2 <#tab:mic_consts_psd>`__ shows the values of the above
+:numref:`Table %s <tab:mic_consts_psd>` shows the values of the above
 constants for the large-scale precipitation scheme.
 
 .. list-table:: Default values of constants used in the particle size-spectra relations. The rain parameters were selected specifically in order to produce smaller drop sizes for lighter rain, as demonstrated from radar data. The parametrization of the crystal size distribution follows the form of `Cox (1988)`_ but uses aircraft data from `Field (1999)`_ to influence the choice of the values of the parameters.
@@ -571,8 +571,7 @@ selected after comparison with aircraft data: see, for example,
 `Field (1999)`_, `Field (2000)`_.
 
 Two choices are available for the graupel particle size distribution are
-available; these are denoted as (i) and (ii) in table
-`2 <#tab:mic_consts_psd>`__ above. The first, (i) is the original scheme
+available; these are denoted as (i) and (ii) in :numref:`Table %s <tab:mic_consts_psd>` above. The first, (i) is the original scheme
 as included by `Forbes and Halliwell (2003)`_, however this
 was found to produce a lot of small graupel particles, even when larger
 graupel mass were present in severe convective storms. A new particle
@@ -595,7 +594,7 @@ where :math:`(T-T_{CT})` is the temperature difference from the cloud
 top. :math:`T_{CT}` is calculated as the temperature of the first layer
 counting upwards which did not have snow falling into it.
 :math:`T_{scaling}` and :math:`q_{cf0}` are specified parameters (see
-table `3 <#tab:mic_split>`__) and :math:`f_{aggregates}` is the fraction
+:numref:`Table %s <tab:mic_split>`) and :math:`f_{aggregates}` is the fraction
 of :math:`q_{cf}` that is apportioned to the aggregate part of the
 particle size distribution. This formulation was developed by Wilson and
 is based upon both aircraft data (for example,
@@ -670,7 +669,7 @@ determined using the formulae
    \end{aligned}
 
 with the values of :math:`a_z` and :math:`b_z` where :math:`z`
-represents the subscripts 1 to 10 are given in table `4 <#tab:field>`__.
+represents the subscripts 1 to 10 are given in :numref:`Table %s <tab:field>`.
 
 .. list-table:: Coefficients and exponents of moment for equations :eq:`eq:fielda` and :eq:`eq:fieldb`.
    :name: tab:field
@@ -803,7 +802,7 @@ can be expressed as a function of diameter:
    V_x(D)=c_xD^{d_x} e^{-h_xD} \left( \frac{\rho_0}{\rho}\right) ^{\mathcal{G}_x}
 
 where :math:`c_x`, :math:`d_x`, :math:`h_x` and :math:`\mathcal{G}_x`
-are constants (see Table `5 <#tab:mic_consts_fallspeed>`__) and
+are constants (see :numref:`Table %s <tab:mic_consts_fallspeed>`) and
 :math:`\rho_0` is a reference density of 1 :math:`kg~m^{-3}`. The scheme
 also has the option to specify the parameters :math:`c_x` and
 :math:`d_x` by using knowledge of their area-diameter relationships and
@@ -828,9 +827,9 @@ particle and
 
 .. math:: R_e=e_x B_e^{f_x}
 
-where parameters are given in tables `5 <#tab:mic_consts_fallspeed>`__,
-`6 <#tab:mic_consts_fallspeed2>`__, `9 <#tab:mic_consts_density>`__ and
-`10 <#tab:bf95>`__.
+where parameters are given in tables :numref:`%s <tab:mic_consts_fallspeed>`,
+:numref:`%s <tab:mic_consts_fallspeed2>`, :numref:`%s <tab:mic_consts_density>` and
+:numref:`%s <tab:bf95>`.
 
 .. list-table:: Default values of constants used in the fall speed relations. The `Sachinananda and Zrnić (1986)`_ relationship does not asymptote to a fixed value for large diameters and better representations exist; these are discussed further in section `4.4.3 <#sec:as07>`__. The ice fall speeds are selected so as to agree with the values calculated using the `Mitchell (1996)`_ relationships.
    :name: tab:mic_consts_fallspeed
@@ -910,8 +909,8 @@ densities have been used operationally in the UM (see section
 crystal velocities are correct, when crystals are used in the model.
 
 So, when `Brown and Francis (1995)`_ densities are being
-used, the last line of table `6 <#tab:mic_consts_fallspeed2>`__ should
-be replaced by that in table `7 <#tab:mit_2nd_rex>`__.
+used, the last line of :numref:`Table %s <tab:mic_consts_fallspeed2>` should
+be replaced by that in :numref:`Table %s <tab:mit_2nd_rex>`.
 
 .. list-table:: Parameters for use in the 2nd Re-X (:math:`R_e`\ :math:`B_e` in this document) relation (Eq.19) of `Mitchell (1996)`_; now operational in the NWP suite.
    :name: tab:mit_2nd_rex
@@ -990,11 +989,11 @@ appendix of `Abel and Shipway (2007)`_:
 
 where the subscript :math:`R` is used instead of :math:`x` as this
 change only applies to rain. The value of the constants used is given in
-table `8 <#tab:as07>`__. It should be noted that while
+:numref:`Table %s <tab:as07>`. It should be noted that while
 `Abel and Shipway (2007)`_ set :math:`\mathcal{G}_R` to be
 0.5, following the practice of the Met Office Large Eddy Model (LEM), we
 have retained the value of 0.4 to maintain consistency with the rest of
-the UM, as defined in table `5 <#tab:mic_consts_fallspeed>`__.
+the UM, as defined in :numref:`Table %s <tab:mic_consts_fallspeed>`.
 
 .. list-table:: Parameters used in the `Abel and Shipway (2007)`_ rain fall velocity (equation :eq:`eq:as07`) as set-up for the UM. Note that parameter :math:`c_{2R}` differs from `Abel and Shipway (2007)`_ as there is a mistake in their paper where they give this term the wrong sign. The version used here and in the UM is correct.
    :name: tab:as07
@@ -1106,7 +1105,7 @@ reflectivity measured by the Chilbolton 94–GHz radar. Use of
 `Brown and Francis (1995)`_ reduces the density by
 approximately a factor of four, but dependent on size. The parameters
 for :math:`a_x` and :math:`b_x` (after translation into SI units) are
-given in table `10 <#tab:bf95>`__.
+given in :numref:`Table %s <tab:bf95>`.
 
 .. list-table:: Values of density relations used by `Brown and Francis (1995)`_
    :name: tab:bf95
@@ -1558,7 +1557,7 @@ Update of precipitation fraction by process-rates
 (where the areas of the first 4 of these sum to the start-of-timestep
 :math:`C_r`).
 
-Table `11 <#tab:precfrac_processes>`__ summarises which of these
+:numref:`Table %s <tab:precfrac_processes>` summarises which of these
 sub-grid partitions each microphysical process rate affecting rain and
 graupel mass is assumed to act within.
 
@@ -2138,7 +2137,7 @@ However it is important that we use the time-integrated solution
 discretisation of :eq:`eq:dcr_dt`, in order to correctly
 integrate over the singularity when :math:`C_R = q_p = 0`.
 
-Table `12 <#tab:precfrac_processes_2>`__ lists the processes where
+:numref:`Table %s <tab:precfrac_processes_2>` lists the processes where
 :eq:`eq:cr_np1` is applied to update :math:`C_R`
 consistent with source terms for :math:`q_p`, and what area-fraction
 :math:`C_{proc}` is assumed for the tendency
@@ -2457,8 +2456,7 @@ can be written as follows:
           & &- P_{GMLT}
    \end{aligned}
 
-where each of the transfer terms above are defined in table
-`13 <#tab:rates>`__. The subscript numbers 1 and 2 indicates first and
+where each of the transfer terms above are defined in :numref:`Table %s <tab:rates>`. The subscript numbers 1 and 2 indicates first and
 second transfers, where transfer to more than one category is possible.
 Note also that the flux terms in all categories except :math:`q` are
 represented in section `6.3 <#sec:trans_eqs>`__ by PRFALL, PIFALL,
@@ -2623,8 +2621,7 @@ A note on graupel transfers not included
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 At this stage, the following transfer terms have not been represented as
-they are small in comparison with the terms in table
-`13 <#tab:rates>`__:
+they are small in comparison with the terms in :numref:`Table %s <tab:rates>`:
 
 - Deposition and sublimation of graupel
 
@@ -2656,7 +2653,7 @@ Using a simple land-sea mask
 The simplest option available is to choose one value for the drop
 concentration over land and another over sea. This is intended to
 represent the fact that maritime air is less polluted than continental
-air. Some sample values are shown in table `14 <#tab:drop_num>`__,
+air. Some sample values are shown in :numref:`Table %s <tab:drop_num>`,
 although many other varieties of this land-sea split do exist in the
 literature.
 
@@ -2751,7 +2748,7 @@ where :math:`A_{mass}` is the prognostic mass mixing ratio of the
 aerosol and :math:`S_{\rm murk}` is a tuning parameter that allows the
 relationship between murk and cloud drop number to be adjusted
 independently from the visibiltiy. The values of the other parameters
-are given in table `15 <#tab:haycla>`__
+are given in :numref:`Table %s <tab:haycla>`
 
 .. list-table:: MURK aerosol parameters used in equation :eq:`eq:new_murk`
    :name: tab:haycla
@@ -2940,8 +2937,8 @@ the mass mean fall-speed condensate-content relationship is:
 where :math:`q_x` is the mixing ratio variable for the condensate
 quantity (:math:`q_{cfa}`, :math:`q_{cfc}`, :math:`q_{graup}` or
 :math:`q_R`). The parameters have already been defined in section
-`4 <#sec:param_par_char>`__. See tables `2 <#tab:mic_consts_psd>`__,
-`5 <#tab:mic_consts_fallspeed>`__ and `9 <#tab:mic_consts_density>`__
+`4 <#sec:param_par_char>`__. See tables :numref:`%s <tab:mic_consts_psd>`,
+:numref:`%s <tab:mic_consts_fallspeed>` and :numref:`%s <tab:mic_consts_density>`
 for the default values used in the UM.
 
 **With the generic ice particle size distribution** When the generic ice
@@ -2989,7 +2986,7 @@ PRFALL: Sedimentation (fall) of rain
 the scheme this term takes the same form as for the fall of ice;
 equation :eq:`eq:icefall` is used, although the quantities
 with the :math:`x` subscript become those for rain listed in tables
-`2 <#tab:mic_consts_psd>`__ and `5 <#tab:mic_consts_fallspeed>`__.
+:numref:`%s <tab:mic_consts_psd>` and :numref:`%s <tab:mic_consts_fallspeed>`.
 
 **Diagnostic rain** In the flux (diagnostic rain) version of the scheme
 the rain variable is assumed to fall entirely out of the model column
@@ -2997,8 +2994,8 @@ within the timestep. In each grid box in the vertical, the magnitude of
 the flux of rain can be altered by other transfer processes. However,
 after precipitation is initiated, the fall speed of the diagnostic rain
 flux remains unaltered by changes to the drop size distribution and fall
-speed parameters in tables `2 <#tab:mic_consts_psd>`__ and
-`5 <#tab:mic_consts_fallspeed>`__. However, all transfer processes are
+speed parameters in tables :numref:`%s <tab:mic_consts_psd>` and
+:numref:`%s <tab:mic_consts_fallspeed>`. However, all transfer processes are
 still applied and increase or decrease the magnitude of the rain rate.
 
 PGFALL: Sedimentation (fall) of graupel
@@ -3008,7 +3005,7 @@ All graupel is assumed to be prognostic; there is no diagnostic graupel
 available. The fall term takes the same form as for the fall of ice;
 equation :eq:`eq:icefall` is used, although the quantities
 with the :math:`x` subscript become those for graupel listed in tables
-`2 <#tab:mic_consts_psd>`__ and `5 <#tab:mic_consts_fallspeed>`__.
+:numref:`%s <tab:mic_consts_psd>` and :numref:`%s <tab:mic_consts_fallspeed>`.
 
 PIPRM: Heterogeneous nucleation (Deposition on to natural ice nuclei)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3445,8 +3442,8 @@ equation :eq:`eq:mic_pyacx1` to be integrated giving
 equation :eq:`eq:mic_pyacx2` (where many of the
 parameters have been defined earlier in section
 `4 <#sec:param_par_char>`__, with default values in tables
-`2 <#tab:mic_consts_psd>`__,\ `9 <#tab:mic_consts_density>`__ and
-`5 <#tab:mic_consts_fallspeed>`__.) Specifically now for the collection
+:numref:`%s <tab:mic_consts_psd>`,\ :numref:`%s <tab:mic_consts_density>` and
+:numref:`%s <tab:mic_consts_fallspeed>`.) Specifically now for the collection
 of ice by snow we have:
 
 .. math:: :label: eq:mic_pyacx2
@@ -3612,8 +3609,8 @@ PGACW: Riming by graupel
 **:math:`q_{cl}` to :math:`q_{graup}`.** The collection rates of liquid
 cloud by graupel obey exactly the same physics as the riming of crystals
 and aggregates (equation :eq:`eq:mic_psacw`, but with
-the parameters for graupel from tables `2 <#tab:mic_consts_psd>`__ and
-`5 <#tab:mic_consts_fallspeed>`__ used in place of those for
+the parameters for graupel from tables :numref:`%s <tab:mic_consts_psd>` and
+:numref:`%s <tab:mic_consts_fallspeed>` used in place of those for
 aggregates).
 
 .. _`sec:PGACS`:
@@ -3671,8 +3668,7 @@ Two options exist to alter the graupel parametrization from the
 `Forbes and Halliwell (2003)`_ representation. The first is
 an increased production of graupel option where snow-rain collisions are
 allowed to create graupel in place of snow. The second is an improved
-graupel particle size distribution shown as option (ii) within table
-`2 <#tab:mic_consts_psd>`__ and based on the work by
+graupel particle size distribution shown as option (ii) within :numref:`Table %s <tab:mic_consts_psd>` and based on the work by
 `Field et al. (2019)`_.
 
 When either of these two options are in use, the :math:`P_{GACS}` term
@@ -5092,7 +5088,7 @@ code. This is done with the following assumptions:
 - **Attenuation** is not accounted for and the calculation makes no
   assumption on the location of the radar.
 
-Diagnostics currently available are shown in table `17 <#tab:radar>`__.
+Diagnostics currently available are shown in :numref:`Table %s <tab:radar>`.
 It is anticipated that the 2D diagnostics will be used operationally and
 could be archived, while the 3D diagnostics may be of use for research
 purposes and for data assimilation.
@@ -5277,13 +5273,13 @@ values of graupel alone, along with snowfall excluding graupel, yet
 while still preserving the original precipitation rate and amount
 diagnostics unchanged.
 
-Table `19 <#tab:precip_diag>`__ describes the precipitation diagnostics
+:numref:`Table %s <tab:precip_diag>` describes the precipitation diagnostics
 available and details which hydrometeor species are used to produce
 those diagnostics. The following guidance points should be noted:
 
 - All precipitation rate diagnostics are contained in STASH section 4.
 
-- All 2D diagnostics in table `19 <#tab:precip_diag>`__ are at the
+- All 2D diagnostics in :numref:`Table %s <tab:precip_diag>` are at the
   surface (i.e. precipitation out of the lowest model level).
 
 - The effects of any gravitational droplet settling (see section
@@ -5498,11 +5494,10 @@ Within the UM single-moment microphysics, this will purely be a function
 of the graupel water content (i.e. mass mixing ratio multiplied by air
 density). Therefore, a look-up table has been generated which calculates
 the minimum ice water content required for each of the hail size bins.
-This uses particle size distribution information from table
-`2 <#tab:mic_consts_psd>`__. The look-up table is automatically
+This uses particle size distribution information from :numref:`Table %s <tab:mic_consts_psd>`. The look-up table is automatically
 generated the first time any of the maximum hail size diagnostics are
 requested and the information is then saved for the remainder of the
-model run. Should the constants in table `2 <#tab:mic_consts_psd>`__ be
+model run. Should the constants in :numref:`Table %s <tab:mic_consts_psd>` be
 altered (i.e. through a code change), the values in the look-up table
 will change based on the new particle size distribution information.
 
