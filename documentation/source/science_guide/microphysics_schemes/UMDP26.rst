@@ -358,12 +358,12 @@ The functions :math:`F_{K_a}(T)`, :math:`F_{\mu}(T)` and
 
 .. math:: :label: eq:mic_conductivity
 
-   F_{K_a}(T) = F_{\mu}(T) = {\left( \frac{T}{T_0} \right)}^{\frac{3}{2}} 
+   F_{K_a}(T) = F_{\mu}(T) = {\left( \frac{T}{T_0} \right)}^{\frac{3}{2}}
    \left( \frac{393}{T+120} \right),
 
 .. math:: :label: eq:mic_diffusivity
 
-   F_{\psi}(T,p) = \left( \frac{T}{T_0} \right)^{\frac{3}{2}} 
+   F_{\psi}(T,p) = \left( \frac{T}{T_0} \right)^{\frac{3}{2}}
     \left( \frac{393}{T+120} \right) \left( \frac{p_0}{p} \right),
 
 where :math:`T` is the temperature in Kelvin, :math:`T_0` is the
@@ -444,12 +444,12 @@ freezing point of water, :math:`p` is the pressure and
    * - :math:`\epsilon`
      - ratio of molecular weights of
      - 0.62198
-     - 
+     -
 
-   * - 
+   * -
      - water and dry air
-     - 
-     - 
+     -
+     -
 
 The air density is estimated from the virtual temperature equation.
 
@@ -521,7 +521,7 @@ constants for the large-scale precipitation scheme.
    * - Model
      - :math:`n_{ax}`
      - :math:`n_{bx}`
-     - 
+     -
      - :math:`\alpha_x`
      - R eference
 
@@ -622,7 +622,7 @@ then used as a single quantity in the rest of the model.
 
 .. _sec_field_psd:
 
-Generic Ice Particle Size Distributions 
+Generic Ice Particle Size Distributions
 ----------------------------------------
 
 Following the work of `Field et al. (2005)`_, the option is
@@ -680,9 +680,9 @@ represents the subscripts 1 to 10 are given in :numref:`Table %s <tab:field>`.
 
    * - :math:`z`
      - :math:`a_z`
-     - 
+     -
      - :math:`b_z`
-     - 
+     -
 
    * - 1
      - 5
@@ -987,7 +987,7 @@ appendix of `Abel and Shipway (2007)`_:
 
 .. math:: :label: eq:as07
 
-   V_R(D)=\left[c_{1R}D^{d_{1R}} e^{-h_{1R}D} + c_{2R}D^{d_{2R}} e^{-h_{2R}D} 
+   V_R(D)=\left[c_{1R}D^{d_{1R}} e^{-h_{1R}D} + c_{2R}D^{d_{2R}} e^{-h_{2R}D}
    \right] \left( \frac{\rho_0}{\rho}\right) ^{\mathcal{G}_{R}}
 
 where the subscript :math:`R` is used instead of :math:`x` as this
@@ -1153,8 +1153,8 @@ For the flux description of the rainfall rate we have:
 
 .. math::
 
-   R = \int_{D_R = 0}^{D_R = \infty} \frac{\pi}{6} 
-   \rho_w {D_R}^3 c_R ~ D_R^{d_R} \left(\frac{\rho_0}{\rho}\right)^{\mathcal{G}_R}  
+   R = \int_{D_R = 0}^{D_R = \infty} \frac{\pi}{6}
+   \rho_w {D_R}^3 c_R ~ D_R^{d_R} \left(\frac{\rho_0}{\rho}\right)^{\mathcal{G}_R}
    N_R(D_R) dD_R
 
 where :math:`R` is the rainfall rate (in kg m\ :math:`^{-2}`
@@ -1163,7 +1163,7 @@ distribution
 
 .. math::
 
-   N_R (D_R) = n_{aR} \lambda_R ^{n_{br}}  D_R ^{\alpha_R} \exp 
+   N_R (D_R) = n_{aR} \lambda_R ^{n_{br}}  D_R ^{\alpha_R} \exp
    \left( - \lambda_R D_R \right)
 
 and solving the integral for :math:`\lambda_R` gives the result
@@ -1171,7 +1171,7 @@ and solving the integral for :math:`\lambda_R` gives the result
 .. math::
 
    \lambda_R = { \left( \frac { \pi ~c_R~ { \left( \frac{\rho_0}{\rho} \right) }
-   ^{\mathcal{G}_R} \rho_w n_{aR} \Gamma \left( 4 + \alpha_R +d_R \right) } 
+   ^{\mathcal{G}_R} \rho_w n_{aR} \Gamma \left( 4 + \alpha_R +d_R \right) }
    {6 R} \right) } ^ { \frac{1}{4 + d_R + \alpha_R - n_{br}} } .
 
 A full derivation of this is available in appendix I.
@@ -1188,7 +1188,7 @@ where :math:`q_{cfa}` is the ice water mixing ratio in the aggregates
 
 .. math::
 
-   \lambda_a = 
+   \lambda_a =
    { \left( \frac {n_{aa} a_a \Gamma(b_a + 1 + \alpha_a) } { \rho q_{cfa} } \right) }
    ^{ \frac{1}{b_a+1+\alpha_a-n_{ba}} }
 
@@ -1196,7 +1196,7 @@ and similarly for :math:`\lambda_c`:
 
 .. math::
 
-   \lambda_c = 
+   \lambda_c =
    { \left( \frac {n_{ac} a_c \Gamma(b_c+1+\alpha_c) } { \rho q_{cfc} } \right) }
    ^{ \frac{1}{b_c+1+\alpha_c-n_{bc}} }
 
@@ -1312,7 +1312,7 @@ can then be specified from the values in the remaining partitions:
 
 .. math::
 
-   q_{ice~only} = \frac { q - C_l q_{sat~water} - C_{clear} q_{clear} } 
+   q_{ice~only} = \frac { q - C_l q_{sat~water} - C_{clear} q_{clear} }
    { C_{ice~only}} .
 
 Note that :math:`q_{ice~only}` is not allowed to exceed
@@ -1516,7 +1516,7 @@ microphysical process rates, sedimentation and numerical checks. These
 are decribed in the following sections below. The method to use is
 selected using the switch i_update_precfrac in the UM namelist.
 
-|  
+|
 
 Assume homogeneous precip mass within the precip fraction at start-of-timestep
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1537,7 +1537,7 @@ to reset to having homogeneous precip mass within that area.
 Update of precipitation fraction by process-rates
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-|  
+|
 | During each microphysics sub-step, the net rain (and optionally
   graupel) mass increment within each of the following 5 sub-grid
   partitions is calculated and stored:
@@ -1568,7 +1568,7 @@ graupel mass is assumed to act within.
    :name: tab:precfrac_processes
    :header-rows: 1
 
-   * - 
+   * -
      - **ra in_liq**
      - **ra in_mix**
      - **ra in_ice**
@@ -1578,15 +1578,15 @@ graupel mass is assumed to act within.
    * - PRACW (a ccretion of liqu id-cloud by rain)
      - +
      - +
-     - 
-     - 
-     - 
+     -
+     -
+     -
 
    * - PRAUT (autoco nversion of liqu id-cloud to rain)
      - +
      - +
-     - 
-     - 
+     -
+     -
      - +
 
    * - PIP RR,PIFRR ( freezing of rain)
@@ -1599,44 +1599,44 @@ graupel mass is assumed to act within.
    * - PGACW (riming of liqu id-cloud onto graupel)
      - +
      - +
-     - 
-     - 
-     - 
+     -
+     -
+     -
 
    * - PSA CR,PIACR (capture of rain by ic e-cloud)
-     - 
+     -
      - -
      - -
-     - 
-     - 
+     -
+     -
 
    * - PGAUT (autoco nversion of snow to graupel)
-     - 
+     -
      - +
-     - 
-     - 
+     -
+     -
      - +
 
    * - PGACS (co llection of i ce-cloud by graupel)
-     - 
+     -
      - +
      - +
-     - 
-     - 
+     -
+     -
 
    * - PSM LT,PIMLT (melting of i ce-cloud into rain)
-     - 
+     -
      - +
      - +
-     - 
+     -
      - +
 
    * - PREVP (eva poration of rain)
-     - 
-     - 
+     -
+     -
      - -
      - -
-     - 
+     -
 
 Note that collisions between ice-cloud and rain (PSACR,PIACR) are a sink
 of precipitation mass if the rain is converted into ice-cloud, but this
@@ -1693,7 +1693,7 @@ This calculation is done in subroutine lsp_update_precfrac in the code.
 Transfer of precipitation fraction by sedimentation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-|  
+|
 | For numerics reasons, the updating of precipitation fraction by fall
   of precipitation is handled separately to the other microphysical
   processes.
@@ -1775,7 +1775,7 @@ lsp_combine_precfrac in the code.
 Precipitation fraction created by "emergency melting"
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-|  
+|
 | As described in section :ref:`Numerical checks <sec_num_check>`, after the
   microphysical processes at theta-level k have been computed, and
   sedimentation of hydrometeors down to the next level has been
@@ -1817,13 +1817,13 @@ with :math:`{C_i}_{fall}`, :math:`dS_{melt}` and :math:`{C_R}_{fall}`,
 And finally...
 ^^^^^^^^^^^^^^
 
-|  
+|
 | After the updates to the prognostic precipitation fraction from all
   the processes discussed above, a final check (in lsp_tidy.F90) resets
   the precipitation fraction to zero in the event that all rain (and
   optionally graupel) mass has been removed.
 
-|  
+|
 
 Inhomogeneous precip mass with parameterised sub-grid correlations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1908,7 +1908,7 @@ precip mass tendency and the existing precip mass...
 Update of precipitation fraction from precip mass sources
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-|  
+|
 | Following our definition of
   :math:`C_r = \frac{ \overline{q_p}^2 }{ \overline{q_p^2} }` (eq
   :eq:`eq:representative_c_r`), the updated
@@ -2158,7 +2158,7 @@ orographically-forced liquid-cloud and rain.
 Update of precipitation fraction from precip mass sinks
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-|  
+|
 | Firstly, we assume that the sink of precip mass from freezing of rain
   (PIPRR, PIFRR) applies uniformly over the sub-grid precip mass
   distribution, so that :math:`C_R` is not affected by this process
@@ -2246,7 +2246,7 @@ of the square-root term, all of the factors of
    :name: tab:precfrac_processes_2
    :header-rows: 1
 
-   * - 
+   * -
      - Source(+) or sink(-)
      - Eqn for :math:`C_R` update
      - **:math:`C_{proc}`**
@@ -2299,7 +2299,7 @@ of the square-root term, all of the factors of
 Transfer of precipitation fraction by sedimentation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-|  
+|
 | This follows the same method as described for i_update_precfrac = 1 in
   section :ref:`Transfer of precipitation fraction by sedimentation <sec_precfrac_sed>`, except that we now use eq
   :eq:`eq:cr_np1` for combining the pre-existing and
@@ -2317,7 +2317,7 @@ area-fraction in-which this source term applies is set to:
 Precipitation fraction created by "emergency melting"
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-|  
+|
 | Again this follows what is done under i_update_precfrac = 1, (section
   :ref:`Precipitation fraction created by "emergency melting" <sec_precfrac_emerg>`) but using eq
   :eq:`eq:cr_np1` to compute the combined fraction of the
@@ -2488,9 +2488,9 @@ as ilustrated by the subscript.
      - :math:`q_R`
      - Autoconversion from liquid cloud to rain due to liquid
 
-   * - 
-     - 
-     - 
+   * -
+     -
+     -
      - cloud droplet aggregation
 
    * - REVP
@@ -2523,9 +2523,9 @@ as ilustrated by the subscript.
      - :math:`q_{cfc}`
      - Nucleation of ice crystals by homogeneous freezing of
 
-   * - 
-     - 
-     - 
+   * -
+     -
+     -
      - liquid cloud drops
 
    * - IMLT
@@ -2664,7 +2664,7 @@ literature.
    :name: tab:drop_num
    :header-rows: 1
 
-   * - 
+   * -
      - :math:`n_d(land)`
      - :math:`n_d(sea)`
 
@@ -2695,11 +2695,11 @@ result converted to :math:`n_{d}`, using the
 
 .. math:: :label: eq:Jones_Nature
 
-   n_{d} = 3.75 \times 10^8 \left[ 1 - \exp 
+   n_{d} = 3.75 \times 10^8 \left[ 1 - \exp
    \left( -2.5 \times 10^{-9} n_{aer} \right) \right].
 
 The droplet number derived by this method is limited to minimum values
-of :math:`35 
+of :math:`35
 \times 10^6` m\ :math:`^{-3}` over land and
 :math:`5 \times 10^6` m\ :math:`^{-3}` over the sea, sea-ice and
 ice-sheets.
@@ -2757,7 +2757,7 @@ are given in :numref:`Table %s <tab:haycla>`
    :name: tab:haycla
    :header-rows: 1
 
-   * - 
+   * -
      - :math:`n_{0_{murk}}`
      - :math:`m_{0_{murk}}`
 
@@ -2878,7 +2878,7 @@ law. The terminal velocity of a cloud droplet is given as follows (after
 
 .. math:: :label: eq:ds_lamb
 
-   V_{cd} = \frac{2}{9} \frac{\rho_w g}{\mu} \left(\frac{D}{2}\right)^2 
+   V_{cd} = \frac{2}{9} \frac{\rho_w g}{\mu} \left(\frac{D}{2}\right)^2
           = \mathcal{K}_1 \left(\frac{D}{2}\right)^2
 
 where :math:`\mathcal{K}_1 = 1.27 \times 10^8` m\ :math:`^{-1}`
@@ -2891,7 +2891,7 @@ which gives the bulk settling velocity as
 
 .. math:: :label: eq:ds_spec
 
-   \overline{V_{cd}} = \frac{1.339 \times 10^6 
+   \overline{V_{cd}} = \frac{1.339 \times 10^6
    \left(\frac{q_{cl} \rho}{n_{d}}\right)^{\frac{2}{3}}}{F_{K_a}},
 
 where :math:`n_d` is the cloud droplet number concentration, determined
@@ -2931,9 +2931,9 @@ the mass mean fall-speed condensate-content relationship is:
 .. math:: :label: eq:icefall
 
    \overline{v_x} = {\left( \frac{\rho_0}{\rho} \right)}^{\mathcal{G}_x} c_x
-   \frac{ \Gamma \left( d_x + b_x + 1 + \alpha_x \right) }{ \Gamma \left( b_x + 1 
+   \frac{ \Gamma \left( d_x + b_x + 1 + \alpha_x \right) }{ \Gamma \left( b_x + 1
    + \alpha_x \right) }
-   { \left( \frac{ \rho q_{x} }{n_{ax} a_x \Gamma \left( b_x + 1 + 
+   { \left( \frac{ \rho q_{x} }{n_{ax} a_x \Gamma \left( b_x + 1 +
    \alpha_x \right) } \right)}
    ^{\frac{d_x}{b_x + 1 + \alpha_x - n_{bx} }}
 
@@ -2951,8 +2951,8 @@ is valid for ice aggregates only):
 
 .. math:: :label: eq:icefallpsd
 
-   \overline{v_a} = {\left( \frac{\rho_0}{\rho} \right)}^{\mathcal{G}_a} c_a a_a 
-   \left(\frac{\mathcal{M}_{b_a+d_a}}{\rho q_{cfa}}\right) 
+   \overline{v_a} = {\left( \frac{\rho_0}{\rho} \right)}^{\mathcal{G}_a} c_a a_a
+   \left(\frac{\mathcal{M}_{b_a+d_a}}{\rho q_{cfa}}\right)
 
 where :math:`\mathcal{M}_{b_a+d_a}` is the result of inputting the
 expression :math:`b_a + d_a` into the generic ice particle size
@@ -2972,7 +2972,7 @@ effect with a single parameter.
 
 .. math::
 
-   \frac{\partial{C_i}}{\partial t} = \mathrm{\footnotesize \sf MAX} \left[ 
+   \frac{\partial{C_i}}{\partial t} = \mathrm{\footnotesize \sf MAX} \left[
    \frac{\partial{C_i}}{\partial z}~,~0\right]   v_i + ws
 
 where :math:`v_i` is the mass-weighted mean fall speed of the aggregates
@@ -3140,7 +3140,7 @@ given by
 
 .. math:: :label: eq:mic_rainfreeze
 
-   P_{PIPRR}=20\pi\ B^\prime n_{0R}\left(\frac{\rho_w}{\rho}\right)\ 
+   P_{PIPRR}=20\pi\ B^\prime n_{0R}\left(\frac{\rho_w}{\rho}\right)\
                 \left\{\exp{\left[A^\prime\left(T_0-T\right)\right]}-1\right\}\lambda_R^{-7}
 
 where :math:`A^\prime` and :math:`B^\prime` are parameters determined by
@@ -3282,8 +3282,8 @@ particle size distribution is switched on, equation
 
 .. math:: :label: eq:mic_ventx_psd
 
-   {{\mathcal{V}}_x}=2\pi\left(0.65 \mathcal{M}_1 + 0.44 
-   \left(\frac{c_x}{\upsilon}\right)^{\frac{1}{2}}S_c^{\frac{1}{3}}\rho^{\frac{1}{2}} 
+   {{\mathcal{V}}_x}=2\pi\left(0.65 \mathcal{M}_1 + 0.44
+   \left(\frac{c_x}{\upsilon}\right)^{\frac{1}{2}}S_c^{\frac{1}{3}}\rho^{\frac{1}{2}}
    {\left( \frac{\rho_0}{\rho} \right)}^{ \frac{\mathcal{G}_x}{2}}
    \mathcal{M}_{1+0.5(d_a+1)}\right),
 
@@ -3305,7 +3305,7 @@ liquid water, then we obtain the expression
 
 .. math::
 
-   \Delta C_l = C_l {\left( 1 - \frac{\Delta q_{cl}}{q_{cl}} 
+   \Delta C_l = C_l {\left( 1 - \frac{\Delta q_{cl}}{q_{cl}}
    \right) }^{\frac{1}{2}} - C_l .
 
 Sublimation is assumed to reduce :math:`C_i` but not to alter
@@ -3369,7 +3369,7 @@ wish to use this representation, you are advised to set
 :math:`T_{HM1} = -8~^{\circ}`\ C, :math:`T_{HM2} = -3~^{\circ}`\ C,
 :math:`T_{HM5} = 7~^{\circ}`\ C.
 
-PSAUT: Aggregation of ice crystals to snow aggregates 
+PSAUT: Aggregation of ice crystals to snow aggregates
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **:math:`q_{cfc}` to :math:`q_{cfa}`**
@@ -3429,8 +3429,8 @@ easier (or indeed possible) by making the assumption of
 
 .. math:: :label: eq:mic_vx_vy
 
-   | v_x(D_x) - v_y(D_y) | =\mathrm{\footnotesize \sf MAX} \left[(\overline{v_x}+\overline{v_y})/8,| \overline{v_x} 
-   - \overline{v_y} |\right]  
+   | v_x(D_x) - v_y(D_y) | =\mathrm{\footnotesize \sf MAX} \left[(\overline{v_x}+\overline{v_y})/8,| \overline{v_x}
+   - \overline{v_y} |\right]
 
 for all values of :math:`D_x` and :math:`D_y`. So the velocity
 difference between any two particles from the two different categories
@@ -3694,7 +3694,7 @@ as for the collection of ice crystals by snow aggregates above (equation
 
 .. math::
 
-   f_V = \mathrm{\footnotesize \sf MAX} \left[| \overline{v_a} - \overline{v_R} |,  \frac{ \overline{v_a} + 
+   f_V = \mathrm{\footnotesize \sf MAX} \left[| \overline{v_a} - \overline{v_R} |,  \frac{ \overline{v_a} +
    \overline{v_R} }{8}~\right]
 
 is used and the collision and collection coefficients are now assumed to
@@ -3982,7 +3982,7 @@ appropriate for liquid drops and is given by,
 
 .. math:: :label: eq:mic_ABliq
 
-   \mathrm{AB}_{liq}=   \left(  \frac{L_v}{R_v T} -1 \right) 
+   \mathrm{AB}_{liq}=   \left(  \frac{L_v}{R_v T} -1 \right)
    \frac{L_v}{K_a T} + \frac{R_v T}{\psi e_{sat~liq}}.
 
 There are a few differences to the sublimation term. The ventilation
@@ -4092,7 +4092,7 @@ parameter :math:`A_1` is defined as
 
 .. math::
 
-   A_1 = \frac{4 \pi g}{18 {\left(\frac{4}{3} \pi \right)}^{\frac{4}{3}} 
+   A_1 = \frac{4 \pi g}{18 {\left(\frac{4}{3} \pi \right)}^{\frac{4}{3}}
    \mu {\rho_{w}}^{\frac{1}{3}}}
 
 which has the numerical value 5907.24 at :math:`0^{\circ}`\ C. The other
@@ -4112,7 +4112,7 @@ infinity:
 
 .. math::
 
-   n_r = \left(\frac{A}{B}\right) r^2 e^{-Br} + \frac{2A}{B^2} r e^{-Br} 
+   n_r = \left(\frac{A}{B}\right) r^2 e^{-Br} + \frac{2A}{B^2} r e^{-Br}
    + \frac{2A}{B^3} e ^{-Br}
 
 where :math:`A = \frac{B^3 n_d}{2}`, :math:`B=\frac{3}{r_{mean}}` and
@@ -4226,7 +4226,7 @@ To solve this we look at the rate of change of ice mass (in either the
 
 .. math::
 
-   \rho \Delta z \frac{\partial q_{cfx}}{\partial t} ~=~ S_x - 
+   \rho \Delta z \frac{\partial q_{cfx}}{\partial t} ~=~ S_x -
    \overline{v_{1x}} ~\rho~ q_{cfx}
 
 where :math:`\overline{v_{1x}}` is the mean ice fall speed out of the
@@ -4246,7 +4246,7 @@ where :math:`a` is given by
 
 .. math::
 
-   S_x(z-\Delta z) = S_x(z) - \left( q_{cfx}(t+\Delta t) - q_{cfx}(t) \right) 
+   S_x(z-\Delta z) = S_x(z) - \left( q_{cfx}(t+\Delta t) - q_{cfx}(t) \right)
    \frac{ \rho \Delta z}{\Delta t}
 
 which gives a solution
@@ -4265,8 +4265,8 @@ layer above:
 
 .. math::
 
-   \overline{v_{1x}}(z) = \frac{ \overline{v_{x}} q_{cfx} + 
-   \overline{v_{1x}}(z+\Delta z) S_x \frac{\Delta z}{\rho \Delta t} } {q_{cfx} + 
+   \overline{v_{1x}}(z) = \frac{ \overline{v_{x}} q_{cfx} +
+   \overline{v_{1x}}(z+\Delta z) S_x \frac{\Delta z}{\rho \Delta t} } {q_{cfx} +
    S_x \frac{\Delta z}{\rho \Delta t}  } .
 
 Since we only store one snowfall flux and one value of
@@ -4691,7 +4691,7 @@ where :math:`\Gamma_s` is the Saturated Adiabatic Lapse Rate
 
 .. math::
 
-   \Gamma_s  ~=~ g ~ \frac{ 1 ~+~ (L_v q)/(R_d T) }  
+   \Gamma_s  ~=~ g ~ \frac{ 1 ~+~ (L_v q)/(R_d T) }
        { c_{pd} ~+~ (L_v^2 q \epsilon)/(R_d T^2) }
 
 and :math:`g` is 9.8 m s\ :math:`^{-2}`, the latent heat of vaporization
@@ -4814,8 +4814,8 @@ mean sub-grid orographic water mixing
 
 .. math::
 
-   qcl_{orog} ~~=~~   \frac{dq_{L}}{dz}~ \frac{1}{\Delta}~ \left ( 
-   \frac{D H_{eff} ~\sin(k x_c)}{k}  ~-~  2 x_c \eta_c 
+   qcl_{orog} ~~=~~   \frac{dq_{L}}{dz}~ \frac{1}{\Delta}~ \left (
+   \frac{D H_{eff} ~\sin(k x_c)}{k}  ~-~  2 x_c \eta_c
     \right )
 
 where the horizontal cloud boundary :math:`x_c` is
@@ -4851,7 +4851,7 @@ grid-box variables and multiplying this by the mean ascent gives
 
 .. math::
 
-   qcl_{orog} ~~=~~   \frac{dq_{L}}{dz}~ \frac{1}{\Delta}~  \left (  
+   qcl_{orog} ~~=~~   \frac{dq_{L}}{dz}~ \frac{1}{\Delta}~  \left (
      \frac{ D H_{eff} sin(k x_c) }{k}  ~-~ 2 (\frac{\Delta}{2} ~-~ x_c ) \eta_c
     \right )
 
@@ -4952,7 +4952,7 @@ The rainrate in the UM is defined as the product of the number of drops,
 
 .. math:: :label: eqn:define_r
 
-   R=\int_{0}^{\infty} n(D) m(D) v(D) dD 
+   R=\int_{0}^{\infty} n(D) m(D) v(D) dD
 
 Let us look at each of the elements which make up the right hand side in
 turn. In the Unified Model (UM) large-scale precipitation scheme the
@@ -5046,9 +5046,9 @@ discuss them with the UKCA code owner before lodging the change.
    :header-rows: 2
 
    * - Precipitation inputs to UKCA
-     - 
-     - 
-     - 
+     -
+     -
+     -
 
    * - Sec
      - Item
@@ -5115,9 +5115,9 @@ purposes and for data assimilation.
      - 2D
      - Determined for each column
 
-   * - 
-     - 
-     - 
+   * -
+     -
+     -
      - from item 118
 
    * - 112
@@ -5128,27 +5128,27 @@ purposes and for data assimilation.
    * - 113
      - Graupel Radar Reflectivity (dBZ)
      - 3D
-     - 
+     -
 
    * - 114
      - Ice Aggregate Radar Reflectivity (dBZ)
      - 3D
-     - 
+     -
 
    * - 115
      - Ice Crystal Radar Reflectivity (dBZ)
      - 3D
-     - 
+     -
 
    * - 116
      - Rain Radar Reflectivity (dBZ)
      - 3D
-     - 
+     -
 
    * - 117
      - Liquid Cloud Radar Reflectivity (dBZ)
      - 3D
-     - 
+     -
 
    * - 118
      - Total Radar Reflectivity (dBZ)
@@ -5231,12 +5231,12 @@ with the only two unknowns now being :math:`|K_x|^2` and :math:`\rho_x`.
    * - Liquid Cloud, Rain
      - 0.93
      - 1000
-     - 
+     -
 
    * - Ice Aggregates, Ice Crystals
      - 0.174
      - 900
-     - 
+     -
 
    * - Graupel
      - 0.174
@@ -5323,11 +5323,11 @@ those diagnostics. The following guidance points should be noted:
      - Rain;
      - kg m \ :math:`^{-2}` ts \ :math:`^{-1}`
 
-   * - 
-     - 
-     - 
+   * -
+     -
+     -
      - Liquid Cloud
-     - 
+     -
 
    * - 202
      - Large Scale Snow Amount
@@ -5335,17 +5335,17 @@ those diagnostics. The following guidance points should be noted:
      - Ice Aggregates;
      - kg m \ :math:`^{-2}` ts \ :math:`^{-1}`
 
-   * - 
-     - 
-     - 
+   * -
+     -
+     -
      - Ice Crystals;
-     - 
+     -
 
-   * - 
-     - 
-     - 
+   * -
+     -
+     -
      - Graupel
-     - 
+     -
 
    * - 203
      - Large Scale Rain Rate
@@ -5353,11 +5353,11 @@ those diagnostics. The following guidance points should be noted:
      - Rain;
      - kg m \ :math:`^{-2}` s \ :math:`^{-1}`
 
-   * - 
-     - 
-     - 
+   * -
+     -
+     -
      - Liquid Cloud
-     - 
+     -
 
    * - 204
      - Large Scale Snow Rate
@@ -5365,17 +5365,17 @@ those diagnostics. The following guidance points should be noted:
      - Ice Aggregates;
      - kg m \ :math:`^{-2}` s \ :math:`^{-1}`
 
-   * - 
-     - 
-     - 
+   * -
+     -
+     -
      - Ice Crystals;
-     - 
+     -
 
-   * - 
-     - 
-     - 
+   * -
+     -
+     -
      - Graupel
-     - 
+     -
 
    * - 209
      - Large Scale Graupel
@@ -5383,11 +5383,11 @@ those diagnostics. The following guidance points should be noted:
      - Graupel
      - kg m \ :math:`^{-2}` ts \ :math:`^{-1}`
 
-   * - 
+   * -
      - Amount
-     - 
-     - 
-     - 
+     -
+     -
+     -
 
    * - 212
      - Large Scale Graupel
@@ -5395,11 +5395,11 @@ those diagnostics. The following guidance points should be noted:
      - Graupel
      - kg m \ :math:`^{-2}` s \ :math:`^{-1}`
 
-   * - 
+   * -
      - Rate
-     - 
-     - 
-     - 
+     -
+     -
+     -
 
    * - 222
      - Rain Rate on Model Levels
@@ -5407,11 +5407,11 @@ those diagnostics. The following guidance points should be noted:
      - Rain;
      - kg m \ :math:`^{-2}` s \ :math:`^{-1}`
 
-   * - 
-     - 
-     - 
+   * -
+     -
+     -
      - Liquid Cloud
-     - 
+     -
 
    * - 223
      - Snow Rate on Model Levels
@@ -5419,17 +5419,17 @@ those diagnostics. The following guidance points should be noted:
      - Ice Aggregates;
      - kg m \ :math:`^{-2}` s \ :math:`^{-1}`
 
-   * - 
-     - 
-     - 
+   * -
+     -
+     -
      - Ice Crystals;
-     - 
+     -
 
-   * - 
-     - 
-     - 
+   * -
+     -
+     -
      - Graupel
-     - 
+     -
 
    * - 226
      - Graupel Rate on Model levels
@@ -5443,11 +5443,11 @@ those diagnostics. The following guidance points should be noted:
      - Ice Aggregates;
      - kg m \ :math:`^{-2}` ts \ :math:`^{-1}`
 
-   * - 
+   * -
      - excluding graupel
-     - 
+     -
      - Ice Crystals
-     - 
+     -
 
    * - 304
      - Large Scale Snow Rate
@@ -5455,21 +5455,21 @@ those diagnostics. The following guidance points should be noted:
      - Ice Aggregates;
      - kg m \ :math:`^{-2}` s \ :math:`^{-1}`
 
-   * - 
+   * -
      - excluding graupel
-     - 
+     -
      - Ice Crystals
-     - 
+     -
 
    * - 323
      - Snow Rate on Model Levels
      - 3D
      - Ice Aggregates;
-     - 
+     -
 
-   * - 
+   * -
      - excluding graupel
-     - 
+     -
      - Ice Crystals
      - kg m \ :math:`^{-2}` s \ :math:`^{-1}`
 
