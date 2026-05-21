@@ -3,7 +3,10 @@ The Large-Scale Precipitation Parametrization Scheme
 ====================================================
 
 :Author: R. Forbes, J. Wilkinson, D. Wilson, I. Boutle, S. A. Smith,
-         V. Varma\ :math:`^{1}`
+         V. Varma\ [#affil1]_
+
+
+.. [#affil1] National Institute of Water and Atmospheric Research, Wellington, New Zealand
 
 .. role:: raw-latex(raw)
    :format: latex
