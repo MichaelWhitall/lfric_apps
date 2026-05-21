@@ -13,7 +13,7 @@ index 7fb94307..a2663ebf 100644
       - Definition
 @@ -517,7 +517,7 @@ constants for the large-scale precipitation scheme.
  
- .. list-table:: Default values of constants used in the particle size-spectra relations. The rain parameters were selected specifically in order to produce smaller drop sizes for lighter rain, as demonstrated from radar data. The parametrization of the crystal size distribution follows the form of :raw-latex:`\cite{Cox:1988}` but uses aircraft data from :raw-latex:`\cite{Field:1999}` to influence the choice of the values of the parameters.
+ .. list-table:: Default values of constants used in the particle size-spectra relations. The rain parameters were selected specifically in order to produce smaller drop sizes for lighter rain, as demonstrated from radar data. The parametrization of the crystal size distribution follows the form of `Cox (1988)`_ but uses aircraft data from `Field (1999)`_ to influence the choice of the values of the parameters.
     :name: tab:mic_consts_psd
 -
 +   :header-rows: 1
@@ -39,7 +39,7 @@ index 7fb94307..a2663ebf 100644
       - :math:`a_z`
 @@ -843,7 +842,7 @@ where parameters are given in tables `5 <#tab:mic_consts_fallspeed>`__,
  
- .. list-table:: Default values of constants used in the fall speed relations. The :raw-latex:`\cite{Sachidananda:Zrnic:1986}` relationship does not asymptote to a fixed value for large diameters and better representations exist; these are discussed further in section `4.4.3 <#sec:as07>`__. The ice fall speeds are selected so as to agree with the values calculated using the :raw-latex:`\cite{Mitchell:1996}` relationships.
+ .. list-table:: Default values of constants used in the fall speed relations. The `Sachinananda and Zrni\'{c} (1986)`_ relationship does not asymptote to a fixed value for large diameters and better representations exist; these are discussed further in section `4.4.3 <#sec:as07>`__. The ice fall speeds are selected so as to agree with the values calculated using the `Mitchell (1996)`_ relationships.
     :name: tab:mic_consts_fallspeed
 -
 +   :header-rows: 1
@@ -57,7 +57,7 @@ index 7fb94307..a2663ebf 100644
       - :math:`e_x`
 @@ -924,7 +923,7 @@ be replaced by that in table `7 <#tab:mit_2nd_rex>`__.
  
- .. list-table:: Parameters for use in the 2nd Re-X (:math:`R_e`\ :math:`B_e` in this document) relation (Eq.19) of :raw-latex:`\cite{Mitchell:1996}`; now operational in the NWP suite.
+ .. list-table:: Parameters for use in the 2nd Re-X (:math:`R_e`\ :math:`B_e` in this document) relation (Eq.19) of `Mitchell (1996)`_; now operational in the NWP suite.
     :name: tab:mit_2nd_rex
 -
 +   :header-rows: 1
@@ -65,7 +65,7 @@ index 7fb94307..a2663ebf 100644
     * - Species
       - :math:`e_x`
 @@ -1009,7 +1008,6 @@ the UM, as defined in table `5 <#tab:mic_consts_fallspeed>`__.
- .. list-table:: Parameters used in the :raw-latex:`\cite{Abel:Shipway:2007}` rain fall velocity (equation `[eq:as07] <#eq:as07>`__) as set-up for the UM. Note that parameter :math:`c_{2R}` differs from :raw-latex:`\cite{Abel:Shipway:2007}` as there is a mistake in their paper where they give this term the wrong sign. The version used here and in the UM is correct.
+ .. list-table:: Parameters used in the `Abel and Shipway (2007)`_ rain fall velocity (equation `[eq:as07] <#eq:as07>`__) as set-up for the UM. Note that parameter :math:`c_{2R}` differs from `Abel and Shipway (2007)`_ as there is a mistake in their paper where they give this term the wrong sign. The version used here and in the UM is correct.
     :name: tab:as07
  
 -
@@ -83,7 +83,7 @@ index 7fb94307..a2663ebf 100644
       - :math:`a_x`
 @@ -1122,7 +1120,7 @@ given in table `10 <#tab:bf95>`__.
  
- .. list-table:: Values of density relations used by :raw-latex:`\cite{Brown:Francis:1995}`
+ .. list-table:: Values of density relations used by `Brown and Francis (1995)`_
     :name: tab:bf95
 -
 +   :header-rows: 1
