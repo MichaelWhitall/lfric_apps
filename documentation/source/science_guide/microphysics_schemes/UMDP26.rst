@@ -1,3 +1,15 @@
+.. -----------------------------------------------------------------------------
+    (c) Crown copyright Met Office. All rights reserved.
+    The file LICENCE, distributed with this code, contains details of the terms
+    under which the code may be used.
+   -----------------------------------------------------------------------------
+
+.. attention::
+
+   This documentation has been transfered directly from the UM to LFRic;
+   It is still a work in progress. There are still UM-specific references
+   and terminology that are yet to be updated.
+
 ====================================================
 The Large-Scale Precipitation Parametrization Scheme
 ====================================================
