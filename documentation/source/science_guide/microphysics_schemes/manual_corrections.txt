@@ -30,7 +30,7 @@ index 7fb94307..a2663ebf 100644
  
 @@ -681,7 +680,7 @@ represents the subscripts 1 to 10 are given in table `4 <#tab:field>`__.
  
- .. list-table:: Coefficients and exponents of moment for equations `[eq:fielda] <#eq:fielda>`__ and `[eq:fieldb] <#eq:fieldb>`__.
+ .. list-table:: Coefficients and exponents of moment for equations :eq:`eq:fielda` and :eq:`eq:fieldb`.
     :name: tab:field
 -
 +   :header-rows: 1
@@ -65,7 +65,7 @@ index 7fb94307..a2663ebf 100644
     * - Species
       - :math:`e_x`
 @@ -1009,7 +1008,6 @@ the UM, as defined in table `5 <#tab:mic_consts_fallspeed>`__.
- .. list-table:: Parameters used in the `Abel and Shipway (2007)`_ rain fall velocity (equation `[eq:as07] <#eq:as07>`__) as set-up for the UM. Note that parameter :math:`c_{2R}` differs from `Abel and Shipway (2007)`_ as there is a mistake in their paper where they give this term the wrong sign. The version used here and in the UM is correct.
+ .. list-table:: Parameters used in the `Abel and Shipway (2007)`_ rain fall velocity (equation :eq:`eq:as07`) as set-up for the UM. Note that parameter :math:`c_{2R}` differs from `Abel and Shipway (2007)`_ as there is a mistake in their paper where they give this term the wrong sign. The version used here and in the UM is correct.
     :name: tab:as07
  
 -
@@ -128,7 +128,7 @@ index 7fb94307..a2663ebf 100644
       - :math:`n_d(land)`
 @@ -2778,7 +2776,7 @@ are given in table `15 <#tab:haycla>`__
  
- .. list-table:: MURK aerosol parameters used in equation `[eq:new_murk] <#eq:new_murk>`__
+ .. list-table:: MURK aerosol parameters used in equation :eq:`eq:new_murk`
     :name: tab:haycla
 -
 +   :header-rows: 1

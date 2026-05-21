@@ -996,7 +996,7 @@ table `8 <#tab:as07>`__. It should be noted that while
 have retained the value of 0.4 to maintain consistency with the rest of
 the UM, as defined in table `5 <#tab:mic_consts_fallspeed>`__.
 
-.. list-table:: Parameters used in the `Abel and Shipway (2007)`_ rain fall velocity (equation :eq:`eq:as07` as set-up for the UM. Note that parameter :math:`c_{2R}` differs from `Abel and Shipway (2007)`_ as there is a mistake in their paper where they give this term the wrong sign. The version used here and in the UM is correct.
+.. list-table:: Parameters used in the `Abel and Shipway (2007)`_ rain fall velocity (equation :eq:`eq:as07`) as set-up for the UM. Note that parameter :math:`c_{2R}` differs from `Abel and Shipway (2007)`_ as there is a mistake in their paper where they give this term the wrong sign. The version used here and in the UM is correct.
    :name: tab:as07
 
    * - Para meter
@@ -1909,7 +1909,7 @@ Update of precipitation fraction from precip mass sources
 |  
 | Following our definition of
   :math:`C_r = \frac{ \overline{q_p}^2 }{ \overline{q_p^2} }` (eq
-  :eq:`eq:representative_c_r`, the updated
+  :eq:`eq:representative_c_r`), the updated
   value of :math:`C_r` following each increment to grid-mean precip mass
   :math:`\overline{q_p}` can be calculated if we also know the
   corresponding increment to the 2nd moment of the sub-grid precip-mass
@@ -2771,7 +2771,7 @@ are given in table `15 <#tab:haycla>`__
 
 `Wilkinson et al. (2010)`_ showed that generating the
 cloud droplet number using the `Jones et al. (1994)`_
-relationship (equation :eq:`eq:Jones_Nature`
+relationship (equation :eq:`eq:Jones_Nature`)
 constrained the cloud droplet numbers into a sensible range of values.
 However `Abel (2012)`_ used aircraft data to suggest that
 the `Haywood et al. (2008)`_ parametrization overestimated
@@ -2883,7 +2883,7 @@ law. The terminal velocity of a cloud droplet is given as follows (after
 
 where :math:`\mathcal{K}_1 = 1.27 \times 10^8` m\ :math:`^{-1}`
 s\ :math:`^{-1} /F_{K_{a}}` (and :math:`F_{K_{a}}`\ is defined in
-equation :eq:`eq:mic_conductivity`. Equation
+equation :eq:`eq:mic_conductivity`). Equation
 :eq:`eq:ds_lamb` is accurate for droplet radii of up to 30
 microns. Damian Wilson has integrated over the cloud droplet spectrum,
 assuming a `Khrgian and Mazin (1952)`_ gamma distribution,
@@ -3387,7 +3387,7 @@ processes as described earlier.
 The process of aggregation of ice crystals to snow aggregates is coded
 to emulate the diagnostic split scheme, i.e. the amount of ice crystal
 mass is calculated using the diagnostic split (equation
-:eq:`eq:cry_agg_split` and any mass greater than
+:eq:`eq:cry_agg_split`) and any mass greater than
 this threshold is transferred to the aggregate category.
 
 .. _`sec:PSACI`:
@@ -4166,7 +4166,7 @@ and :math:`f_{cl}` is given in Equation :eq:`eq-fsdqcl`.
 .. figure:: blank.svg
    :name: fig:fall_speeds
 
-   \footnotesize {Autoconversion Thresholds for the default scheme (black line; equation :eq:`eq:jones_nd` and the `Tripoli and Cotton (1980)`_ formula (red line; equation :eq:`eq:tc_act`, shown as a function of cloud droplet number. }
+   \footnotesize {Autoconversion Thresholds for the default scheme (black line; equation :eq:`eq:jones_nd`) and the `Tripoli and Cotton (1980)`_ formula (red line; equation :eq:`eq:tc_act`), shown as a function of cloud droplet number. }
 
    .. list-table::
       :align: center
