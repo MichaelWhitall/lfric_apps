@@ -818,7 +818,7 @@ as described by `Mitchell (1996)`_.
 
 where :math:`\mu_0` is the dynamic viscosity of air at
 0\ :math:`^{\circ}`\ C, :math:`g` is the acceleration due to
-gravity [1]_ and
+gravity [#fnote1]_ and
 
 .. math:: A_{ice}=r_x D^{s_x}
 
@@ -1223,7 +1223,7 @@ in its cloud field. The microphysical transfer rates that are calculated
 are thus not directly applicable to the whole gridbox.
 
 The schemes divide the grid box into eight regions, representing the
-possible states of presence or absence of ice  [2]_, liquid water and
+possible states of presence or absence of ice  [#fnote2]_, liquid water and
 rain. (Thus there are three phases each with 2 options, present or
 absent and :math:`2^3=8`.) In order to calculate the size of these
 partitions we need to know information about the ice cloud fraction (by
@@ -3253,7 +3253,7 @@ equation. This gives `Rogers and Yau (1989)`_:
             {\mathrm{sin}^{-1} \left( {\left( 1 - {r_a}^2 \right)}^{\frac{1}{2}} \right) },
              ~~r_a < 1 (oblates)
 
-where :math:`r_a` is the axial ratio [3]_
+where :math:`r_a` is the axial ratio [#fnote3]_
 
 :math:`c` is the multiplying factor to apply to :math:`{\mathcal{V}}_x`. The
 precipitation scheme allows the specification of an axial ratio and make
@@ -4368,7 +4368,7 @@ because the melting term occurs after the sedimentation, leading to a
 collection of stagnant rain at the melting level, which cannot fall any
 further until the next call to the microphysics. This stagnant rain
 leads to a large radar reflectivity signal at the melting level which
-looks unrealistic compared to observations [4]_. In addition, the
+looks unrealistic compared to observations [#fnote4]_. In addition, the
 stagnant rain at the end of the timestep is passed to the UM’s dynamical
 core and in the presence of an updraught, will be advected back above
 the freezing level, leading to supercooled rain, which may persist to
@@ -4427,7 +4427,7 @@ precip mass); they should really have been allowed to remove some of the
 flux passed down to the next level as well. For example, this makes it
 impossible for the rain flux to evaporate entirely before reaching the
 surface (since some rain flux is always passed down to the next level
-*before* rain evaporation is applied)  [5]_.
+*before* rain evaporation is applied)  [#fnote5]_.
 
 This numerical problem causes light rain rates to spuriously reach the
 surface in situations where they should have fully evaporated on the way
@@ -5527,29 +5527,29 @@ level is close to the surface.
      - Maximum hail size on model levels [mm]
      - 3D
 
-.. [1]
+.. [#fnote1]
    This should not be confused with the exponent of the fallspeed air
    density correction used from equation :eq:`eq:mic_vxd`
    onwards. To avoid any confusion, in this document ‘:math:`g`’ will be
    used for acceleration due to gravity and ‘:math:`\mathcal{G}`’ in the
    fall speed correction with air density.
 
-.. [2]
+.. [#fnote2]
    when crystals are used, aggregates and crystals are classed together
    as ice, graupel is ignored at present
 
-.. [3]
+.. [#fnote3]
    This is defined as :math:`a/b` in `Rogers and Yau (1989)`_
    and `Pruppacher and Klett (1997)`_. In their notation,
    :math:`a` is the major semi-axes while :math:`b` is the minor
    semi-axes.
 
-.. [4]
+.. [#fnote4]
    This should not be confused with the radar bright-band, which would
    not normally be present in model data is and regularly filtered out
    of radar observations
 
-.. [5]
+.. [#fnote5]
    In practice, the rain fall-flux does eventually get forced to zero
    but only because the sedimentation code removes fluxes below a tiny
    numerical tolerance for computational efficiency.
