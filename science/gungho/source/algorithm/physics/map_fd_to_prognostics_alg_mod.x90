@@ -51,7 +51,9 @@ module map_fd_to_prognostics_alg_mod
   use random_perturb_field_alg_mod,    only: random_perturb_field
     use mr_indices_mod,                only: imr_v, imr_cl, imr_ci, imr_r, &
                                              imr_s, imr_g
-  use moist_dyn_mod,                   only: num_moist_factors, gas_law
+  use moist_dyn_mod,                   only: num_moist_factors, &
+                                             gas_law,           &
+                                             total_mass
   use moist_dyn_factors_alg_mod,       only: moist_dyn_factors_alg
 
   ! Configuration modules
@@ -61,6 +63,13 @@ module map_fd_to_prognostics_alg_mod
                                        topology_fully_periodic
   use formulation_config_mod,    only: rotating, shallow
   use finite_element_config_mod, only: coord_system, coord_system_native
+  use initialization_config_mod, only: model_eos_height,      &
+                                       read_w2h_wind,         &
+                                       regravitate,           &
+                                       regravitate_geopot,    &
+                                       regravitate_isotherm1, &
+                                       regravitate_isotherm2, &
+                                       regravitate_isotherm3
   use physics_config_mod,        only: sample_physics_winds, &
                                        sample_physics_winds_correction
   use planet_config_mod,         only: gravity, p_zero, kappa, rd, cp
@@ -113,15 +122,6 @@ contains
 
     type(integer_field_type), pointer :: face_selector_ew
     type(integer_field_type), pointer :: face_selector_ns
-
-    integer(i_def)               :: model_eos_height
-    logical(l_def)               :: read_w2h_wind
-    type(namelist_type), pointer :: initialization_nml
-
-    initialization_nml => configuration%get_namelist('initialization')
-    call initialization_nml%get_value( 'model_eos_height', model_eos_height )
-    call initialization_nml%get_value( 'read_w2h_wind', read_w2h_wind )
-    nullify( initialization_nml )
 
     ! FD (source) fields
     if ( read_w2h_wind ) then
@@ -347,8 +347,12 @@ contains
     use sci_enforce_bc_kernel_mod,     only : enforce_bc_kernel_type
     use hydrostatic_coriolis_kernel_mod, &
                                        only : hydrostatic_coriolis_kernel_type
+    use hstat_cori_g_const_kernel_mod, &
+                                       only : hstat_cori_g_const_kernel_type
     use hydro_shallow_to_deep_kernel_mod, &
                                        only : hydro_shallow_to_deep_kernel_type
+    use regrav_isotherm_kernel_mod,    only : regrav_isotherm_kernel_type
+    use regrav_geopot_kernel_mod,      only : regrav_geopot_kernel_type
     use moist_dyn_mod,                 only : num_moist_factors
     use matrix_vector_kernel_mod,      only : matrix_vector_kernel_type
     use sci_nodal_xyz_coordinates_kernel_mod, &
@@ -449,7 +453,10 @@ contains
       ! by rederiving potential temperature (theta) and density (rho).
       call theta%copy_field_properties(exner_in_wth)
       call theta%copy_field_properties(temperature)
-      call invoke( &
+
+      select case( regravitate )
+      case( regravitate_isotherm1 )
+        call invoke( &
              ! Compute exner from EoS
              sample_eos_pressure_kernel_type( exner, rho,                    &
                                               theta, moist_dyn(gas_law) ),   &
@@ -469,8 +476,83 @@ contains
                                                 moist_dyn, geopotential,     &
                                                 height_w3, height_wth,       &
                                                 mask, gravity,               &
-                                                cp, eos_level ),             &
+                                                cp, eos_level ) )
+      case( regravitate_isotherm2 )
+        call invoke( &
+             ! Compute exner from EoS
+             sample_eos_pressure_kernel_type( exner, rho,                    &
+                                              theta, moist_dyn(gas_law) ),   &
 
+             ! Compute exner in Wtheta (required to calculate T)
+             sample_w3_to_wtheta_kernel_type( exner_in_wth, exner,           &
+                                              height_wth, height_w3 ),       &
+
+             ! Compute absolute temperature T = theta * exner
+             X_times_Y( temperature, exner_in_wth, theta),                   &
+             ! Rebalance exner in vertical, using hydrostatic balance.
+             ! This integrates down using g (shallow) from eos_level and
+             ! then integrates up using phi (deep).
+             hstat_cori_g_const_kernel_type( exner, rho, theta,     &
+                                             c_vert_term,           &
+                                             moist_dyn(gas_law),    &
+                                             moist_dyn(total_mass), &
+                                             height_w3, mask,       &
+                                             eos_level ),           &
+             regrav_isotherm_kernel_type( exner, temperature,    &
+                                          c_vert_term,           &
+                                          moist_dyn(gas_law),    &
+                                          moist_dyn(total_mass), &
+                                          geopotential,          &
+                                          height_w3, height_wth, &
+                                          mask ) )
+      case( regravitate_isotherm3 )
+        call invoke( &
+             hstat_cori_g_const_kernel_type( exner, rho, theta,     &
+                                             c_vert_term,           &
+                                             moist_dyn(gas_law),    &
+                                             moist_dyn(total_mass), &
+                                             height_w3, mask,       &
+                                             eos_level ),           &
+             sample_w3_to_wtheta_kernel_type( exner_in_wth, exner,     &
+                                              height_wth, height_w3 ), &
+
+             ! Compute absolute temperature T = theta * exner
+             X_times_Y( temperature, exner_in_wth, theta),       &
+             regrav_isotherm_kernel_type( exner, temperature,    &
+                                          c_vert_term,           &
+                                          moist_dyn(gas_law),    &
+                                          moist_dyn(total_mass), &
+                                          geopotential,          &
+                                          height_w3, height_wth, &
+                                          mask ) )
+      case( regravitate_geopot )
+        call invoke( &
+             hstat_cori_g_const_kernel_type( exner, rho, theta,     &
+                                             c_vert_term,           &
+                                             moist_dyn(gas_law),    &
+                                             moist_dyn(total_mass), &
+                                             height_w3, mask,       &
+                                             eos_level ),           &
+             sample_w3_to_wtheta_kernel_type( exner_in_wth, exner,     &
+                                              height_wth, height_w3 ), &
+             ! Compute absolute temperature T = theta * exner
+             X_times_Y( temperature, exner_in_wth, theta),     &
+             regrav_geopot_kernel_type( temperature, theta,    &
+                                        exner,                 &
+                                        c_vert_term,           &
+                                        moist_dyn(gas_law),    &
+                                        moist_dyn(total_mass), &
+                                        height_w3, height_wth, &
+                                        mask ),                &
+             regrav_isotherm_kernel_type( exner, temperature,    &
+                                          c_vert_term,           &
+                                          moist_dyn(gas_law),    &
+                                          moist_dyn(total_mass), &
+                                          geopotential,          &
+                                          height_w3, height_wth, &
+                                          mask ) )
+      end select
+      call invoke( &
              ! Recompute exner in Wtheta (required to calculate theta)
              sample_w3_to_wtheta_kernel_type( exner_in_wth, exner,           &
                                               height_wth, height_w3 ),       &
