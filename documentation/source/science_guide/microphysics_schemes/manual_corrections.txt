@@ -1,78 +1,78 @@
 diff --git a/documentation/source/science_guide/microphysics_schemes/UMDP26.rst b/documentation/source/science_guide/microphysics_schemes/UMDP26.rst
-index 7fb94307..a2663ebf 100644
+index cc9f6beb..526dd704 100644
 --- a/documentation/source/science_guide/microphysics_schemes/UMDP26.rst
 +++ b/documentation/source/science_guide/microphysics_schemes/UMDP26.rst
-@@ -388,7 +388,7 @@ freezing point of water, :math:`p` is the pressure and
- 
- .. list-table:: Values and definitions of physical constants used in the microphysics parametrization.
+@@ -404,7 +404,7 @@ freezing point of water, :math:`p` is the pressure and
+ .. list-table:: Values and definitions of physical constants used in the
+    microphysics parametrization.
     :name: tab:mic_phys
 -
 +   :header-rows: 1
  
     * - Symbol
       - Definition
-@@ -517,7 +517,7 @@ constants for the large-scale precipitation scheme.
- 
- .. list-table:: Default values of constants used in the particle size-spectra relations. The rain parameters were selected specifically in order to produce smaller drop sizes for lighter rain, as demonstrated from radar data. The parametrization of the crystal size distribution follows the form of `Cox (1988)`_ but uses aircraft data from `Field (1999)`_ to influence the choice of the values of the parameters.
+@@ -537,7 +537,7 @@ constants for the large-scale precipitation scheme.
+    (1988)`_ but uses aircraft data from `Field (1999)`_ to influence the choice of
+    the values of the parameters.
     :name: tab:mic_consts_psd
 -
 +   :header-rows: 1
  
     * - Model
       - :math:`n_{ax}`
-@@ -617,7 +617,6 @@ then used as a single quantity in the rest of the model.
- .. list-table:: Parameters for the splitting of ice into crystals and aggregates.
+@@ -639,7 +639,6 @@ then used as a single quantity in the rest of the model.
+    aggregates.
     :name: tab:mic_split
  
 -
     * - :math:`T_{scaling}`
       - 0.0384 K\ :math:`^{-1}`
  
-@@ -681,7 +680,7 @@ represents the subscripts 1 to 10 are given in table `4 <#tab:field>`__.
- 
- .. list-table:: Coefficients and exponents of moment for equations :eq:`eq:fielda` and :eq:`eq:fieldb`.
+@@ -705,7 +704,7 @@ represents the subscripts 1 to 10 are given in :numref:`Table %s <tab:field>`.
+ .. list-table:: Coefficients and exponents of moment for equations
+    :eq:`eq:fielda` and :eq:`eq:fieldb`.
     :name: tab:field
 -
 +   :header-rows: 1
  
     * - :math:`z`
       - :math:`a_z`
-@@ -843,7 +842,7 @@ where parameters are given in tables `5 <#tab:mic_consts_fallspeed>`__,
- 
- .. list-table:: Default values of constants used in the fall speed relations. The `Sachinananda and Zrnić (1986)`_ relationship does not asymptote to a fixed value for large diameters and better representations exist; these are discussed further in section `4.4.3 <#sec:as07>`__. The ice fall speeds are selected so as to agree with the values calculated using the `Mitchell (1996)`_ relationships.
+@@ -873,7 +872,7 @@ and
+    fall speeds are selected so as to agree with the values calculated using the
+    `Mitchell (1996)`_ relationships.
     :name: tab:mic_consts_fallspeed
 -
 +   :header-rows: 1
  
     * - Model
       - :math:`c_x`
-@@ -882,7 +881,7 @@ where parameters are given in tables `5 <#tab:mic_consts_fallspeed>`__,
- 
- .. list-table:: Constants used in the calculation of ice crystal and aggregate fall speed relationships. Graupel, like rain is assumed to be spherical; hence it is not possible to set values for the constants in this table for these quantities.
+@@ -915,7 +914,7 @@ and
+    it is not possible to set values for the constants in this table for these
+    quantities.
     :name: tab:mic_consts_fallspeed2
 -
 +   :header-rows: 1
  
     * - Species
       - :math:`e_x`
-@@ -924,7 +923,7 @@ be replaced by that in table `7 <#tab:mit_2nd_rex>`__.
- 
- .. list-table:: Parameters for use in the 2nd Re-X (:math:`R_e`\ :math:`B_e` in this document) relation (Eq.19) of `Mitchell (1996)`_; now operational in the NWP suite.
+@@ -960,7 +959,7 @@ be replaced by that in :numref:`Table %s <tab:mit_2nd_rex>`.
+    this document) relation (Eq.19) of `Mitchell (1996)`_; now operational in the
+    NWP suite.
     :name: tab:mit_2nd_rex
 -
 +   :header-rows: 1
  
     * - Species
       - :math:`e_x`
-@@ -1009,7 +1008,6 @@ the UM, as defined in table `5 <#tab:mic_consts_fallspeed>`__.
- .. list-table:: Parameters used in the `Abel and Shipway (2007)`_ rain fall velocity (equation :eq:`eq:as07`) as set-up for the UM. Note that parameter :math:`c_{2R}` differs from `Abel and Shipway (2007)`_ as there is a mistake in their paper where they give this term the wrong sign. The version used here and in the UM is correct.
+@@ -1049,7 +1048,6 @@ the UM, as defined in :numref:`Table %s <tab:mic_consts_fallspeed>`.
+    in the UM is correct.
     :name: tab:as07
  
 -
     * - Para meter
       - :math:`c_{1R}`
       - :math:`d_{1R}`
-@@ -1087,7 +1085,7 @@ microphysical transfer rates to be solved easily.
+@@ -1126,7 +1124,7 @@ microphysical transfer rates to be solved easily.
  
  .. list-table:: Default values of constants used in the density relations.
     :name: tab:mic_consts_density
@@ -81,7 +81,7 @@ index 7fb94307..a2663ebf 100644
  
     * - Species
       - :math:`a_x`
-@@ -1122,7 +1120,7 @@ given in table `10 <#tab:bf95>`__.
+@@ -1161,7 +1159,7 @@ given in :numref:`Table %s <tab:bf95>`.
  
  .. list-table:: Values of density relations used by `Brown and Francis (1995)`_
     :name: tab:bf95
@@ -90,52 +90,52 @@ index 7fb94307..a2663ebf 100644
  
     * - Species
       - :math:`a_x`
-@@ -1579,7 +1577,7 @@ graupel mass is assumed to act within.
- 
- .. list-table:: Processes affecting precipitation mass within the sub-grid precipitation fraction area partitions, when using i_update_precfrac = 1. “+” signs denote sources of preipitation mass, whereas “-” signs denote sinks.
+@@ -1630,7 +1628,7 @@ graupel mass is assumed to act within.
+    precipitation fraction area partitions, when using i_update_precfrac = 1. "+"
+    signs denote sources of preipitation mass, whereas "-" signs denote sinks.
     :name: tab:precfrac_processes
 -
 +   :header-rows: 1
  
-    * - 
+    * -
       - **ra in_liq**
-@@ -2263,7 +2261,7 @@ of the square-root term, all of the factors of
- 
- .. list-table:: Method, equation and process-fraction :math:`C_{proc}` used to update the prognostic precipitation fraction consistent with precip mass for each process, when using i_update_precfrac = 2.
+@@ -2323,7 +2321,7 @@ of the square-root term, all of the factors of
+    update the prognostic precipitation fraction consistent with precip mass for
+    each process, when using i_update_precfrac = 2.
     :name: tab:precfrac_processes_2
 -
 +   :header-rows: 1
  
-    * - 
+    * -
       - Source(+) or sink(-)
-@@ -2491,7 +2489,7 @@ as ilustrated by the subscript.
- 
- .. list-table:: Details of the process conversion terms that are modelled in the UM microphysics parametrizations. :math:`q` is vapour mixing ratio, :math:`q_{cl}` liquid water mixing ratio, :math:`q_{cfa}` ice aggregate mixing ratio, :math:`q_R` rain mixing ratio, :math:`q_{cfc}` ice crystal mixing ratio and :math:`q_{graup}` is graupel mixing ratio. Sedimentation processes are ignored as they do not change the microphysical category.
+@@ -2557,7 +2555,7 @@ as ilustrated by the subscript.
+    and :math:`q_{graup}` is graupel mixing ratio. Sedimentation processes are
+    ignored as they do not change the microphysical category.
     :name: tab:rates
 -
 +   :header-rows: 1
  
     * - Code
       - Sink
-@@ -2683,7 +2681,7 @@ literature.
+@@ -2749,7 +2747,7 @@ literature.
  
  .. list-table:: Land-sea droplet number concentrations
     :name: tab:drop_num
 -
 +   :header-rows: 1
  
-    * - 
+    * -
       - :math:`n_d(land)`
-@@ -2778,7 +2776,7 @@ are given in table `15 <#tab:haycla>`__
+@@ -2843,7 +2841,7 @@ are given in :numref:`Table %s <tab:haycla>`
  
  .. list-table:: MURK aerosol parameters used in equation :eq:`eq:new_murk`
     :name: tab:haycla
 -
 +   :header-rows: 1
  
-    * - 
+    * -
       - :math:`n_{0_{murk}}`
-@@ -5089,7 +5087,7 @@ discuss them with the UKCA code owner before lodging the change.
+@@ -5199,7 +5197,7 @@ discuss them with the UKCA code owner before lodging the change.
  
  .. list-table:: Precipitation Diagnostics which are used by UKCA
     :name: tab:ukca
@@ -143,17 +143,17 @@ index 7fb94307..a2663ebf 100644
 +   :header-rows: 2
  
     * - Precipitation inputs to UKCA
-      - 
-@@ -5144,7 +5142,7 @@ purposes and for data assimilation.
- 
- .. list-table:: Available radar reflectivity diagnostics (all diagnostics are contained in section 4).
+      -
+@@ -5255,7 +5253,7 @@ purposes and for data assimilation.
+ .. list-table:: Available radar reflectivity diagnostics (all diagnostics are
+    contained in section 4).
     :name: tab:radar
 -
 +   :header-rows: 1
  
     * - Item
       - Description
-@@ -5272,7 +5270,7 @@ with the only two unknowns now being :math:`|K_x|^2` and :math:`\rho_x`.
+@@ -5381,7 +5379,7 @@ with the only two unknowns now being :math:`|K_x|^2` and :math:`\rho_x`.
  
  .. list-table:: Constants used in the Radar Reflectivity Calculations.
     :name: tab:rad_param
@@ -162,25 +162,25 @@ index 7fb94307..a2663ebf 100644
  
     * - Category
       - :math:`|K_x|^2`
-@@ -5361,7 +5359,7 @@ those diagnostics. The following guidance points should be noted:
- 
- .. list-table:: Precipitation Rate and Amount Diagnostics currently available from the large-scale precipitation scheme. In the units column, ‘ts’ denotes the model timestep.
+@@ -5473,7 +5471,7 @@ those diagnostics. The following guidance points should be noted:
+    from the large-scale precipitation scheme. In the units column, 'ts' denotes
+    the model timestep.
     :name: tab:precip_diag
 -
 +   :header-rows: 1
  
     * - Item
       - Description
-@@ -5565,7 +5563,7 @@ level is close to the surface.
- 
- .. list-table:: Maximum hail size diagnostics available from section 4 of the microphysics scheme.
+@@ -5678,7 +5676,7 @@ level is close to the surface.
+ .. list-table:: Maximum hail size diagnostics available from section 4 of the
+    microphysics scheme.
     :name: tab:max_hail_size
 -
 +   :header-rows: 1
  
     * - Item
       - Description
-@@ -559,7 +559,7 @@ constants for the large-scale precipitation scheme.
+@@ -579,7 +579,7 @@ constants for the large-scale precipitation scheme.
       - :math:`-2`
       - :math:`58`
       - 0.0
@@ -189,12 +189,12 @@ index 7fb94307..a2663ebf 100644
  
  The functions :math:`F_{n_{ax}}(T_c)` represent the observed broadening
  of the size spectra with increasing temperature for ice particles (due
-@@ -856,21 +856,21 @@ where parameters are given in tables `5 <#tab:mic_consts_fallspeed>`__,
+@@ -887,21 +886,21 @@ and
       - 0.67
       - 0.4
       - 0.0
--     - :ra w-latex: ``Sachinananda and Zrnić (1986)`_`
-+     - `Sachinananda and Zrnić (1986)`_
+-     - :ra w-latex: ``Sachinananda and Zrnic (1986)`_`
++     - `Sachinananda and Zrnic (1986)`_
  
     * - Ag gregates
       - 14.3
@@ -214,7 +214,7 @@ index 7fb94307..a2663ebf 100644
  
     * - Graupel
       - 253.0
-@@ -895,14 +895,14 @@ where parameters are given in tables `5 <#tab:mic_consts_fallspeed>`__,
+@@ -929,14 +928,14 @@ and
       - 0.638
       - 0.131
       - 1.88
@@ -229,14 +229,14 @@ index 7fb94307..a2663ebf 100644
 -     - : raw-late x:``Mitchell (1996)`_`
 +     - `Mitchell (1996)`_
  
- .. _`sec:mit_2nd_rex`:
+ .. _sec_mit_2nd_rex:
  
-@@ -937,7 +937,7 @@ be replaced by that in table `7 <#tab:mit_2nd_rex>`__.
+@@ -974,7 +973,7 @@ be replaced by that in :numref:`Table %s <tab:mit_2nd_rex>`.
       - 0.831
       - 0.131
       - 1.88
 -     - : raw-late x:``Mitchell (1996)`_`
 +     - `Mitchell (1996)`_
  
- .. _`sec:split_ice_vt`:
+ .. _sec_split_ice_vt:
  
