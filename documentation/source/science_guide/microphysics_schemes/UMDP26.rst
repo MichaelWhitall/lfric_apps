@@ -238,7 +238,7 @@ transfer processes have been performed, this is converted to a rain rate
 (code symbol :math:`rainrate`).
 
 Diagnostic representation:
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Units :math:`kg~m^{-2}~s^{-1}`.** This represents the flux of rain (or
 rain rate) in each model level. There is no advection of rain between
@@ -250,7 +250,7 @@ end of the timestep, any rain left will have fallen to the Earth's
 surface.
 
 Prognostic representation:
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Units :math:`kg~kg^{-1}`.** This represents the mixing ratio of rain.
 This quantity is *advected* downwards in the column to represent its
@@ -277,7 +277,7 @@ Ice water content
 content per kg of moist air in the grid box.
 
 Single prognostic representation:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This quantity is split by a diagnostic relationship into a large-ice
 category, *'aggregates'* (**symbol :math:`q_{cfa}`, code variable
@@ -287,7 +287,7 @@ separately by the microphysical transfers before being recombined after
 the transfers have been completed.
 
 Prognostic representation of a second ice category
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This allows the large-ice and the small-ice quantities to be carried as
 prognostics elsewhere in the model. The transfers are the same as in the
@@ -301,7 +301,7 @@ experimental option. Unless you have good reason to use it, it is
 recommended to use the single prognostic above.
 
 Prognostic representation of graupel:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Symbol :math:`q_{graup}`, units :math:`kg~kg^{-1}`, code variable
 :math:`qgraup`** This allows the representation of ice in the form of
@@ -644,7 +644,7 @@ aggregates only.
 .. _sec_field_psd_ml:
 
 Mid-latitude version
-~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^
 
 Using aircraft data over large areas around the British Isles,
 `Field et al. (2005)`_ show that the ice particle size
@@ -759,7 +759,7 @@ represents the subscripts 1 to 10 are given in :numref:`Table %s <tab:field>`.
 .. _sec_field_psd_gl:
 
 Global version
-~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^
 
 As an extension to the `Field et al. (2005)`_ work,
 `Field et al. (2007)`_ developed an extension to the 2005
@@ -792,7 +792,7 @@ be proven within the UM.
 .. _sec_field_psd_fc:
 
 Further comments relevant to both versions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 In the transfer equations for ice, (described in more detail in section
 :ref:`Transfer equations <sec_trans_eqs>`), it is possible to use various different
@@ -913,7 +913,7 @@ where parameters are given in tables :numref:`%s <tab:mic_consts_fallspeed>`,
 .. _sec_mit_2nd_rex:
 
 Crystal fall speed relations using Mitchell (1996)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Recently, the `Brown and Francis (1995)`_ ice particle
 densities have been used operationally in the UM (see section
@@ -948,7 +948,7 @@ be replaced by that in :numref:`Table %s <tab:mit_2nd_rex>`.
 .. _sec_split_ice_vt:
 
 Splitting the ice fallspeeds with the Generic PSD
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The Generic PSD described in section (:ref:`Generic Ice Particle Size Distributions <sec_field_psd>`) uses a
 single size distribution to describe the whole particle population. In
@@ -990,7 +990,7 @@ growth (where :math:`V_t` affects the ventilation), riming and so on.
 .. _sec_as07:
 
 Abel and Shipway rain fall speeds
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This changes the standard rain fall speeds (equation
 :eq:`eq:mic_vxd`, with values from
@@ -1109,7 +1109,7 @@ microphysical transfer rates to be solved easily.
 .. _sec_bf95:
 
 Brown and Francis ice particle densities
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 An alternative density function to the default one used in the UM has
 been derived by `Brown and Francis (1995)`_, following
@@ -1420,7 +1420,7 @@ Prognostic Precipitation Fraction
 ---------------------------------
 
 Overview
-~~~~~~~~
+^^^^^^^^
 
 There is also an option to use an additional prognostic variable to
 carry the rain fraction :math:`C_R`. This is enabled by turning on the
@@ -1474,7 +1474,7 @@ subsequent microphysics call uses the appropriate fraction for
 convectively generated precipitation.
 
 Effective fraction for inhomogeneous precipitation fields
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 When using the prognostic precipitation fraction, the updating of the
 rain fraction during each microphysics sub-step is modified.
@@ -1531,7 +1531,7 @@ selected using the switch i_update_precfrac in the UM namelist.
 |
 
 Assume homogeneous precip mass within the precip fraction at start-of-timestep
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Under this option (selected by setting i_update_precfrac = 1), the
 precipitation mass is assumed to be homogeneous *within* the
@@ -1547,7 +1547,7 @@ to reset to having homogeneous precip mass within that area.
 .. _sec_precip_frac_update:
 
 Update of precipitation fraction by process-rates
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""""""""""""""""""""""""""""
 
 |
 | During each microphysics sub-step, the net rain (and optionally
@@ -1703,7 +1703,7 @@ This calculation is done in subroutine lsp_update_precfrac in the code.
 .. _sec_precfrac_sed:
 
 Transfer of precipitation fraction by sedimentation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""""""""""""""""""""""""""""""
 
 |
 | For numerics reasons, the updating of precipitation fraction by fall
@@ -1785,7 +1785,7 @@ lsp_combine_precfrac in the code.
 .. _sec_precfrac_emerg:
 
 Precipitation fraction created by "emergency melting"
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 |
 | As described in section :ref:`Numerical checks <sec_num_check>`, after the
@@ -1827,7 +1827,7 @@ with :math:`{C_i}_{fall}`, :math:`dS_{melt}` and :math:`{C_R}_{fall}`,
 :math:`P` swapped.
 
 And finally...
-^^^^^^^^^^^^^^
+""""""""""""""
 
 |
 | After the updates to the prognostic precipitation fraction from all
@@ -1838,7 +1838,7 @@ And finally...
 |
 
 Inhomogeneous precip mass with parameterised sub-grid correlations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Under this option (selected by setting i_update_precfrac = 2), we remove
 the assumption that precipitation mass returns to being homogeneous
@@ -1918,7 +1918,7 @@ parameterising the sub-grid spatial correlation between each process's
 precip mass tendency and the existing precip mass...
 
 Update of precipitation fraction from precip mass sources
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 |
 | Following our definition of
@@ -2168,7 +2168,7 @@ is set to the already-calculated area of overlap between
 orographically-forced liquid-cloud and rain.
 
 Update of precipitation fraction from precip mass sinks
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 |
 | Firstly, we assume that the sink of precip mass from freezing of rain
@@ -2309,7 +2309,7 @@ of the square-root term, all of the factors of
      - **rain_ice** + **rain_clear**
 
 Transfer of precipitation fraction by sedimentation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""""""""""""""""""""""""""""""
 
 |
 | This follows the same method as described for i_update_precfrac = 1 in
@@ -2327,7 +2327,7 @@ area-fraction in-which this source term applies is set to:
 .. math:: C_{proc} = {C_R}_{fall}
 
 Precipitation fraction created by "emergency melting"
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 |
 | Again this follows what is done under i_update_precfrac = 1, (section
@@ -2633,7 +2633,7 @@ as ilustrated by the subscript.
 .. _sec_gr_tr:
 
 A note on graupel transfers not included
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 At this stage, the following transfer terms have not been represented as
 they are small in comparison with the terms in :numref:`Table %s <tab:rates>`:
@@ -2663,7 +2663,7 @@ some of the possible options.
 .. _sec_landsea:
 
 Using a simple land-sea mask
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The simplest option available is to choose one value for the drop
 concentration over land and another over sea. This is intended to
@@ -2696,7 +2696,7 @@ amounts, as detailed in the next section.
 .. _sec_CLASSIC:
 
 Using the CLASSIC aerosol species
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This is a common option in the climate model simulations, but rarely
 used for NWP. The droplet number is related to the total aerosol
@@ -2728,7 +2728,7 @@ discrepencies between the prognostic and climatological aerosol inputs.
 .. _sec_UKCA_cdnc:
 
 Using the UKCA-derived cloud drop number concentration
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The UKCA model (see ``:umdp:084``) is capable of producing a cloud drop
 number concentration derived from aerosol. This can be passed into the
@@ -2739,7 +2739,7 @@ concentration.
 .. _sec_murk2nd:
 
 Using MURK aerosol
-~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
 
 Total (or 'MURK') aerosol is a prognostic mass-mixing ratio of a single
 aerosol species that is designed to broadly represent the behaviour of
@@ -2795,7 +2795,7 @@ relation.
 .. _sec_easy_cdnc:
 
 Using EasyAerosol
-~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^
 
 The EasyAerosol prescription of cloud droplet number concentration can
 be used to provide cloud droplet number directly. The corresponding
@@ -2810,7 +2810,7 @@ albedo, see UMDP23 section 3.3.
 .. _sec_drop_taper:
 
 Drop tapering
-~~~~~~~~~~~~~
+^^^^^^^^^^^^^
 
 `Price (2011)`_ showed that drop concentrations were much
 lower in fog than in stratocumulus cloud, with concentrations varying
@@ -2880,7 +2880,7 @@ appear in the microphysics scheme.
 .. _sec_PLSET:
 
 PLSET: Droplet Settling
-~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^
 
 **:math:`q_{cl}` to :math:`q_{cl}`, :math:`q_{cl}` to :math:`q`** This
 term is intended to update the cloud prognostics as a results of
@@ -2932,7 +2932,7 @@ downwards. That which falls into the clear part of the grid box will be
 converted into :math:`q` and increase the humidity in the grid box.
 
 PIFALL/PSFALL: Sedimentation (fall) of ice (aggregates and crystals)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This term is scientifically just the flux divergence of the ice across
 the layer in each model column. Its numerical solution is not
@@ -2995,7 +2995,7 @@ for the wind-shear parameter.
 .. _sec_PRFALL:
 
 PRFALL: Sedimentation (fall) of rain
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Prognostic rain.** For the mixing ratio (prognostic rain) version of
 the scheme this term takes the same form as for the fall of ice;
@@ -3014,7 +3014,7 @@ speed parameters in tables :numref:`%s <tab:mic_consts_psd>` and
 still applied and increase or decrease the magnitude of the rain rate.
 
 PGFALL: Sedimentation (fall) of graupel
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 All graupel is assumed to be prognostic; there is no diagnostic graupel
 available. The fall term takes the same form as for the fall of ice;
@@ -3023,7 +3023,7 @@ with the :math:`x` subscript become those for graupel listed in tables
 :numref:`%s <tab:mic_consts_psd>` and :numref:`%s <tab:mic_consts_fallspeed>`.
 
 PIPRM: Heterogeneous nucleation (Deposition on to natural ice nuclei)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **:math:`q_{cl}` to :math:`q_{cfc}`, :math:`q` to :math:`q_{cfc}`.**
 This term provides a small 'seed' ice content for ice free clouds in
@@ -3068,7 +3068,7 @@ locations within the liquid cloud volume, so :math:`C_i` is set equal to
 .. _sec_tnuc_dust:
 
 Prognostic dust approach
-~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 This approach is intended to mimic the role of ice nucleation particles
 (INPs) in the atmosphere which are not incorporated within the UM
@@ -3117,7 +3117,7 @@ temperature thresholds would also be replaced in the convection scheme.
 For further details, please refer to ``:umdp:030``.
 
 PIFRW: Homogeneous nucleation of liquid water
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **:math:`q_{cl}` to :math:`q_{cfc}`.** All liquid water at temperatures
 less than :math:`-40^{\circ}`\ C is instantaneously frozen to form ice
@@ -3128,7 +3128,7 @@ equal to :math:`C` and :math:`C_l` set to zero.
 .. _pifrw-homogeneous-nucleation-of-liquid-water-1:
 
 PIFRW: Homogeneous nucleation of liquid water
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **:math:`q_{cl}` to :math:`q_{cfc}`.** All liquid water at temperatures
 less than :math:`-40^{\circ}`\ C is instantaneously frozen to form ice
@@ -3137,13 +3137,13 @@ particles (:math:`q_{cfc}`), according to
 equal to :math:`C` and :math:`C_l` set to zero.
 
 PIFRR: Homogeneous nucleation of rain
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **:math:`q_{R}` to :math:`q_{cfc}`.** As PIFRW, but for rain rather than
 liquid water.
 
 PIPRR: Heterogeneous freezing of rain
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **:math:`q_{R}` to :math:`q_{graup}`.** From vn11.2 there is an option
 to include heterogeneous freezing of rain. Following
@@ -3179,7 +3179,7 @@ assumes that nucleation occurs throughout the rain volume.
 .. _sec_psdep_pssub:
 
 PSDEP/PSSUB: Deposition/Sublimation of vapour on to aggregates
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **:math:`q_{cl}` to :math:`q_{cfa}`, :math:`q` to :math:`q_{cfa}`.** The
 deposition/sublimation equation is (following
@@ -3330,14 +3330,14 @@ and hence a similar adjustment to the total cloud fraction (since
 sublimation can only occur outside of liquid cloud).
 
 PIDEP/PISUB: Deposition/Sublimation of vapour on to ice crystals
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **:math:`q_{cl}` to :math:`q_{cfc}`, :math:`q` to :math:`q_{cfc}`.**
 This term is identical to the above except the parameters used are those
 for the ice crystal category.
 
 Hallett-Mossop process
-~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^
 
 **Formulation in the UM**
 
@@ -3382,7 +3382,7 @@ wish to use this representation, you are advised to set
 :math:`T_{HM5} = 7~^{\circ}`\ C.
 
 PSAUT: Aggregation of ice crystals to snow aggregates
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **:math:`q_{cfc}` to :math:`q_{cfa}`**
 
@@ -3405,7 +3405,7 @@ this threshold is transferred to the aggregate category.
 .. _sec_PSACI:
 
 PSACI: Collection of ice crystals by snow aggregates
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **:math:`q_{cfc}` to :math:`q_{cfa}`**. In reality, the transfer process
 should be small. This modification only works when the use of a second
@@ -3494,7 +3494,7 @@ of ice by snow we have:
 .. _sec_PSACW:
 
 PSACW: Riming by aggregates
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **:math:`q_{cl}` to :math:`q_{cfa}`.**
 
@@ -3556,7 +3556,7 @@ rate equation is modified, as described in Section
 :ref:`Implicit formulation <sec_proc_rate_implicit>`.
 
 PIACW: Riming by crystals
-~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **:math:`q_{cl}` to :math:`q_{cfc}`.** This term is formulated in the
 same way as the riming by aggregates term in equation
@@ -3569,7 +3569,7 @@ occur.
 .. _sec_PGAUT:
 
 PGAUT: Autoconversion of snow to graupel
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **:math:`q_{cfa}` to :math:`q_{graup}`.** It is assumed that when snow
 growth is dominated by riming liquid cloud it increases its density, so
@@ -3619,7 +3619,7 @@ observations.
 .. _sec_PGACW:
 
 PGACW: Riming by graupel
-~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 **:math:`q_{cl}` to :math:`q_{graup}`.** The collection rates of liquid
 cloud by graupel obey exactly the same physics as the riming of crystals
@@ -3631,7 +3631,7 @@ aggregates).
 .. _sec_PGACS:
 
 PGACS: Collection of snow aggregates by graupel
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **:math:`q_{cfa}` to :math:`q_{graup}`.** The rates of collision between
 the graupel and snow categories is parametrized in the same way as the
@@ -3697,7 +3697,7 @@ aggregates by graupel.
 .. _sec_PSACR:
 
 PSACR: Collection of rain by aggregates
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **:math:`q_{R}` to :math:`q_{cfa}`.** This term uses similar assumptions
 as for the collection of ice crystals by snow aggregates above (equation
@@ -3834,7 +3834,7 @@ then the result of a collision is a graupel particle. Otherwise the
 result will be an ice aggregate.
 
 PIACR: Collection of rain by crystals
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **:math:`q_{R}` to :math:`q_{cfc}`.** This term is formulated in the
 same way as the collection of rain by aggregates term (PSACR; equation
@@ -3848,7 +3848,7 @@ mixing ratio is 0.1 g kg\ :math:`^{-1}` or above. Below this threshold
 the result of the collision will be crystals (:math:`P_{IACR-C}`).
 
 PSMLTEV: Evaporation of melting snow aggregates
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **:math:`q_{cfa}` to :math:`q`.** This term acts to evaporate any ice at
 temperatures above 0C since the deposition term is switched off at these
@@ -3862,14 +3862,14 @@ distribution can be used with this option; the formulation is the same
 as in section :ref:`PSDEP/PSSUB: Deposition/Sublimation of vapour on to aggregates <sec_psdep_pssub>`.
 
 PIMLTEV: Evaporation of melting ice crystals
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **:math:`q_{cfc}` to :math:`q`.** This term is parametrized in the same
 way as for aggregates, simply with the crystal parameters instead of the
 aggregate values.
 
 PSMLT: Melting of snow aggregates to rain
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **:math:`q_{cfa}` to :math:`q_R`.** This is solved from the diffusion
 equation. The latent heat due to melting is equal to the sum of the
@@ -3930,7 +3930,7 @@ coefficient as defined in equation
 :eq:`eq:mic_ventx_psd`.
 
 PIMLT: Melting of ice crystals to rain
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **:math:`q_{cfc}` to :math:`q_{R}`.** This term is equivalent to the
 melting of aggregates to rain, although with different parameter values.
@@ -3938,7 +3938,7 @@ melting of aggregates to rain, although with different parameter values.
 .. _sec_PGMLT:
 
 PGMLT: Melting of Graupel
-~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **:math:`q_{graup}` to :math:`q_{R}`.** The melting of graupel acts as a
 source of rain and is parametrized in the same way as the melting of
@@ -3977,7 +3977,7 @@ aggregates.
 .. _sec_PREVP:
 
 PREVP: Evaporation of rain
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **:math:`q_{R}` to :math:`q`.** The evaporation rate of rain is
 analogous to the sublimation of snow in equation
@@ -4027,7 +4027,7 @@ There are no cloud fraction changes associated with this term.
 .. _sec_PRACW:
 
 PRACW: Accretion of cloud liquid water by rain
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **:math:`q_{cl}` to :math:`q_{R}`.** The rate that liquid cloud is
 collected by rain is the product of the sweep out rate of rain, the mass
@@ -4087,7 +4087,7 @@ and :math:`\rho=0.9` is specified.
 .. _sec_PRAUT:
 
 PRAUT: Autoconversion of cloud liquid water to rain
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **:math:`q_{cl}` to :math:`q_{R}`.** The UM has a power-law formulation
 of autoconversion as a function of liquid water content with a minimum
@@ -4196,7 +4196,7 @@ The cloud fractions are not altered by this microphysical process.
 .. _sec_scav:
 
 Scavenging of aerosol
-~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^
 
 In addition to the link between MURK aerosol and cloud droplet number
 concentration described in section :ref:`PRAUT: Autoconversion of cloud liquid water to rain <sec_PRAUT>`, falling
@@ -4356,7 +4356,7 @@ applicable, in the sequences described below, the transfer for the
 .. _sec_historic_order:
 
 Historic order of transfer processes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 | The historic order in which the transfer processes are applied is as
   follows:
@@ -4375,7 +4375,7 @@ reasonable depth scale.
 .. _sec_sed_at_end:
 
 Sedimentation at end of the microphysics
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Later, investigations using prognostic rain have shown that the fall of
 rain being at the start of the timestep has caused problems. This is
@@ -4416,7 +4416,7 @@ terms within the microphysics scheme remains a current area of research.
 .. _sec_proc_fluxes:
 
 Applying process rates to hydrometeor fall-fluxes.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The ordering of processes detailed in section
 :ref:`Historic order of transfer processes <sec_historic_order>` can be summarised as:
@@ -4763,7 +4763,7 @@ to know whether the grid-box air is saturated on average, in order to
 estimate the sub-grid orographic cloud water correctly.
 
 Clear model grid-box
-~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^
 
 For a clear model grid-box, the amount of sub-grid orographic ascent
 which would produce water is that which occurs above the condensation
@@ -4841,7 +4841,7 @@ subroutines, which will always be :math:`\le`\ 0.5 for a clear grid-box.
 .. math:: cf\_orog ~=~ \frac{2 ~ x_c}{\Delta}
 
 Cloudy model grid-box
-~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^
 
 This section describes how the sub-grid orographic cloud water mixing
 ratio :math:`qcl_{orog}` is estimated for a model grid-box which already
@@ -4927,7 +4927,7 @@ rimed, :math:`dqsnow * lsrcp`, is added to :math:`T`. Here,
 sublimation.
 
 Overlap of orographic water with rain and snow
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The overlaps of the orographic cloud water with rain or snow are
 estimated using the same assumptions as for the resolved cloud water.
