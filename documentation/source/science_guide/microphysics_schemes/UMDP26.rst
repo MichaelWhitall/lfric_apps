@@ -68,9 +68,9 @@ Microphysical processes
 -----------------------
 
 The scheme is originally based upon that developed by
-:raw-latex:`\cite{Rutledge:Hobbs:1983}` and was developed principally by
+`Rutledge and Hobbs (1983)`_ and was developed principally by
 Sue Ballard and then Damian Wilson. The earlier, 3B scheme is described,
-along with sample results, in :raw-latex:`\cite{Wilson:Ballard:1999}`.
+along with sample results, in `Wilson and Ballard (1999)`_.
 This scheme has been retired as of VN7.7 of the UM.
 
 Only four phases are assumed (liquid, vapour, ice aggregates and rain)
@@ -118,7 +118,7 @@ necessary for the PC2 prognostic cloud scheme. It also contain some
 important science developments.
 
 Briefly, the scientific differences of the 3D microphysics scheme
-compared to the :raw-latex:`\cite{Wilson:Ballard:1999}` paper are:
+compared to the `Wilson and Ballard (1999)`_ paper are:
 
 - Options for two ice quantities and associated particle distributions,
   mass-diameter relationships and fall-speed diameter relationships
@@ -161,10 +161,10 @@ compared to the :raw-latex:`\cite{Wilson:Ballard:1999}` paper are:
   fog
 
 - Optional use of a generic ice particle size distribution
-  :raw-latex:`\citep{Field:etal:2005,Field:etal:2007}`
+  `Field et al. (2005)`_, `Field et al. (2007)`_
 
 - Improved representation of rain fall speeds
-  :raw-latex:`\citep{Abel:Shipway:2007}`
+  `Abel and Shipway (2007)`_
 
 - Improved link between visibility aerosol and droplet number
 
@@ -183,7 +183,7 @@ detailed microphysical calculations involving prognostic rain and
 multiple types of ice particle. This extra detail is intended for use in
 high resolution versions of the Unified Model and is closer to the more
 cloud resolving model type of formulations, such as
-:raw-latex:`\cite{Swann:1996}`. The prognostics in the scheme are
+`Swann (1996)`_. The prognostics in the scheme are
 detailed below.
 
 .. _`sec:wvdes`:
@@ -281,7 +281,7 @@ recombination of the quantities is required. The prognostic
 representation was introduced to investigate the necessary level of
 complexity required in microphysical schemes and more closely matches
 representations within cloud resolving models, such as
-:raw-latex:`\cite{Swann:1996}`. This is currently only used as an
+`Swann (1996)`_. This is currently only used as an
 experimental option. Unless you have good reason to use it, it is
 recommended to use the single prognostic above.
 
@@ -295,7 +295,7 @@ efficient moisture sink due to having a high fall speed relative to rain
 and snow. Hence, the representation of this hydrometeor in high
 resolution versions of the UM is probably desirable. The most important
 microphysical processes associated with graupel have been determined by
-:raw-latex:`\cite{Forbes:Halliwell:2003}` from CRM runs of convective
+`Forbes and Halliwell (2003)`_ from CRM runs of convective
 case studies and details of four implemented graupel processes are
 described in section `6.3 <#sec:trans_eqs>`__. This option is used
 routinely in km-scale simulations in the Met Office operational suite.
@@ -303,7 +303,7 @@ There is also the option to increase the production of graupel by
 allowing snow-rain collisions to form graupel. A further option allows
 improvements to graupel parametrization, by changing the the particle
 size distribution to match observations based on work by
-:raw-latex:`\cite{Field:etal:2019}`, along with a reduction in the
+`Field et al. (2019)`_, along with a reduction in the
 autoconversion of snow to graupel and setting the graupel collection of
 snow term to zero.
 
@@ -348,7 +348,7 @@ Table `1 <#tab:mic_phys>`__ shows the values of the physical constants
 used in the microphysics parametrization. The UM includes a temperature
 dependence for the thermal conductivity, dynamic viscosity and
 diffusivity terms and an additional pressure dependence for the
-diffusivity term :raw-latex:`\citep{Rogers:Yau:1989}`.
+diffusivity term `Rogers and Yau (1989)`_.
 
 The functions :math:`F_{K_a}(T)`, :math:`F_{\mu}(T)` and
 :math:`F_{\psi}(T,p)` in the UM are defined as:
@@ -372,13 +372,13 @@ freezing point of water, :math:`p` is the pressure and
 - The Schmidt number used in the definition of the ventilation
   coefficient (see section 6) is defined as :math:`\mu / (\psi \rho)`.
   In the UM, the Schmidt number is taken as 0.6, following
-  :raw-latex:`\cite{Rutledge:Hobbs:1983}`.
+  `Rutledge and Hobbs (1983)`_.
 
 - The values of latent heat are valid for a temperature of 0C and are
   assumed in the model to be constant for all temperatures (this
   assumption helps to conserve energy in the model).
   **Aside:** In practice, however, these values change with temperature
-  and recent research :raw-latex:`\citep{Fukuta:Gramada:2003}` suggests
+  and recent research `Fukuta and Gramada (2003)`_ suggests
   the latent heat of fusion decreases dramatically at temperatures below
   :math:`-20`\ C: it is found to be less than half the 0value at
   :math:`-30`\ C. Given that this could significantly affect the latent
@@ -515,7 +515,7 @@ where :math:`n_{ax}` and :math:`n_{bx}` are constants.
 Table `2 <#tab:mic_consts_psd>`__ shows the values of the above
 constants for the large-scale precipitation scheme.
 
-.. list-table:: Default values of constants used in the particle size-spectra relations. The rain parameters were selected specifically in order to produce smaller drop sizes for lighter rain, as demonstrated from radar data. The parametrization of the crystal size distribution follows the form of :raw-latex:`\cite{Cox:1988}` but uses aircraft data from :raw-latex:`\cite{Field:1999}` to influence the choice of the values of the parameters.
+.. list-table:: Default values of constants used in the particle size-spectra relations. The rain parameters were selected specifically in order to produce smaller drop sizes for lighter rain, as demonstrated from radar data. The parametrization of the crystal size distribution follows the form of `Cox (1988)`_ but uses aircraft data from `Field (1999)`_ to influence the choice of the values of the parameters.
    :name: tab:mic_consts_psd
    :header-rows: 1
 
@@ -531,14 +531,14 @@ constants for the large-scale precipitation scheme.
      - 2
      - 2
      - 0.0
-     - :raw-latex:`\cite{Abel:Boutle:2012}`
+     - `Abel and Boutle (2012)`_
 
    * - Ag gregates
      - :math:`2.0 \times10^{6}F_{n_{ax}}(T_c)`
      - 0
      - 0
      - 0.0
-     - :raw-latex:`\cite{Cox:1988}`
+     - `Cox (1988)`_
 
    * - Crystals
      - :math:`40.0 \times10^{6}F_{n_{ax}}(T_c)`
@@ -552,14 +552,14 @@ constants for the large-scale precipitation scheme.
      - :math:`-4`
      - :math:`0`
      - 2.5
-     - :raw-latex:`\cite{Ferrier:1994}`
+     - `Ferrier (1994)`_
 
    * - Graupel (ii)
      - :math:`7.9 \times10^{9}`
      - :math:`-2`
      - :math:`58`
      - 0.0
-     - :ra w-latex: `\cite{Field:etal:2019}`
+     - :ra w-latex: ``Field et al. (2019)`_`
 
 The functions :math:`F_{n_{ax}}(T_c)` represent the observed broadening
 of the size spectra with increasing temperature for ice particles (due
@@ -572,16 +572,16 @@ to the aggregation process). It is defined as:
 
 where :math:`T_c` is the temperature in degrees Celsius. This form was
 selected after comparison with aircraft data: see, for example,
-:raw-latex:`\cite{Field:1999, Field:2000}`.
+`Field (1999)`_, `Field (2000)`_.
 
 Two choices are available for the graupel particle size distribution are
 available; these are denoted as (i) and (ii) in table
 `2 <#tab:mic_consts_psd>`__ above. The first, (i) is the original scheme
-as included by :raw-latex:`\cite{Forbes:Halliwell:2003}`, however this
+as included by `Forbes and Halliwell (2003)`_, however this
 was found to produce a lot of small graupel particles, even when larger
 graupel mass were present in severe convective storms. A new particle
 size distribution has been developed by
-:raw-latex:`\cite{Field:etal:2019}` which shows better agreement with
+`Field et al. (2019)`_ which shows better agreement with
 aircraft data.
 
 Splitting of ice into aggregates and crystals
@@ -605,7 +605,7 @@ of :math:`q_{cf}` that is apportioned to the aggregate part of the
 particle size distribution. This formulation was developed by Wilson and
 is based upon both aircraft data (for example,
 :raw-latex:`\citealp{Field:1999}`) and modelling data
-:raw-latex:`\citep{Cardwell:etal:2002}`. The flux of snow that is
+`Cardwell et al. (2002)`_. The flux of snow that is
 carried between model levels represents the combined fluxes of both
 aggregates and crystals. When snow falls into a layer it is assumed to
 be distributed between aggregates and crystals according to the
@@ -628,7 +628,7 @@ then used as a single quantity in the rest of the model.
 Generic Ice Particle Size Distributions 
 ----------------------------------------
 
-Following the work of :raw-latex:`\cite{Field:etal:2005}`, the option is
+Following the work of `Field et al. (2005)`_, the option is
 now available to include a generic ice particle size distribution for
 aggregates only.
 
@@ -638,7 +638,7 @@ Mid-latitude version
 ~~~~~~~~~~~~~~~~~~~~
 
 Using aircraft data over large areas around the British Isles,
-:raw-latex:`\cite{Field:etal:2005}` show that the ice particle size
+`Field et al. (2005)`_ show that the ice particle size
 distribution all have bimodal distributions. It is possible to relate
 any moment of the distribution (for example, the zeroth moment, which is
 usually number concentration) to the second moment (directly
@@ -753,8 +753,8 @@ represents the subscripts 1 to 10 are given in table `4 <#tab:field>`__.
 Global version
 ~~~~~~~~~~~~~~
 
-As an extension to the :raw-latex:`\cite{Field:etal:2005}` work,
-:raw-latex:`\cite{Field:etal:2007}` developed an extension to the 2005
+As an extension to the `Field et al. (2005)`_ work,
+`Field et al. (2007)`_ developed an extension to the 2005
 parametrization but based on a global aircraft data set. The new
 parametrization is of the form
 
@@ -816,7 +816,7 @@ are constants (see Table `5 <#tab:mic_consts_fallspeed>`__) and
 also has the option to specify the parameters :math:`c_x` and
 :math:`d_x` by using knowledge of their area-diameter relationships and
 a Best number (:math:`B_e`)- Reynolds number (:math:`R_e`) relationship
-as described by :raw-latex:`\cite{Mitchell:1996}`.
+as described by `Mitchell (1996)`_.
 
 .. math::
 
@@ -840,7 +840,7 @@ where parameters are given in tables `5 <#tab:mic_consts_fallspeed>`__,
 `6 <#tab:mic_consts_fallspeed2>`__, `9 <#tab:mic_consts_density>`__ and
 `10 <#tab:bf95>`__.
 
-.. list-table:: Default values of constants used in the fall speed relations. The :raw-latex:`\cite{Sachidananda:Zrnic:1986}` relationship does not asymptote to a fixed value for large diameters and better representations exist; these are discussed further in section `4.4.3 <#sec:as07>`__. The ice fall speeds are selected so as to agree with the values calculated using the :raw-latex:`\cite{Mitchell:1996}` relationships.
+.. list-table:: Default values of constants used in the fall speed relations. The `Sachinananda and Zrni\'{c} (1986)`_ relationship does not asymptote to a fixed value for large diameters and better representations exist; these are discussed further in section `4.4.3 <#sec:as07>`__. The ice fall speeds are selected so as to agree with the values calculated using the `Mitchell (1996)`_ relationships.
    :name: tab:mic_consts_fallspeed
    :header-rows: 1
 
@@ -856,28 +856,28 @@ where parameters are given in tables `5 <#tab:mic_consts_fallspeed>`__,
      - 0.67
      - 0.4
      - 0.0
-     - :ra w-latex: `\cite{Sachidananda:Zrnic:1986}`
+     - :ra w-latex: ``Sachinananda and Zrni\'{c} (1986)`_`
 
    * - Ag gregates
      - 14.3
      - 0.416
      - 0.4
      - 0.0
-     - : raw-late x:`\cite{Mitchell:1996}`
+     - : raw-late x:``Mitchell (1996)`_`
 
    * - Crystals
      - 74.5
      - 0.640
      - 0.4
      - 0.0
-     - : raw-late x:`\cite{Mitchell:1996}`
+     - : raw-late x:``Mitchell (1996)`_`
 
    * - Graupel
      - 253.0
      - 0.734
      - 0.4
      - 0.0
-     - :raw-latex:`\cite{Ferrier:1994}`
+     - `Ferrier (1994)`_
 
 .. list-table:: Constants used in the calculation of ice crystal and aggregate fall speed relationships. Graupel, like rain is assumed to be spherical; hence it is not possible to set values for the constants in this table for these quantities.
    :name: tab:mic_consts_fallspeed2
@@ -895,33 +895,33 @@ where parameters are given in tables `5 <#tab:mic_consts_fallspeed>`__,
      - 0.638
      - 0.131
      - 1.88
-     - : raw-late x:`\cite{Mitchell:1996}`
+     - : raw-late x:``Mitchell (1996)`_`
 
    * - Crystals
      - 0.2072
      - 0.638
      - 0.131
      - 1.88
-     - : raw-late x:`\cite{Mitchell:1996}`
+     - : raw-late x:``Mitchell (1996)`_`
 
 .. _`sec:mit_2nd_rex`:
 
 Crystal fall speed relations using Mitchell (1996)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Recently, the :raw-latex:`\cite{Brown:Francis:1995}` ice particle
+Recently, the `Brown and Francis (1995)`_ ice particle
 densities have been used operationally in the UM (see section
 `4.5.1 <#sec:bf95>`__ for further details). If the
-:raw-latex:`\cite{Brown:Francis:1995}` particle densities are used, the
+`Brown and Francis (1995)`_ particle densities are used, the
 2nd Re-X (:math:`R_e`\ :math:`B_e` in this document) relation (Eq.19) of
-:raw-latex:`\cite{Mitchell:1996}` **must** also be used to ensure the
+`Mitchell (1996)`_ **must** also be used to ensure the
 crystal velocities are correct, when crystals are used in the model.
 
-So, when :raw-latex:`\cite{Brown:Francis:1995}` densities are being
+So, when `Brown and Francis (1995)`_ densities are being
 used, the last line of table `6 <#tab:mic_consts_fallspeed2>`__ should
 be replaced by that in table `7 <#tab:mit_2nd_rex>`__.
 
-.. list-table:: Parameters for use in the 2nd Re-X (:math:`R_e`\ :math:`B_e` in this document) relation (Eq.19) of :raw-latex:`\cite{Mitchell:1996}`; now operational in the NWP suite.
+.. list-table:: Parameters for use in the 2nd Re-X (:math:`R_e`\ :math:`B_e` in this document) relation (Eq.19) of `Mitchell (1996)`_; now operational in the NWP suite.
    :name: tab:mit_2nd_rex
    :header-rows: 1
 
@@ -937,7 +937,7 @@ be replaced by that in table `7 <#tab:mit_2nd_rex>`__.
      - 0.831
      - 0.131
      - 1.88
-     - : raw-late x:`\cite{Mitchell:1996}`
+     - : raw-late x:``Mitchell (1996)`_`
 
 .. _`sec:split_ice_vt`:
 
@@ -989,7 +989,7 @@ Abel and Shipway rain fall speeds
 This changes the standard rain fall speeds (equation
 `[eq:mic_vxd] <#eq:mic_vxd>`__, with values from
 :raw-latex:`\citealp{Sachidananda:Zrnic:1986}`) to the relation in
-appendix of :raw-latex:`\cite{Abel:Shipway:2007}`:
+appendix of `Abel and Shipway (2007)`_:
 
 .. math::
 
@@ -1000,12 +1000,12 @@ appendix of :raw-latex:`\cite{Abel:Shipway:2007}`:
 where the subscript :math:`R` is used instead of :math:`x` as this
 change only applies to rain. The value of the constants used is given in
 table `8 <#tab:as07>`__. It should be noted that while
-:raw-latex:`\cite{Abel:Shipway:2007}` set :math:`\mathcal{G}_R` to be
+`Abel and Shipway (2007)`_ set :math:`\mathcal{G}_R` to be
 0.5, following the practice of the Met Office Large Eddy Model (LEM), we
 have retained the value of 0.4 to maintain consistency with the rest of
 the UM, as defined in table `5 <#tab:mic_consts_fallspeed>`__.
 
-.. list-table:: Parameters used in the :raw-latex:`\cite{Abel:Shipway:2007}` rain fall velocity (equation `[eq:as07] <#eq:as07>`__) as set-up for the UM. Note that parameter :math:`c_{2R}` differs from :raw-latex:`\cite{Abel:Shipway:2007}` as there is a mistake in their paper where they give this term the wrong sign. The version used here and in the UM is correct.
+.. list-table:: Parameters used in the `Abel and Shipway (2007)`_ rain fall velocity (equation `[eq:as07] <#eq:as07>`__) as set-up for the UM. Note that parameter :math:`c_{2R}` differs from `Abel and Shipway (2007)`_ as there is a mistake in their paper where they give this term the wrong sign. The version used here and in the UM is correct.
    :name: tab:as07
 
    * - Para meter
@@ -1027,24 +1027,24 @@ the UM, as defined in table `5 <#tab:mic_consts_fallspeed>`__.
      - 0.4
 
 The inclusion of these extra parameters allows a precise fit to the
-rainfall observations of :raw-latex:`\cite{Beard:1976}`. The
-:raw-latex:`\cite{Sachidananda:Zrnic:1986}` in the UM provides a good
+rainfall observations of `Beard (1976)`_. The
+`Sachinananda and Zrni\'{c} (1986)`_ in the UM provides a good
 fit to the fall velocity of rain, but for smaller drizzle drops, the
 fall speed is overestimated by as much as a factor of ten. Simple tests
 using the 1D explicit microphysics model of
-:raw-latex:`\cite{Wilkinson:etal:2010:qj}` and the 1D KiD model
-:raw-latex:`\citep{Shipway:Hill:2011}` have indicated that this should
+`Wilkinson et al. (2010) 2`_ and the 1D KiD model
+`Shipway and Hill (2010)`_ have indicated that this should
 improve the representation of drizzle in the UM. The scheme works in one
 of two ways:
 
 - **Prognostic Rain** In this case, the
-  :raw-latex:`\cite{Sachidananda:Zrnic:1986}` relation is replaced by
-  the :raw-latex:`\cite{Abel:Shipway:2007}` fall velocity in every
+  `Sachinananda and Zrni\'{c} (1986)`_ relation is replaced by
+  the `Abel and Shipway (2007)`_ fall velocity in every
   instance that a rain velocity assumption is made in the code. The
   largest impact is in the ‘fall’ routine, where the rain falls out from
   one layer to the next. This determines how long the rain content
   remains in each layer. Use of the new
-  :raw-latex:`\cite{Abel:Shipway:2007}` relation allows rain to remain
+  `Abel and Shipway (2007)`_ relation allows rain to remain
   in the column for longer, thus allowing more time for the small drops
   to evaporate.
 
@@ -1052,12 +1052,12 @@ of two ways:
   one timestep, irrespective of the size of the drops, so altering the
   fall speed of rain will have little impact. To get around this
   problem, the code examines the difference in fall velocity between the
-  :raw-latex:`\cite{Sachidananda:Zrnic:1986}` and
-  :raw-latex:`\cite{Abel:Shipway:2007}` relations. The ratio of the two
+  `Sachinananda and Zrni\'{c} (1986)`_ and
+  `Abel and Shipway (2007)`_ relations. The ratio of the two
   velocities is used to enhance the evaporation rate, such that light
   drizzle rates are evaporated more readily, whilst the heavier rain
   rates remain unaffected. For consistency, the
-  :raw-latex:`\cite{Abel:Shipway:2007}` relation is also applied
+  `Abel and Shipway (2007)`_ relation is also applied
   throughout the code wherever a transfer involves a rain-rate
   assumption.
 
@@ -1095,12 +1095,12 @@ microphysical transfer rates to be solved easily.
    * - Aggregates
      - 0.0444
      - 2.1
-     - based on :raw-latex:`\cite{Locatelli:Hobbs:1974}`
+     - based on `Locatelli and Hobbs (1974)`_
 
    * - Crystals
      - 0.587
      - 2.45
-     - Similar to table 1 of :raw-latex:`\cite{Mitchell:1996}`
+     - Similar to table 1 of `Mitchell (1996)`_
 
 .. _`sec:bf95`:
 
@@ -1108,17 +1108,17 @@ Brown and Francis ice particle densities
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 An alternative density function to the default one used in the UM has
-been derived by :raw-latex:`\cite{Brown:Francis:1995}`, following
-:raw-latex:`\cite{Locatelli:Hobbs:1974}`. The relation gives better
+been derived by `Brown and Francis (1995)`_, following
+`Locatelli and Hobbs (1974)`_. The relation gives better
 agreement with aircraft measurements of ice and has been shown by
-:raw-latex:`\cite{Wilkinson:2007}` to give better agreement with radar
+`Wilkinson (2007)`_ to give better agreement with radar
 reflectivity measured by the Chilbolton 94–GHz radar. Use of
-:raw-latex:`\cite{Brown:Francis:1995}` reduces the density by
+`Brown and Francis (1995)`_ reduces the density by
 approximately a factor of four, but dependent on size. The parameters
 for :math:`a_x` and :math:`b_x` (after translation into SI units) are
 given in table `10 <#tab:bf95>`__.
 
-.. list-table:: Values of density relations used by :raw-latex:`\cite{Brown:Francis:1995}`
+.. list-table:: Values of density relations used by `Brown and Francis (1995)`_
    :name: tab:bf95
    :header-rows: 1
 
@@ -1130,19 +1130,19 @@ given in table `10 <#tab:bf95>`__.
    * - Aggregates
      - 0.0185
      - 1.90
-     - :raw-latex:`\cite{Brown:Francis:1995}`
+     - `Brown and Francis (1995)`_
 
    * - Crystals
      - 0.0185
      - 1.90
-     - :raw-latex:`\cite{Brown:Francis:1995}`
+     - `Brown and Francis (1995)`_
 
 These parameters have been adopted for use in the current operational UM
 and can be set in the gui/namelist.
 
-If the density is changed to :raw-latex:`\cite{Brown:Francis:1995}`,
+If the density is changed to `Brown and Francis (1995)`_,
 then the 2nd Re-X (:math:`R_e`\ :math:`B_e` in this document) relation
-(Eq.19) of :raw-latex:`\cite{Mitchell:1996}` **must** also be used.
+(Eq.19) of `Mitchell (1996)`_ **must** also be used.
 Section `4.4.1 <#sec:mit_2nd_rex>`__ contains details on how to do this.
 
 .. _mr2psd:
@@ -1357,7 +1357,7 @@ evaporation (Sec `6.3.28 <#sec:PREVP>`__) and sedimentation
 (Sec `6.3.3 <#sec:PRFALL>`__) parametrizations. Furthermore, it improves
 the sub-grid treatment of the warm rain microphysics, which is important
 due to the highly nonlinear nature of many of the process rates.
-:raw-latex:`\cite{boutle:etal:2014}` gives full details, but we
+`Boutle et al. (2014)`_ gives full details, but we
 summarise the results here.
 
 For any microphysical process rate of the form :math:`M=aq^b`, for some
@@ -1395,7 +1395,7 @@ representation of the sub-grid variability in cloud (:math:`q_{cl}`) and
 rain water (:math:`q_R`) to the autoconversion and accretion
 parametrizations. :math:`f` is parametrized, either based on the
 analysis of CloudSat, CloudNet-ARM and aircraft data presented in
-:raw-latex:`\cite{boutle:etal:2014}` or for consistency set to the same
+`Boutle et al. (2014)`_ or for consistency set to the same
 parametrization as used in the subgrid cloud generator that describes
 subgrid cloud structure for the radiation scheme. The cloud-rain
 correlation is specified, currently at :math:`\rho=0.9`.
@@ -2361,7 +2361,7 @@ version to model version.
 
 The equations governing the transfer of moisture from one category to
 another can be written in qualitative form, in a similar way to
-:raw-latex:`\cite{Rutledge:Hobbs:1983}`, as:
+`Rutledge and Hobbs (1983)`_, as:
 
 - :math:`\frac{Dq}{Dt}` = (Sublimation of Crystals and Aggregates
   :math:`+` Evaporation) :math:`-` (Deposition of Crystals and
@@ -2691,7 +2691,7 @@ literature.
      - :math:`3.0\times 10^8~m^{-3}`
      - :math:`1.0\times 10^8~m^{-3}`
 
-   * - :raw-latex:`\cite{Bower:Choularton:1992}`
+   * - `Bower and Choularton (1992)`_
      - :math:`6.0\times 10^8~m^{-3}`
      - :math:`1.5\times 10^8~m^{-3}`
 
@@ -2708,9 +2708,9 @@ Using the CLASSIC aerosol species
 This is a common option in the climate model simulations, but rarely
 used for NWP. The droplet number is related to the total aerosol
 *number* concentration, :math:`n_{aer}`. This is derived from the
-CLASSIC aerosol species :raw-latex:`\citep{Bellouin:etal:2007}` and the
+CLASSIC aerosol species `Bellouin et al. (2007)`_ and the
 result converted to :math:`n_{d}`, using the
-:raw-latex:`\cite{Jones:etal:1994}` relationship:
+`Jones et al. (1994)`_ relationship:
 
 .. math::
 
@@ -2758,8 +2758,8 @@ the aerosol number concentration can be activated to produce a value of
 cloud drop number, which is used in the microphysical calculations.
 
 This scheme uses the parametrization of either
-:raw-latex:`\cite{Clark:etal:2008}` or
-:raw-latex:`\cite{Haywood:etal:2008}` using flight data around the UK.
+`Clark et al. (2008)`_ or
+`Haywood et al. (2008)`_ using flight data around the UK.
 Both relations share the same equation
 
 .. math::
@@ -2782,23 +2782,23 @@ are given in table `15 <#tab:haycla>`__
      - :math:`n_{0_{murk}}`
      - :math:`m_{0_{murk}}`
 
-   * - :raw-latex:`\cite{Clark:etal:2008}`
+   * - `Clark et al. (2008)`_
      - :math:`5.0 \times 10^8`
      - :math:`1.4584 \times 10^{-8}`
 
-   * - :raw-latex:`\cite{Haywood:etal:2008}`
+   * - `Haywood et al. (2008)`_
      - :math:`2.0 \times 10^9`
      - :math:`1.8956 \times 10^{-8}`
 
-:raw-latex:`\cite{Wilkinson:etal:2010:ams}` showed that generating the
-cloud droplet number using the :raw-latex:`\cite{Jones:etal:1994}`
+`Wilkinson et al. (2010)`_ showed that generating the
+cloud droplet number using the `Jones et al. (1994)`_
 relationship (equation `[eq:Jones_Nature] <#eq:Jones_Nature>`__)
 constrained the cloud droplet numbers into a sensible range of values.
-However :raw-latex:`\cite{Abel:2012}` used aircraft data to suggest that
-the :raw-latex:`\cite{Haywood:etal:2008}` parametrization overestimated
+However `Abel (2012)`_ used aircraft data to suggest that
+the `Haywood et al. (2008)`_ parametrization overestimated
 the cloud drop number concentration and that the
-:raw-latex:`\cite{Clark:etal:2008}` gave a better representation of the
-droplet spectrum when coupled to the :raw-latex:`\cite{Jones:etal:1994}`
+`Clark et al. (2008)`_ gave a better representation of the
+droplet spectrum when coupled to the `Jones et al. (1994)`_
 relation.
 
 .. _`sec:easy_cdnc`:
@@ -2821,10 +2821,10 @@ albedo, see UMDP23 section 3.3.
 Drop tapering
 ~~~~~~~~~~~~~
 
-:raw-latex:`\cite{Price:2011}` showed that drop concentrations were much
+`Price (2011)`_ showed that drop concentrations were much
 lower in fog than in stratocumulus cloud, with concentrations varying
 between 20 per cm\ :math:`^3` and 100 per cm\ :math:`^3`.
-:raw-latex:`\cite{Wilkinson:etal:2012}` derived a parametrization to
+`Wilkinson et al. (2013)`_ derived a parametrization to
 taper (or reduce) the drop number concentration in the boundary layer,
 with lower values closer to the surface. This can be used in conjunction
 with the MURK and CLASSIC aerosols as described in sections
@@ -2911,7 +2911,7 @@ s\ :math:`^{-1} /F_{K_{a}}` (and :math:`F_{K_{a}}`\ is defined in
 equation `[eq:mic_conductivity] <#eq:mic_conductivity>`__). Equation
 `[eq:ds_lamb] <#eq:ds_lamb>`__ is accurate for droplet radii of up to 30
 microns. Damian Wilson has integrated over the cloud droplet spectrum,
-assuming a :raw-latex:`\cite{Khrgian:Mazin:1952}` gamma distribution,
+assuming a `Khrgian and Mazin (1952)`_ gamma distribution,
 which gives the bulk settling velocity as
 
 .. math::
@@ -3064,9 +3064,9 @@ newly nucleated ice particle, :math:`RH=(q+q_{cl})/q_{sat~water}` and
 :math:`T_c` is the temperature in degrees Celsius. :math:`q_{inuc}` is
 the combined mass of the number of active nuclei produced per timestep
 following the temperature dependent function suggested by
-:raw-latex:`\cite{Fletcher:1962}`. The other criteria restrict the
+`Fletcher (1962)`_. The other criteria restrict the
 nucleation term to low temperatures and regions of high vapour content
-:raw-latex:`\citep{Heymsfield:Milo:1995}`. This nucleated ice content is
+`Heymsfield and Miloshevich (1995)`_. This nucleated ice content is
 first removed from the available liquid water, and then from available
 vapour (hence :math:`P_{IPRM1}` and :math:`P_{IPRM2}` terms). It is
 added to the :math:`q_{cfc}` (rather than :math:`q_{cfa}`). The amount
@@ -3091,7 +3091,7 @@ This approach is intended to mimic the role of ice nucleation particles
 (INPs) in the atmosphere which are not incorporated within the UM
 single-moment microphysics scheme. Currently the heterogeneous
 nucleation is controlled by the temperature dependent function suggested
-by :raw-latex:`\cite{Fletcher:1962}`. By activating the prognostic dust
+by `Fletcher (1962)`_. By activating the prognostic dust
 approach,the heterogeneous nucleation temperature can be defined to vary
 three dimensionally globally as an arc-tangent function of the mineral
 dust distribution in the model. This will delay the heterogeneous
@@ -3111,7 +3111,7 @@ nucleation temperature as function of dust, :math:`t_{homo}` =
 nucleation temperature), :math:`dust` (number of dust particles per
 :math:`m^3`) = total dust number density (sum of all 6 (or 2) dust bins
 depending on 6-bin or 2-bin schemes; also available with dust
-climatology), :raw-latex:`\cite{Woodward:2001}`) and :math:`refdust` =
+climatology), `Woodward ({2001})`_) and :math:`refdust` =
 an arbitrary reference total dust number density value. In the event
 that no dust is present, the heterogeneous freezing temperature relaxes
 to the homogeneous nucleation temperature, :math:`t_{homo}`.
@@ -3140,7 +3140,7 @@ PIFRW: Homogeneous nucleation of liquid water
 **:math:`q_{cl}` to :math:`q_{cfc}`.** All liquid water at temperatures
 less than :math:`-40^{\circ}`\ C is instantaneously frozen to form ice
 particles (:math:`q_{cfc}`), according to
-:raw-latex:`\cite{Rogers:Yau:1989}`. In the scheme :math:`C_i` is set
+`Rogers and Yau (1989)`_. In the scheme :math:`C_i` is set
 equal to :math:`C` and :math:`C_l` set to zero.
 
 .. _pifrw-homogeneous-nucleation-of-liquid-water-1:
@@ -3151,7 +3151,7 @@ PIFRW: Homogeneous nucleation of liquid water
 **:math:`q_{cl}` to :math:`q_{cfc}`.** All liquid water at temperatures
 less than :math:`-40^{\circ}`\ C is instantaneously frozen to form ice
 particles (:math:`q_{cfc}`), according to
-:raw-latex:`\cite{Rogers:Yau:1989}`. In the scheme :math:`C_i` is set
+`Rogers and Yau (1989)`_. In the scheme :math:`C_i` is set
 equal to :math:`C` and :math:`C_l` set to zero.
 
 PIFRR: Homogeneous nucleation of rain
@@ -3216,7 +3216,7 @@ phase change, :math:`\mbox{AB}` is a function of temperature and is
 different for ice or liquid particles, :math:`C` is the shape parameter,
 for spherical particles :math:`C=2 \pi D`, and :math:`F'` is the
 ventilation coefficient. The scheme uses the ventilation factor of
-:raw-latex:`\cite{Thorpe:Mason:1966}`, which is applicable for hexagonal
+`Thorpe and Mason (1966)`_, which is applicable for hexagonal
 plates:
 
 .. math:: F'=0.65+0.44S_c^{\frac{1}{3}} R_e^\frac{1}{2}
@@ -3255,7 +3255,7 @@ The deposition and sublimation rates of snow aggregates
    \label{eq:mic_xsub}
 
 where :math:`\mbox{AB}_{ice}` is a thermodynamic term given by
-:raw-latex:`\cite{Rogers:Yau:1989}` as
+`Rogers and Yau (1989)`_ as
 
 .. math::
 
@@ -3273,7 +3273,7 @@ deposition/sublimation term only acts when :math:`T<0 \deg C`.
 particles (these are used by default but aren’t consistent with the
 area-size relationships). For non-spherical particles we can use the
 concept of capacitance to provide a multiplying factor to the rate
-equation. This gives :raw-latex:`\citep{Rogers:Yau:1989}`:
+equation. This gives `Rogers and Yau (1989)`_:
 
 .. math::
 
@@ -3366,7 +3366,7 @@ Hallett-Mossop process
 **Formulation in the UM**
 
 There is functionality in the UM to include a simple
-:raw-latex:`\cite{Hallett:Mossop:1974}` process that acts to increase
+`Hallett and Mossop (1974)`_ process that acts to increase
 the deposition rate by a factor when supercooled liquid water is
 present, although this is not usually turned on in the model. A
 gui/namelist switch from VN7.9 allows this option to be turned on if
@@ -3453,7 +3453,7 @@ that mass from category :math:`y` is collected by category :math:`x` is
    \end{aligned}
 
 Where :math:`E_{xy}` is a collection efficiency defined following
-:raw-latex:`\cite{Gray:etal:2004}` as
+`Gray et al. (2004)`_ as
 
 .. math::
 
@@ -3462,7 +3462,7 @@ Where :math:`E_{xy}` is a collection efficiency defined following
 
 The integration of equation `[eq:mic_pyacx1] <#eq:mic_pyacx1>`__ is made
 easier (or indeed possible) by making the assumption of
-:raw-latex:`\cite{Forbes:Halliwell:2003}` that
+`Forbes and Halliwell (2003)`_ that
 
 .. math::
 
@@ -3572,12 +3572,12 @@ being user-defined inputs. In the code, the actual particle area is
 :math:`A = RD^2` (a neglected factor of :math:`4/\pi` being considered
 as part of the uncertainity in the collection efficency of ice/liquid
 collisions). The default parameters are taken from the analysis of
-*insitu* aircraft data by :raw-latex:`\cite{Heymsfield:Milo:2003}`.
+*insitu* aircraft data by `Heymsfield and Miloshevich (2003)`_.
 
 Using the shape-dependent riming parametrization also allows for a
 threshold liquid-water content for riming to be specified. Only liquid
 water contents above this threshold are available for riming. This is
-done to mimic the findings of :raw-latex:`\cite{Harimaya:1975}` that
+done to mimic the findings of `Harimaya (1975)`_ that
 there is a minimum droplet size for riming to occur. To implement the
 minimum :math:`q_{cl}` for riming, the implicit solution of the process
 rate equation is modified, as described in Section
@@ -3607,7 +3607,7 @@ activated. This is for :math:`\rho q_{cfa} >3 \times 10^{-4}` kg
 m\ :math:`^{-3}` and also the temperature must be below :math:`-4` C.
 This is based on radar observations of a large number of convective
 showers over Southern England
-:raw-latex:`\citep{Forbes:Halliwell:2003}`. The conversion rate is:
+`Forbes and Halliwell (2003)`_. The conversion rate is:
 
 .. math::
 
@@ -3619,11 +3619,11 @@ where :math:`P_{SACW}` is the rate of riming of snow and
 snow must exceed the rate of growth due to vapour deposition. The
 coefficient :math:`\mathcal{F}` is inserted because the riming snow will
 not immediately increase its density to that of graupel. For the
-original :raw-latex:`\cite{Forbes:Halliwell:2003}` graupel scheme,
+original `Forbes and Halliwell (2003)`_ graupel scheme,
 :math:`\mathcal{F}` is set to a constant value of 0.5. With the modified
-scheme :raw-latex:`\cite{Field:etal:2019}`, the value of
+scheme `Field et al. (2019)`_, the value of
 :math:`\mathcal{F}` is set to match the
-:raw-latex:`\cite{Thompson:etal:2008}` scheme as follows:
+`Thompson et al. (2008)`_ scheme as follows:
 
 .. math::
 
@@ -3710,12 +3710,12 @@ follows:
 representation**
 
 Two options exist to alter the graupel parametrization from the
-:raw-latex:`\cite{Forbes:Halliwell:2003}` representation. The first is
+`Forbes and Halliwell (2003)`_ representation. The first is
 an increased production of graupel option where snow-rain collisions are
 allowed to create graupel in place of snow. The second is an improved
 graupel particle size distribution shown as option (ii) within table
 `2 <#tab:mic_consts_psd>`__ and based on the work by
-:raw-latex:`\cite{Field:etal:2019}`.
+`Field et al. (2019)`_.
 
 When either of these two options are in use, the :math:`P_{GACS}` term
 above defaults to 0.0. This is based on personal communication with
@@ -4033,7 +4033,7 @@ appropriate for liquid drops and is given by,
 
 There are a few differences to the sublimation term. The ventilation
 factor is different, in this term we use the
-:raw-latex:`\cite{Beard:Pruppacher:1971}` formulation:
+`Beard and Pruppacher (1971)`_ formulation:
 
 .. math:: F'=0.78+0.31S_c^{\frac{1}{3}} R_e^\frac{1}{2}
 
@@ -4042,7 +4042,7 @@ value 0.6. The particles are also assumed to be spherical in the
 capacitance calculation.
 
 Note that if the user has diagnostic rain selected and the
-:raw-latex:`\cite{Abel:Shipway:2007}` rain fall speeds selected, the
+`Abel and Shipway (2007)`_ rain fall speeds selected, the
 evaporation rate will be enhanced for light rain rates, in an attempt to
 remove some of the spurious drizzle from the model. See section
 `4.4.3 <#sec:as07>`__ for more details.
@@ -4081,8 +4081,8 @@ assumed to be no change in rain fraction and no change in cloud
 fractions.
 
 **Under the improved warm rain scheme**, this process rate is replaced
-by the formulation of :raw-latex:`\cite{Khair:Kogan:2000}`, bias
-corrected following :raw-latex:`\cite{boutle:etal:2014}`. Therefore, the
+by the formulation of `Khairoutdinov and Kogan (2000)`_, bias
+corrected following `Boutle et al. (2014)`_. Therefore, the
 process rate is given by:
 
 .. math:: P_{RACW} = 67E(f_{cl},f_R,\rho)q_{cl}^{1.15}q_R^{1.15},
@@ -4131,7 +4131,7 @@ of autoconversion as a function of liquid water content with a minimum
 threshold liquid water content.
 
 The conversion rate is based on that specified by
-:raw-latex:`\cite{Tripoli:Cotton:1980}`:
+`Tripoli and Cotton (1980)`_:
 
 .. math:: P_{RAUT}=A_1 E_{auto} (\rho q_{cl})^{A_2-1} \frac{q_{cl}}{ (n_d)^{A_3}}
 
@@ -4156,7 +4156,7 @@ content such that the number concentration of particles of radii 20
 :math:`\mu`\ m or larger is 1000 m\ :math:`^{-3}`. The number of
 droplets of radius greater than :math:`r` (:math:`n_r`) can be estimated
 assuming a modified gamma cloud droplet distribution
-:raw-latex:`\citep{pruppacher:klett}` and then integrating from r to
+`Pruppacher and Klett (1997)`_ and then integrating from r to
 infinity:
 
 .. math::
@@ -4183,7 +4183,7 @@ numerical approximation (from Andy Jones):
 where :math:`n_d` is in units of m\ :math:`^{-3}`. The value of
 :math:`n_d` is determined in section `6.2 <#sec:cloud_drop_calc>`__.
 
-**:raw-latex:`\cite{Tripoli:Cotton:1980}` autoconversion threshold:**
+**`Tripoli and Cotton (1980)`_ autoconversion threshold:**
 :math:`q_{cl0}` is defined as
 
 .. math::
@@ -4200,8 +4200,8 @@ autoconversion will not reduce the liquid water content to below the
 value of :math:`q_{cl0}`.
 
 **Under the improved warm rain scheme**, this process rate is replaced
-by the formulation of :raw-latex:`\cite{Khair:Kogan:2000}`, bias
-corrected following :raw-latex:`\cite{boutle:etal:2014}`. Therefore, the
+by the formulation of `Khairoutdinov and Kogan (2000)`_, bias
+corrected following `Boutle et al. (2014)`_. Therefore, the
 process rate is given by:
 
 .. math:: P_{RAUT}=1350E(f_{cl})q_c^{2.47}N_c^{-1.79},
@@ -4215,7 +4215,7 @@ and :math:`f_{cl}` is given in Equation `[eq-fsdqcl] <#eq-fsdqcl>`__.
 .. figure:: blank.svg
    :name: fig:fall_speeds
 
-   \footnotesize {Autoconversion Thresholds for the default scheme (black line; equation `[eq:jones_nd] <#eq:jones_nd>`__) and the :raw-latex:`\cite{Tripoli:Cotton:1980}` formula (red line; equation `[eq:tc_act] <#eq:tc_act>`__), shown as a function of cloud droplet number. }
+   \footnotesize {Autoconversion Thresholds for the default scheme (black line; equation `[eq:jones_nd] <#eq:jones_nd>`__) and the `Tripoli and Cotton (1980)`_ formula (red line; equation `[eq:tc_act] <#eq:tc_act>`__), shown as a function of cloud droplet number. }
 
    .. list-table::
       :align: center
@@ -4241,7 +4241,7 @@ concentration described in section `6.3.30 <#sec:PRAUT>`__, falling
 precipitation particles can remove aerosol (sometimes called
 scavenging). Rain-out of most aerosol species is covered in the
 appropriate documentation (:umdp:‘020‘). However, in the case of MURK
-aerosol, this follows the method of :raw-latex:`\cite{Clark:etal:2008}`,
+aerosol, this follows the method of `Clark et al. (2008)`_,
 and the mixing ratio of aerosol, :math:`A_{mass}` is reduced as:
 
 .. math::
@@ -4662,8 +4662,8 @@ Introduction
 
 This section describes the enhancement of precipitation due to sub-grid
 orography via the seeder feeder effect
-:raw-latex:`\citep{Bergeron:1965}`. The need for such a scheme in the UM
-was demonstrated in :raw-latex:`\cite{Smith:etal:2015}`. At 1.5 km
+`Bergeron (1965)`_. The need for such a scheme in the UM
+was demonstrated in `Smith et al. (2015)`_. At 1.5 km
 horizontal resolution, the UM performs reasonably well in terms of
 orographic rain enhancement. However at lower resolutions, the UM does
 not generally produce enough orographic rain. This scheme attempts to
@@ -4680,7 +4680,7 @@ Assumptions about the shape of the sub-grid orography
 -----------------------------------------------------
 
 The sub-grid orography is assumed to take the form of a single cosine
-shaped ridge :raw-latex:`\citep{Smith:etal:2016}`, which has equal
+shaped ridge `Smith et al. (2016)`_, which has equal
 deviations above and below the model surface. This quality is desirable
 because ascents and descents are equally important, having opposite
 effects on the orographic water mixing ratio. The actual shape of the
@@ -4700,10 +4700,10 @@ Calculation of the blocked layer depth
 
 The blocking calculations described in this section are based on those
 used by the gravity wave drag (GWD) scheme
-:raw-latex:`\cite{Vosper:2015}`. The wind speed and Brunt Vaisala
+`Vosper (2015)`_. The wind speed and Brunt Vaisala
 frequency :math:`U` and :math:`N` are averaged over a layer of depth
 :math:`z_{av}` adjacent to the surface as described in
-:raw-latex:`\cite{Vosper:etal:2009}`. These are used to calculate the
+`Vosper et al. (2009)`_. These are used to calculate the
 low-level Froude number :math:`F` (given by :math:`U / N H_T`), which
 determines the sub-grid blocked layer depth :math:`z_b`
 
@@ -4734,7 +4734,7 @@ sub-grid orographic water mixing ratio can be estimated. The amount of
 adiabatic cloud water mixing ratio produced per metre of ascent (model
 variable :math:`dqldz`) is the negative of the rate of change of the
 saturation vapour mixing ratio :math:`q_{sat}`, as in
-:raw-latex:`\cite{Albrecht:etal:1990}`
+`Albrecht et al. (1990)`_
 
 .. math:: \frac{dq_{L}}{dz} ~=~ \frac{(\epsilon +q_{sat})q_{sat} L_v}{R_d T^2} \Gamma_s  - \frac{q_{sat} P g}{(P - e_{sat}) R_d T}
 
@@ -4808,8 +4808,8 @@ Clear model grid-box
 For a clear model grid-box, the amount of sub-grid orographic ascent
 which would produce water is that which occurs above the condensation
 level :math:`\eta_c` as indicated by the dark shaded region in Figure 1a
-in :raw-latex:`\cite{Smith:etal:2016}`. The simple calculation of
-:math:`\eta_c` described in :raw-latex:`\cite{Smith:etal:2016}` is valid
+in `Smith et al. (2016)`_. The simple calculation of
+:math:`\eta_c` described in `Smith et al. (2016)`_ is valid
 for the warm, moist conditions typical of the low-level warm sector flow
 considered to be responsible for most orographic rain enhancement in the
 UK. Within the UM, however, the scheme will have to cope with a much
@@ -4819,7 +4819,7 @@ estimate of :math:`\eta_c` is used
 .. math:: \eta_c ~~=~~ \frac{(T ~-~ T_d)}{\Gamma_d - DEWLR}
 
 This differs in two ways from Equation (1) in
-:raw-latex:`\cite{Smith:etal:2016}`. Firstly the dewpoint temperature
+`Smith et al. (2016)`_. Firstly the dewpoint temperature
 :math:`T_d` is estimated using
 
 .. math:: T_d ~=~ \frac{ B_1 ( ln(RH) ~+~ \frac{A_1 T}{B_1 ~+~ T} ) }{  A_1 ~-~ ln(RH) ~-~ \frac{A_1 T}{B_1 ~+~ T} }
@@ -4827,11 +4827,11 @@ This differs in two ways from Equation (1) in
 where :math:`RH` is the fractional relative humidity (and both T and
 T\ :math:`_d` are in :math:`^{\circ}C`). The coefficients are
 :math:`A_1` = 17.625 and :math:`B_1` = 243.04\ :math:`^{\circ}`\ C as
-recommended by :raw-latex:`\cite{Alduchov:Eskridge:1996}`. Secondly,
+recommended by `Alduchov and Eskridge (1996)`_. Secondly,
 instead of assuming a constant dewpoint lapse rate of 1.8 K
 km\ :math:`^{-1}` (typical of the BL), the actual value :math:`DEWLR` is
 derived from the Clausius-Clapeyron equation
-:raw-latex:`\citep{McIlveen:2010}`
+`McIlveen (2010)`_
 
 .. math:: DEWLR ~=~ \frac{T_d^2 g R_v}{L_v R_d T}
 
@@ -4886,7 +4886,7 @@ Cloudy model grid-box
 This section describes how the sub-grid orographic cloud water mixing
 ratio :math:`qcl_{orog}` is estimated for a model grid-box which already
 contains cloud. The equations used to to estimate :math:`qcl_{orog}` in
-:raw-latex:`\cite{Smith:etal:2016}` were used here. In this case
+`Smith et al. (2016)`_ were used here. In this case
 :math:`\eta_c` is the distance of the condensation level below the model
 level and is calculated by estimating the descent required to evaporate
 all of the resolved water :math:`q_{cl}`
@@ -4896,7 +4896,7 @@ all of the resolved water :math:`q_{cl}`
 The sub-grid orographic vertical motions occurring above the saturation
 level :math:`\eta_c` are integrated across the sub-grid ridge, with the
 descents partially offsetting the ascents as indicated by Figure 1b of
-:raw-latex:`\cite{Smith:etal:2016}`. This integrated saturated ascent is
+`Smith et al. (2016)`_. This integrated saturated ascent is
 divided by the grid-spacing :math:`\Delta` to give a mean saturated
 orographic ascent. The value of :math:`dqldz` is calculated using the
 grid-box variables and multiplying this by the mean ascent gives
@@ -5064,7 +5064,7 @@ for :math:`n(D)`, :math:`m(D)` and :math:`v(D)` in eqn.
    \end{aligned}
 
 We make use of the gamma function defined (for example by
-:raw-latex:`\cite{dz84}`) as
+`Doviak and Du{\u{s} (1984)`_) as
 
 .. math:: \frac{1}{\mu^{\nu}}\Gamma(\nu)=\int_{0}^{\infty} x^{\nu-1} exp(-\mu x) dx
 
@@ -5211,9 +5211,9 @@ purposes and for data assimilation.
      - Linear sum of items 113 to 117
 
 The diagnostics are calculated in the same manner as Appendix A of
-:raw-latex:`\cite{Stein:etal:2014}`, which is based upon the Appendix of
-:raw-latex:`\cite{McBeath:etal:2014}`, which is itself based upon
-:raw-latex:`\cite{Gaussiat:2008}`. As Rayleigh scattering is assumed,
+`Stein et al. (2014)`_, which is based upon the Appendix of
+`{McBeath} et al. (2014)`_, which is itself based upon
+`Gaussiat (2008)`_. As Rayleigh scattering is assumed,
 reflectivity is considered proportional to mass squared. The linear
 radar reflectivity for ice crystals, ice aggregates, rain and graupel is
 given as
@@ -5225,7 +5225,7 @@ given as
 
 with :math:`n_x(D)` being determined by equation
 `[eq:mic_nx] <#eq:mic_nx>`__ and :math:`M_x(D)` being determined by
-equation `[eq:m_x] <#eq:m_x>`__. :raw-latex:`\cite{Stein:etal:2014}`
+equation `[eq:m_x] <#eq:m_x>`__. `Stein et al. (2014)`_
 show that by including equations `[eq:mic_nx] <#eq:mic_nx>`__ and
 `[eq:m_x] <#eq:m_x>`__ into equation `[eq:z_lin] <#eq:z_lin>`__ and
 using the value of :math:`\lambda_x` determined in section
@@ -5255,8 +5255,8 @@ exceptions:
   :math:`2.0 \times b_i`.
 
 | **2. Liquid Cloud**
-| This follows :raw-latex:`\cite{Stein:etal:2014}` and
-  :raw-latex:`\cite{McBeath:etal:2014}`, who derive a relationship of
+| This follows `Stein et al. (2014)`_ and
+  `{McBeath} et al. (2014)`_, who derive a relationship of
   the form
 
   .. math::
@@ -5604,8 +5604,8 @@ level is close to the surface.
    as ice, graupel is ignored at present
 
 .. [3]
-   This is defined as :math:`a/b` in :raw-latex:`\cite{Rogers:Yau:1989}`
-   and :raw-latex:`\cite{pruppacher:klett}`. In their notation,
+   This is defined as :math:`a/b` in `Rogers and Yau (1989)`_
+   and `Pruppacher and Klett (1997)`_. In their notation,
    :math:`a` is the major semi-axes while :math:`b` is the minor
    semi-axes.
 
@@ -5618,3 +5618,413 @@ level is close to the surface.
    In practice, the rain fall-flux does eventually get forced to zero
    but only because the sedimentation code removes fluxes below a tiny
    numerical tolerance for computational efficiency.
+
+
+References
+==========
+
+.. _Swann (1996):
+
+   Swann, H. A. (1996).
+   *The development and validation of a microphysics scheme for cloud
+   resolving model simulations of deep convection*.
+
+.. _Wilkinson (2007):
+
+   Wilkinson, J. M. (2007).
+   *Evaluating Numerical Model Cloud Parametrizations using Radar and Lidar
+   Simulation*.
+
+.. _Abel (2012):
+
+   Abel, S. J. (2012).
+   *A revision to the {MURK} aerosol to cloud droplet number concentration
+   parametrization*.
+   Met Office Technical Note.
+
+.. _Abel and Boutle (2012):
+
+   Abel, S. J. and Boutle, I. A. (2012).
+   *An improved representation of the rain drop size distribution for
+   single-moment microphysics schemes*.
+   j, 138, 2151-2162.
+
+.. _Abel and Shipway (2007):
+
+   Abel, S. J. and Shipway, B. J. (2007).
+   *A comparison of cloud-resolving model simulations of trade wind cumulus
+   with aircraft observations taken during {RICO}.*.
+   j, 133, 781-794.
+
+.. _Albrecht et al. (1990):
+
+   Albrecht, B. A. and Fairall, C. W. and Thomson, D. W. and White A. B.
+   (1990).
+   *Surface-based remote sensing of the observed and the adiabatic liquid
+   water content of stratocumulus clouds*.
+   j, 17, 89–92.
+
+.. _Alduchov and Eskridge (1996):
+
+   Alduchov, O. A. and Eskridge, R. E. (1996).
+   *Improved Magnus form approximation of saturation vapor pressure*.
+   j, 35, 601–609.
+
+.. _Beard and Pruppacher (1971):
+
+   Beard, K. V. and Pruppacher, H. R. (1971).
+   *A wind tunnel investigation of the rate of evaporation of small water
+   drops falling at terminal velocity in air*.
+   j, 28, 1455–1464.
+
+.. _Beard (1976):
+
+   Beard, K. V. (1976).
+   *Terminal velocity and shape of cloud and precipitation droplets aloft.*.
+   j, 33, 851–864.
+
+.. _Bellouin et al. (2007):
+
+   Bellouin, N. and Boucher, O. and Haywood, J. and Johnson, C. and Jones, A.
+   and Rae, J. and Woodward, S. (2007).
+   *Improved representation of aerosols for HadGEM2*.
+   Tech. Note 73, Hadley Centre., Met Office, Exeter, UK..
+
+.. _Bergeron (1965):
+
+   Bergeron, T. (1965).
+   *On the low-level redistribution of atmospheric water caused by orography*.
+
+.. _Boutle et al. (2014):
+
+   Boutle, I. A. and Abel, S. J. and Hill, P. G. and Morcrette, C. J. (2014).
+   *Spatial variability of liquid cloud and rain: observations and
+   microphysical effects*.
+   j, 140, 583-594.
+
+.. _Bower and Choularton (1992):
+
+   Bower, K. N. and Choularton, T. W. (1992).
+   *A parametrization of the effective radius of ice free clouds for use in
+   global climate models*.
+   j, 27, 305–339.
+
+.. _Brown and Francis (1995):
+
+   Brown, Philip R. A. and Francis, Peter N. (1995).
+   *Improved Measurements of the Ice Water Content in Cirrus Using a
+   Total-Water Probe*.
+   j, 12, 410–414.
+
+.. _Cardwell et al. (2002):
+
+   Cardwell, J. R. and Choularton, T. W. and Wilson, D. R. and Kershaw, R.
+   (2002).
+   *Use of an explicit model of the microphysics of precipitating stratiform
+   cloud to test a bulk microphysics scheme*.
+   j, 128, 573–592.
+
+.. _Clark et al. (2008):
+
+   Clark, P. A. and Harcourt, S. A. and Macpherson, B. and Mathison, C. T. and
+   Cusack, S. and Naylor, M. (2008).
+   *Prediction of visbility and aerosol within the operational {Met Office
+   Unified Model. Part 1}: model formulation and variational assimilation.*.
+   j, 134, 1801-1816.
+
+.. _Cox (1988):
+
+   G. P. Cox (1988).
+   *Modelling precipitation in frontal rainbands*.
+   j, 114, 115–127.
+
+.. _Ferrier (1994):
+
+   Ferrier, B. S. (1994).
+   *A double-moment multiple-phase four-class bulk ice scheme. {Part I:
+   Description}*.
+   j, 51, 249–280.
+
+.. _Field (1999):
+
+   Field, P. R. (1999).
+   *Aircraft observations of ice crystal evolution in an altostratus cloud*.
+   j, 56, 1925–1941.
+
+.. _Field (2000):
+
+   Field, P. R. (2000).
+   *Bimodal ice spectra in frontal clouds*.
+   j, 126, 379–392.
+
+.. _Field et al. (2005):
+
+   Field, P.R. and Hogan, R. J. and Brown, P. R. A. and Illingworth, A. J. and
+   Choularton, T. W. and Cotton, R. J. (2005).
+   *Parametrization of ice-particle size distributions for mid-latitude
+   stratiform cloud*.
+   j, 131, 1997–2017.
+
+.. _Field et al. (2007):
+
+   Field, P. R. and Heymsfield, A. J. and Bansemer, A. (2007).
+   *Snow Size Distribution Parametrization for Midlatitude and Tropical Ice
+   Clouds*.
+   j, 64, 4346–4365.
+
+.. _Field et al. (2019):
+
+   Field, P. R. and Heymsfield, A. J. and Detwiler, A. G. and Wilkinson, J. M.
+   (2019).
+   *{Normalized hail particle size distributions from the T-28 storm
+   penetrating aircraft}*.
+   J. Appl. Meteorol. Climatol., In Press.
+
+.. _Fukuta and Gramada (2003):
+
+   Fukuta, N. and Gramada, C. M. (2003).
+   *Vapor pressure measurement of supercooled water*.
+   j, 60, 1871–1875.
+
+.. _Gaussiat (2008):
+
+   Gaussiat, N. (2008).
+   *Comparisons of radar reflectivities with synthesised observations from
+   {NWP} model output*.
+   Met Office.
+
+.. _Hallett and Mossop (1974):
+
+   Hallett, J. and Mossop, S. C. (1974).
+   *Production of secondary ice crystals during the riming process*.
+   j, 249, 26–28.
+
+.. _Haywood et al. (2008):
+
+   Haywood, J. and Bush, M. and Abel, S. and Claxton, B. and Coe, H. and
+   Crosier, J. and Harrison, M. and Macpherson, B. and Naylor, M. and Osborne,
+   S. (2008).
+   *{Prediction of visibility and aerosol within the operational Met Office
+   Unified Model. II: Validation of model performance using observational
+   data}*.
+   j, 134, 1817–1832.
+
+.. _Heymsfield and Miloshevich (1995):
+
+   Heymsfield, A. J. and Miloshevich, L. M. (1995).
+   *Relative humidity and temperature influences on cirrus formation and
+   evolution*.
+   j, 52, 4302–4326.
+
+.. _Heymsfield and Miloshevich (2003):
+
+   Heymsfield, A. J. and Miloshevich, L. M. (2003).
+   *Parameterizations for the Cross-Sectional Area and Extinction of Cirrus
+   and Stratiform Ice Cloud Particles*.
+   j, 60, 936–956.
+
+.. _Jones et al. (1994):
+
+   Jones, A. and Roberts, D. L. and Slingo, A. (1994).
+   *A climate model study of indirect radiative forcing by anthropogenic
+   sulphate aerosols*.
+   j, 370, 450–453.
+
+.. _Khairoutdinov and Kogan (2000):
+
+   Khairoutdinov, M. and Kogan, Y. (2000).
+   *A new cloud physics parametrization in a large-eddy simulation model of
+   marine stratocumulus*.
+   j, 128, 229–243.
+
+.. _Khrgian and Mazin (1952):
+
+   Khrgian, A. {Kh.} and Mazin, I. P. (1952).
+   *The size distribution of droplets in clouds*.
+   Trudy TsAo, 7.
+
+.. _Locatelli and Hobbs (1974):
+
+   John D. Locatelli and Peter V. Hobbs (1974).
+   *Fall Speeds and Masses of Solid Precipitation Particles*.
+   j, 79, 2185–2197.
+
+.. _Harimaya (1975):
+
+   Harimaya, T. (1975).
+   *The Riming Properties of Snow Crystals*.
+   j, 99, 384–392.
+
+.. _{McBeath} et al. (2014):
+
+   {McBeath}, K. and Field, P. R. and Cotton, R. J. (2014).
+   *Using operational weather radar to assess high-resolution numerical
+   weather prediction over the British Isles for a cold air outbreak
+   case-study.*.
+   j, 140, 225–239.
+
+.. _McIlveen (2010):
+
+   McIlveen, R. (2010).
+   *Fundamentals of Weather and Climate*.
+
+.. _Mitchell (1996):
+
+   Mitchell, David L. (1996).
+   *Use of Mass- and Area-Dimensional Power Laws for Determining Precipitation
+   Particle Terminal Velocities*.
+   j, 53, 1710–1723.
+
+.. _Price (2011):
+
+   Price, J. D. (2011).
+   *Radiation Fog. {Part I: O}bservations of stability and drop size
+   distributions*.
+   j, 139, 167–191.
+
+.. _Rutledge and Hobbs (1983):
+
+   Rutledge, S. A. and Hobbs, P. V. (1983).
+   *The mesoscale and microscale structure and organization of clouds and
+   precipiation in midlatitude cyclones. {VIII}: A model for the
+   'seeder-feeder' process in warm-frontal rainbands*.
+   j, 40, 1185–1206.
+
+.. _Sachinananda and Zrni\'{c} (1986):
+
+   Sachinananda, M. and Zrni\'{c}, D. S. (1986).
+   *Differential propogation phase shift and rainfall rate estimation*.
+   Radio Sci., 21, 235–247.
+
+.. _Shipway and Hill (2010):
+
+   Shipway, B. J. and Hill, A. A. (2010).
+   *{A 1D modelling framework for a microphysics intercomparison study: Part
+   I}*.
+   manuscript in preparation; to be submitted to {Q. J. R. Met. Soc.}.
+
+.. _Smith et al. (2015):
+
+   Smith, S. A. and Vosper, S. B. and Field, P. R. (2015).
+   *Sensitivity of orographic precipitation enhancement to horizontal
+   resolution in the operational Met Office weather forecasts*.
+   j, 22, 14-24.
+
+.. _Smith et al. (2016):
+
+   Smith, S. A. and Field, P. R. and Vosper, S. B. and Shipway, B. J. and
+   Hill, A. A. (2016).
+   *A parameterization of sub-grid orographic rain enhancement via the
+   seeder-feeder effect.*.
+   j, 142, 132-142.
+
+.. _Stein et al. (2014):
+
+   Stein, T. H. M. and Hogan, R. J. and Hanley, K. E. and Nicol, J. C. and
+   Lean, H. W. and Plant, R. S. and Clark, P. A. and Halliwell, C. E. (2014).
+   *The three-dimensional morphology of simulated and observed convective
+   storms over southern England*.
+   Submitted to Monthly Weather Review.
+
+.. _Thompson et al. (2008):
+
+   Thompson, G. and Field. P. R. and Rasmussen, R. M. and Hall, W. D. (2008).
+   *{Explicit Forecasts of Winter Precipitation Using an Improved Bulk
+   Microphysics Scheme. Part II: Implementation of a New Snow
+   Parameterization}*.
+   j, 136, 5095–5115.
+
+.. _Thorpe and Mason (1966):
+
+   Thorpe, A. D. and Mason, B. J. (1966).
+   *The evaporation of ice spheres and ice crystals*.
+   j, 17, 541–548.
+
+.. _Tripoli and Cotton (1980):
+
+   Tripoli, G. J. and Cotton, W. R. (1980).
+   *A numerical investigationof several factors contributing to the observed
+   variable intensity of deep convection over south {Florida}*.
+   j, 19, 1037–1063.
+
+.. _Vosper et al. (2009):
+
+   Vosper, S. B. and Wells, H. and Brown, A. R. (2009).
+   *Accounting for non-uniform static stability in orographic drag
+   parametrization*.
+   j, 135, 815–822.
+
+.. _Vosper (2015):
+
+   Vosper, S. B. (2015).
+   *Mountain waves and wakes generated by South Georgia*.
+   j, 141, 2813–2827.
+
+.. _Wilkinson et al. (2010):
+
+   Wilkinson, J. M. and Abel, S. J. and Field, P. R. (2010).
+   *Does the introduction of a simple cloud-aerosol interaction improve the
+   representation of drizzle in the operational Met Office unified model?*.
+
+.. _Wilkinson et al. (2010) 2:
+
+   Wilkinson, J. M. and Hogan, R. J. and Illingworth, A. J. (2010).
+   *Using {Doppler} radar and modelling to diagnose problems with ice
+   sublimation depth scales in forecast models*.
+   j, 136, 2094–2108.
+
+.. _Wilkinson et al. (2013):
+
+   Wilkinson, J. M. and Poson, A. N. F. and Bornemann, F. J. and Weeks, M. and
+   Field, P. R. and Lock, A. P. (2013).
+   *Improved microphysical representation of drizzle and fog for the {Met
+   Office Unified Model}*.
+   j, 139, 488–500.
+
+.. _Wilson and Ballard (1999):
+
+   Wilson, Damian R. and Ballard, Susan P. (1999).
+   *A microphysically based precipitation scheme for the {UK Meteorological
+   Office Unified Model}*.
+   j, 125, 1607–1636.
+
+.. _Fletcher (1962):
+
+   Fletcher, N. H. (1962).
+   *The physics of rainclouds*.
+
+.. _Pruppacher and Klett (1997):
+
+   Pruppacher, H. R. and Klett, J. D. (1997).
+   *Microphysics of Clouds and Precipitation*.
+
+.. _Rogers and Yau (1989):
+
+   Rogers, R. R. and Yau, M. K. (1989).
+   *A short course in cloud physics*.
+
+.. _Doviak and Du{\u{s} (1984):
+
+   Doviak, R. J. and Du{\u{s} (1984).
+   *Doppler Radar and Weather Observations*.
+
+.. _Forbes and Halliwell (2003):
+
+   Forbes, R. and Halliwell, C. (2003).
+   *Assessment of the performance of an enhanced microphysics parametrization
+   scheme in the {Unified Model} at 1 km resolution*.
+
+.. _Gray et al. (2004):
+
+   Gray, M. E. B. and Petch, J. and Derbyshire, S. H. and Brown, A. R. and
+   Lock, A. P. and Swann, H. A. and Brown, P. R. A. (2004).
+   *{Version 2.3 of the Met Office Large Eddy Model: Part II. Scientific
+   Documentation}*.
+   Met Office.
+
+.. _Woodward ({2001}):
+
+   Woodward, S ({2001}).
+   *{Modeling the atmospheric life cycle and radiative impact of mineral dust
+   in the Hadley Centre climate model}*.
+   {Journal of Geophysical Research-Atmospheres}, {106}, {18155-18166}.
