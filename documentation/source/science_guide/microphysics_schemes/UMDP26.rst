@@ -353,17 +353,15 @@ diffusivity term `Rogers and Yau (1989)`_.
 The functions :math:`F_{K_a}(T)`, :math:`F_{\mu}(T)` and
 :math:`F_{\psi}(T,p)` in the UM are defined as:
 
-.. math::
+.. math:: :label: eq:mic_conductivity
 
    F_{K_a}(T) = F_{\mu}(T) = {\left( \frac{T}{T_0} \right)}^{\frac{3}{2}} 
    \left( \frac{393}{T+120} \right),
-   \label{eq:mic_conductivity}
 
-.. math::
+.. math:: :label: eq:mic_diffusivity
 
    F_{\psi}(T,p) = \left( \frac{T}{T_0} \right)^{\frac{3}{2}} 
     \left( \frac{393}{T+120} \right) \left( \frac{p_0}{p} \right),
-   \label{eq:mic_diffusivity}
 
 where :math:`T` is the temperature in Kelvin, :math:`T_0` is the
 freezing point of water, :math:`p` is the pressure and
@@ -494,10 +492,9 @@ Particle Size Distribution
 The particle size distribution (PSD), :math:`n_x(D)`, for a particle of
 diameter, :math:`D` is defined as a gamma function:
 
-.. math::
+.. math:: :label: eq:mic_nx
 
    n_x(D)=n_{0x} D^{\alpha_x} e^{-\lambda_x D},
-   \label{eq:mic_nx}
 
 where :math:`n_{0x}` is the intercept parameter, :math:`\lambda_x` is
 the slope parameter, :math:`\alpha_x` is the constant shape parameter.
@@ -506,10 +503,9 @@ the slope parameter, :math:`\alpha_x` is the constant shape parameter.
 moment scheme, the intercept parameter is assumed constant or a simple
 function of :math:`\lambda_x`
 
-.. math::
+.. math:: :label: eq:mic_nx0s
 
    n_{0x}=n_{ax} \lambda_x^{n_{bx}}
-      \label{eq:mic_nx0s}
 
 where :math:`n_{ax}` and :math:`n_{bx}` are constants.
 Table `2 <#tab:mic_consts_psd>`__ shows the values of the above
@@ -591,10 +587,9 @@ In the version of the scheme where there is only one ice prognostic,
 :math:`q_{cf}`, this is split between the aggregates :math:`q_{cfa}` and
 crystals :math:`q_{cfc}` using the following diagnostic function.
 
-.. math::
+.. math:: :label: eq:cry_agg_split
 
    f_{aggregates} = 1 - \exp \left( - T_{scaling} (T-T_{CT}) q_{cf} / q_{cf0} \right)
-   \label{eq:cry_agg_split}
 
 where :math:`(T-T_{CT})` is the temperature difference from the cloud
 top. :math:`T_{CT}` is calculated as the temperature of the first layer
@@ -644,9 +639,8 @@ any moment of the distribution (for example, the zeroth moment, which is
 usually number concentration) to the second moment (directly
 proportional to ice water content) as a power law as follows:
 
-.. math::
+.. math:: :label: eq:field1
 
-   \label{eq:field1}
    \mathcal{M}_{\hat{n}} = \hat{a}(\hat{n}, T_c)\mathcal{M}_2^{\hat{b}(\hat{n}, T_c)}
 
 where :math:`\mathcal{M}_{\hat{n}}` is moment of the distribution of
@@ -678,7 +672,7 @@ determined using the formulae
 with the values of :math:`a_z` and :math:`b_z` where :math:`z`
 represents the subscripts 1 to 10 are given in table `4 <#tab:field>`__.
 
-.. list-table:: Coefficients and exponents of moment for equations `[eq:fielda] <#eq:fielda>`__ and `[eq:fieldb] <#eq:fieldb>`__.
+.. list-table:: Coefficients and exponents of moment for equations :eq:`eq:fielda` and :eq:`eq:fieldb`.
    :name: tab:field
    :header-rows: 1
 
@@ -758,9 +752,8 @@ As an extension to the `Field et al. (2005)`_ work,
 parametrization but based on a global aircraft data set. The new
 parametrization is of the form
 
-.. math::
+.. math:: :label: eq:field2
 
-   \label{eq:field2}
    \mathcal{M}_{\hat{n}} = \hat{d}(\hat{n})~\exp(~\hat{e}T_c~)~
    \mathcal{M}_2^{\hat{f}(\hat{n})}
 
@@ -805,10 +798,9 @@ Terminal Fall Speed
 The terminal fall velocity of a precipitating particle, :math:`V_x(D)`
 can be expressed as a function of diameter:
 
-.. math::
+.. math:: :label: eq:mic_vxd
 
    V_x(D)=c_xD^{d_x} e^{-h_xD} \left( \frac{\rho_0}{\rho}\right) ^{\mathcal{G}_x}
-   \label{eq:mic_vxd}
 
 where :math:`c_x`, :math:`d_x`, :math:`h_x` and :math:`\mathcal{G}_x`
 are constants (see Table `5 <#tab:mic_consts_fallspeed>`__) and
@@ -987,13 +979,12 @@ Abel and Shipway rain fall speeds
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This changes the standard rain fall speeds (equation
-`[eq:mic_vxd] <#eq:mic_vxd>`__, with values from
+:eq:`eq:mic_vxd`, with values from
 `Sachinananda and Zrnić (1986)`_) to the relation in
 appendix of `Abel and Shipway (2007)`_:
 
-.. math::
+.. math:: :label: eq:as07
 
-   \label{eq:as07}
    V_R(D)=\left[c_{1R}D^{d_{1R}} e^{-h_{1R}D} + c_{2R}D^{d_{2R}} e^{-h_{2R}D} 
    \right] \left( \frac{\rho_0}{\rho}\right) ^{\mathcal{G}_{R}}
 
@@ -1005,7 +996,7 @@ table `8 <#tab:as07>`__. It should be noted that while
 have retained the value of 0.4 to maintain consistency with the rest of
 the UM, as defined in table `5 <#tab:mic_consts_fallspeed>`__.
 
-.. list-table:: Parameters used in the `Abel and Shipway (2007)`_ rain fall velocity (equation `[eq:as07] <#eq:as07>`__) as set-up for the UM. Note that parameter :math:`c_{2R}` differs from `Abel and Shipway (2007)`_ as there is a mistake in their paper where they give this term the wrong sign. The version used here and in the UM is correct.
+.. list-table:: Parameters used in the `Abel and Shipway (2007)`_ rain fall velocity (equation :eq:`eq:as07` as set-up for the UM. Note that parameter :math:`c_{2R}` differs from `Abel and Shipway (2007)`_ as there is a mistake in their paper where they give this term the wrong sign. The version used here and in the UM is correct.
    :name: tab:as07
 
    * - Para meter
@@ -1074,9 +1065,8 @@ spherical particle with a density equal to 500 kg m\ :math:`^{-3}`.
 For other ice species, we assume a power law relating the mass of the
 particle to the diameter.
 
-.. math::
+.. math:: :label: eq:m_x
 
-   \label{eq:m_x}
    M_x(D)=a_x D^{b_x}
 
 Although this can result in ice particle densities that get above that
@@ -1371,9 +1361,8 @@ representation of the sub-grid variability is required. The one chosen
 here is to assume that :math:`q` follows a log-normal distribution at
 the sub-grid scale:
 
-.. math::
+.. math:: :label: eq-lognorm
 
-   \label{eq-lognorm}
      P(q)=\frac{1}{\sqrt{2\pi}\sigma q}\exp\left(-\frac{(\ln q-\mu)^2}{2\sigma^2}\right),
 
 where :math:`\mu=\ln(\bar{q}(1+f^2)^{-1/2})` and
@@ -1383,9 +1372,8 @@ deviation of :math:`q`. By integrating the process rate over this
 distribution, we find that the un-biased process rate is given by
 :math:`\overline{M}=E(f,b)a\overline{q}^b`, where
 
-.. math::
+.. math:: :label: eq-lncorr
 
-   \label{eq-lncorr}
      E(f,b)=(1+f^2)^{-b/2}(1+f^2)^{b^2/2}.
 
 This analytical correction method can easily be extended to multiple
@@ -1516,9 +1504,8 @@ precip-mass-weighted mean value of :math:`q_p`, which gives us a
 representative value of :math:`q_p` where precip-mass is present.
 Rearranging:
 
-.. math::
+.. math:: :label: eq:representative_c_r
 
-   \label{eq:representative_c_r}
    C_R = \frac{ \overline{q_p}^2 }{ \overline{q_p^2} }
 
 Two different options have been implemented for how to update this
@@ -1540,7 +1527,7 @@ processes can change the precip mass within some parts of the region
 start-of-timestep :math:`C_r`, so that :math:`C_r` is increased), thus
 creating inhomogeneity within :math:`C_r` during the timestep. But at
 the end of every timestep :math:`C_r` is recalculated following eq
-(`[eq:representative_c_r] <#eq:representative_c_r>`__) and then assumed
+:eq:`eq:representative_c_r` and then assumed
 to reset to having homogeneous precip mass within that area.
 
 .. _`sec:precip_frac_update`:
@@ -1685,7 +1672,7 @@ the 5 partitions. Note we have assumed that any precipitation mass
 present at the start of the current sub-step is distributed evenly
 across all the partitions except for **rain_new**. The new value of
 :math:`C_R` is then given by equation
-`[eq:representative_c_r] <#eq:representative_c_r>`__, expanding out the
+:eq:`eq:representative_c_r`, expanding out the
 grid-means in the numerator and denominator:
 
 .. math::
@@ -1736,7 +1723,7 @@ The combined effective precipitation fraction :math:`{C_R}_{combined}`
 resulting from merging the falling-in precipitation
 :math:`{q_p}_{fall}`, :math:`{C_R}_{fall}` with the existing
 precipitation :math:`{q_p}_k`, :math:`{C_R}_k` is calculated using
-equation `[eq:representative_c_r] <#eq:representative_c_r>`__, assuming
+equation :eq:`eq:representative_c_r`, assuming
 the fractions :math:`{C_R}_k` and :math:`{C_R}_{fall}` are maximally
 overlapped.
 
@@ -1751,7 +1738,7 @@ partitions:
   :math:`\frac{{q_p}_{fall}}{{C_R}_{fall}}` (contribution from only
   falling-in precipitation mass).
 
-From equation `[eq:representative_c_r] <#eq:representative_c_r>`__,
+From equation :eq:`eq:representative_c_r`,
 expanding out the grid-means in the numerator and denominator over these
 2 regions, the combined precipitation fraction will then be:
 
@@ -1770,9 +1757,8 @@ expanding out the grid-means in the numerator and denominator over these
 
 This rearranges to give:
 
-.. math::
+.. math:: :label: eq:combine_cr
 
-   \label{eq:combine_cr}
    {C_R}_{combined} = \frac{ {C_R}_k {C_R}_{fall} }
                          { {C_R}_k + \left( {C_R}_{fall} - {C_R}_k \right)
                            \left( \frac{{q_p}_k}{{q_p}_k + {q_p}_{fall}} \right)^2 }
@@ -1847,7 +1833,7 @@ that this assumption led to a spurious timestep sensitivity (the shorter
 the timestep, the more frequent the assumed return to homogeneity, and
 this systematically alters the solution over time). To illustrate the
 problem mathematically, consider eq
-(`[eq:combine_cr] <#eq:combine_cr>`__) but for the case where
+:eq:`eq:combine_cr` but for the case where
 :math:`{C_R}_{fall} < {C_R}_k`, substituting
 :math:`{q_P}_{fall} = \frac{\Delta t}{\rho \Delta z} P`, and rearrange
 to obtain an expression for the tendency in :math:`C_R` for a given
@@ -1900,7 +1886,7 @@ continuous calculus:
 
 The tendency scales with :math:`\Delta t` and therefore goes to zero in
 the limit of small timesteps. i.e. eq
-(`[eq:combine_cr] <#eq:combine_cr>`__) does not converge to the solution
+:eq:`eq:combine_cr` does not converge to the solution
 to any reasonable continuous differential equation for :math:`C_R`. In
 the limit of small :math:`\Delta t`, it is impossible for precip mass
 being injected by a process with a small area-fraction to reduce any
@@ -1923,7 +1909,7 @@ Update of precipitation fraction from precip mass sources
 |  
 | Following our definition of
   :math:`C_r = \frac{ \overline{q_p}^2 }{ \overline{q_p^2} }` (eq
-  `[eq:representative_c_r] <#eq:representative_c_r>`__), the updated
+  :eq:`eq:representative_c_r`, the updated
   value of :math:`C_r` following each increment to grid-mean precip mass
   :math:`\overline{q_p}` can be calculated if we also know the
   corresponding increment to the 2nd moment of the sub-grid precip-mass
@@ -1961,18 +1947,16 @@ For the 2nd moment:
    \end{aligned}
 
 Rearranging our definition of :math:`C_R`
-(`[eq:representative_c_r] <#eq:representative_c_r>`__), we have:
+:eq:`eq:representative_c_r`, we have:
 
-.. math::
+.. math:: :label: eq:qpn_sq
 
-   \label{eq:qpn_sq}
    \overline{ {q_p}_n^2 } = \frac{ \overline{{q_p}_n}^2 }{ {C_R}_n }
 
 And we can similarly write:
 
-.. math::
+.. math:: :label: eq:dqpdt_sq
 
-   \label{eq:dqpdt_sq}
    \overline{ \frac{\partial q_p}{\partial t}^2 }
     = \frac{ \overline{\frac{\partial q_p}{\partial t}}^2 }{ C_{proc} }
 
@@ -1982,7 +1966,7 @@ of overlap between rain and liquid-cloud).
 
 The cross term
 :math:`\overline{ {q_p}_n \frac{\partial q_p}{\partial t} }` on the
-r.h.s. of (`[eq:q_p_np1_sq_1] <#eq:q_p_np1_sq_1>`__) depends on the
+r.h.s. of :eq:`eq:q_p_np1_sq_1` depends on the
 sub-grid spatial correlation between the existing precip mass and the
 process-rate tendency.
 
@@ -2029,14 +2013,14 @@ area-fraction for the two fields, taken to be the geometric mean of
                    \overline{ \frac{\partial q_p}{\partial t}^2 } }
 
 The last line above is derived by noting that
-(`[eq:cross_term_correl] <#eq:cross_term_correl>`__) is the product of
-the square-roots of (`[eq:qpn_sq] <#eq:qpn_sq>`__) and
-(`[eq:dqpdt_sq] <#eq:dqpdt_sq>`__).
+:eq:`eq:cross_term_correl` is the product of
+the square-roots of :eq:`eq:qpn_sq` and
+:eq:`eq:dqpdt_sq`.
 
-Substituting (`[eq:qpn_sq] <#eq:qpn_sq>`__),
-(`[eq:dqpdt_sq] <#eq:dqpdt_sq>`__) and
-(`[eq:cross_term_correl] <#eq:cross_term_correl>`__) into
-(`[eq:q_p_np1_sq_1] <#eq:q_p_np1_sq_1>`__), we obtain:
+Substituting :eq:`eq:qpn_sq`,
+:eq:`eq:dqpdt_sq` and
+:eq:`eq:cross_term_correl` into
+:eq:`eq:q_p_np1_sq_1`, we obtain:
 
 .. math:: :label: eq:q_p_np1_sq_2
 
@@ -2055,17 +2039,16 @@ Substituting (`[eq:qpn_sq] <#eq:qpn_sq>`__),
              \right)^2
    \end{aligned}
 
-Now substituting (`[eq:q_p_np1] <#eq:q_p_np1>`__) for
+Now substituting :eq:`eq:q_p_np1` for
 :math:`\overline{{q_p}_{n+1}}` and
-(`[eq:q_p_np1_sq_2] <#eq:q_p_np1_sq_2>`__) for
+:eq:`eq:q_p_np1_sq_2` for
 :math:`\overline{{q_p}_{n+1}^2}` into our equation
-(`[eq:representative_c_r] <#eq:representative_c_r>`__) for the updated
+:eq:`eq:representative_c_r` for the updated
 :math:`C_R`, we obtain our formula for updating the prognostic precip
 fraction wherever precipitation mass is produced:
 
-.. math::
+.. math:: :label: eq:cr_np1
 
-   \label{eq:cr_np1}
    {C_R}_{n+1} \; = \;
      \frac{ \overline{{q_p}_{n+1}}^2 }{ \overline{{q_p}_{n+1}^2} }
    \; = \;
@@ -2095,7 +2078,7 @@ since a mass-weighted mean of any quantity is the same regardless of how
 many timesteps the total increment is split into.
 
 Taking 1st order Taylor expansions in the limit of small
-:math:`\Delta t`, we can also write (`[eq:cr_np1] <#eq:cr_np1>`__) as a
+:math:`\Delta t`, we can also write :eq:`eq:cr_np1` as a
 continuous differential equation for :math:`C_R`:
 
 .. math:: :label: eq:dcr_dt
@@ -2151,12 +2134,12 @@ continuous differential equation for :math:`C_R`:
    \end{aligned}
 
 However it is important that we use the time-integrated solution
-(`[eq:cr_np1] <#eq:cr_np1>`__) instead of attempting a forwards-time
-discretisation of (`[eq:dcr_dt] <#eq:dcr_dt>`__), in order to correctly
+:eq:`eq:cr_np1` instead of attempting a forwards-time
+discretisation of :eq:`eq:dcr_dt`, in order to correctly
 integrate over the singularity when :math:`C_R = q_p = 0`.
 
 Table `12 <#tab:precfrac_processes_2>`__ lists the processes where
-(`[eq:cr_np1] <#eq:cr_np1>`__) is applied to update :math:`C_R`
+:eq:`eq:cr_np1` is applied to update :math:`C_R`
 consistent with source terms for :math:`q_p`, and what area-fraction
 :math:`C_{proc}` is assumed for the tendency
 :math:`\frac{\partial q_p}{\partial t}` from each process.
@@ -2190,9 +2173,8 @@ area is expected to enhance the sub-grid inhomogeneity of :math:`q_R`
 and so reduce :math:`C_R`. For the timebeing, a smooth behaviour between
 these limits is parameterised as:
 
-.. math::
+.. math:: :label: eq:dcr_capture
 
-   \label{eq:dcr_capture}
    \frac{\partial C_R}{\partial t} = \left( C_R - rain\_ice - rain\_mix \right)
      \frac{1}{\overline{q_p}}
      \; \overline{ \frac{\partial q_p}{\partial t} }
@@ -2203,7 +2185,7 @@ process can convert :math:`q_R` to either the capturing ice-cloud mass
 or to graupel mass, depending on options and conditions. If prognosing a
 single fraction for both rain and graupel,
 :math:`\frac{\partial q_p}{\partial t}` in
-(`[eq:dcr_capture] <#eq:dcr_capture>`__) is (minus) the rate of
+:eq:`eq:dcr_capture` is (minus) the rate of
 conversion of rain to ice-cloud only, since the conversion of rain to
 graupel does not change :math:`q_p`.
 
@@ -2218,9 +2200,8 @@ evaporate away completely while other parts of the rainshaft do not, so
 that :math:`C_R` is reduced by rain evaporation. This is parameterised
 as:
 
-.. math::
+.. math:: :label: eq:dcr_evap
 
-   \label{eq:dcr_evap}
    \frac{\partial C_R}{\partial t} = \frac{1}{2} C_R
      \frac{1}{\overline{q_p}} \overline{ \frac{\partial q_p}{\partial t} }
 
@@ -2230,13 +2211,13 @@ negative, hence so is :math:`\tfrac{\partial C_R}{\partial t}` for this
 process). i.e. the fractional rate of reduction of :math:`C_R` is half
 the fractional rate of reduction of :math:`q_p`, so that over time
 evaporation reduces :math:`C_R` in proportion to the square-root of
-rain-mass. From (`[eq:representative_c_r] <#eq:representative_c_r>`__),
+rain-mass. From :eq:`eq:representative_c_r`,
 this is equivalent to assuming that evaporation reduces the 2nd moment
 of the sub-grid spatial distribution :math:`\overline{q_p^2}` in
 proportion with the first moment :math:`\overline{q_p}` raised to the
 power :math:`\tfrac{3}{2}`.
 
-We time-integrate (`[eq:dcr_evap] <#eq:dcr_evap>`__) separately in the
+We time-integrate :eq:`eq:dcr_evap` separately in the
 saturated (liquid-cloud) and subsaturated sub-regions of :math:`C_R`,
 assuming (consistent with the rest of the rain evaporation code) that
 evaporation takes place only outside the liquid-cloud:
@@ -2257,7 +2238,7 @@ where :math:`\Delta t` is the microphysics timestep length. Note that in
 the limit of small :math:`\Delta t`, taking a 1st order Taylor expansion
 of the square-root term, all of the factors of
 :math:`\frac{C_R}{rain\_ice + rain\_clear}` cancel and we retreive
-(`[eq:dcr_evap] <#eq:dcr_evap>`__).
+:eq:`eq:dcr_evap`.
 
 .. list-table:: Method, equation and process-fraction :math:`C_{proc}` used to update the prognostic precipitation fraction consistent with precip mass for each process, when using i_update_precfrac = 2.
    :name: tab:precfrac_processes_2
@@ -2270,12 +2251,12 @@ of the square-root term, all of the factors of
 
    * - PRACW (accretion of liquid-cloud by rain)
      - +
-     - (`[eq:cr_np1] <#eq:cr_np1>`__)
+     - :eq:`eq:cr_np1`
      - **rain_liq** + **rain_mix**
 
    * - PRAUT ( autoconversion of liquid-cloud to rain)
      - +
-     - (`[eq:cr_np1] <#eq:cr_np1>`__)
+     - :eq:`eq:cr_np1`
      - :math:`C_l`
 
    * - PIPRR,PIFRR (freezing of rain)
@@ -2285,32 +2266,32 @@ of the square-root term, all of the factors of
 
    * - PGACW (riming of liquid-cloud onto graupel)
      - +
-     - (`[eq:cr_np1] <#eq:cr_np1>`__)
+     - :eq:`eq:cr_np1`
      - **rain_liq** + **rain_mix**
 
    * - PSACR,PIACR (capture of rain by ice-cloud)
      - -
-     - (`[eq:dcr_capture] <#eq:dcr_capture>`__)
+     - :eq:`eq:dcr_capture`
      - **rain_ice** + **rain_mix**
 
    * - PGAUT ( autoconversion of ice-cloud to graupel)
      - +
-     - (`[eq:cr_np1] <#eq:cr_np1>`__)
+     - :eq:`eq:cr_np1`
      - :math:`C_{mixed~phase}`
 
    * - PGACS (collection of ice-cloud by graupel)
      - +
-     - (`[eq:cr_np1] <#eq:cr_np1>`__)
+     - :eq:`eq:cr_np1`
      - **rain_ice** + **rain_mix**
 
    * - PSMLT,PIMLT (melting of ice-cloud into rain)
      - +
-     - (`[eq:cr_np1] <#eq:cr_np1>`__)
+     - :eq:`eq:cr_np1`
      - :math:`C_i`
 
    * - PREVP (evaporation of rain)
      - -
-     - (`[eq:dcr_evap] <#eq:dcr_evap>`__)
+     - :eq:`eq:dcr_evap`
      - **rain_ice** + **rain_clear**
 
 Transfer of precipitation fraction by sedimentation
@@ -2319,7 +2300,7 @@ Transfer of precipitation fraction by sedimentation
 |  
 | This follows the same method as described for i_update_precfrac = 1 in
   section `5.4.3.2 <#sec:precfrac_sed>`__, except that we now use eq
-  (`[eq:cr_np1] <#eq:cr_np1>`__) for combining the pre-existing and
+  :eq:`eq:cr_np1` for combining the pre-existing and
   falling-in precip masses assuming both have strongly-correlated
   sub-grid spatial distributions. The tendency from fall-in of precip
   mass from above is set to:
@@ -2337,7 +2318,7 @@ Precipitation fraction created by “emergency melting”
 |  
 | Again this follows what is done under i_update_precfrac = 1, (section
   `5.4.3.3 <#sec:precfrac:emerg>`__) but using eq
-  (`[eq:cr_np1] <#eq:cr_np1>`__) to compute the combined fraction of the
+  :eq:`eq:cr_np1` to compute the combined fraction of the
   existing rain / graupel and the melted snow-flux.
 
 And the final check to reset :math:`C_R` to zero if rain / graupel mass
@@ -2712,9 +2693,8 @@ CLASSIC aerosol species `Bellouin et al. (2007)`_ and the
 result converted to :math:`n_{d}`, using the
 `Jones et al. (1994)`_ relationship:
 
-.. math::
+.. math:: :label: eq:Jones_Nature
 
-   \label{eq:Jones_Nature}
    n_{d} = 3.75 \times 10^8 \left[ 1 - \exp 
    \left( -2.5 \times 10^{-9} n_{aer} \right) \right].
 
@@ -2762,9 +2742,8 @@ This scheme uses the parametrization of either
 `Haywood et al. (2008)`_ using flight data around the UK.
 Both relations share the same equation
 
-.. math::
+.. math:: :label: eq:new_murk
 
-   \label{eq:new_murk}
    n_{aer}= n_{0_{murk}} \left( \frac{A_{mass}}
    {S_{\rm murk} \, m_{0_{murk}} } \right)^{\frac{1}{2}},
 
@@ -2774,7 +2753,7 @@ relationship between murk and cloud drop number to be adjusted
 independently from the visibiltiy. The values of the other parameters
 are given in table `15 <#tab:haycla>`__
 
-.. list-table:: MURK aerosol parameters used in equation `[eq:new_murk] <#eq:new_murk>`__
+.. list-table:: MURK aerosol parameters used in equation :eq:`eq:new_murk`
    :name: tab:haycla
    :header-rows: 1
 
@@ -2792,7 +2771,7 @@ are given in table `15 <#tab:haycla>`__
 
 `Wilkinson et al. (2010)`_ showed that generating the
 cloud droplet number using the `Jones et al. (1994)`_
-relationship (equation `[eq:Jones_Nature] <#eq:Jones_Nature>`__)
+relationship (equation :eq:`eq:Jones_Nature`
 constrained the cloud droplet numbers into a sensible range of values.
 However `Abel (2012)`_ used aircraft data to suggest that
 the `Haywood et al. (2008)`_ parametrization overestimated
@@ -2834,9 +2813,8 @@ ratio.
 
 For a fixed taper, the droplet number at a given height is defined as
 
-.. math::
+.. math:: :label: eq:taper
 
-   \label{eq:taper}
    n_d = n_{ds} + \sigma \ln \left( \frac{\eta}{\eta_{s}} \right)
 
 where :math:`\eta = z / z_{toa}`, :math:`z` is the altitude of the model
@@ -2846,9 +2824,8 @@ the height of this ’surface’ value is specified via a namelist parameter
 :math:`z_s`, and a constant value of :math:`n_d=n_{ds}` is used below
 this. :math:`\sigma` is defined as
 
-.. math::
+.. math:: :label: eq:sigma
 
-   \label{eq:sigma}
    \sigma = \frac{n_{dth} - n_{ds}}{\ln \left( \frac{\eta_{th}}{\eta_{s}} \right) }
 
 and the taper height :math:`z_{th}` is defined as the product of
@@ -2862,11 +2839,10 @@ m\ :math:`^{-3}`).
 If a variable taper is used, the value of :math:`n_{ds}` is calculated
 based on the aerosol amount in the lowest model level
 (:math:`n_{aer_{s}}`) as a modified version of equation
-`[eq:Jones_Nature] <#eq:Jones_Nature>`__:
+:eq:`eq:Jones_Nature`:
 
-.. math::
+.. math:: :label: eq:tapvar
 
-   \label{eq:tapvar}
    n_{ds} = n_{ds_{max}} \left[1.0 - \exp \left( - 1.5 \times 10^{-9}  n_{aer_{s}} \right) \right].
 
 and a typical value of :math:`n_{ds_{max}}` is 100 per cm\ :math:`^3`
@@ -2900,23 +2876,21 @@ allowing cloud droplets to fall out by gravity using a modified Stokes’
 law. The terminal velocity of a cloud droplet is given as follows (after
 `Lamb (1994)`_, `Rogers and Yau (1989)`_)
 
-.. math::
+.. math:: :label: eq:ds_lamb
 
-   \label{eq:ds_lamb}
    V_{cd} = \frac{2}{9} \frac{\rho_w g}{\mu} \left(\frac{D}{2}\right)^2 
           = \mathcal{K}_1 \left(\frac{D}{2}\right)^2
 
 where :math:`\mathcal{K}_1 = 1.27 \times 10^8` m\ :math:`^{-1}`
 s\ :math:`^{-1} /F_{K_{a}}` (and :math:`F_{K_{a}}`\ is defined in
-equation `[eq:mic_conductivity] <#eq:mic_conductivity>`__). Equation
-`[eq:ds_lamb] <#eq:ds_lamb>`__ is accurate for droplet radii of up to 30
+equation :eq:`eq:mic_conductivity`. Equation
+:eq:`eq:ds_lamb` is accurate for droplet radii of up to 30
 microns. Damian Wilson has integrated over the cloud droplet spectrum,
 assuming a `Khrgian and Mazin (1952)`_ gamma distribution,
 which gives the bulk settling velocity as
 
-.. math::
+.. math:: :label: eq:ds_spec
 
-   \label{eq:ds_spec}
    \overline{V_{cd}} = \frac{1.339 \times 10^6 
    \left(\frac{q_{cl} \rho}{n_{d}}\right)^{\frac{2}{3}}}{F_{K_a}},
 
@@ -2926,9 +2900,8 @@ in section `6.2 <#sec:cloud_drop_calc>`__.
 With the bulk velocity for cloud droplets known, the flux of cloud
 droplets out of the layer can be calculated as
 
-.. math::
+.. math:: :label: eq:ds_flux
 
-   \label{eq:ds_flux}
    P_{LSET} = \rho q_{cl}\overline{V_{cd}},
 
 with the restriction that the droplets are not allowed to settle more
@@ -2955,7 +2928,7 @@ straightforward because of the long timestep and the way in which it is
 solved is discussed in the numerical methods section. The solution to
 the mass mean fall-speed condensate-content relationship is:
 
-.. math::
+.. math:: :label: eq:icefall
 
    \overline{v_x} = {\left( \frac{\rho_0}{\rho} \right)}^{\mathcal{G}_x} c_x
    \frac{ \Gamma \left( d_x + b_x + 1 + \alpha_x \right) }{ \Gamma \left( b_x + 1 
@@ -2963,7 +2936,6 @@ the mass mean fall-speed condensate-content relationship is:
    { \left( \frac{ \rho q_{x} }{n_{ax} a_x \Gamma \left( b_x + 1 + 
    \alpha_x \right) } \right)}
    ^{\frac{d_x}{b_x + 1 + \alpha_x - n_{bx} }}
-   \label{eq:icefall}
 
 where :math:`q_x` is the mixing ratio variable for the condensate
 quantity (:math:`q_{cfa}`, :math:`q_{cfc}`, :math:`q_{graup}` or
@@ -2973,19 +2945,18 @@ quantity (:math:`q_{cfa}`, :math:`q_{cfc}`, :math:`q_{graup}` or
 for the default values used in the UM.
 
 **With the generic ice particle size distribution** When the generic ice
-particle option is switched on, equation `[eq:icefall] <#eq:icefall>`__
+particle option is switched on, equation :eq:`eq:icefall`
 is modified as follows (now using the ’\ :math:`a`\ ’ subscript as this
 is valid for ice aggregates only):
 
-.. math::
+.. math:: :label: eq:icefallpsd
 
    \overline{v_a} = {\left( \frac{\rho_0}{\rho} \right)}^{\mathcal{G}_a} c_a a_a 
    \left(\frac{\mathcal{M}_{b_a+d_a}}{\rho q_{cfa}}\right) 
-   \label{eq:icefallpsd}
 
 where :math:`\mathcal{M}_{b_a+d_a}` is the result of inputting the
 expression :math:`b_a + d_a` into the generic ice particle size
-distribution calculation (equation `[eq:field1] <#eq:field1>`__,
+distribution calculation (equation :eq:`eq:field1`,
 described in section `4.3 <#sec:field_psd>`__).
 
 **Cloud fraction changes** We assume that :math:`C_i` is not reduced if
@@ -3016,7 +2987,7 @@ PRFALL: Sedimentation (fall) of rain
 
 **Prognostic rain.** For the mixing ratio (prognostic rain) version of
 the scheme this term takes the same form as for the fall of ice;
-equation `[eq:icefall] <#eq:icefall>`__ is used, although the quantities
+equation :eq:`eq:icefall` is used, although the quantities
 with the :math:`x` subscript become those for rain listed in tables
 `2 <#tab:mic_consts_psd>`__ and `5 <#tab:mic_consts_fallspeed>`__.
 
@@ -3035,7 +3006,7 @@ PGFALL: Sedimentation (fall) of graupel
 
 All graupel is assumed to be prognostic; there is no diagnostic graupel
 available. The fall term takes the same form as for the fall of ice;
-equation `[eq:icefall] <#eq:icefall>`__ is used, although the quantities
+equation :eq:`eq:icefall` is used, although the quantities
 with the :math:`x` subscript become those for graupel listed in tables
 `2 <#tab:mic_consts_psd>`__ and `5 <#tab:mic_consts_fallspeed>`__.
 
@@ -3099,9 +3070,8 @@ nucleation in regions with lower dust number density (cleaner
 environments like the Southern Ocean where INPs are relatively scarce)
 by lowering cloud freezing temperatures relative to other regions. E.g:
 
-.. math::
+.. math:: :label: eqn:progtnuc
 
-   \label{eqn:progtnuc}
        tnuc_n = t_{homo} + \left(tnuc-t_{homo}\right) \times \left( \frac{ \arctan \left({5 \times \log_{10}} \left(\frac{dust}{refdust}\right ) \right)}{\pi}+0.5 \right)
 
 where :math:`tnuc_n` (:math:`^{\circ}`\ C) = the new heterogeneous
@@ -3119,7 +3089,7 @@ to the homogeneous nucleation temperature, :math:`t_{homo}`.
 .. figure:: blank.svg
    :name: fig:tnucnew
 
-   Representation of :math:`tnuc_n` vs :math:`dust` (:math:`log_{10}` scale) following (`[eqn:progtnuc] <#eqn:progtnuc>`__). The dotted line represents the arbitrary reference dust value which can be adjusted for testing
+   Representation of :math:`tnuc_n` vs :math:`dust` (:math:`log_{10}` scale) following :eq:`eqn:progtnuc`. The dotted line represents the arbitrary reference dust value which can be adjusted for testing
 
    .. list-table::
       :align: center
@@ -3168,11 +3138,10 @@ to include heterogeneous freezing of rain. Following
 `Bigg (1953)`_, the heterogeneous freezing of rain is
 given by
 
-.. math::
+.. math:: :label: eq:mic_rainfreeze
 
    P_{PIPRR}=20\pi\ B^\prime n_{0R}\left(\frac{\rho_w}{\rho}\right)\ 
                 \left\{\exp{\left[A^\prime\left(T_0-T\right)\right]}-1\right\}\lambda_R^{-7}
-   \label{eq:mic_rainfreeze}
 
 where :math:`A^\prime` and :math:`B^\prime` are parameters determined by
 laboratory experiments and defined as :math:`0.66` C\ :math:`^{-1}` and
@@ -3205,11 +3174,10 @@ deposition/sublimation equation is (following
 `Rogers and Yau (1989)`_ or
 `Rutledge and Hobbs (1983)`_):
 
-.. math::
+.. math:: :label: eq:mic_dmevap
 
    \frac {dM_{x}}{dt}=\frac{ \left(\frac{q}{q_{isat}}-1\right)}
                               {\mbox{AB}} C F'.
-   \label{eq:mic_dmevap}
 
 where :math:`dM_x/dt` represents the rate of change of mass due to the
 phase change, :math:`\mbox{AB}` is a function of temperature and is
@@ -3231,7 +3199,7 @@ where :math:`\mu` is the dynamic viscosity of air. The Schmidt number,
 The integrated value of :math:`CF'` *for spherical particles* over a
 generalised gamma distribution of sizes is defined as:
 
-.. math::
+.. math:: :label: eq:mic_ventx
 
    {{\cal V}_x}=2\pi n_{0x}
              \left(0.65\frac{\Gamma(2+\alpha_x)}{\lambda_x^{(2+\alpha_x)}}
@@ -3241,27 +3209,24 @@ generalised gamma distribution of sizes is defined as:
            \frac{\Gamma\left(0.5d_x+\alpha_x+2.5\right)}
     {\left(\lambda_x+0.5h_x\right)^{(0.5d_x+\alpha_x+2.5)}}
              \right)
-   \label{eq:mic_ventx}
 
 :math:`x` can stand for :math:`R`,\ :math:`c`,\ :math:`a` or :math:`g`.
 The deposition and sublimation rates of snow aggregates
 (:math:`P_{SDEP}` and :math:`P_{SSUB}`) are given by
 
-.. math::
+.. math:: :label: eq:mic_xsub
 
    P_{SDEP} ( or ~ -P_{SSUB})=
         \frac{ \left(\frac{q}{q_{isat}}-1\right)} {\rho \mbox{AB}_{ice}}
    \times {{\cal V}_x}
-   \label{eq:mic_xsub}
 
 where :math:`\mbox{AB}_{ice}` is a thermodynamic term given by
 `Rogers and Yau (1989)`_ as
 
-.. math::
+.. math:: :label: eq:mic_ABiceUM
 
    \mbox{AB}_{ice}=\left(\frac{L_S}{R_vT}-1\right)\frac{L_S}{K_a(T)T}+\frac{R_v
      T}{e_{isat}\psi(T,p)}
-   \label{eq:mic_ABiceUM}
 
 where :math:`e_{isat}` is the saturated vapour pressure over ice. When
 liquid exists this is assumed to be removed before the ice (the
@@ -3312,16 +3277,15 @@ be set to true.
 
 **With the generic ice particle size distribution** When the generic ice
 particle size distribution is switched on, equation
-`[eq:mic_xsub] <#eq:mic_xsub>`__ remains identical, but equation
-`[eq:mic_ventx] <#eq:mic_ventx>`__ is modified as
+:eq:`eq:mic_xsub` remains identical, but equation
+:eq:`eq:mic_ventx` is modified as
 
-.. math::
+.. math:: :label: eq:mic_ventx_psd
 
    {{\cal V}_x}=2\pi\left(0.65 \mathcal{M}_1 + 0.44 
    \left(\frac{c_x}{\upsilon}\right)^{\frac{1}{2}}S_c^{\frac{1}{3}}\rho^{\frac{1}{2}} 
    {\left( \frac{\rho_0}{\rho} \right)}^{ \frac{\mathcal{G}_x}{2}}
    \mathcal{M}_{1+0.5(d_a+1)}\right),
-   \label{eq:mic_ventx_psd}
 
 where :math:`\mathcal{M}_1` is the first moment of the generic ice
 particle size distribution calculation and
@@ -3331,7 +3295,7 @@ calculation.
 
 The multiplying factor, :math:`c`, for non-spherical particles may also
 be used to scale the values coming from equation
-`[eq:mic_ventx_psd] <#eq:mic_ventx_psd>`__.
+:eq:`eq:mic_ventx_psd`.
 
 **Cloud fraction changes** Deposition is assumed to remove :math:`C_l`
 but not to adjust :math:`C_i` or :math:`C`. If we assume a uniform
@@ -3423,7 +3387,7 @@ processes as described earlier.
 The process of aggregation of ice crystals to snow aggregates is coded
 to emulate the diagnostic split scheme, i.e. the amount of ice crystal
 mass is calculated using the diagnostic split (equation
-`[eq:cry_agg_split] <#eq:cry_agg_split>`__) and any mass greater than
+:eq:`eq:cry_agg_split` and any mass greater than
 this threshold is transferred to the aggregate category.
 
 .. _`sec:PSACI`:
@@ -3455,20 +3419,18 @@ that mass from category :math:`y` is collected by category :math:`x` is
 Where :math:`E_{xy}` is a collection efficiency defined following
 `Gray et al. (2004)`_ as
 
-.. math::
+.. math:: :label: eq:mic_exy
 
    E_{xy}= 0.02 \exp ( 0.08 (T - 273.15))
-   \label{eq:mic_exy}
 
-The integration of equation `[eq:mic_pyacx1] <#eq:mic_pyacx1>`__ is made
+The integration of equation :eq:`eq:mic_pyacx1` is made
 easier (or indeed possible) by making the assumption of
 `Forbes and Halliwell (2003)`_ that
 
-.. math::
+.. math:: :label: eq:mic_vx_vy
 
    | v_x(D_x) - v_y(D_y) | =\mbox{\footnotesize \sf MAX} \left[(\overline{v_x}+\overline{v_y})/8,| \overline{v_x} 
    - \overline{v_y} |\right]  
-   \label{eq:mic_vx_vy}
 
 for all values of :math:`D_x` and :math:`D_y`. So the velocity
 difference between any two particles from the two different categories
@@ -3478,9 +3440,9 @@ average of the two mass–mean fall velocities, whichever is greater. The
 latter takes account of the distribution of fall speeds in the case
 where the mean fall speeds of the two categories are similar.
 
-Substituting in equation (`[eq:mic_vx_vy] <#eq:mic_vx_vy>`__) allows
-equation (`[eq:mic_pyacx1] <#eq:mic_pyacx1>`__) to be integrated giving
-equation `[eq:mic_pyacx2] <#eq:mic_pyacx2>`__ (where many of the
+Substituting in equation :eq:`eq:mic_vx_vy` allows
+equation :eq:`eq:mic_pyacx1` to be integrated giving
+equation :eq:`eq:mic_pyacx2` (where many of the
 parameters have been defined earlier in section
 `4 <#sec:param_par_char>`__, with default values in tables
 `2 <#tab:mic_consts_psd>`__,\ `9 <#tab:mic_consts_density>`__ and
@@ -3530,12 +3492,11 @@ Although this term is called ’riming’, it obeys a similar process (and
 hence is formulated in the same way), as that for the accretion of
 liquid cloud by falling rain.
 
-.. math::
+.. math:: :label: eq:mic_psacw
 
    P_{SACW}=\frac{\pi n_{0a} c_a  \Gamma (3+d_a+\alpha_a) E_{aw} q_{cl}}
                {4(\lambda_a+h_a)^{3+d_a+\alpha_a}}
            \left(\frac{\rho_0}{\rho}\right)^{\mathcal{G}_a}
-   \label{eq:mic_psacw}
 
 Collision/collection efficiency :math:`E_{aw}` are also assumed to be 1,
 which is not such a reasonable assumption for ice particles since they
@@ -3546,17 +3507,16 @@ to act when T\ :math:`< 0 ^{\circ}`\ C.
 **When the generic ice particle size distribution is used**
 
 This follows the same form as equation
-`[eq:mic_psacw] <#eq:mic_psacw>`__, although with the intercepts
-replaced by moment calculations. Equation `[eq:field1] <#eq:field1>`__
+:eq:`eq:mic_psacw`, although with the intercepts
+replaced by moment calculations. Equation :eq:`eq:field1`
 is used to calculate the moment of the ice particle size distribution
 corresponding to :math:`2+d_a`, :math:`\mathcal{M}_{2+d_a}` and then the
 riming equation can be modified as follows:
 
-.. math::
+.. math:: :label: eq:mic_psacw_psd
 
    P_{SACW} = \frac{\pi}{4} c_a \mathcal{M}_{2+d_a} E_{aw} q_{cl}
    \left(\frac{\rho_0}{\rho}\right)^{\mathcal{G}_a}.
-   \label{eq:mic_psacw_psd}
 
 **When shape-dependent riming is used**
 
@@ -3588,7 +3548,7 @@ PIACW: Riming by crystals
 
 **:math:`q_{cl}` to :math:`q_{cfc}`.** This term is formulated in the
 same way as the riming by aggregates term in equation
-`[eq:mic_psacw] <#eq:mic_psacw>`__ (and is valid for non-generic ice PSD
+:eq:`eq:mic_psacw` (and is valid for non-generic ice PSD
 cases). The only differences are the values of the parameters used in
 the PSD, density and fall speed parametrizations. Collision/collection
 efficiency are also assumed to be 1 and no change in cloud fractions
@@ -3609,10 +3569,9 @@ This is based on radar observations of a large number of convective
 showers over Southern England
 `Forbes and Halliwell (2003)`_. The conversion rate is:
 
-.. math::
+.. math:: :label: eq:mic_pgaut
 
    P_{GAUT}= \mathcal{F} \times \mbox{\footnotesize \sf MAX} \left[0, P_{SACW}-P_{SDEP}\right]  .
-   \label{eq:mic_pgaut}
 
 where :math:`P_{SACW}` is the rate of riming of snow and
 :math:`P_{SDEP}` is the rate of snow deposition. Thus the riming rate of
@@ -3625,14 +3584,13 @@ scheme `Field et al. (2019)`_, the value of
 :math:`\mathcal{F}` is set to match the
 `Thompson et al. (2008)`_ scheme as follows:
 
-.. math::
+.. math:: :label: eq:mic_pgaut_f
 
    \mathcal{F}=\left\{ \begin{array}{llll}
          0.75  & & \mathcal{R} & > 30 \\
          0.028 (\mathcal{R} -5) + 0.05 & 5 \le & \mathcal{R} & \le 30 \\
          0     & & \mathcal{R} & < 5
        \end{array},\right.
-   \label{eq:mic_pgaut_f}
 
 where :math:`\mathcal{R}` is defined as
 :math:`\frac{P_{SCAW}}{P_{SDEP}}`.
@@ -3641,7 +3599,7 @@ This has the impact that the initial snow to graupel production within a
 cloud cannot start until the ratio of riming to deposition is 5 or more.
 With the original graupel scheme, small amounts of graupel were commonly
 produced away from the main core of a convective cell; with the
-modifications in `[eq:mic_pgaut_f] <#eq:mic_pgaut_f>`__, the graupel
+modifications in :eq:`eq:mic_pgaut_f`, the graupel
 seen within a convective cell tends to be produced closer to the main
 core of the storm, which looks more realistic when comparing to radar
 observations.
@@ -3653,7 +3611,7 @@ PGACW: Riming by graupel
 
 **:math:`q_{cl}` to :math:`q_{graup}`.** The collection rates of liquid
 cloud by graupel obey exactly the same physics as the riming of crystals
-and aggregates (equation `[eq:mic_psacw] <#eq:mic_psacw>`__, but with
+and aggregates (equation :eq:`eq:mic_psacw`, but with
 the parameters for graupel from tables `2 <#tab:mic_consts_psd>`__ and
 `5 <#tab:mic_consts_fallspeed>`__ used in place of those for
 aggregates).
@@ -3666,25 +3624,25 @@ PGACS: Collection of snow aggregates by graupel
 **:math:`q_{cfa}` to :math:`q_{graup}`.** The rates of collision between
 the graupel and snow categories is parametrized in the same way as the
 snow/crystal collisions (PSACI) described by equation
-`[eq:mic_pyacx2] <#eq:mic_pyacx2>`__ in section `6.3.15 <#sec:PSACI>`__,
+:eq:`eq:mic_pyacx2` in section `6.3.15 <#sec:PSACI>`__,
 but with the coefficients for graupel replacing those for snow
 aggregates and those for snow aggregates replacing those for ice
 crystals. The collection efficiencies remain the same as those used in
-equation `[eq:mic_exy] <#eq:mic_exy>`__.
+equation :eq:`eq:mic_exy`.
 
 **With the generic ice particle size distribution**
 
 This uses the same physics, but is calculated slightly differently from
-`[eq:mic_pyacx2] <#eq:mic_pyacx2>`__ in section `6.3.15 <#sec:PSACI>`__.
-Equation `[eq:field1] <#eq:field1>`__ is used to calculate the zeroth
+:eq:`eq:mic_pyacx2` in section `6.3.15 <#sec:PSACI>`__.
+Equation :eq:`eq:field1` is used to calculate the zeroth
 (:math:`\mathcal{M}_0`), first (:math:`\mathcal{M}_1`), second
 (:math:`\mathcal{M}_2`) and :math:`b_a+d_a`
 (:math:`\mathcal{M}_{b_a+d_a}`) moments of the ice distribution. The
 moment :math:`\mathcal{M}_{b_a+d_a}` is used to calculate the ice
 particle fall speed, following equation
-`[eq:icefallpsd] <#eq:icefallpsd>`__.
+:eq:`eq:icefallpsd`.
 
-Equation `[eq:mic_pyacx2] <#eq:mic_pyacx2>`__ is then modified as
+Equation :eq:`eq:mic_pyacx2` is then modified as
 follows:
 
 .. math:: :label: eq:pgacs_psd
@@ -3732,7 +3690,7 @@ PSACR: Collection of rain by aggregates
 
 **:math:`q_{R}` to :math:`q_{cfa}`.** This term uses similar assumptions
 as for the collection of ice crystals by snow aggregates above (equation
-`[eq:mic_pyacx2] <#eq:mic_pyacx2>`__ in section
+:eq:`eq:mic_pyacx2` in section
 `6.3.15 <#sec:PSACI>`__). Again, the approximation
 
 .. math::
@@ -3762,8 +3720,8 @@ be 1. Integrating leads to terms in :math:`\lambda_R` and
    \right)
    \end{aligned}
 
-Note that equation `[eq:psacr] <#eq:psacr>`__ is formulated slightly
-differently than equation `[eq:mic_pyacx2] <#eq:mic_pyacx2>`__ due to
+Note that equation :eq:`eq:psacr` is formulated slightly
+differently than equation :eq:`eq:mic_pyacx2` due to
 the captured quantity being water and not ice.
 
 **When the increased graupel production term is included** The resultant
@@ -3797,16 +3755,16 @@ There are no changes to the cloud fractions as a result of this process.
 **When the generic ice particle size distribution is used**
 
 This is calculated in a similar way to section `6.3.20 <#sec:PGACS>`__.
-Equation `[eq:field1] <#eq:field1>`__ is used to calculate the zeroth
+Equation :eq:`eq:field1` is used to calculate the zeroth
 (:math:`\mathcal{M}_0`), first (:math:`\mathcal{M}_1`), second
 (:math:`\mathcal{M}_2`), :math:`1+0.5(d_a+1)`
 (:math:`\mathcal{M}_{1+0.5(d_a+1)}`) and :math:`b_a+d_a`
 (:math:`\mathcal{M}_{b_a+d_a}`) moments of the ice distribution. The
 moment :math:`\mathcal{M}_{b_a+d_a}` is used to calculate the ice
 aggregate fall speed, following equation
-`[eq:icefallpsd] <#eq:icefallpsd>`__.
+:eq:`eq:icefallpsd`.
 
-Equation `[eq:psacr] <#eq:psacr>`__ can be modified as follows
+Equation :eq:`eq:psacr` can be modified as follows
 
 .. math:: :label: eq:psacr_psd
 
@@ -3859,7 +3817,7 @@ The value of :math:`\lambda_R` can then be derived as in section
             & = & \frac{\mathcal{M}_{ba + 1}}{\mathcal{M}_{ba}}
    \end{aligned}
 
-where equation `[eq:field1] <#eq:field1>`__ is used to calculate the two
+where equation :eq:`eq:field1` is used to calculate the two
 moments required. If :math:`\bar{D_R}` is greater than :math:`\bar{D_a}`
 then the result of a collision is a graupel particle. Otherwise the
 result will be an ice aggregate.
@@ -3869,7 +3827,7 @@ PIACR: Collection of rain by crystals
 
 **:math:`q_{R}` to :math:`q_{cfc}`.** This term is formulated in the
 same way as the collection of rain by aggregates term (PSACR; equation
-`[eq:psacr] <#eq:psacr>`__ in section `6.3.21 <#sec:PSACR>`__). The only
+:eq:`eq:psacr` in section `6.3.21 <#sec:PSACR>`__). The only
 differences are the values of the parameters used to describe the
 properties of the crystals.
 
@@ -3917,14 +3875,13 @@ Here, :math:`q_{0sat}` is the saturation mixing ratio at 0
 ignoring corrections due to the sensible heat associated with accreted
 liquid water, the melting of snow to form rain is given as:
 
-.. math::
+.. math:: :label: eq:mic_psmlt
 
    P_{SMLT} ~=~
    \frac{1}{\rho L_f} (K_a(T-T_0)-L_v\psi\rho(q -q_{0sat}))\times{\cal V}_a
-   \label{eq:mic_psmlt}
 
 where :math:`T_0` is 0C. The ventilation coefficient is given in
-equation `[eq:mic_ventx] <#eq:mic_ventx>`__. The second term can be
+equation :eq:`eq:mic_ventx`. The second term can be
 subsumed into the first if we use the wet-bulb temperature, :math:`T_w`,
 in the calculation. Damian Wilson approximated the wet bulb temperature
 over a range of temperatures and pressures as
@@ -3959,7 +3916,7 @@ randomly overlapped with any existing liquid cloud.
 
 This follows the intercept method, although with the ventilation
 coefficient as defined in equation
-`[eq:mic_ventx_psd] <#eq:mic_ventx_psd>`__.
+:eq:`eq:mic_ventx_psd`.
 
 PIMLT: Melting of ice crystals to rain
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3987,7 +3944,7 @@ wet-bulb temperature of the air and 0C and :math:`{\cal V}_g` is the
 integrated ventilation factor for spherical particles with a generalised
 gamma distribution of particle sizes:
 
-.. math::
+.. math:: :label: eq:mic_ventx_g
 
    {{\cal V}_g}=2\pi n_{0g}
              \left(0.78\frac{\Gamma(2+\alpha_g)}{\lambda_g^{(2+\alpha_g)}}
@@ -3997,7 +3954,6 @@ gamma distribution of particle sizes:
            \frac{\Gamma\left(0.5d_g+\alpha_g+2.5\right)}
     {\left(\lambda_g+0.5h_g\right)^{(0.5d_g+\alpha_g+2.5)}}
              \right).
-   \label{eq:mic_ventx_g}
 
 It should be noted that the ventilation coefficients used here, (0.78
 and 0.31) are the same as rain and not ice. This method is used
@@ -4014,7 +3970,7 @@ PREVP: Evaporation of rain
 
 **:math:`q_{R}` to :math:`q`.** The evaporation rate of rain is
 analogous to the sublimation of snow in equation
-(`[eq:mic_xsub] <#eq:mic_xsub>`__) and only occurs in sub-saturated air.
+:eq:`eq:mic_xsub` and only occurs in sub-saturated air.
 
 .. math::
 
@@ -4025,11 +3981,10 @@ analogous to the sublimation of snow in equation
 where :math:`\mbox{AB}_{liq}` is the thermodynamic coefficient
 appropriate for liquid drops and is given by,
 
-.. math::
+.. math:: :label: eq:mic_ABliq
 
    \mbox{AB}_{liq}=   \left(  \frac{L_v}{R_v T} -1 \right) 
    \frac{L_v}{K_a T} + \frac{R_v T}{\psi e_{sat~liq}}.
-   \label{eq:mic_ABliq}
 
 There are a few differences to the sublimation term. The ventilation
 factor is different, in this term we use the
@@ -4069,12 +4024,11 @@ concentration of liquid cloud and the efficiency that liquid cloud
 droplets collide with and then coalesce with raindrops that intercept
 them on their direct fall line. This is formulated as:
 
-.. math::
+.. math:: :label: eq:mic_pracw
 
    P_{RACW}=\frac{\pi n_{0r} c_r  \Gamma (3+d_r+\alpha_R) E_{rw} {q_{cl}}}
                {4(\lambda_R+h_R)^{3+d_r+\alpha_R}}
            \left(\frac{\rho_0}{\rho}\right)^{\mathcal{G}_R}
-    \label{eq:mic_pracw}
 
 We assume that the collision/collection efficiency is 1. There is
 assumed to be no change in rain fraction and no change in cloud
@@ -4101,9 +4055,8 @@ where
    \times \exp\left(\rho 1.15^2 \sqrt{\ln(1+f_{cl}^2)\ln(1+f_R^2)}\right),
    \end{aligned}
 
-.. math::
+.. math:: :label: eq-fsdqcl
 
-   \label{eq-fsdqcl}
      f_{cl}=\left\{ \begin{array}{ll}
          (0.45-0.25C_l)\sqrt{(xC_l)^{2/3}}((0.06xC_l)^{1.5}+1)^{-0.17}&C_l<1 \\
          0.11\sqrt{(xC_l)^{2/3}}((0.06xC_l)^{1.5}+1)^{-0.17}&C_l=1
@@ -4111,9 +4064,8 @@ where
 
 and
 
-.. math::
+.. math:: :label: eq-fsdqr
 
-   \label{eq-fsdqr}
      f_R=\left\{ \begin{array}{ll}
          (1.1-0.8C_R)\sqrt{(xC_R)^{2/3}}((0.11xC_R)^{1.14}+1)^{-0.22}&C_R<1 \\
          0.3\sqrt{(xC_R)^{2/3}}((0.11xC_R)^{1.14}+1)^{-0.22}&C_R=1
@@ -4186,9 +4138,8 @@ where :math:`n_d` is in units of m\ :math:`^{-3}`. The value of
 **`Tripoli and Cotton (1980)`_ autoconversion threshold:**
 :math:`q_{cl0}` is defined as
 
-.. math::
+.. math:: :label: eq:tc_act
 
-   \label{eq:tc_act}
    q_{cl0} = \frac{4}{3} \pi \frac{\rho_{w} r^3_{crit} n_d}{\rho}
 
 where :math:`r_{crit} = 7 \times 10^{-6}` m and :math:`n_d` is defined
@@ -4210,12 +4161,12 @@ where
 
 .. math:: E(f_{cl})=(1+f_{cl}^2)^{-2.47/2}(1+f_{cl}^2)^{2.47^2/2},
 
-and :math:`f_{cl}` is given in Equation `[eq-fsdqcl] <#eq-fsdqcl>`__.
+and :math:`f_{cl}` is given in Equation :eq:`eq-fsdqcl`.
 
 .. figure:: blank.svg
    :name: fig:fall_speeds
 
-   \footnotesize {Autoconversion Thresholds for the default scheme (black line; equation `[eq:jones_nd] <#eq:jones_nd>`__) and the `Tripoli and Cotton (1980)`_ formula (red line; equation `[eq:tc_act] <#eq:tc_act>`__), shown as a function of cloud droplet number. }
+   \footnotesize {Autoconversion Thresholds for the default scheme (black line; equation :eq:`eq:jones_nd` and the `Tripoli and Cotton (1980)`_ formula (red line; equation :eq:`eq:tc_act`, shown as a function of cloud droplet number. }
 
    .. list-table::
       :align: center
@@ -4244,18 +4195,16 @@ appropriate documentation (:umdp:‘020‘). However, in the case of MURK
 aerosol, this follows the method of `Clark et al. (2008)`_,
 and the mixing ratio of aerosol, :math:`A_{mass}` is reduced as:
 
-.. math::
+.. math:: :label: eq:scav
 
-   \label{eq:scav}
    \frac{A_{mass}}{1.0+K_{rain}RR+K_{snow}SR+K_{ds}PLSET}
 
 Where :math:`RR` is the rain rate, :math:`SR` is the snow rate and
 :math:`PLSET` is the droplet settle rate. The other coefficients can be
 described as
 
-.. math::
+.. math:: :label: eq:scav_coef
 
-   \label{eq:scav_coef}
    K_{rain}=K_{snow}=K_{ds}=1.0\times10^{-4}\times 3600 \times \Delta t.
 
 Numerical methods
@@ -5002,20 +4951,18 @@ The rainrate in the UM is defined as the product of the number of drops,
 :math:`n(D)~dD`, their mass, :math:`m(D)` and fall velocity,
 :math:`v(D)` integrated over the drop size distribution (DSD) spectrum.
 
-.. math::
+.. math:: :label: eqn:define_r
 
    R=\int_{0}^{\infty} n(D) m(D) v(D) dD 
-   \label{eqn:define_r}
 
 Let us look at each of the elements which make up the right hand side in
 turn. In the Unified Model (UM) large-scale precipitation scheme the
 number of raindrops of a given size, :math:`n(D)`, i.e. the DSD is
 assumed to be of the form
 
-.. math::
+.. math:: :label: eqn:general_gamma_dsd
 
    n(D)=x_{1R} \lambda^{x_{2R}} D^{x_{4R}} exp(- \lambda D)
-   \label{eqn:general_gamma_dsd}
 
 where :math:`\lambda`, which depends on the rainrate, represents the
 slope of the distribution, :math:`D` is the diameter of the raindrop and
@@ -5025,7 +4972,7 @@ For simplicity we will no longer use the :math:`R` subscripts, but we
 must remember that a different set of values for :math:`x_{1}`,
 :math:`x_{2}` and :math:`x_{4}` are used for aggregates and for ice
 crystals. The form of the DSD given by eqn.
-`[eqn:general_gamma_dsd] <#eqn:general_gamma_dsd>`__ is a general gamma
+:eq:`eqn:general_gamma_dsd` is a general gamma
 distribution. The value of :math:`x_{4}` currently in the model is zero,
 so the DSD actually simplifies to a modified exponential distribution.
 However for completeness, the parameter :math:`x_{4}` is retained in the
@@ -5051,7 +4998,7 @@ slower in denser air.
 At low altitudes, where :math:`\rho \simeq \rho_{0}` the density
 correction is small and can be neglected for simplicity. Substituting
 for :math:`n(D)`, :math:`m(D)` and :math:`v(D)` in eqn.
-`[eqn:define_r] <#eqn:define_r>`__ gives
+:eq:`eqn:define_r` gives
 
 .. math::
 
@@ -5081,10 +5028,9 @@ to write
 
 which can be re-arranged to give
 
-.. math::
+.. math:: :label: eqn:lambda
 
    \lambda=\Big ( \frac{x_{1} \pi \rho_{w} c_{R} \Gamma(x_{4}+4+d_{R})}{6 R} \Big )^{\frac{1}{(x_{4}+4+d_{R}-x_{2})}}
-   \label{eqn:lambda}
 
 Appendix II: Interface with UKCA
 --------------------------------
@@ -5218,22 +5164,20 @@ reflectivity is considered proportional to mass squared. The linear
 radar reflectivity for ice crystals, ice aggregates, rain and graupel is
 given as
 
-.. math::
+.. math:: :label: eq:z_lin
 
-   \label{eq:z_lin}
    Z_{lin_x} = \hat{Q_x} \int_0^{\infty} |M_x(D)|^2 n_x(D) dD,
 
 with :math:`n_x(D)` being determined by equation
-`[eq:mic_nx] <#eq:mic_nx>`__ and :math:`M_x(D)` being determined by
-equation `[eq:m_x] <#eq:m_x>`__. `Stein et al. (2014)`_
-show that by including equations `[eq:mic_nx] <#eq:mic_nx>`__ and
-`[eq:m_x] <#eq:m_x>`__ into equation `[eq:z_lin] <#eq:z_lin>`__ and
+:eq:`eq:mic_nx` and :math:`M_x(D)` being determined by
+equation :eq:`eq:m_x`. `Stein et al. (2014)`_
+show that by including equations :eq:`eq:mic_nx` and
+:eq:`eq:m_x` into equation :eq:`eq:z_lin` and
 using the value of :math:`\lambda_x` determined in section
 `4.6 <#mr2psd>`__ then
 
-.. math::
+.. math:: :label: eq:z_lin2
 
-   \label{eq:z_lin2}
    Z_{lin_x} = \hat{Q_x}~ C_x~n_{ax}~(a_x)^2~ \Gamma(1+2b_x+\alpha_x)~ \lambda_x^{-(1+2b_x+\alpha_x-n_{bx})},
 
 with, :math:`C_x` being the cloud fraction of that grid box and
@@ -5243,12 +5187,11 @@ exceptions:
 
 | **1. With the generic ice particle size distribution**
 | When the generic ice particle option is switched on, equation
-  `[eq:z_lin2] <#eq:z_lin2>`__ is modified for the aggregates category
+  :eq:`eq:z_lin2` is modified for the aggregates category
   as
 
-  .. math::
+  .. math:: :label: eq:z_psd
 
-     \label{eq:z_psd}
      Z_{lin_a} = 0.224 \times 10^{18} \left(\frac{6 ai/\pi}{\rho_a}\right)^2 \mathcal{M}_4,
 
   where in this case, :math:`\mathcal{M}_4` is equivalent to
@@ -5259,9 +5202,8 @@ exceptions:
   `McBeath et al. (2014)`_, who derive a relationship of
   the form
 
-  .. math::
+  .. math:: :label: eq:z_liq
 
-     \label{eq:z_liq}
      Z_{lin_{cl}} = \hat{Q_{cl}} \frac{5.6}{n_d} LWC^2,
 
   where LWC is the in-cloud liquid water content and :math:`n_d` is the
@@ -5272,9 +5214,8 @@ exceptions:
 
 Finally, the value :math:`\hat{Q_x}` is taken as
 
-.. math::
+.. math:: :label: eq:qhat
 
-   \label{eq:qhat}
    \hat{Q_x} = 10^{18} \frac{|K_x|^2}{0.93}\left(\frac{6}{\pi \rho_x}\right)^2,
 
 with the only two unknowns now being :math:`|K_x|^2` and :math:`\rho_x`.
@@ -5303,19 +5244,18 @@ with the only two unknowns now being :math:`|K_x|^2` and :math:`\rho_x`.
      - 500
      - See Section `4.5 <#sec:density>`__
 
-The factor :math:`10^{18}` in equations `[eq:z_psd] <#eq:z_psd>`__ and
-`[eq:qhat] <#eq:qhat>`__ ensures that the units are
+The factor :math:`10^{18}` in equations :eq:`eq:z_psd` and
+:eq:`eq:qhat` ensures that the units are
 mm\ :math:`^6`\ m\ :math:`^{-3}`, but before output, this is converted
 to dBZ (which is more widely used) as:
 
-.. math::
+.. math:: :label: eq:dbz
 
-   \label{eq:dbz}
    Z_{dbZ} = 10.0 ~ \mathrm{LOG}_{10}(Z_{lin}).
 
 A minimum reflectivity value of -40.0 dBZ is applied throughout the
 domain; this is because a linear reflectivity of zero will generate a
-model error when equation `[eq:dbz] <#eq:dbz>`__ is applied and a radar
+model error when equation :eq:`eq:dbz` is applied and a radar
 reflectivity of zero dBZ could be confused with cloud or light
 precipitation.
 
@@ -5594,7 +5534,7 @@ level is close to the surface.
 
 .. [1]
    This should not be confused with the exponent of the fallspeed air
-   density correction used from equation `[eq:mic_vxd] <#eq:mic_vxd>`__
+   density correction used from equation :eq:`eq:mic_vxd`
    onwards. To avoid any confusion, in this document ‘:math:`g`’ will be
    used for acceleration due to gravity and ‘:math:`\mathcal{G}`’ in the
    fall speed correction with air density.
