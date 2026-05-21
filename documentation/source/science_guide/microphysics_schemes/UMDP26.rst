@@ -5064,7 +5064,7 @@ for :math:`n(D)`, :math:`m(D)` and :math:`v(D)` in eqn.
    \end{aligned}
 
 We make use of the gamma function defined (for example by
-`Doviak and Duš (1984)`_) as
+`Doviak and Zrnić (1984)`_) as
 
 .. math:: \frac{1}{\mu^{\nu}}\Gamma(\nu)=\int_{0}^{\infty} x^{\nu-1} exp(-\mu x) dx
 
@@ -6003,9 +6003,9 @@ References
    Rogers, R. R. and Yau, M. K. (1989).
    *A short course in cloud physics*.
 
-.. _Doviak and Duš (1984):
+.. _Doviak and Zrnić (1984):
 
-   Doviak, R. J. and Duš (1984).
+   Doviak, R. J. and Dušan Zrnić (1984).
    *Doppler Radar and Weather Observations*.
 
 .. _Forbes and Halliwell (2003):
