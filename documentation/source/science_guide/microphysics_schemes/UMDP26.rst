@@ -604,7 +604,7 @@ table `3 <#tab:mic_split>`__) and :math:`f_{aggregates}` is the fraction
 of :math:`q_{cf}` that is apportioned to the aggregate part of the
 particle size distribution. This formulation was developed by Wilson and
 is based upon both aircraft data (for example,
-:raw-latex:`\citealp{Field:1999}`) and modelling data
+`Field (1999)`_) and modelling data
 `Cardwell et al. (2002)`_. The flux of snow that is
 carried between model levels represents the combined fluxes of both
 aggregates and crystals. When snow falls into a layer it is assumed to
@@ -988,7 +988,7 @@ Abel and Shipway rain fall speeds
 
 This changes the standard rain fall speeds (equation
 `[eq:mic_vxd] <#eq:mic_vxd>`__, with values from
-:raw-latex:`\citealp{Sachidananda:Zrnic:1986}`) to the relation in
+`Sachinananda and Zrnić (1986)`_) to the relation in
 appendix of `Abel and Shipway (2007)`_:
 
 .. math::
@@ -2898,7 +2898,7 @@ PLSET: Droplet Settling
 term is intended to update the cloud prognostics as a results of
 allowing cloud droplets to fall out by gravity using a modified Stokes’
 law. The terminal velocity of a cloud droplet is given as follows (after
-:raw-latex:`\citealp{Lamb:1994, Rogers:Yau:1989}`)
+`Lamb (1994)`_, `Rogers and Yau (1989)`_)
 
 .. math::
 
@@ -3165,7 +3165,7 @@ PIPRR: Heterogeneous freezing of rain
 
 **:math:`q_{R}` to :math:`q_{graup}`.** From vn11.2 there is an option
 to include heterogeneous freezing of rain. Following
-:raw-latex:`\citealp{Bigg:1953}`, the heterogeneous freezing of rain is
+`Bigg (1953)`_, the heterogeneous freezing of rain is
 given by
 
 .. math::
@@ -3202,8 +3202,8 @@ PSDEP/PSSUB: Deposition/Sublimation of vapour on to aggregates
 
 **:math:`q_{cl}` to :math:`q_{cfa}`, :math:`q` to :math:`q_{cfa}`.** The
 deposition/sublimation equation is (following
-:raw-latex:`\citealp{Rogers:Yau:1989}` or
-:raw-latex:`\citealp{Rutledge:Hobbs:1983}`):
+`Rogers and Yau (1989)`_ or
+`Rutledge and Hobbs (1983)`_):
 
 .. math::
 
@@ -3265,7 +3265,7 @@ where :math:`\mbox{AB}_{ice}` is a thermodynamic term given by
 
 where :math:`e_{isat}` is the saturated vapour pressure over ice. When
 liquid exists this is assumed to be removed before the ice (the
-Bergeron-Findeisen process: :raw-latex:`\citealp{Bergeron:1935}`), hence
+Bergeron-Findeisen process: `Bergeron (1935)`_), hence
 the split into :math:`P_{SDEP1}` and :math:`P_{SDEP2}` terms. The
 deposition/sublimation term only acts when :math:`T<0 \deg C`.
 
@@ -3378,7 +3378,7 @@ representation on (:math:`PIDEP_{HM}`) is given by
 .. math:: PIDEP_{HM} = PIDEP \left( 1 + f_{HM}(T) \frac{q_{cl}}{q_{cl0}} \right)
 
 where :math:`q_{cl0}` is a reference liquid water content from
-:raw-latex:`\citealp{Hallett:Mossop:1974}` (:math:`1.0 \times 10^{-4}`
+`Hallett and Mossop (1974)`_ (:math:`1.0 \times 10^{-4}`
 kg kg\ :math:`^{-1}`) and :math:`f_{HM}` is a function of temperature
 
 .. math::
@@ -3539,7 +3539,7 @@ liquid cloud by falling rain.
 
 Collision/collection efficiency :math:`E_{aw}` are also assumed to be 1,
 which is not such a reasonable assumption for ice particles since they
-have slower fall-speeds (see e.g. :raw-latex:`\citealp{Mitchell:1996}`).
+have slower fall-speeds (see e.g. `Mitchell (1996)`_).
 No change in the cloud fractions are assumed. This term is only allowed
 to act when T\ :math:`< 0 ^{\circ}`\ C.
 
@@ -4002,7 +4002,7 @@ gamma distribution of particle sizes:
 It should be noted that the ventilation coefficients used here, (0.78
 and 0.31) are the same as rain and not ice. This method is used
 elsewhere in the literature (e.g.
-:raw-latex:`\citealp{Reisner:etal:1998}` ) and tries to implement the
+`Reisner et al. (1998)`_ ) and tries to implement the
 fact that graupel particles are spheres with a much higher density than
 aggregates, and are more like raindrops in nature than they are like
 aggregates.
@@ -5690,10 +5690,21 @@ References
    *Improved representation of aerosols for HadGEM2*.
    Tech. Note 73, Hadley Centre., Met Office, Exeter, UK..
 
+.. _Bergeron (1935):
+
+   Bergeron, T. (1935).
+   *On the physics of cloud and precipitation*.
+
 .. _Bergeron (1965):
 
    Bergeron, T. (1965).
    *On the low-level redistribution of atmospheric water caused by orography*.
+
+.. _Bigg (1953):
+
+   Bigg, E. K. (1953).
+   *The supercooling of water*.
+   P. Phys. Soc. Lond. B, 66, 688–694.
 
 .. _Boutle et al. (2014):
 
@@ -5882,6 +5893,13 @@ References
    distributions*.
    j, 139, 167–191.
 
+.. _Reisner et al. (1998):
+
+   Reisner, J. and Rasmussen, R. M. and Bruintjes, R. T. (1998).
+   *Explicit forecasting of supercooled liquid water in winter storms using
+   the MM5 mesoscale model*.
+   j, 124, 1071–1107.
+
 .. _Rutledge and Hobbs (1983):
 
    Rutledge, S. A. and Hobbs, P. V. (1983).
@@ -5992,6 +6010,11 @@ References
 
    Fletcher, N. H. (1962).
    *The physics of rainclouds*.
+
+.. _Lamb (1994):
+
+   Lamb, Horace (1994).
+   *Hydrodynamics*.
 
 .. _Pruppacher and Klett (1997):
 
