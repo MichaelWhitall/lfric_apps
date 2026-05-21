@@ -39,7 +39,7 @@ index 7fb94307..a2663ebf 100644
       - :math:`a_z`
 @@ -843,7 +842,7 @@ where parameters are given in tables `5 <#tab:mic_consts_fallspeed>`__,
  
- .. list-table:: Default values of constants used in the fall speed relations. The `Sachinananda and Zrni\'{c} (1986)`_ relationship does not asymptote to a fixed value for large diameters and better representations exist; these are discussed further in section `4.4.3 <#sec:as07>`__. The ice fall speeds are selected so as to agree with the values calculated using the `Mitchell (1996)`_ relationships.
+ .. list-table:: Default values of constants used in the fall speed relations. The `Sachinananda and Zrnić (1986)`_ relationship does not asymptote to a fixed value for large diameters and better representations exist; these are discussed further in section `4.4.3 <#sec:as07>`__. The ice fall speeds are selected so as to agree with the values calculated using the `Mitchell (1996)`_ relationships.
     :name: tab:mic_consts_fallspeed
 -
 +   :header-rows: 1

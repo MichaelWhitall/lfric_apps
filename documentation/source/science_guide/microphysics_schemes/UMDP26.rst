@@ -840,7 +840,7 @@ where parameters are given in tables `5 <#tab:mic_consts_fallspeed>`__,
 `6 <#tab:mic_consts_fallspeed2>`__, `9 <#tab:mic_consts_density>`__ and
 `10 <#tab:bf95>`__.
 
-.. list-table:: Default values of constants used in the fall speed relations. The `Sachinananda and Zrni\'{c} (1986)`_ relationship does not asymptote to a fixed value for large diameters and better representations exist; these are discussed further in section `4.4.3 <#sec:as07>`__. The ice fall speeds are selected so as to agree with the values calculated using the `Mitchell (1996)`_ relationships.
+.. list-table:: Default values of constants used in the fall speed relations. The `Sachinananda and Zrnić (1986)`_ relationship does not asymptote to a fixed value for large diameters and better representations exist; these are discussed further in section `4.4.3 <#sec:as07>`__. The ice fall speeds are selected so as to agree with the values calculated using the `Mitchell (1996)`_ relationships.
    :name: tab:mic_consts_fallspeed
    :header-rows: 1
 
@@ -856,7 +856,7 @@ where parameters are given in tables `5 <#tab:mic_consts_fallspeed>`__,
      - 0.67
      - 0.4
      - 0.0
-     - :ra w-latex: ``Sachinananda and Zrni\'{c} (1986)`_`
+     - :ra w-latex: ``Sachinananda and Zrnić (1986)`_`
 
    * - Ag gregates
      - 14.3
@@ -1028,7 +1028,7 @@ the UM, as defined in table `5 <#tab:mic_consts_fallspeed>`__.
 
 The inclusion of these extra parameters allows a precise fit to the
 rainfall observations of `Beard (1976)`_. The
-`Sachinananda and Zrni\'{c} (1986)`_ in the UM provides a good
+`Sachinananda and Zrnić (1986)`_ in the UM provides a good
 fit to the fall velocity of rain, but for smaller drizzle drops, the
 fall speed is overestimated by as much as a factor of ten. Simple tests
 using the 1D explicit microphysics model of
@@ -1038,7 +1038,7 @@ improve the representation of drizzle in the UM. The scheme works in one
 of two ways:
 
 - **Prognostic Rain** In this case, the
-  `Sachinananda and Zrni\'{c} (1986)`_ relation is replaced by
+  `Sachinananda and Zrnić (1986)`_ relation is replaced by
   the `Abel and Shipway (2007)`_ fall velocity in every
   instance that a rain velocity assumption is made in the code. The
   largest impact is in the ‘fall’ routine, where the rain falls out from
@@ -1052,7 +1052,7 @@ of two ways:
   one timestep, irrespective of the size of the drops, so altering the
   fall speed of rain will have little impact. To get around this
   problem, the code examines the difference in fall velocity between the
-  `Sachinananda and Zrni\'{c} (1986)`_ and
+  `Sachinananda and Zrnić (1986)`_ and
   `Abel and Shipway (2007)`_ relations. The ratio of the two
   velocities is used to enhance the evaporation rate, such that light
   drizzle rates are evaporated more readily, whilst the heavier rain
@@ -3111,7 +3111,7 @@ nucleation temperature as function of dust, :math:`t_{homo}` =
 nucleation temperature), :math:`dust` (number of dust particles per
 :math:`m^3`) = total dust number density (sum of all 6 (or 2) dust bins
 depending on 6-bin or 2-bin schemes; also available with dust
-climatology), `Woodward ({2001})`_) and :math:`refdust` =
+climatology), `Woodward (2001)`_) and :math:`refdust` =
 an arbitrary reference total dust number density value. In the event
 that no dust is present, the heterogeneous freezing temperature relaxes
 to the homogeneous nucleation temperature, :math:`t_{homo}`.
@@ -5064,7 +5064,7 @@ for :math:`n(D)`, :math:`m(D)` and :math:`v(D)` in eqn.
    \end{aligned}
 
 We make use of the gamma function defined (for example by
-`Doviak and Du{\u{s} (1984)`_) as
+`Doviak and Duš (1984)`_) as
 
 .. math:: \frac{1}{\mu^{\nu}}\Gamma(\nu)=\int_{0}^{\infty} x^{\nu-1} exp(-\mu x) dx
 
@@ -5212,7 +5212,7 @@ purposes and for data assimilation.
 
 The diagnostics are calculated in the same manner as Appendix A of
 `Stein et al. (2014)`_, which is based upon the Appendix of
-`{McBeath} et al. (2014)`_, which is itself based upon
+`McBeath et al. (2014)`_, which is itself based upon
 `Gaussiat (2008)`_. As Rayleigh scattering is assumed,
 reflectivity is considered proportional to mass squared. The linear
 radar reflectivity for ice crystals, ice aggregates, rain and graupel is
@@ -5256,7 +5256,7 @@ exceptions:
 
 | **2. Liquid Cloud**
 | This follows `Stein et al. (2014)`_ and
-  `{McBeath} et al. (2014)`_, who derive a relationship of
+  `McBeath et al. (2014)`_, who derive a relationship of
   the form
 
   .. math::
@@ -5638,7 +5638,7 @@ References
 .. _Abel (2012):
 
    Abel, S. J. (2012).
-   *A revision to the {MURK} aerosol to cloud droplet number concentration
+   *A revision to the MURK aerosol to cloud droplet number concentration
    parametrization*.
    Met Office Technical Note.
 
@@ -5653,7 +5653,7 @@ References
 
    Abel, S. J. and Shipway, B. J. (2007).
    *A comparison of cloud-resolving model simulations of trade wind cumulus
-   with aircraft observations taken during {RICO}.*.
+   with aircraft observations taken during RICO.*.
    j, 133, 781-794.
 
 .. _Albrecht et al. (1990):
@@ -5728,8 +5728,8 @@ References
 
    Clark, P. A. and Harcourt, S. A. and Macpherson, B. and Mathison, C. T. and
    Cusack, S. and Naylor, M. (2008).
-   *Prediction of visbility and aerosol within the operational {Met Office
-   Unified Model. Part 1}: model formulation and variational assimilation.*.
+   *Prediction of visbility and aerosol within the operational Met Office
+   Unified Model. Part 1: model formulation and variational assimilation.*.
    j, 134, 1801-1816.
 
 .. _Cox (1988):
@@ -5741,8 +5741,8 @@ References
 .. _Ferrier (1994):
 
    Ferrier, B. S. (1994).
-   *A double-moment multiple-phase four-class bulk ice scheme. {Part I:
-   Description}*.
+   *A double-moment multiple-phase four-class bulk ice scheme. Part I:
+   Description*.
    j, 51, 249–280.
 
 .. _Field (1999):
@@ -5776,8 +5776,8 @@ References
 
    Field, P. R. and Heymsfield, A. J. and Detwiler, A. G. and Wilkinson, J. M.
    (2019).
-   *{Normalized hail particle size distributions from the T-28 storm
-   penetrating aircraft}*.
+   *Normalized hail particle size distributions from the T-28 storm
+   penetrating aircraft*.
    J. Appl. Meteorol. Climatol., In Press.
 
 .. _Fukuta and Gramada (2003):
@@ -5789,8 +5789,8 @@ References
 .. _Gaussiat (2008):
 
    Gaussiat, N. (2008).
-   *Comparisons of radar reflectivities with synthesised observations from
-   {NWP} model output*.
+   *Comparisons of radar reflectivities with synthesised observations from NWP
+   model output*.
    Met Office.
 
 .. _Hallett and Mossop (1974):
@@ -5804,9 +5804,9 @@ References
    Haywood, J. and Bush, M. and Abel, S. and Claxton, B. and Coe, H. and
    Crosier, J. and Harrison, M. and Macpherson, B. and Naylor, M. and Osborne,
    S. (2008).
-   *{Prediction of visibility and aerosol within the operational Met Office
+   *Prediction of visibility and aerosol within the operational Met Office
    Unified Model. II: Validation of model performance using observational
-   data}*.
+   data*.
    j, 134, 1817–1832.
 
 .. _Heymsfield and Miloshevich (1995):
@@ -5839,7 +5839,7 @@ References
 
 .. _Khrgian and Mazin (1952):
 
-   Khrgian, A. {Kh.} and Mazin, I. P. (1952).
+   Khrgian, A. Kh. and Mazin, I. P. (1952).
    *The size distribution of droplets in clouds*.
    Trudy TsAo, 7.
 
@@ -5855,9 +5855,9 @@ References
    *The Riming Properties of Snow Crystals*.
    j, 99, 384–392.
 
-.. _{McBeath} et al. (2014):
+.. _McBeath et al. (2014):
 
-   {McBeath}, K. and Field, P. R. and Cotton, R. J. (2014).
+   McBeath, K. and Field, P. R. and Cotton, R. J. (2014).
    *Using operational weather radar to assess high-resolution numerical
    weather prediction over the British Isles for a cold air outbreak
    case-study.*.
@@ -5878,7 +5878,7 @@ References
 .. _Price (2011):
 
    Price, J. D. (2011).
-   *Radiation Fog. {Part I: O}bservations of stability and drop size
+   *Radiation Fog. Part I: Observations of stability and drop size
    distributions*.
    j, 139, 167–191.
 
@@ -5886,22 +5886,22 @@ References
 
    Rutledge, S. A. and Hobbs, P. V. (1983).
    *The mesoscale and microscale structure and organization of clouds and
-   precipiation in midlatitude cyclones. {VIII}: A model for the
-   'seeder-feeder' process in warm-frontal rainbands*.
+   precipiation in midlatitude cyclones. VIII: A model for the 'seeder-feeder'
+   process in warm-frontal rainbands*.
    j, 40, 1185–1206.
 
-.. _Sachinananda and Zrni\'{c} (1986):
+.. _Sachinananda and Zrnić (1986):
 
-   Sachinananda, M. and Zrni\'{c}, D. S. (1986).
+   Sachinananda, M. and Zrnić, D. S. (1986).
    *Differential propogation phase shift and rainfall rate estimation*.
    Radio Sci., 21, 235–247.
 
 .. _Shipway and Hill (2010):
 
    Shipway, B. J. and Hill, A. A. (2010).
-   *{A 1D modelling framework for a microphysics intercomparison study: Part
-   I}*.
-   manuscript in preparation; to be submitted to {Q. J. R. Met. Soc.}.
+   *A 1D modelling framework for a microphysics intercomparison study: Part
+   I*.
+   manuscript in preparation; to be submitted to Q. J. R. Met. Soc..
 
 .. _Smith et al. (2015):
 
@@ -5929,9 +5929,9 @@ References
 .. _Thompson et al. (2008):
 
    Thompson, G. and Field. P. R. and Rasmussen, R. M. and Hall, W. D. (2008).
-   *{Explicit Forecasts of Winter Precipitation Using an Improved Bulk
+   *Explicit Forecasts of Winter Precipitation Using an Improved Bulk
    Microphysics Scheme. Part II: Implementation of a New Snow
-   Parameterization}*.
+   Parameterization*.
    j, 136, 5095–5115.
 
 .. _Thorpe and Mason (1966):
@@ -5944,7 +5944,7 @@ References
 
    Tripoli, G. J. and Cotton, W. R. (1980).
    *A numerical investigationof several factors contributing to the observed
-   variable intensity of deep convection over south {Florida}*.
+   variable intensity of deep convection over south Florida*.
    j, 19, 1037–1063.
 
 .. _Vosper et al. (2009):
@@ -5969,7 +5969,7 @@ References
 .. _Wilkinson et al. (2010) 2:
 
    Wilkinson, J. M. and Hogan, R. J. and Illingworth, A. J. (2010).
-   *Using {Doppler} radar and modelling to diagnose problems with ice
+   *Using Doppler radar and modelling to diagnose problems with ice
    sublimation depth scales in forecast models*.
    j, 136, 2094–2108.
 
@@ -5977,15 +5977,15 @@ References
 
    Wilkinson, J. M. and Poson, A. N. F. and Bornemann, F. J. and Weeks, M. and
    Field, P. R. and Lock, A. P. (2013).
-   *Improved microphysical representation of drizzle and fog for the {Met
-   Office Unified Model}*.
+   *Improved microphysical representation of drizzle and fog for the Met
+   Office Unified Model*.
    j, 139, 488–500.
 
 .. _Wilson and Ballard (1999):
 
    Wilson, Damian R. and Ballard, Susan P. (1999).
-   *A microphysically based precipitation scheme for the {UK Meteorological
-   Office Unified Model}*.
+   *A microphysically based precipitation scheme for the UK Meteorological
+   Office Unified Model*.
    j, 125, 1607–1636.
 
 .. _Fletcher (1962):
@@ -6003,28 +6003,28 @@ References
    Rogers, R. R. and Yau, M. K. (1989).
    *A short course in cloud physics*.
 
-.. _Doviak and Du{\u{s} (1984):
+.. _Doviak and Duš (1984):
 
-   Doviak, R. J. and Du{\u{s} (1984).
+   Doviak, R. J. and Duš (1984).
    *Doppler Radar and Weather Observations*.
 
 .. _Forbes and Halliwell (2003):
 
    Forbes, R. and Halliwell, C. (2003).
    *Assessment of the performance of an enhanced microphysics parametrization
-   scheme in the {Unified Model} at 1 km resolution*.
+   scheme in the Unified Model at 1 km resolution*.
 
 .. _Gray et al. (2004):
 
    Gray, M. E. B. and Petch, J. and Derbyshire, S. H. and Brown, A. R. and
    Lock, A. P. and Swann, H. A. and Brown, P. R. A. (2004).
-   *{Version 2.3 of the Met Office Large Eddy Model: Part II. Scientific
-   Documentation}*.
+   *Version 2.3 of the Met Office Large Eddy Model: Part II. Scientific
+   Documentation*.
    Met Office.
 
-.. _Woodward ({2001}):
+.. _Woodward (2001):
 
-   Woodward, S ({2001}).
-   *{Modeling the atmospheric life cycle and radiative impact of mineral dust
-   in the Hadley Centre climate model}*.
-   {Journal of Geophysical Research-Atmospheres}, {106}, {18155-18166}.
+   Woodward, S (2001).
+   *Modeling the atmospheric life cycle and radiative impact of mineral dust
+   in the Hadley Centre climate model*.
+   Journal of Geophysical Research-Atmospheres, 106, 18155-18166.
