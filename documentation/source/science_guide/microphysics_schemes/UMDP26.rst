@@ -559,7 +559,7 @@ constants for the large-scale precipitation scheme.
      - :math:`-2`
      - :math:`58`
      - 0.0
-     - :ra w-latex: ``Field et al. (2019)`_`
+     - `Field et al. (2019)`_
 
 The functions :math:`F_{n_{ax}}(T_c)` represent the observed broadening
 of the size spectra with increasing temperature for ice particles (due
@@ -856,21 +856,21 @@ where parameters are given in tables `5 <#tab:mic_consts_fallspeed>`__,
      - 0.67
      - 0.4
      - 0.0
-     - :ra w-latex: ``Sachinananda and Zrnić (1986)`_`
+     - `Sachinananda and Zrnić (1986)`_
 
    * - Ag gregates
      - 14.3
      - 0.416
      - 0.4
      - 0.0
-     - : raw-late x:``Mitchell (1996)`_`
+     - `Mitchell (1996)`_
 
    * - Crystals
      - 74.5
      - 0.640
      - 0.4
      - 0.0
-     - : raw-late x:``Mitchell (1996)`_`
+     - `Mitchell (1996)`_
 
    * - Graupel
      - 253.0
@@ -895,14 +895,14 @@ where parameters are given in tables `5 <#tab:mic_consts_fallspeed>`__,
      - 0.638
      - 0.131
      - 1.88
-     - : raw-late x:``Mitchell (1996)`_`
+     - `Mitchell (1996)`_
 
    * - Crystals
      - 0.2072
      - 0.638
      - 0.131
      - 1.88
-     - : raw-late x:``Mitchell (1996)`_`
+     - `Mitchell (1996)`_
 
 .. _`sec:mit_2nd_rex`:
 
@@ -937,7 +937,7 @@ be replaced by that in table `7 <#tab:mit_2nd_rex>`__.
      - 0.831
      - 0.131
      - 1.88
-     - : raw-late x:``Mitchell (1996)`_`
+     - `Mitchell (1996)`_
 
 .. _`sec:split_ice_vt`:
 
