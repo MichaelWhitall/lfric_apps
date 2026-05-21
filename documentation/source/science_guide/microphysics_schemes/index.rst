@@ -6,7 +6,7 @@
 .. _microphysics_schemes_index:
 
 Microphysics Schemes available in LFRic
-=====================================
+=======================================
 
 Contained here are descriptions of the resolved-scale microphysics schemes
 available in the LFRic atmosphere model.  These schemes represent
