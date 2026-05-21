@@ -563,7 +563,7 @@ to the aggregation process). It is defined as:
 
 .. math::
 
-   F_{n_{ax}}(T_c) = \exp\left(- \frac{\mbox{\footnotesize \sf MAX} \left[T_c, -45^{\circ}\mathrm{C}\right]  }
+   F_{n_{ax}}(T_c) = \exp\left(- \frac{\mathrm{\footnotesize \sf MAX} \left[T_c, -45^{\circ}\mathrm{C}\right]  }
    {8.18^{\circ}\mathrm{C}}\right),
 
 where :math:`T_c` is the temperature in degrees Celsius. This form was
@@ -960,11 +960,11 @@ mass-weighted mean fallspeeds are given by
 
 .. math:: :label: eq:split_vm
 
-   \rho q_{cf} [V]^{(1)}_{q_{cf}} = a{\cal M}_{b+d_1}(q_{cf},T_c),
+   \rho q_{cf} [V]^{(1)}_{q_{cf}} = a{\mathcal{M}}_{b+d_1}(q_{cf},T_c),
 
 .. math::
 
-   \rho q_{cf} [V]^{(2)}_{q_{cf}} = a{\cal M}_{b+d_2}(q_{cf},T_c).
+   \rho q_{cf} [V]^{(2)}_{q_{cf}} = a{\mathcal{M}}_{b+d_2}(q_{cf},T_c).
 
 In each grid box the :math:`V_t-D` relation is selected which gives the
 *least* mass-weighted mean fallspeed. The selected fallspeed is then
@@ -2742,10 +2742,10 @@ Both relations share the same equation
 .. math:: :label: eq:new_murk
 
    n_{aer}= n_{0_{murk}} \left( \frac{A_{mass}}
-   {S_{\rm murk} \, m_{0_{murk}} } \right)^{\frac{1}{2}},
+   {S_{\mathrm{murk}} \, m_{0_{murk}} } \right)^{\frac{1}{2}},
 
 where :math:`A_{mass}` is the prognostic mass mixing ratio of the
-aerosol and :math:`S_{\rm murk}` is a tuning parameter that allows the
+aerosol and :math:`S_{\mathrm{murk}}` is a tuning parameter that allows the
 relationship between murk and cloud drop number to be adjusted
 independently from the visibiltiy. The values of the other parameters
 are given in :numref:`Table %s <tab:haycla>`
@@ -2969,7 +2969,7 @@ effect with a single parameter.
 
 .. math::
 
-   \frac{\partial{C_i}}{\partial t} = \mbox{\footnotesize \sf MAX} \left[ 
+   \frac{\partial{C_i}}{\partial t} = \mathrm{\footnotesize \sf MAX} \left[ 
    \frac{\partial{C_i}}{\partial z}~,~0\right]   v_i + ws
 
 where :math:`v_i` is the mass-weighted mean fall speed of the aggregates
@@ -3020,10 +3020,10 @@ all the following criteria are satisfied:
    \begin{aligned}
    T_c   <& -10 \deg C    &
    \\
-   RH  >& RH_{inuc}   & RH_{inuc}=\mbox{\footnotesize \sf MIN} \left[~0.01(188.92+2.81 T_c +0.013336~{T_c}^2), 1.0~\right]
+   RH  >& RH_{inuc}   & RH_{inuc}=\mathrm{\footnotesize \sf MIN} \left[~0.01(188.92+2.81 T_c +0.013336~{T_c}^2), 1.0~\right]
    - 0.1
    \\
-   q_i <& q_{inuc}    & q_{inuc} = \frac{m_0}{\rho} ~\mbox{\footnotesize \sf MIN} \left[~0.01~\exp (-0.6~T_c), 1
+   q_i <& q_{inuc}    & q_{inuc} = \frac{m_0}{\rho} ~\mathrm{\footnotesize \sf MIN} \left[~0.01~\exp (-0.6~T_c), 1
    \times 10^5~\right]
    \end{aligned}
 
@@ -3158,7 +3158,7 @@ this term, except if all of the rain freezes :math:`C_R` is set to
 rain fraction is calculated differently; see section
 :ref:`Update of precipitation fraction by process-rates <sec_precip_frac_update>`. If this term acts as a source of
 ice aggregates, the ice cloud fraction after this process is taken to be
-the :math:`\mbox{\footnotesize \sf MAX} \left[C_R,C_i\right]`, which
+the :math:`\mathrm{\footnotesize \sf MAX} \left[C_R,C_i\right]`, which
 assumes that nucleation occurs throughout the rain volume.
 
 .. _sec_psdep_pssub:
@@ -3174,10 +3174,10 @@ deposition/sublimation equation is (following
 .. math:: :label: eq:mic_dmevap
 
    \frac {dM_{x}}{dt}=\frac{ \left(\frac{q}{q_{isat}}-1\right)}
-                              {\mbox{AB}} C F'.
+                              {\mathrm{AB}} C F'.
 
 where :math:`dM_x/dt` represents the rate of change of mass due to the
-phase change, :math:`\mbox{AB}` is a function of temperature and is
+phase change, :math:`\mathrm{AB}` is a function of temperature and is
 different for ice or liquid particles, :math:`C` is the shape parameter,
 for spherical particles :math:`C=2 \pi D`, and :math:`F'` is the
 ventilation coefficient. The scheme uses the ventilation factor of
@@ -3198,7 +3198,7 @@ generalised gamma distribution of sizes is defined as:
 
 .. math:: :label: eq:mic_ventx
 
-   {{\cal V}_x}=2\pi n_{0x}
+   {{\mathcal{V}}_x}=2\pi n_{0x}
              \left(0.65\frac{\Gamma(2+\alpha_x)}{\lambda_x^{(2+\alpha_x)}}
                           +0.44\left(\frac{c_x}{\mu}\right)^{\frac{1}{2}}
                                                              S_c^{\frac{1}{3}}
@@ -3214,15 +3214,15 @@ The deposition and sublimation rates of snow aggregates
 .. math:: :label: eq:mic_xsub
 
    P_{SDEP} ( or ~ -P_{SSUB})=
-        \frac{ \left(\frac{q}{q_{isat}}-1\right)} {\rho \mbox{AB}_{ice}}
-   \times {{\cal V}_x}
+        \frac{ \left(\frac{q}{q_{isat}}-1\right)} {\rho \mathrm{AB}_{ice}}
+   \times {{\mathcal{V}}_x}
 
-where :math:`\mbox{AB}_{ice}` is a thermodynamic term given by
+where :math:`\mathrm{AB}_{ice}` is a thermodynamic term given by
 `Rogers and Yau (1989)`_ as
 
 .. math:: :label: eq:mic_ABiceUM
 
-   \mbox{AB}_{ice}=\left(\frac{L_S}{R_vT}-1\right)\frac{L_S}{K_a(T)T}+\frac{R_v
+   \mathrm{AB}_{ice}=\left(\frac{L_S}{R_vT}-1\right)\frac{L_S}{K_a(T)T}+\frac{R_v
      T}{e_{isat}\psi(T,p)}
 
 where :math:`e_{isat}` is the saturated vapour pressure over ice. When
@@ -3255,7 +3255,7 @@ equation. This gives `Rogers and Yau (1989)`_:
 
 where :math:`r_a` is the axial ratio [3]_
 
-:math:`c` is the multiplying factor to apply to :math:`{\cal V}_x`. The
+:math:`c` is the multiplying factor to apply to :math:`{\mathcal{V}}_x`. The
 precipitation scheme allows the specification of an axial ratio and make
 additional assumptions about the nature of the particle shape; subliming
 particles are assumed to have a more rounded shape with more
@@ -3279,7 +3279,7 @@ particle size distribution is switched on, equation
 
 .. math:: :label: eq:mic_ventx_psd
 
-   {{\cal V}_x}=2\pi\left(0.65 \mathcal{M}_1 + 0.44 
+   {{\mathcal{V}}_x}=2\pi\left(0.65 \mathcal{M}_1 + 0.44 
    \left(\frac{c_x}{\upsilon}\right)^{\frac{1}{2}}S_c^{\frac{1}{3}}\rho^{\frac{1}{2}} 
    {\left( \frac{\rho_0}{\rho} \right)}^{ \frac{\mathcal{G}_x}{2}}
    \mathcal{M}_{1+0.5(d_a+1)}\right),
@@ -3426,7 +3426,7 @@ easier (or indeed possible) by making the assumption of
 
 .. math:: :label: eq:mic_vx_vy
 
-   | v_x(D_x) - v_y(D_y) | =\mbox{\footnotesize \sf MAX} \left[(\overline{v_x}+\overline{v_y})/8,| \overline{v_x} 
+   | v_x(D_x) - v_y(D_y) | =\mathrm{\footnotesize \sf MAX} \left[(\overline{v_x}+\overline{v_y})/8,| \overline{v_x} 
    - \overline{v_y} |\right]  
 
 for all values of :math:`D_x` and :math:`D_y`. So the velocity
@@ -3449,12 +3449,12 @@ of ice by snow we have:
 .. math:: :label: eq:mic_pyacx2
 
    \begin{aligned}
-   P_{SACI}&=&\frac{\pi}{4\rho} E_{xy}a_a n_{0c}\mbox{\footnotesize \sf MAX} \left[(V_a+V_c)/8,| V_a -V_c |\right]
+   P_{SACI}&=&\frac{\pi}{4\rho} E_{xy}a_a n_{0c}\mathrm{\footnotesize \sf MAX} \left[(V_a+V_c)/8,| V_a -V_c |\right]
    \\
            & &\times\int_0^\infty\int_0^\infty (D_a+D_c)^2
             D_a^{b_a}n_a(D_a) n_c(D_c) dD_a dD_c
    \\[0.5cm]
-             &=&\frac{\pi}{4\rho}E_{xy}a_a n_{0c}\mbox{\footnotesize \sf MAX} \left[(V_a+V_c)/8,| V_a -V_c |\right]
+             &=&\frac{\pi}{4\rho}E_{xy}a_a n_{0c}\mathrm{\footnotesize \sf MAX} \left[(V_a+V_c)/8,| V_a -V_c |\right]
    \\
              & & \times  \int_0^\infty D_a^{b_a} n_a(D_a)
                 \left(D_a^2\frac{\Gamma(1+\alpha_c)}{\lambda_c^{(1+\alpha_c)}}
@@ -3462,7 +3462,7 @@ of ice by snow we have:
                   +\frac{\Gamma(3+\alpha_c)}{\lambda_c^{(3+\alpha_c)}}\right)dD_a
    \\[0.5cm]
             &=&\frac{\pi}{4\rho}E_{xy}a_an_{0a}n_{0c}
-                                    \mbox{\footnotesize \sf MAX} \left[(V_a+V_c)/8,| V_a -V_c |\right]
+                                    \mathrm{\footnotesize \sf MAX} \left[(V_a+V_c)/8,| V_a -V_c |\right]
    \\
              & &\times
              \left(\frac{\Gamma(1+\alpha_c)}{\lambda_c^{(1+\alpha_c)}}
@@ -3568,7 +3568,7 @@ showers over Southern England
 
 .. math:: :label: eq:mic_pgaut
 
-   P_{GAUT}= \mathcal{F} \times \mbox{\footnotesize \sf MAX} \left[0, P_{SACW}-P_{SDEP}\right]  .
+   P_{GAUT}= \mathcal{F} \times \mathrm{\footnotesize \sf MAX} \left[0, P_{SACW}-P_{SDEP}\right]  .
 
 where :math:`P_{SACW}` is the rate of riming of snow and
 :math:`P_{SDEP}` is the rate of snow deposition. Thus the riming rate of
@@ -3646,7 +3646,7 @@ follows:
 
    \begin{aligned}
    P_{GACS}  &=&\frac{\pi}{4\rho}E_{xy}a_gn_{0g}
-                                     \mbox{\footnotesize \sf MAX} \left[(\overline{v_g}+\overline{v_a})/8,|
+                                     \mathrm{\footnotesize \sf MAX} \left[(\overline{v_g}+\overline{v_a})/8,|
    \overline{v_g} -\overline{v_a} |\right]
    \\
               & &\times
@@ -3691,7 +3691,7 @@ as for the collection of ice crystals by snow aggregates above (equation
 
 .. math::
 
-   f_V = \mbox{\footnotesize \sf MAX} \left[| \overline{v_a} - \overline{v_R} |,  \frac{ \overline{v_a} + 
+   f_V = \mathrm{\footnotesize \sf MAX} \left[| \overline{v_a} - \overline{v_R} |,  \frac{ \overline{v_a} + 
    \overline{v_R} }{8}~\right]
 
 is used and the collision and collection coefficients are now assumed to
@@ -3874,7 +3874,7 @@ liquid water, the melting of snow to form rain is given as:
 .. math:: :label: eq:mic_psmlt
 
    P_{SMLT} ~=~
-   \frac{1}{\rho L_f} (K_a(T-T_0)-L_v\psi\rho(q -q_{0sat}))\times{\cal V}_a
+   \frac{1}{\rho L_f} (K_a(T-T_0)-L_v\psi\rho(q -q_{0sat}))\times{\mathcal{V}}_a
 
 where :math:`T_0` is 0C. The ventilation coefficient is given in
 equation :eq:`eq:mic_ventx`. The second term can be
@@ -3932,17 +3932,17 @@ snow to form rain in the UM:
 .. math::
 
    P_{GMLT} =
-   \frac{1}{\rho L_f} K_a(T_w-T_0) \times{\cal V}_g ,
+   \frac{1}{\rho L_f} K_a(T_w-T_0) \times{\mathcal{V}}_g ,
 
 where :math:`L_f` is the latent heat of fusion, :math:`K_a` is the
 thermal conductivity, :math:`(T_w-T_0)` is the difference between the
-wet-bulb temperature of the air and 0C and :math:`{\cal V}_g` is the
+wet-bulb temperature of the air and 0C and :math:`{\mathcal{V}}_g` is the
 integrated ventilation factor for spherical particles with a generalised
 gamma distribution of particle sizes:
 
 .. math:: :label: eq:mic_ventx_g
 
-   {{\cal V}_g}=2\pi n_{0g}
+   {{\mathcal{V}}_g}=2\pi n_{0g}
              \left(0.78\frac{\Gamma(2+\alpha_g)}{\lambda_g^{(2+\alpha_g)}}
                           +0.31\left(\frac{c_g}{\mu}\right)^{\frac{1}{2}}
                                                              S_c^{\frac{1}{3}}
@@ -3971,15 +3971,15 @@ analogous to the sublimation of snow in equation
 .. math::
 
    P_{REVP}=
-        \frac{ \left(\frac{q}{q_{wsat}}-1\right)} {\rho \mbox{AB}_{liq}}
-   \times {{\cal V}_r}
+        \frac{ \left(\frac{q}{q_{wsat}}-1\right)} {\rho \mathrm{AB}_{liq}}
+   \times {{\mathcal{V}}_r}
 
-where :math:`\mbox{AB}_{liq}` is the thermodynamic coefficient
+where :math:`\mathrm{AB}_{liq}` is the thermodynamic coefficient
 appropriate for liquid drops and is given by,
 
 .. math:: :label: eq:mic_ABliq
 
-   \mbox{AB}_{liq}=   \left(  \frac{L_v}{R_v T} -1 \right) 
+   \mathrm{AB}_{liq}=   \left(  \frac{L_v}{R_v T} -1 \right) 
    \frac{L_v}{K_a T} + \frac{R_v T}{\psi e_{sat~liq}}.
 
 There are a few differences to the sublimation term. The ventilation
