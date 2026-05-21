@@ -47,7 +47,7 @@ possibility of precipitation at the surface. Hence the large-scale
 precipitation scheme works on model columns, starting at the top and
 moving downwards.
 
-.. _`sec:terms`:
+.. _sec_terms:
 
 A note on terminology
 ---------------------
@@ -169,7 +169,7 @@ compared to the `Wilson and Ballard (1999)`_ paper are:
 - Improved link between visibility aerosol and droplet number
 
 - Extensive modifications and improvements to the representation of warm
-  rain, see Section `5.3 <#sec:warmnew>`__.
+  rain, see Section :ref:`Improved Warm Rain Microphysics Scheme <sec_warmnew>`.
 
 There are also changes to the numerical solution of the fall of ice from
 level to level.
@@ -186,7 +186,7 @@ cloud resolving model type of formulations, such as
 `Swann (1996)`_. The prognostics in the scheme are
 detailed below.
 
-.. _`sec:wvdes`:
+.. _sec_wvdes:
 
 Water vapour
 ------------
@@ -297,7 +297,7 @@ resolution versions of the UM is probably desirable. The most important
 microphysical processes associated with graupel have been determined by
 `Forbes and Halliwell (2003)`_ from CRM runs of convective
 case studies and details of four implemented graupel processes are
-described in section `6.3 <#sec:trans_eqs>`__. This option is used
+described in section :ref:`Transfer equations <sec_trans_eqs>`. This option is used
 routinely in km-scale simulations in the Met Office operational suite.
 There is also the option to increase the production of graupel by
 allowing snow-rain collisions to form graupel. A further option allows
@@ -307,7 +307,7 @@ size distribution to match observations based on work by
 autoconversion of snow to graupel and setting the graupel collection of
 snow term to zero.
 
-.. _`sec:snowdes`:
+.. _sec_snowdes:
 
 Snow
 ----
@@ -321,7 +321,7 @@ in a gridbox is therefore given by
 :math:`q_{cfa} + q_{cfc} +q_{graup}`*. The *flux* of
 :math:`q_{cfa} + q_{cfc}+ q_{graup}` is given by :math:`S`.
 
-.. _`sec:flux_to_m`:
+.. _sec_flux_to_m:
 
 Flux to mixing ratio conversion
 -------------------------------
@@ -481,7 +481,7 @@ change, :math:`c_p` is the heat capacity of air at constant pressure and
 then used to scale the deposition, evaporation and sublimation processes
 in the UM transfer rates.
 
-.. _`sec:param_par_char`:
+.. _sec_param_par_char:
 
 Parametrized Particle Characteristics
 =====================================
@@ -617,7 +617,7 @@ then used as a single quantity in the rest of the model.
    * - :math:`q_{cf0}`
      - :math:`1.0 \times 10^{-4}` kg kg\ :math:`^{-1}`
 
-.. _`sec:field_psd`:
+.. _sec_field_psd:
 
 Generic Ice Particle Size Distributions 
 ----------------------------------------
@@ -626,7 +626,7 @@ Following the work of `Field et al. (2005)`_, the option is
 now available to include a generic ice particle size distribution for
 aggregates only.
 
-.. _`sec:field_psd_ml`:
+.. _sec_field_psd_ml:
 
 Mid-latitude version
 ~~~~~~~~~~~~~~~~~~~~
@@ -741,7 +741,7 @@ represents the subscripts 1 to 10 are given in :numref:`Table %s <tab:field>`.
      - :math:`-`\ 0
      - 003577
 
-.. _`sec:field_psd_gl`:
+.. _sec_field_psd_gl:
 
 Global version
 ~~~~~~~~~~~~~~
@@ -774,17 +774,17 @@ The global version should revert to the same results as the mid-latitude
 version in a mid-latitude limited area model, although this has yet to
 be proven within the UM.
 
-.. _`sec:field_psd_fc`:
+.. _sec_field_psd_fc:
 
 Further comments relevant to both versions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the transfer equations for ice, (described in more detail in section
-`6.3 <#sec:trans_eqs>`__), it is possible to use various different
+:ref:`Transfer equations <sec_trans_eqs>`), it is possible to use various different
 moments of the particle size distribution to obtain the transfer rates,
 without having to make assumptions about the intercept parameters of the
 distribution using the ice water content. These are discussed in turn in
-section `6.3 <#sec:trans_eqs>`__.
+section :ref:`Transfer equations <sec_trans_eqs>`.
 
 Note that the generic ice particle size distribution includes the effect
 of crystals within the formulation and hence it is not possible to use
@@ -831,7 +831,7 @@ where parameters are given in tables :numref:`%s <tab:mic_consts_fallspeed>`,
 :numref:`%s <tab:mic_consts_fallspeed2>`, :numref:`%s <tab:mic_consts_density>` and
 :numref:`%s <tab:bf95>`.
 
-.. list-table:: Default values of constants used in the fall speed relations. The `Sachinananda and Zrnić (1986)`_ relationship does not asymptote to a fixed value for large diameters and better representations exist; these are discussed further in section `4.4.3 <#sec:as07>`__. The ice fall speeds are selected so as to agree with the values calculated using the `Mitchell (1996)`_ relationships.
+.. list-table:: Default values of constants used in the fall speed relations. The `Sachinananda and Zrnić (1986)`_ relationship does not asymptote to a fixed value for large diameters and better representations exist; these are discussed further in section :ref:`Abel and Shipway rain fall speeds <sec_as07>`. The ice fall speeds are selected so as to agree with the values calculated using the `Mitchell (1996)`_ relationships.
    :name: tab:mic_consts_fallspeed
    :header-rows: 1
 
@@ -895,14 +895,14 @@ where parameters are given in tables :numref:`%s <tab:mic_consts_fallspeed>`,
      - 1.88
      - `Mitchell (1996)`_
 
-.. _`sec:mit_2nd_rex`:
+.. _sec_mit_2nd_rex:
 
 Crystal fall speed relations using Mitchell (1996)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Recently, the `Brown and Francis (1995)`_ ice particle
 densities have been used operationally in the UM (see section
-`4.5.1 <#sec:bf95>`__ for further details). If the
+:ref:`Brown and Francis ice particle densities <sec_bf95>` for further details). If the
 `Brown and Francis (1995)`_ particle densities are used, the
 2nd Re-X (:math:`R_e`\ :math:`B_e` in this document) relation (Eq.19) of
 `Mitchell (1996)`_ **must** also be used to ensure the
@@ -930,12 +930,12 @@ be replaced by that in :numref:`Table %s <tab:mit_2nd_rex>`.
      - 1.88
      - `Mitchell (1996)`_
 
-.. _`sec:split_ice_vt`:
+.. _sec_split_ice_vt:
 
 Splitting the ice fallspeeds with the Generic PSD
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The Generic PSD described in section (`4.3 <#sec:field_psd>`__) uses a
+The Generic PSD described in section (:ref:`Generic Ice Particle Size Distributions <sec_field_psd>`) uses a
 single size distribution to describe the whole particle population. In
 contrast the exponential PSD splits the total ice water content in each
 grid box into ice and aggregate categories. Hence for the exponential
@@ -972,7 +972,7 @@ used for all ice-microphysical process rate calculations for that grid
 box on that timestep. This includes sedimentation, but also depositional
 growth (where :math:`V_t` affects the ventilation), riming and so on.
 
-.. _`sec:as07`:
+.. _sec_as07:
 
 Abel and Shipway rain fall speeds
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1051,7 +1051,7 @@ of two ways:
   throughout the code wherever a transfer involves a rain-rate
   assumption.
 
-.. _`sec:density`:
+.. _sec_density:
 
 Density Distribution
 --------------------
@@ -1091,7 +1091,7 @@ microphysical transfer rates to be solved easily.
      - 2.45
      - Similar to table 1 of `Mitchell (1996)`_
 
-.. _`sec:bf95`:
+.. _sec_bf95:
 
 Brown and Francis ice particle densities
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1132,7 +1132,7 @@ and can be set in the gui/namelist.
 If the density is changed to `Brown and Francis (1995)`_,
 then the 2nd Re-X (:math:`R_e`\ :math:`B_e` in this document) relation
 (Eq.19) of `Mitchell (1996)`_ **must** also be used.
-Section `4.4.1 <#sec:mit_2nd_rex>`__ contains details on how to do this.
+Section :ref:`Crystal fall speed relations using Mitchell (1996) <sec_mit_2nd_rex>` contains details on how to do this.
 
 .. _mr2psd:
 
@@ -1143,7 +1143,7 @@ In order to solve for the microphysical transfer rates it is necessary
 to be able to infer the particle size distribution in terms of mixing
 ratios and fluxes. The exception to this is when the generic ice
 particle size distribution is being used (see section
-`4.3 <#sec:field_psd>`__ for details). We can do this by integrating the
+:ref:`Generic Ice Particle Size Distributions <sec_field_psd>` for details). We can do this by integrating the
 mass-diameter relationship across the particle-size distribution
 relationship. For fluxes we also weight by the fall-speed relationship.
 For the flux description of the rainfall rate we have:
@@ -1208,7 +1208,7 @@ and finally for :math:`\lambda_g`:
 The microphysical transfer processes modelled are generally solved by
 performing similar integrals over the particle size distribution.
 
-.. _`sec:subgrid`:
+.. _sec_subgrid:
 
 Sub Grid-scale treatment
 ========================
@@ -1333,17 +1333,17 @@ or growing by vapor deposition, depending on whether :math:`q_a` is
 greater or less than the saturated specific humidity with respect to
 ice.
 
-.. _`sec:warmnew`:
+.. _sec_warmnew:
 
 Improved Warm Rain Microphysics Scheme
 --------------------------------------
 
 From version 8.4, an option for an improved warm rain microphysics
 scheme is available through the gui/namelist. This changes the
-autoconversion (Sec `6.3.30 <#sec:PRAUT>`__) and accretion
-(Sec `6.3.29 <#sec:PRACW>`__) parametrizations, and corrects bugs in the
-evaporation (Sec `6.3.28 <#sec:PREVP>`__) and sedimentation
-(Sec `6.3.3 <#sec:PRFALL>`__) parametrizations. Furthermore, it improves
+autoconversion (Sec :ref:`PRAUT: Autoconversion of cloud liquid water to rain <sec_PRAUT>`) and accretion
+(Sec :ref:`PRACW: Accretion of cloud liquid water by rain <sec_PRACW>`) parametrizations, and corrects bugs in the
+evaporation (Sec :ref:`PREVP: Evaporation of rain <sec_PREVP>`) and sedimentation
+(Sec :ref:`PRFALL: Sedimentation (fall) of rain <sec_PRFALL>`) parametrizations. Furthermore, it improves
 the sub-grid treatment of the warm rain microphysics, which is important
 due to the highly nonlinear nature of many of the process rates.
 `Boutle et al. (2014)`_ gives full details, but we
@@ -1399,7 +1399,7 @@ at approximately the same rate as the rain, and therefore is using the
 cloud fraction as a proxy for the rain fraction rather than including an
 additional prognostic variable.
 
-.. _`sec:prog_precip_frac`:
+.. _sec_prog_precip_frac:
 
 Prognostic Precipitation Fraction
 ---------------------------------
@@ -1452,7 +1452,7 @@ convection is the primary source of rain or graupel mass, the
 appropriate sub-grid fraction to use is the convective updraft fraction
 at the height where the precipitation was produced, and this is likely
 to be very different to the “large-scale” cloud fraction used in the
-approach described in section `5.3 <#sec:warmnew>`__. With a prognostic
+approach described in section :ref:`Improved Warm Rain Microphysics Scheme <sec_warmnew>`. With a prognostic
 rain / graupel fraction, the convection scheme can update the fraction
 alongside its update to :math:`q_R` and :math:`q_{graup}`, so that the
 subsequent microphysics call uses the appropriate fraction for
@@ -1529,7 +1529,7 @@ the end of every timestep :math:`C_r` is recalculated following eq
 :eq:`eq:representative_c_r` and then assumed
 to reset to having homogeneous precip mass within that area.
 
-.. _`sec:precip_frac_update`:
+.. _sec_precip_frac_update:
 
 Update of precipitation fraction by process-rates
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1642,7 +1642,7 @@ graupel (and include graupel in the “precipitation” fraction).
 
 Also note that if using the option to produce accretion and riming from
 orographically-forced clouds, via the “seeder feeder” mechanism (see
-section `8 <#sec:seeder_feeder>`__), the rainy liquid cloud fraction
+section :ref:`The sub-grid orographic seeder feeder scheme <sec_seeder_feeder>`), the rainy liquid cloud fraction
 used for this maybe considerably larger than the areas **rain_liq** +
 **rain_mix**, due to the temporarily-assumed additional liquid-cloud
 forced by sub-grid-scale orography. When this occurs, any source of rain
@@ -1685,7 +1685,7 @@ grid-means in the numerator and denominator:
 
 This calculation is done in subroutine lsp_update_precfrac in the code.
 
-.. _`sec:precfrac_sed`:
+.. _sec_precfrac_sed:
 
 Transfer of precipitation fraction by sedimentation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1767,13 +1767,13 @@ exactly the same but with the labels “:math:`_k`” and
 “\ :math:`_{fall}`" swapped. This calculation is done in subroutine
 lsp_combine_precfrac in the code.
 
-.. _`sec:precfrac:emerg`:
+.. _sec_precfrac_emerg:
 
 Precipitation fraction created by “emergency melting”
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 |  
-| As described in section `7.4 <#sec:num_check>`__, after the
+| As described in section :ref:`Numerical checks <sec_num_check>`, after the
   microphysical processes at theta-level k have been computed, and
   sedimentation of hydrometeors down to the next level has been
   calculated, an additional “emergency melting” term is applied which
@@ -2145,7 +2145,7 @@ consistent with source terms for :math:`q_p`, and what area-fraction
 
 If using the option to produce accretion and riming from
 orographically-forced clouds, via the “seeder feeder” mechanism (see
-section `8 <#sec:seeder_feeder>`__), the rainy liquid cloud fraction
+section :ref:`The sub-grid orographic seeder feeder scheme <sec_seeder_feeder>`), the rainy liquid cloud fraction
 used for this maybe considerably larger than the areas **rain_liq** +
 **rain_mix**, due to the temporarily-assumed additional liquid-cloud
 forced by sub-grid-scale orography. When this occurs, :math:`C_{proc}`
@@ -2298,7 +2298,7 @@ Transfer of precipitation fraction by sedimentation
 
 |  
 | This follows the same method as described for i_update_precfrac = 1 in
-  section `5.4.3.2 <#sec:precfrac_sed>`__, except that we now use eq
+  section :ref:`Transfer of precipitation fraction by sedimentation <sec_precfrac_sed>`, except that we now use eq
   :eq:`eq:cr_np1` for combining the pre-existing and
   falling-in precip masses assuming both have strongly-correlated
   sub-grid spatial distributions. The tendency from fall-in of precip
@@ -2316,7 +2316,7 @@ Precipitation fraction created by “emergency melting”
 
 |  
 | Again this follows what is done under i_update_precfrac = 1, (section
-  `5.4.3.3 <#sec:precfrac:emerg>`__) but using eq
+  :ref:`Precipitation fraction created by “emergency melting” <sec_precfrac_emerg>`) but using eq
   :eq:`eq:cr_np1` to compute the combined fraction of the
   existing rain / graupel and the melted snow-flux.
 
@@ -2326,7 +2326,7 @@ has fallen to zero is retained the same under i_update_precfrac = 2.
 Parametrized Microphysical Process Terms
 ========================================
 
-.. _`sec:trans_intro`:
+.. _sec_trans_intro:
 
 Introduction
 ------------
@@ -2459,7 +2459,7 @@ can be written as follows:
 where each of the transfer terms above are defined in :numref:`Table %s <tab:rates>`. The subscript numbers 1 and 2 indicates first and
 second transfers, where transfer to more than one category is possible.
 Note also that the flux terms in all categories except :math:`q` are
-represented in section `6.3 <#sec:trans_eqs>`__ by PRFALL, PIFALL,
+represented in section :ref:`Transfer equations <sec_trans_eqs>` by PRFALL, PIFALL,
 PSFALL and PGFALL for rain, ice, snow and graupel respectively and cloud
 droplet fall is represented as PLSET1 (sedimentation where no
 evaporation takes place). :math:`[V]` is a bulk fall velocity of the
@@ -2615,7 +2615,7 @@ as ilustrated by the subscript.
      - :math:`q_{R}`
      - Melting of graupel to form rain
 
-.. _`sec:gr_tr`:
+.. _sec_gr_tr:
 
 A note on graupel transfers not included
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2632,7 +2632,7 @@ they are small in comparison with the terms in :numref:`Table %s <tab:rates>`:
 - Freezing of rain (from vn11.2 there is an option to include this
   process)
 
-.. _`sec:cloud_drop_calc`:
+.. _sec_cloud_drop_calc:
 
 Calculation of cloud drop number
 --------------------------------
@@ -2642,10 +2642,10 @@ autoconversion and droplet settling transfer processes. Cloud drop
 number is the concentration of activated cloud nuclei. :math:`n_d` can
 be specified as a simple constant, depending only upon whether the grid
 point is a land or sea point, or it can be dependent on model aerosol.
-Sections `6.2.1 <#sec:landsea>`__ to `6.2.5 <#sec:easy_cdnc>`__ outline
+Sections :ref:`Using a simple land-sea mask <sec_landsea>` to :ref:`Using EasyAerosol <sec_easy_cdnc>` outline
 some of the possible options.
 
-.. _`sec:landsea`:
+.. _sec_landsea:
 
 Using a simple land-sea mask
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2678,7 +2678,7 @@ clouds, the model often has a distinct split in drizzle fields, which
 looks rather unrealistic. To get around this issue, we can use aerosol
 amounts, as detailed in the next section.
 
-.. _`sec:CLASSIC`:
+.. _sec_CLASSIC:
 
 Using the CLASSIC aerosol species
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2706,11 +2706,11 @@ fixed climatology. Prognostic variables are common in climate
 simulations, but are generally too expensive to use in NWP models. So,
 in NWP models, the use of climatological aerosols provides a useful
 alternative to the land-sea mask discussed in section
-`6.2.1 <#sec:landsea>`__. The droplet number derived from the
+:ref:`Using a simple land-sea mask <sec_landsea>`. The droplet number derived from the
 climatological aerosols can be scaled in order to account for any
 discrepencies between the prognostic and climatological aerosol inputs.
 
-.. _`sec:UKCA_cdnc`:
+.. _sec_UKCA_cdnc:
 
 Using the UKCA-derived cloud drop number concentration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2721,7 +2721,7 @@ UM microphysics and used in the process rates. In this case, the
 microphysics scheme does not modify the UKCA-derived cloud drop number
 concentration.
 
-.. _`sec:murk2nd`:
+.. _sec_murk2nd:
 
 Using MURK aerosol
 ~~~~~~~~~~~~~~~~~~
@@ -2777,7 +2777,7 @@ the cloud drop number concentration and that the
 droplet spectrum when coupled to the `Jones et al. (1994)`_
 relation.
 
-.. _`sec:easy_cdnc`:
+.. _sec_easy_cdnc:
 
 Using EasyAerosol
 ~~~~~~~~~~~~~~~~~
@@ -2792,7 +2792,7 @@ aerosol modelling group for advice on creating the input file. Note that
 the same distribution can also be used in the calculation of cloud
 albedo, see UMDP23 section 3.3.
 
-.. _`sec:drop_taper`:
+.. _sec_drop_taper:
 
 Drop tapering
 ~~~~~~~~~~~~~
@@ -2804,7 +2804,7 @@ between 20 per cm\ :math:`^3` and 100 per cm\ :math:`^3`.
 taper (or reduce) the drop number concentration in the boundary layer,
 with lower values closer to the surface. This can be used in conjunction
 with the MURK and CLASSIC aerosols as described in sections
-`6.2.2 <#sec:CLASSIC>`__ and `6.2.4 <#sec:murk2nd>`__. The surface drop
+:ref:`Using the CLASSIC aerosol species <sec_CLASSIC>` and :ref:`Using MURK aerosol <sec_murk2nd>`. The surface drop
 concentration can either be fixed or can vary with aerosol mass mixing
 ratio.
 
@@ -2853,16 +2853,16 @@ cloud drop concentration is assumed to be 375 per cm\ :math:`^3`, which
 is relaxed smoothly to 100 per cm\ :math:`^3` at 2 km altitude. Above 2
 km altitude, the drop number remains constant at 100 per cm\ :math:`^3`.
 
-.. _`sec:trans_eqs`:
+.. _sec_trans_eqs:
 
 Transfer equations
 ------------------
 
-We next look at these terms from section `6.1 <#sec:trans_intro>`__ in
+We next look at these terms from section :ref:`Introduction <sec_trans_intro>` in
 detail. The order of terms approximately follows the order that they
 appear in the microphysics scheme.
 
-.. _`sec:PLSET`:
+.. _sec_PLSET:
 
 PLSET: Droplet Settling
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -2892,7 +2892,7 @@ which gives the bulk settling velocity as
    \left(\frac{q_{cl} \rho}{n_{d}}\right)^{\frac{2}{3}}}{F_{K_a}},
 
 where :math:`n_d` is the cloud droplet number concentration, determined
-in section `6.2 <#sec:cloud_drop_calc>`__.
+in section :ref:`Calculation of cloud drop number <sec_cloud_drop_calc>`.
 
 With the bulk velocity for cloud droplets known, the flux of cloud
 droplets out of the layer can be calculated as
@@ -2937,7 +2937,7 @@ the mass mean fall-speed condensate-content relationship is:
 where :math:`q_x` is the mixing ratio variable for the condensate
 quantity (:math:`q_{cfa}`, :math:`q_{cfc}`, :math:`q_{graup}` or
 :math:`q_R`). The parameters have already been defined in section
-`4 <#sec:param_par_char>`__. See tables :numref:`%s <tab:mic_consts_psd>`,
+:ref:`Parametrized Particle Characteristics <sec_param_par_char>`. See tables :numref:`%s <tab:mic_consts_psd>`,
 :numref:`%s <tab:mic_consts_fallspeed>` and :numref:`%s <tab:mic_consts_density>`
 for the default values used in the UM.
 
@@ -2954,7 +2954,7 @@ is valid for ice aggregates only):
 where :math:`\mathcal{M}_{b_a+d_a}` is the result of inputting the
 expression :math:`b_a + d_a` into the generic ice particle size
 distribution calculation (equation :eq:`eq:field1`,
-described in section `4.3 <#sec:field_psd>`__).
+described in section :ref:`Generic Ice Particle Size Distributions <sec_field_psd>`).
 
 **Cloud fraction changes** We assume that :math:`C_i` is not reduced if
 ice falls out of a layer (since slower falling ice particles will be
@@ -2977,7 +2977,7 @@ and crystals and :math:`ws` is currently set to a constant,
 :math:`ws=1 \times 10^{-4} s^{-1}`, which is a typical baseline value
 for the wind-shear parameter.
 
-.. _`sec:PRFALL`:
+.. _sec_PRFALL:
 
 PRFALL: Sedimentation (fall) of rain
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3050,7 +3050,7 @@ of ice that can be nucleated) and assumes that nucleation occurs in all
 locations within the liquid cloud volume, so :math:`C_i` is set equal to
 :math:`C` if there is a nucleation increment.
 
-.. _`sec:tnuc_dust`:
+.. _sec_tnuc_dust:
 
 Prognostic dust approach
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3156,12 +3156,12 @@ otherwise it is a source term for ice aggregates.
 this term, except if all of the rain freezes :math:`C_R` is set to
 :math:`0`. If using the prognostic precipitation fraction, the change of
 rain fraction is calculated differently; see section
-`5.4.3.1 <#sec:precip_frac_update>`__. If this term acts as a source of
+:ref:`Update of precipitation fraction by process-rates <sec_precip_frac_update>`. If this term acts as a source of
 ice aggregates, the ice cloud fraction after this process is taken to be
 the :math:`\mbox{\footnotesize \sf MAX} \left[C_R,C_i\right]`, which
 assumes that nucleation occurs throughout the rain volume.
 
-.. _`sec:psdep_pssub`:
+.. _sec_psdep_pssub:
 
 PSDEP/PSSUB: Deposition/Sublimation of vapour on to aggregates
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3387,7 +3387,7 @@ mass is calculated using the diagnostic split (equation
 :eq:`eq:cry_agg_split`) and any mass greater than
 this threshold is transferred to the aggregate category.
 
-.. _`sec:PSACI`:
+.. _sec_PSACI:
 
 PSACI: Collection of ice crystals by snow aggregates
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3441,7 +3441,7 @@ Substituting in equation :eq:`eq:mic_vx_vy` allows
 equation :eq:`eq:mic_pyacx1` to be integrated giving
 equation :eq:`eq:mic_pyacx2` (where many of the
 parameters have been defined earlier in section
-`4 <#sec:param_par_char>`__, with default values in tables
+:ref:`Parametrized Particle Characteristics <sec_param_par_char>`, with default values in tables
 :numref:`%s <tab:mic_consts_psd>`,\ :numref:`%s <tab:mic_consts_density>` and
 :numref:`%s <tab:mic_consts_fallspeed>`.) Specifically now for the collection
 of ice by snow we have:
@@ -3476,7 +3476,7 @@ of ice by snow we have:
                                                              \right)
    \end{aligned}
 
-.. _`sec:PSACW`:
+.. _sec_PSACW:
 
 PSACW: Riming by aggregates
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3538,7 +3538,7 @@ done to mimic the findings of `Harimaya (1975)`_ that
 there is a minimum droplet size for riming to occur. To implement the
 minimum :math:`q_{cl}` for riming, the implicit solution of the process
 rate equation is modified, as described in Section
-`7.2 <#sec:proc_rate_implicit>`__.
+:ref:`Implicit formulation <sec_proc_rate_implicit>`.
 
 PIACW: Riming by crystals
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3551,7 +3551,7 @@ the PSD, density and fall speed parametrizations. Collision/collection
 efficiency are also assumed to be 1 and no change in cloud fractions
 occur.
 
-.. _`sec:PGAUT`:
+.. _sec_PGAUT:
 
 PGAUT: Autoconversion of snow to graupel
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3601,7 +3601,7 @@ seen within a convective cell tends to be produced closer to the main
 core of the storm, which looks more realistic when comparing to radar
 observations.
 
-.. _`sec:PGACW`:
+.. _sec_PGACW:
 
 PGACW: Riming by graupel
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3613,7 +3613,7 @@ the parameters for graupel from tables :numref:`%s <tab:mic_consts_psd>` and
 :numref:`%s <tab:mic_consts_fallspeed>` used in place of those for
 aggregates).
 
-.. _`sec:PGACS`:
+.. _sec_PGACS:
 
 PGACS: Collection of snow aggregates by graupel
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3621,7 +3621,7 @@ PGACS: Collection of snow aggregates by graupel
 **:math:`q_{cfa}` to :math:`q_{graup}`.** The rates of collision between
 the graupel and snow categories is parametrized in the same way as the
 snow/crystal collisions (PSACI) described by equation
-:eq:`eq:mic_pyacx2` in section `6.3.15 <#sec:PSACI>`__,
+:eq:`eq:mic_pyacx2` in section :ref:`PSACI: Collection of ice crystals by snow aggregates <sec_PSACI>`,
 but with the coefficients for graupel replacing those for snow
 aggregates and those for snow aggregates replacing those for ice
 crystals. The collection efficiencies remain the same as those used in
@@ -3630,7 +3630,7 @@ equation :eq:`eq:mic_exy`.
 **With the generic ice particle size distribution**
 
 This uses the same physics, but is calculated slightly differently from
-:eq:`eq:mic_pyacx2` in section `6.3.15 <#sec:PSACI>`__.
+:eq:`eq:mic_pyacx2` in section :ref:`PSACI: Collection of ice crystals by snow aggregates <sec_PSACI>`.
 Equation :eq:`eq:field1` is used to calculate the zeroth
 (:math:`\mathcal{M}_0`), first (:math:`\mathcal{M}_1`), second
 (:math:`\mathcal{M}_2`) and :math:`b_a+d_a`
@@ -3679,7 +3679,7 @@ Therefore, when either of these two options is se, there will be no
 change in graupel or snow masses due to the collection of snow
 aggregates by graupel.
 
-.. _`sec:PSACR`:
+.. _sec_PSACR:
 
 PSACR: Collection of rain by aggregates
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3687,7 +3687,7 @@ PSACR: Collection of rain by aggregates
 **:math:`q_{R}` to :math:`q_{cfa}`.** This term uses similar assumptions
 as for the collection of ice crystals by snow aggregates above (equation
 :eq:`eq:mic_pyacx2` in section
-`6.3.15 <#sec:PSACI>`__). Again, the approximation
+:ref:`PSACI: Collection of ice crystals by snow aggregates <sec_PSACI>`). Again, the approximation
 
 .. math::
 
@@ -3744,13 +3744,13 @@ zero.
 
 If using the prognostic precipitation fraction, the change of rain
 fraction is calculated differently; see section
-`5.4.3.1 <#sec:precip_frac_update>`__.
+:ref:`Update of precipitation fraction by process-rates <sec_precip_frac_update>`.
 
 There are no changes to the cloud fractions as a result of this process.
 
 **When the generic ice particle size distribution is used**
 
-This is calculated in a similar way to section `6.3.20 <#sec:PGACS>`__.
+This is calculated in a similar way to section :ref:`PGACS: Collection of snow aggregates by graupel <sec_PGACS>`.
 Equation :eq:`eq:field1` is used to calculate the zeroth
 (:math:`\mathcal{M}_0`), first (:math:`\mathcal{M}_1`), second
 (:math:`\mathcal{M}_2`), :math:`1+0.5(d_a+1)`
@@ -3823,7 +3823,7 @@ PIACR: Collection of rain by crystals
 
 **:math:`q_{R}` to :math:`q_{cfc}`.** This term is formulated in the
 same way as the collection of rain by aggregates term (PSACR; equation
-:eq:`eq:psacr` in section `6.3.21 <#sec:PSACR>`__). The only
+:eq:`eq:psacr` in section :ref:`PSACR: Collection of rain by aggregates <sec_PSACR>`). The only
 differences are the values of the parameters used to describe the
 properties of the crystals.
 
@@ -3844,7 +3844,7 @@ liquid, not ice. However, the latent heat of sublimation is used to
 calculate the temperature change due to the evaporation. Either the
 default ‘intercepts’ method or the generic ice particle size
 distribution can be used with this option; the formulation is the same
-as in section `6.3.11 <#sec:psdep_pssub>`__.
+as in section :ref:`PSDEP/PSSUB: Deposition/Sublimation of vapour on to aggregates <sec_psdep_pssub>`.
 
 PIMLTEV: Evaporation of melting ice crystals
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3900,7 +3900,7 @@ of the ice-only and the mixed-phase partitions in the gridbox. The rain
 fraction is increased to :math:`C_i` if :math:`C_i` is larger than the
 rain fraction. If using the prognostic precipitation fraction, the
 change of rain fraction is calculated differently; see section
-`5.4.3.1 <#sec:precip_frac_update>`__. The scheme reduces the
+:ref:`Update of precipitation fraction by process-rates <sec_precip_frac_update>`. The scheme reduces the
 :math:`C_i` in proportion to the mass of ice melted:
 
 .. math:: \Delta C_i = P_{SMLT} \frac{C_i}{q_{cfa}}
@@ -3920,7 +3920,7 @@ PIMLT: Melting of ice crystals to rain
 **:math:`q_{cfc}` to :math:`q_{R}`.** This term is equivalent to the
 melting of aggregates to rain, although with different parameter values.
 
-.. _`sec:PGMLT`:
+.. _sec_PGMLT:
 
 PGMLT: Melting of Graupel
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3959,7 +3959,7 @@ fact that graupel particles are spheres with a much higher density than
 aggregates, and are more like raindrops in nature than they are like
 aggregates.
 
-.. _`sec:PREVP`:
+.. _sec_PREVP:
 
 PREVP: Evaporation of rain
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3996,7 +3996,7 @@ Note that if the user has diagnostic rain selected and the
 `Abel and Shipway (2007)`_ rain fall speeds selected, the
 evaporation rate will be enhanced for light rain rates, in an attempt to
 remove some of the spurious drizzle from the model. See section
-`4.4.3 <#sec:as07>`__ for more details.
+:ref:`Abel and Shipway rain fall speeds <sec_as07>` for more details.
 
 Usually this process does not alter the rain fraction :math:`C_R`;
 except that :math:`C_R` is reset to zero in the event that qrain falls
@@ -4005,11 +4005,11 @@ completely.
 
 If using the prognostic precipitation fraction, the change of rain
 fraction is calculated differently; see section
-`5.4.3.1 <#sec:precip_frac_update>`__.
+:ref:`Update of precipitation fraction by process-rates <sec_precip_frac_update>`.
 
 There are no cloud fraction changes associated with this term.
 
-.. _`sec:PRACW`:
+.. _sec_PRACW:
 
 PRACW: Accretion of cloud liquid water by rain
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -4069,7 +4069,7 @@ and
 
 and :math:`\rho=0.9` is specified.
 
-.. _`sec:PRAUT`:
+.. _sec_PRAUT:
 
 PRAUT: Autoconversion of cloud liquid water to rain
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -4129,7 +4129,7 @@ numerical approximation (from Andy Jones):
    \end{aligned}
 
 where :math:`n_d` is in units of m\ :math:`^{-3}`. The value of
-:math:`n_d` is determined in section `6.2 <#sec:cloud_drop_calc>`__.
+:math:`n_d` is determined in section :ref:`Calculation of cloud drop number <sec_cloud_drop_calc>`.
 
 **`Tripoli and Cotton (1980)`_ autoconversion threshold:**
 :math:`q_{cl0}` is defined as
@@ -4139,7 +4139,7 @@ where :math:`n_d` is in units of m\ :math:`^{-3}`. The value of
    q_{cl0} = \frac{4}{3} \pi \frac{\rho_{w} r^3_{crit} n_d}{\rho}
 
 where :math:`r_{crit} = 7 \times 10^{-6}` m and :math:`n_d` is defined
-in section `6.2 <#sec:cloud_drop_calc>`__; this was the only option
+in section :ref:`Calculation of cloud drop number <sec_cloud_drop_calc>`; this was the only option
 available in the now-retired 3B scheme.
 
 With both the default, and Tripoli and Cotton autoconversion thresholds,
@@ -4174,17 +4174,17 @@ and :math:`f_{cl}` is given in Equation :eq:`eq-fsdqcl`.
 :math:`C_l` if :math:`C_l` is greater than the current rain fraction. If
 using the prognostic precipitation fraction, the change of rain fraction
 is calculated differently; see section
-`5.4.3.1 <#sec:precip_frac_update>`__.
+:ref:`Update of precipitation fraction by process-rates <sec_precip_frac_update>`.
 
 The cloud fractions are not altered by this microphysical process.
 
-.. _`sec:scav`:
+.. _sec_scav:
 
 Scavenging of aerosol
 ~~~~~~~~~~~~~~~~~~~~~
 
 In addition to the link between MURK aerosol and cloud droplet number
-concentration described in section `6.3.30 <#sec:PRAUT>`__, falling
+concentration described in section :ref:`PRAUT: Autoconversion of cloud liquid water to rain <sec_PRAUT>`, falling
 precipitation particles can remove aerosol (sometimes called
 scavenging). Rain-out of most aerosol species is covered in the
 appropriate documentation (:umdp:‘020‘). However, in the case of MURK
@@ -4281,7 +4281,7 @@ the amount of dispersion is fortuitously similar to the amount of
 physical dispersion that should occur because of the distribution of ice
 particle sizes (and hence fall speeds).
 
-.. _`sec:proc_rate_implicit`:
+.. _sec_proc_rate_implicit:
 
 Implicit formulation
 --------------------
@@ -4320,7 +4320,7 @@ likely to be limited.
 **Implicit solution for riming with :math:`q_{cl}`-threshold**
 
 When the shape-dependent riming with liquid water content threshold
-(Section `6.3.16 <#sec:PSACW>`__) is used, the implicit solution needs
+(Section :ref:`PSACW: Riming by aggregates <sec_PSACW>`) is used, the implicit solution needs
 to be modifed to account for the minimum :math:`q_{cl}` available for
 riming. If the :math:`q_{cl}` threshold is :math:`q_{cl,min}` then the
 implicit solution is
@@ -4338,7 +4338,7 @@ parallel does not guarantee less timestep sensitivity). Where
 applicable, in the sequences described below, the transfer for the
 ‘crystals’ is performed before the transfer for the ‘aggregates’.
 
-.. _`sec:historic_order`:
+.. _sec_historic_order:
 
 Historic order of transfer processes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -4357,7 +4357,7 @@ chosen because early investigations suggested that having the
 sublimation term later in the microphysics allows ice to evaporate on a
 reasonable depth scale.
 
-.. _`sec:sed_at_end`:
+.. _sec_sed_at_end:
 
 Sedimentation at end of the microphysics
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -4378,7 +4378,7 @@ To try and avoid these issues, new options are now available to re-order
 the transfer processes using the option *sediment_loc*. These are as
 follows:
 
-#. As the historical order in section `7.3.1 <#sec:historic_order>`__.
+#. As the historical order in section :ref:`Historic order of transfer processes <sec_historic_order>`.
 
 #. As 1., but with the fall of ice, rain and graupel moved after
    autoconversion.
@@ -4388,7 +4388,7 @@ follows:
 
 #. As 1., but with the fall of rain moved after autoconversion. Fall of
    ice and graupel remain as the historic order in section
-   `7.3.1 <#sec:historic_order>`__.
+   :ref:`Historic order of transfer processes <sec_historic_order>`.
 
 #. As 4., but with the droplet settling moved between the autoconversion
    term and the fall of rain term.
@@ -4398,13 +4398,13 @@ terms after the autoconversion and accretion terms may have a
 significant impact on fog forecasts in the UM. Therefore, the order of
 terms within the microphysics scheme remains a current area of research.
 
-.. _`sec:proc_fluxes`:
+.. _sec_proc_fluxes:
 
 Applying process rates to hydrometeor fall-fluxes.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ordering of processes detailed in section
-`7.3.1 <#sec:historic_order>`__ can be summarised as:
+:ref:`Historic order of transfer processes <sec_historic_order>` can be summarised as:
 
 #. Add fall-in of precip flux from the level above.
 
@@ -4441,11 +4441,11 @@ This problem was clearly already recognised for the process of melting
 snow (it would have resulted in spurious snowfall at the surface),
 because in the "tidy-up" section at the end of the microphysics scheme,
 melting is separately applied to the fall-out flux of snow to prevent
-this (see section `7.4 <#sec:num_check>`__)
+this (see section :ref:`Numerical checks <sec_num_check>`)
 
 Note that the various options to perform sedimentation for some
 variables at the end of the timestep instead of at the beginning
-(section `7.3.2 <#sec:sed_at_end>`__) do not address this problem,
+(section :ref:`Sedimentation at end of the microphysics <sec_sed_at_end>`) do not address this problem,
 because in all cases the increments due to the fall-in and fall-out
 fluxes of a given hydrometeor are added in the same place; none of the
 options allow other processes to modify the fall-out flux.
@@ -4455,7 +4455,7 @@ activated if the UM namelist switch *l_proc_fluxes* is set to true.
 After the sedimentation is performed, the fall-out fluxes of ice, rain
 and graupel are added back onto the hydrometeor masses at model-level k
 (following the conservative flux to mixing-ratio conversion described in
-section `2.6 <#sec:flux_to_m>`__):
+section :ref:`Flux to mixing ratio conversion <sec_flux_to_m>`):
 
 .. math:: {q_X}_* = q_X + \frac{\Delta t}{\rho \Delta z} f_X
 
@@ -4508,11 +4508,11 @@ the latest-guess value *after* sedimentation.
 
 With this option active (*l_proc_fluxes = .true.*), the snow melting
 process no longer needs to be separately applied to the snow fluxes as
-described in section `7.4 <#sec:num_check>`__ (doing so would now be
+described in section :ref:`Numerical checks <sec_num_check>` (doing so would now be
 double-counting), so the section of code to do "emergency melting" is
 skipped.
 
-.. _`sec:num_check`:
+.. _sec_num_check:
 
 Numerical checks
 ----------------
@@ -4595,7 +4595,7 @@ considered when tuning the model for a particular application.
 Preliminary tests indicate that savings on total model runtime may be of
 the order 5%.
 
-.. _`sec:seeder_feeder`:
+.. _sec_seeder_feeder:
 
 The sub-grid orographic seeder feeder scheme
 ============================================
@@ -5204,7 +5204,7 @@ exceptions:
 
   where LWC is the in-cloud liquid water content and :math:`n_d` is the
   cloud drop number concentration, as determined in section
-  `6.2 <#sec:cloud_drop_calc>`__. Thus, the radar reflectivity due to
+  :ref:`Calculation of cloud drop number <sec_cloud_drop_calc>`. Thus, the radar reflectivity due to
   liquid cloud will change in response to cloud drop number changes
   (e.g. by movement of different aerosol masses).
 
@@ -5238,7 +5238,7 @@ with the only two unknowns now being :math:`|K_x|^2` and :math:`\rho_x`.
    * - Graupel
      - 0.174
      - 500
-     - See Section `4.5 <#sec:density>`__
+     - See Section :ref:`Density Distribution <sec_density>`
 
 The factor :math:`10^{18}` in equations :eq:`eq:z_psd` and
 :eq:`eq:qhat` ensures that the units are
@@ -5283,11 +5283,11 @@ those diagnostics. The following guidance points should be noted:
   surface (i.e. precipitation out of the lowest model level).
 
 - The effects of any gravitational droplet settling (see section
-  `6.3.1 <#sec:PLSET>`__) are included in the rainfall diagnostics.
+  :ref:`PLSET: Droplet Settling <sec_PLSET>`) are included in the rainfall diagnostics.
 
 - The effects of ice crystals are included in the diagnostics whenever
   the Generic Ice Particle Size Distribution (see section
-  `4.3 <#sec:field_psd>`__) is not included.
+  :ref:`Generic Ice Particle Size Distributions <sec_field_psd>`) is not included.
 
 - All ‘amount’ diagnostics are the precipitation amount generated over
   the model timestep. These are generally output as STASH accumulations,
