@@ -58,7 +58,7 @@ the unit mass of dry air. However, the term ’specific humidity’ is
 applied generally to water vapour only and is defined as the mass of
 water vapour per the total mass (air plus vapour). In practice, the two
 have approximately the same value, as the mass of vapour is much less
-than the mass of air. :umdp:‘015‘ (Dynamics) shows that all quantities
+than the mass of air. ``:umdp:015`` (Dynamics) shows that all quantities
 are passed into model physics as ’mixing ratios’; therefore we have used
 this term in this document. However, in the code you may see references
 to specific humidity. These are technically incorrect and they should
@@ -102,7 +102,7 @@ and the microphysical processes represented are:
 
 Note that the condensation and evaporation of cloud droplets are
 implemented as part of the large-scale cloud scheme. For further
-details, please refer to :umdp:‘029‘.
+details, please refer to ``:umdp:029``.
 
 There are many cloud microphysics processes which are not represented in
 this parametrization. They are *assumed* to be of less significance than
@@ -469,7 +469,7 @@ ratio. In any process which results in a change in phase, latent heat is
 produced or removed. This heat will modify the saturation mixing ratio.
 This modification can be accounted for in a change from vapour to a
 condensate phase by multiplying the available moisture by the correction
-factor :math:`a_L`. This is derived in :umdp:‘029‘ (large-scale cloud)
+factor :math:`a_L`. This is derived in ``:umdp:029`` (large-scale cloud)
 and is approximated in the large-scale precipitation scheme by
 
 .. math:: \frac{1}{a_L} = 1 +  \frac{\epsilon L^2 q_{sat}}{c_p R T^{2}}
@@ -2715,7 +2715,7 @@ discrepencies between the prognostic and climatological aerosol inputs.
 Using the UKCA-derived cloud drop number concentration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The UKCA model (see :umdp:‘084‘) is capable of producing a cloud drop
+The UKCA model (see ``:umdp:084``) is capable of producing a cloud drop
 number concentration derived from aerosol. This can be passed into the
 UM microphysics and used in the process rates. In this case, the
 microphysics scheme does not modify the UKCA-derived cloud drop number
@@ -3099,7 +3099,7 @@ In order to implement this approach, the logical switch l which appears
 under Mixed phase processes in Section 04 in rose GUI needs to be set to
 true. Additionally, by activating this approach, the default detrainment
 temperature thresholds would also be replaced in the convection scheme.
-For further details, please refer to :umdp:‘030‘.
+For further details, please refer to ``:umdp:030``.
 
 PIFRW: Homogeneous nucleation of liquid water
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -4187,7 +4187,7 @@ In addition to the link between MURK aerosol and cloud droplet number
 concentration described in section :ref:`PRAUT: Autoconversion of cloud liquid water to rain <sec_PRAUT>`, falling
 precipitation particles can remove aerosol (sometimes called
 scavenging). Rain-out of most aerosol species is covered in the
-appropriate documentation (:umdp:‘020‘). However, in the case of MURK
+appropriate documentation (``:umdp:020``). However, in the case of MURK
 aerosol, this follows the method of `Clark et al. (2008)`_,
 and the mixing ratio of aerosol, :math:`A_{mass}` is reduced as:
 
