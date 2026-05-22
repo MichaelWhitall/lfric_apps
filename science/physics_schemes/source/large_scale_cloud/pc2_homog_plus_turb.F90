@@ -464,14 +464,14 @@ do k = 1, nlevels
                 w2 = -(2.0*c_coef/b_coef)                                      &
                    / ( 1.0 + sqrt( 1.0 - 4.0*a_coef*c_coef/b_coef**2 ) )
                 w2 = min( max( w2, 0.0 ), 1.0 )
-                ! Limit weight to ensure +ive qcl and sde
+                ! Limit weight to ensure no negative qcl, sde, cfl, cfc
                 ! 0 = (1-w2) qcl1 + w2 qcl2 => w2 (qcl2 - qcl1) = -qcl1
                 if ( dqcdt < 0.0 ) then
-                  ! Drying; solution 1 could give -ive qcl or cfl.  Limit w1:
+                  ! Drying; limit contribution from solution 1:
                   if (qcl1<0.0) w2 = max(w2, min(-qcl1/qcl_diff+smallp, 1.0))
                   if (cfl1<0.0) w2 = max(w2, min(-cfl1/cfl_diff+smallp, 1.0))
                 else
-                  ! Moistening; soln 2 could give -ive sde or cfc.  Limit w2:
+                  ! Moistening; limit contribution from solution 2:
                   if (sde2<0.0) w2 = min(w2, max(-sde1/qcl_diff-smallp, 0.0))
                   if (cfc2<0.0) w2 = min(w2, max( cfc1/cfl_diff-smallp, 0.0))
                 end if
