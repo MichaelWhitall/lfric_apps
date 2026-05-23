@@ -207,24 +207,29 @@ detailed below.
 Water vapour
 ------------
 
-**Symbol ':math:`q`', units :math:`kg~kg^{-1}`, code variable
-':math:`q`'.** This is the vapour mixing ratio and represents the mean
+**Symbol '** :math:`\boldsymbol{q}` **', units**
+:math:`\boldsymbol{kg~kg^{-1}}` **, code variable
+'** :math:`\boldsymbol{q}` **'.** This is the vapour mixing ratio and
+represents the mean
 water vapour in the model grid box. It is a prognostic for all options
 within the scheme.
 
 Liquid water content
 --------------------
 
-**Symbol ':math:`q_{cl}`', units :math:`kg~kg^{-1}`, code variable
-':math:`qcl`'.** This represents the mean liquid water content in the
+**Symbol '** :math:`\boldsymbol{q_{cl}}` **', units**
+:math:`\boldsymbol{kg~kg^{-1}}` **, code variable
+'** :math:`\boldsymbol{qcl}` **'.** This represents the mean liquid water
+content in the
 model grid box (per kg of moist air). It is a prognostic quantity within
 this scheme.
 
 Rain water content and rain rate
 --------------------------------
 
-**Symbols ':math:`q_R`' and :math:`R`; code variables ':math:`qrain`'
-(mixing ratio) and :math:`rainrate` (flux)**
+**Symbols '** :math:`\boldsymbol{q_R}` **' and** :math:`\boldsymbol{R}` **;
+code variables '** :math:`\boldsymbol{qrain}` **'
+(mixing ratio) and** :math:`\boldsymbol{rainrate}` **(flux)**
 
 There are two ways in which rain is represented in the UM. It can be
 either a prognostic variable and therefore advected by the model winds,
@@ -241,7 +246,8 @@ transfer processes have been performed, this is converted to a rain rate
 Diagnostic representation:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**Units :math:`kg~m^{-2}~s^{-1}`.** This represents the flux of rain (or
+**Units** :math:`\boldsymbol{kg~m^{-2}~s^{-1}}` **.** This represents the flux
+of rain (or
 rain rate) in each model level. There is no advection of rain between
 horizontal grid boxes, so any rain generated remain within the same
 vertical column of model grid boxes, falling from level to level.
@@ -253,7 +259,8 @@ surface.
 Prognostic representation:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**Units :math:`kg~kg^{-1}`.** This represents the mixing ratio of rain.
+**Units** :math:`\boldsymbol{kg~kg^{-1}}` **.** This represents the mixing
+ratio of rain.
 This quantity is *advected* downwards in the column to represent its
 fall. The prognostic representation means that this representation costs
 more in run-time (it needs to be advected by the dynamics).
@@ -273,17 +280,20 @@ convective storm.
 Ice water content
 -----------------
 
-**Symbol ':math:`q_{cf}`', Units :math:`kg~kg^{-1}`, code variable
-':math:`qcf`'** This is the mixing ratio representing the mean ice water
+**Symbol '** :math:`\boldsymbol{q_{cf}}` **', Units**
+:math:`\boldsymbol{kg~kg^{-1}}` **, code variable
+'** :math:`\boldsymbol{qcf}` **'** This is the mixing ratio representing the
+mean ice water
 content per kg of moist air in the grid box.
 
 Single prognostic representation:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This quantity is split by a diagnostic relationship into a large-ice
-category, *'aggregates'* (**symbol :math:`q_{cfa}`, code variable
-qcf_agg**), and a small-ice category, *'crystals'* (**symbol
-:math:`q_{cfc}`, code variable qcf_cry**) which are then treated
+category, *'aggregates'* (**symbol** :math:`\boldsymbol{q_{cfa}}` **, code
+variable
+qcf_agg**), and a small-ice category, *'crystals'* (**symbol**
+:math:`\boldsymbol{q_{cfc}}` **, code variable qcf_cry**) which are then treated
 separately by the microphysical transfers before being recombined after
 the transfers have been completed.
 
@@ -304,8 +314,9 @@ recommended to use the single prognostic above.
 Prognostic representation of graupel:
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**Symbol :math:`q_{graup}`, units :math:`kg~kg^{-1}`, code variable
-:math:`qgraup`** This allows the representation of ice in the form of
+**Symbol** :math:`\boldsymbol{q_{graup}}` **, units**
+:math:`\boldsymbol{kg~kg^{-1}}` **, code variable**
+:math:`\boldsymbol{qgraup}` This allows the representation of ice in the form of
 graupel, which can occur in deep convective cells. It acts as an
 efficient moisture sink due to having a high fall speed relative to rain
 and snow. Hence, the representation of this hydrometeor in high
@@ -329,13 +340,14 @@ snow term to zero.
 Snow
 ----
 
-**Symbol 'S', units :math:`kg~m^{-2}~s^{-1}`, code variable 'snow'**
+**Symbol 'S', units** :math:`\boldsymbol{kg~m^{-2}~s^{-1}}` **, code variable
+'snow'**
 This simply represents a temporary quantity, namely the amount of ice
 that falls from one gridbox to the one immediately below. Its mass is
 contained entirely within the ice water content variables and it should
 *not* be considered as a separate ice quantity. *The total mass of ice
-in a gridbox is therefore given by
-:math:`q_{cfa} + q_{cfc} +q_{graup}`*. The *flux* of
+in a gridbox is therefore given by*
+:math:`q_{cfa} + q_{cfc} +q_{graup}`. The *flux* of
 :math:`q_{cfa} + q_{cfc}+ q_{graup}` is given by :math:`S`.
 
 .. _sec_flux_to_m:
@@ -473,7 +485,7 @@ The air density is estimated from the virtual temperature equation.
 
 where :math:`p` is the pressure (:math:`N~m^{-2}`) and :math:`R` is the
 gas constant for dry air (287 :math:`J~kg^{-1}~K^{-1}`). *The factor of
-0.6 is strictly the value :math:`(1-\epsilon)/\epsilon`, which is
+0.6 is strictly the value* :math:`(1-\epsilon)/\epsilon` *, which is
 0.608.* The air density calculated here does not impact on the
 conservation properties of the scheme, it is the input mass of air in a
 gridbox which is important for this. This is still calculated via the
@@ -2326,7 +2338,7 @@ of the square-root term, all of the factors of
    * -
      - Source(+) or sink(-)
      - Eqn for :math:`C_R` update
-     - **:math:`C_{proc}`**
+     - :math:`\boldsymbol{C_{proc}}`
 
    * - PRACW (accretion of liquid-cloud by rain)
      - +
@@ -2960,7 +2972,8 @@ appear in the microphysics scheme.
 PLSET: Droplet Settling
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-**:math:`q_{cl}` to :math:`q_{cl}`, :math:`q_{cl}` to :math:`q`** This
+:math:`\boldsymbol{q_{cl}}` **to** :math:`\boldsymbol{q_{cl}}` **,**
+:math:`\boldsymbol{q_{cl}}` **to** :math:`\boldsymbol{q}` This
 term is intended to update the cloud prognostics as a results of
 allowing cloud droplets to fall out by gravity using a modified Stokes'
 law. The terminal velocity of a cloud droplet is given as follows (after
@@ -3107,7 +3120,8 @@ with the :math:`x` subscript become those for graupel listed in tables
 PIPRM: Heterogeneous nucleation (Deposition on to natural ice nuclei)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**:math:`q_{cl}` to :math:`q_{cfc}`, :math:`q` to :math:`q_{cfc}`.**
+:math:`\boldsymbol{q_{cl}}` **to** :math:`\boldsymbol{q_{cfc}}` **,**
+:math:`\boldsymbol{q}` **to** :math:`\boldsymbol{q_{cfc}}` **.**
 This term provides a small 'seed' ice content for ice free clouds in
 order that the other microphysical terms can grow it. The term acts if
 all the following criteria are satisfied:
@@ -3207,7 +3221,8 @@ For further details, please refer to ``:umdp:030``.
 PIFRW: Homogeneous nucleation of liquid water
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**:math:`q_{cl}` to :math:`q_{cfc}`.** All liquid water at temperatures
+:math:`\boldsymbol{q_{cl}}` **to** :math:`\boldsymbol{q_{cfc}}` **.** All
+liquid water at temperatures
 less than :math:`-40^{\circ}`\ C is instantaneously frozen to form ice
 particles (:math:`q_{cfc}`), according to
 `Rogers and Yau (1989)`_. In the scheme :math:`C_i` is set
@@ -3218,7 +3233,8 @@ equal to :math:`C` and :math:`C_l` set to zero.
 PIFRW: Homogeneous nucleation of liquid water
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**:math:`q_{cl}` to :math:`q_{cfc}`.** All liquid water at temperatures
+:math:`\boldsymbol{q_{cl}}` **to** :math:`\boldsymbol{q_{cfc}}` **.** All
+liquid water at temperatures
 less than :math:`-40^{\circ}`\ C is instantaneously frozen to form ice
 particles (:math:`q_{cfc}`), according to
 `Rogers and Yau (1989)`_. In the scheme :math:`C_i` is set
@@ -3227,13 +3243,15 @@ equal to :math:`C` and :math:`C_l` set to zero.
 PIFRR: Homogeneous nucleation of rain
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**:math:`q_{R}` to :math:`q_{cfc}`.** As PIFRW, but for rain rather than
+:math:`\boldsymbol{q_{R}}` **to** :math:`\boldsymbol{q_{cfc}}` **.** As PIFRW,
+but for rain rather than
 liquid water.
 
 PIPRR: Heterogeneous freezing of rain
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**:math:`q_{R}` to :math:`q_{graup}`.** From vn11.2 there is an option
+:math:`\boldsymbol{q_{R}}` **to** :math:`\boldsymbol{q_{graup}}` **.** From
+vn11.2 there is an option
 to include heterogeneous freezing of rain. Following
 `Bigg (1953)`_, the heterogeneous freezing of rain is
 given by
@@ -3270,7 +3288,8 @@ assumes that nucleation occurs throughout the rain volume.
 PSDEP/PSSUB: Deposition/Sublimation of vapour on to aggregates
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**:math:`q_{cl}` to :math:`q_{cfa}`, :math:`q` to :math:`q_{cfa}`.** The
+:math:`\boldsymbol{q_{cl}}` **to** :math:`\boldsymbol{q_{cfa}}` **,**
+:math:`\boldsymbol{q}` **to** :math:`\boldsymbol{q_{cfa}}` **.** The
 deposition/sublimation equation is (following
 `Rogers and Yau (1989)`_ or
 `Rutledge and Hobbs (1983)`_):
@@ -3425,7 +3444,8 @@ sublimation can only occur outside of liquid cloud).
 PIDEP/PISUB: Deposition/Sublimation of vapour on to ice crystals
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**:math:`q_{cl}` to :math:`q_{cfc}`, :math:`q` to :math:`q_{cfc}`.**
+:math:`\boldsymbol{q_{cl}}` **to** :math:`\boldsymbol{q_{cfc}}` **,**
+:math:`\boldsymbol{q}` **to** :math:`\boldsymbol{q_{cfc}}` **.**
 This term is identical to the above except the parameters used are those
 for the ice crystal category.
 
@@ -3479,7 +3499,7 @@ wish to use this representation, you are advised to set
 PSAUT: Aggregation of ice crystals to snow aggregates
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**:math:`q_{cfc}` to :math:`q_{cfa}`**
+:math:`\boldsymbol{q_{cfc}}` **to** :math:`\boldsymbol{q_{cfa}}`
 
 **If there is only one ice prognostic**
 
@@ -3502,7 +3522,8 @@ this threshold is transferred to the aggregate category.
 PSACI: Collection of ice crystals by snow aggregates
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**:math:`q_{cfc}` to :math:`q_{cfa}`**. In reality, the transfer process
+:math:`\boldsymbol{q_{cfc}}` **to** :math:`\boldsymbol{q_{cfa}}`. In reality,
+the transfer process
 should be small. This modification only works when the use of a second
 ice prognostic (crystals) is used. Collection of ice crystals by snow
 does not take place when the generic ice particle size distribution is
@@ -3594,7 +3615,7 @@ of ice by snow we have:
 PSACW: Riming by aggregates
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**:math:`q_{cl}` to :math:`q_{cfa}`.**
+:math:`\boldsymbol{q_{cl}}` **to** :math:`\boldsymbol{q_{cfa}}` **.**
 
 **When the generic ice particle size distribution is not used**
 
@@ -3656,7 +3677,8 @@ rate equation is modified, as described in Section
 PIACW: Riming by crystals
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**:math:`q_{cl}` to :math:`q_{cfc}`.** This term is formulated in the
+:math:`\boldsymbol{q_{cl}}` **to** :math:`\boldsymbol{q_{cfc}}` **.** This term
+is formulated in the
 same way as the riming by aggregates term in equation
 :eq:`eq:mic_psacw` (and is valid for non-generic ice PSD
 cases). The only differences are the values of the parameters used in
@@ -3669,7 +3691,8 @@ occur.
 PGAUT: Autoconversion of snow to graupel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**:math:`q_{cfa}` to :math:`q_{graup}`.** It is assumed that when snow
+:math:`\boldsymbol{q_{cfa}}` **to** :math:`\boldsymbol{q_{graup}}` **.** It is
+assumed that when snow
 growth is dominated by riming liquid cloud it increases its density, so
 some is converted to the graupel category. A threshold snow mass
 concentration is defined which must be exceeded before this process is
@@ -3720,7 +3743,8 @@ observations.
 PGACW: Riming by graupel
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-**:math:`q_{cl}` to :math:`q_{graup}`.** The collection rates of liquid
+:math:`\boldsymbol{q_{cl}}` **to** :math:`\boldsymbol{q_{graup}}` **.** The
+collection rates of liquid
 cloud by graupel obey exactly the same physics as the riming of crystals
 and aggregates (equation :eq:`eq:mic_psacw`, but with
 the parameters for graupel from tables :numref:`%s <tab:mic_consts_psd>` and
@@ -3732,7 +3756,8 @@ aggregates).
 PGACS: Collection of snow aggregates by graupel
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**:math:`q_{cfa}` to :math:`q_{graup}`.** The rates of collision between
+:math:`\boldsymbol{q_{cfa}}` **to** :math:`\boldsymbol{q_{graup}}` **.** The
+rates of collision between
 the graupel and snow categories is parametrized in the same way as the
 snow/crystal collisions (PSACI) described by equation
 :eq:`eq:mic_pyacx2` in section :ref:`PSACI: Collection of ice crystals by snow
@@ -3802,7 +3827,8 @@ aggregates by graupel.
 PSACR: Collection of rain by aggregates
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**:math:`q_{R}` to :math:`q_{cfa}`.** This term uses similar assumptions
+:math:`\boldsymbol{q_{R}}` **to** :math:`\boldsymbol{q_{cfa}}` **.** This term
+uses similar assumptions
 as for the collection of ice crystals by snow aggregates above (equation
 :eq:`eq:mic_pyacx2` in section
 :ref:`PSACI: Collection of ice crystals by snow aggregates <sec_PSACI>`).
@@ -3945,7 +3971,8 @@ result will be an ice aggregate.
 PIACR: Collection of rain by crystals
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**:math:`q_{R}` to :math:`q_{cfc}`.** This term is formulated in the
+:math:`\boldsymbol{q_{R}}` **to** :math:`\boldsymbol{q_{cfc}}` **.** This term
+is formulated in the
 same way as the collection of rain by aggregates term (PSACR; equation
 :eq:`eq:psacr` in section :ref:`PSACR: Collection of rain by aggregates
 <sec_PSACR>`). The only
@@ -3960,7 +3987,8 @@ the result of the collision will be crystals (:math:`P_{IACR-C}`).
 PSMLTEV: Evaporation of melting snow aggregates
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**:math:`q_{cfa}` to :math:`q`.** This term acts to evaporate any ice at
+:math:`\boldsymbol{q_{cfa}}` **to** :math:`\boldsymbol{q}` **.** This term acts
+to evaporate any ice at
 temperatures above 0C since the deposition term is switched off at these
 temperatures. The term follows that for the deposition/sublimation
 process equation with the exception that saturation vapour pressures and
@@ -3975,14 +4003,16 @@ aggregates <sec_psdep_pssub>`.
 PIMLTEV: Evaporation of melting ice crystals
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**:math:`q_{cfc}` to :math:`q`.** This term is parametrized in the same
+:math:`\boldsymbol{q_{cfc}}` **to** :math:`\boldsymbol{q}` **.** This term is
+parametrized in the same
 way as for aggregates, simply with the crystal parameters instead of the
 aggregate values.
 
 PSMLT: Melting of snow aggregates to rain
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**:math:`q_{cfa}` to :math:`q_R`.** This is solved from the diffusion
+:math:`\boldsymbol{q_{cfa}}` **to** :math:`\boldsymbol{q_R}` **.** This is
+solved from the diffusion
 equation. The latent heat due to melting is equal to the sum of the
 sensible heat lost due to thermal diffusion and convection and the
 latent heat due to vapour transfer:
@@ -4044,7 +4074,8 @@ coefficient as defined in equation
 PIMLT: Melting of ice crystals to rain
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**:math:`q_{cfc}` to :math:`q_{R}`.** This term is equivalent to the
+:math:`\boldsymbol{q_{cfc}}` **to** :math:`\boldsymbol{q_{R}}` **.** This term
+is equivalent to the
 melting of aggregates to rain, although with different parameter values.
 
 .. _sec_PGMLT:
@@ -4052,7 +4083,8 @@ melting of aggregates to rain, although with different parameter values.
 PGMLT: Melting of Graupel
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**:math:`q_{graup}` to :math:`q_{R}`.** The melting of graupel acts as a
+:math:`\boldsymbol{q_{graup}}` **to** :math:`\boldsymbol{q_{R}}` **.** The
+melting of graupel acts as a
 source of rain and is parametrized in the same way as the melting of
 snow to form rain in the UM:
 
@@ -4091,7 +4123,8 @@ aggregates.
 PREVP: Evaporation of rain
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**:math:`q_{R}` to :math:`q`.** The evaporation rate of rain is
+:math:`\boldsymbol{q_{R}}` **to** :math:`\boldsymbol{q}` **.** The evaporation
+rate of rain is
 analogous to the sublimation of snow in equation
 :eq:`eq:mic_xsub` and only occurs in sub-saturated air.
 
@@ -4142,7 +4175,8 @@ There are no cloud fraction changes associated with this term.
 PRACW: Accretion of cloud liquid water by rain
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**:math:`q_{cl}` to :math:`q_{R}`.** The rate that liquid cloud is
+:math:`\boldsymbol{q_{cl}}` **to** :math:`\boldsymbol{q_{R}}` **.** The rate
+that liquid cloud is
 collected by rain is the product of the sweep out rate of rain, the mass
 concentration of liquid cloud and the efficiency that liquid cloud
 droplets collide with and then coalesce with raindrops that intercept
@@ -4202,7 +4236,8 @@ and :math:`\rho=0.9` is specified.
 PRAUT: Autoconversion of cloud liquid water to rain
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-**:math:`q_{cl}` to :math:`q_{R}`.** The UM has a power-law formulation
+:math:`\boldsymbol{q_{cl}}` **to** :math:`\boldsymbol{q_{R}}` **.** The UM has
+a power-law formulation
 of autoconversion as a function of liquid water content with a minimum
 threshold liquid water content.
 
@@ -4458,7 +4493,7 @@ implicit part of the calculation. Not all the transfer terms are coded
 in an implicit formulation, so the advantages of this formulation are
 likely to be limited.
 
-**Implicit solution for riming with :math:`q_{cl}`-threshold**
+**Implicit solution for riming with** :math:`\boldsymbol{q_{cl}}` **-threshold**
 
 When the shape-dependent riming with liquid water content threshold
 (Section :ref:`PSACW: Riming by aggregates <sec_PSACW>`) is used, the implicit
