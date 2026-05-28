@@ -1711,7 +1711,7 @@ varies linearly between 0.1 and 0.3 for cloud depths between 100 m and
 layer depth, :math:`z_h` plus the inversion thickness,
 :math:`\Delta z_i` parametrized following `Beare (2008)`_ as:
 
-.. math:: :label: dz_param
+.. math:: :label: dz_param_inv
 
    \Delta z_i  = 6.3 \, w_m^2 /  \int_{z_h}^{z_h+\Delta z_i} b \, dz
 
@@ -1719,7 +1719,7 @@ where :math:`w_m` is the boundary layer velocity scale
 (:math:`w_m^3 = u_*^3 + 0.25 w_*^3`) and :math:`b` is the parcel
 buoyancy that is integrated over the depth of the inversion assuming a
 piece-wise linear variation between grid-levels. Note that the constant
-in :eq:`dz_param` is the same as in
+in :eq:`dz_param_inv` is the same as in
 `Beare (2008)`_ because :math:`6.3 = 2.5 * 4^{2/3}` and
 :math:`w_m^3` differs by a factor of 4.
 
