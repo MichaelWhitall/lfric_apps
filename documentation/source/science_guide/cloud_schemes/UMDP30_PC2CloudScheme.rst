@@ -384,9 +384,9 @@ The idea is to parametrize each of the terms in the above equations.
 This approach removes the diagnostic method, hence it will be critical
 that we can write expressions for
 :math:`\frac{\partial \overline{q_{cl}}}{\partial t}` and
-:math:`\frac{\partial C_l}{\partial t}` for *each process that alters
-:math:`\overline{T}`, :math:`\overline{p}`, :math:`\overline{q}`, or
-:math:`\overline{q_{cl}}` in the model* (and similarly for the ice
+:math:`\frac{\partial C_l}{\partial t}` for *each process that alters*
+:math:`\overline{T}` *,* :math:`\overline{p}` *,* :math:`\overline{q}` *, or*
+:math:`\overline{q_{cl}}` *in the model* (and similarly for the ice
 terms). In doing so, we will not lose sight of underlying PDF approach
 given by :eq:`eq:int_gs_ds` and
 :eq:`eq:qclbar=int` since we will still use the
@@ -594,7 +594,7 @@ needs to be initiated in some way. This is discussed further in
 may be used to trace out an underlying PDF for any input values of
 :math:`C_l`, :math:`\overline{q_{cl}}` and :math:`SD`. Although we never
 need to define the complete PDF in PC2 (just the value of
-:math:`G(-Q_c)` from equation :eq:`eqn22`, a PDF can be
+:math:`G(-Q_c)` from equation :eq:`eqn22`), a PDF can be
 inferred off-line if required.
 
 `Wilson and Gregory (2003)`_ analyse the performance of this parametrization
@@ -1202,7 +1202,7 @@ width of the moisture PDF at each point.
 The positions of the upper and lower truncated bounds of the moisture
 PDF relative to the saturation threshold are expressed in terms of a
 normalised :math:`Q_N` = :math:`Q_c` over PDF-width (see equation
-:eq:`eq:qn_def`. In entrainment zones, the sum of the two
+:eq:`eq:qn_def`). In entrainment zones, the sum of the two
 Gaussian modes can lead to a highly skewed distribution; hence
 :math:`Q_N` can have different values for the upper and lower bounds,
 each normalised by the different widths on either side of the PDF. The
@@ -1994,7 +1994,7 @@ Given :math:`C_l^{sgt}` and :math:`q_{cl}^{sgt}`, two options are
 available for relating these to changes in the model prognostics:
 
 Option one: direct increments
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""""""""""""
 
 The values of :math:`C_l^{sgt}` and :math:`q_{cl}^{sgt}` can be added as
 increments to the model prognostic fields, :math:`C_l` and
@@ -2029,7 +2029,7 @@ scheme does not condense out more liquid than there is available
 moisture.
 
 Option two: PC2 Erosion method
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""
 
 Option one gives a simple method for incrementing the model prognostics,
 but it gives rise to a potential inconsistency with the PC2 cloud
@@ -2341,7 +2341,7 @@ cloud formulation, which considers an underlying PDF across the whole
 gridbox and does not have, in general, its width prescribed. Remember
 that we do not calculate on-line the whole of the liquid - vapour PDF,
 we only parametrize the single point :math:`G(-Qc)`, using equation
-:eq:`eqn22`.
+:eq:`eqn22`).
 
 The width is then limited further to be no greater than
 :math:`\overline{q}`, to make sure that there are no negative values of
@@ -2655,7 +2655,7 @@ discretize eq
 Similarly to :eq:`eq:c_l^n+1`, we then limit the cloud
 fraction to 0 and 1 and then apply a mid-point value of :math:`C_l` to
 calculate the change in :math:`\overline{q_{cl}}` (discretizing eq
-:eq:`eq:dqcldt_width`:
+:eq:`eq:dqcldt_width`):
 
 .. math:: :label: eq:dqcl_turb_final
 
@@ -2678,7 +2678,7 @@ Cloud-surface-area hybrid erosion method
 
 `Morcrette and Petch (2010)`_ showed that changes to the erosion
 parameter (:math:`\Upsilon` in Eqn.
-:eq:`eq:dbsbydtbs_turb` did not have as
+:eq:`eq:dbsbydtbs_turb`) did not have as
 significant an impact on the global work done by the erosion process as
 might be expected. This was due to a feedback process whereby, reducing
 the erosion parameter leads to more cloud water, more autoconversion of
@@ -2828,7 +2828,8 @@ yield much less timestep sensitivity for detrained cloud in shallow
 cumulus regimes.
 
 #. **Retain the explicit discretization, but limit the resulting erosion
-   increments to ensure :math:`q_{cl}` and :math:`C_l` don't go
+   increments to ensure** :math:`\boldsymbol{q_{cl}}` **and**
+   :math:`\boldsymbol{C_l}` **don't go
    negative. (i_pc2_erosion_numerics=1)** Also, to ensure that some
    cloud remains at end-of-timestep where shallow cumulus is detraining
    into dry environments, the erosion calculation is fed copies of the
@@ -2859,7 +2860,8 @@ cumulus regimes.
    erosion, to give some improvement in accuracy.
 
 #. **Use an approximate implicit discretisation, which intrinsically
-   yields a positive solution for :math:`q_{cl}` and :math:`C_l`.
+   yields a positive solution for** :math:`\boldsymbol{q_{cl}}` **and**
+   :math:`\boldsymbol{C_l}` **.
    (i_pc2_erosion_numerics=2)** The copies of the fields passed to the
    erosion calculation are fully updated with the convection increments.
    We then write equation :eq:`eq:dqcldt_hybrid` in
@@ -2995,7 +2997,7 @@ cumulus regimes.
    each case. In the code, we first test the value of :math:`Q_c` and
    compute the erosion increments as follows:
 
-   #. **Grid-mean subsaturation (:math:`Q_c < 0`):**
+   #. **Grid-mean subsaturation (** :math:`\boldsymbol{Q_c < 0}` **):**
 
       The relation between the erosion tendencies in
       liquid-cloud-fraction and liquid water content
@@ -3015,9 +3017,9 @@ cumulus regimes.
       defined the PDF height at the saturation boundary when near the
       cloudy end of the PDF as
       :math:`G(-Q_c) = \frac{n+1}{n+2} \frac{C_l^2}{q_{cl}}` (eq
-      :eq:`eqn20`. In fact, :math:`G(-Q_c)` is set to some
+      :eq:`eqn20`). In fact, :math:`G(-Q_c)` is set to some
       blend between this and the value near the clear end of the PDF (eq
-      :eq:`eqn21`. But we will assume that when eroding cloud
+      :eq:`eqn21`). But we will assume that when eroding cloud
       under grid-mean subsaturated conditions (:math:`Q_c < 0`),
       :math:`G(-Q_c)` follows this scaling with
       :math:`\frac{C_l^2}{q_{cl}}` even if its value differs somewhat
@@ -3073,7 +3075,7 @@ cumulus regimes.
       dimensionless factor defined in eq :eq:`eq:a_L`.
       Following the derivation in section
       :ref:`"Smooth" initiation logic <sec_smooth_initiation>` (eq
-      :eq:`eq:qc_plus_sd`, we can write this in terms
+      :eq:`eq:qc_plus_sd`), we can write this in terms
       of the liquid-water content: :math:`SD = q_{cl} - Q_c` (where
       :math:`Q_c` was defined in eq
       :eq:`eq:qc_eq_qt-qs`, and corresponds to the
@@ -3136,11 +3138,11 @@ cumulus regimes.
       find the solution with the explicitly-treated terms (the exponent
       :math:`b_1 = \frac{ c_1 }{ 1 - \frac{q_{cl}}{C_l Q_c} }` and the
       terms :math:`(1 - C_l)` and :math:`(q_{cl}-Q_c)` in eq
-      :eq:`eq:qcl_int_hybrid` adjusted to values
+      :eq:`eq:qcl_int_hybrid`) adjusted to values
       linearly-interpolated to half-way between the start and end of the
       erosion timestep.
 
-   #. **Grid-mean supersaturation (:math:`Q_c > 0`):**
+   #. **Grid-mean supersaturation (** :math:`\boldsymbol{Q_c > 0}` **):**
 
       In this case, erosion does not act to reduce :math:`C_l` and
       :math:`q_{cl}` towards zero. Instead, the narrow PDF limit it
@@ -3209,14 +3211,14 @@ cumulus regimes.
       iterations are then performed to find the solution with the
       explicitly-treated terms (the exponent
       :math:`b_2 = \frac{ c_2 }{ 1 + \frac{SD}{(1-C_l) Q_c} }` and the
-      term :math:`C_l` in eq :eq:`eq:sd_int_hybrid`
+      term :math:`C_l` in eq :eq:`eq:sd_int_hybrid`)
       adjusted to values linearly-interpolated to half-way between the
       start and end of the erosion timestep. Then the final values of
       :math:`SD` and :math:`1-C_l` are used to increment
       :math:`q_{cl} = Q_c + SD` and :math:`C_l`, as prognosed by the
       rest of the model.
 
-   #. **grid-mean saturation (:math:`Q_c` near-zero):**
+   #. **grid-mean saturation (** :math:`\boldsymbol{Q_c}` **near-zero):**
 
       In this case, the PDF is centred on the saturation boundary, so
       that narrowing it does not change the cloud-fraction. In the limit
@@ -3312,7 +3314,7 @@ denominator is small, we will, to avoid numerical problems, set
 that we do not use the multiple phases injection source expressions
 (section :ref:`Multiple phases in the injection source <sec_multiple>` and
 equation
-:eq:`eq:cff_ts`. This is because the liquid water changes
+:eq:`eq:cff_ts`). This is because the liquid water changes
 are not associated with the plume model.
 
 Equation :eq:`eq:qcf_ci` assumes that the change to the ice
@@ -4755,7 +4757,7 @@ completely uninitiated state will have zero saturation deficit
 :math:`SD`, rather than zero :math:`q_{cl}`. Therefore, in this case the
 increment to :math:`C_l` is calculated based on the fractional increase
 in :math:`SD` from initiation (equation
-:eq:`eq:dcl_init2`, instead of the fractional increase
+:eq:`eq:dcl_init2`), instead of the fractional increase
 in :math:`q_{cl}`.
 
 Whether to increment :math:`C_l` based on the increase in :math:`q_{cl}`
@@ -6573,7 +6575,7 @@ increment terms.
 
 If your scheme is currently using the homogeneous forcing then there is
 no need to update the cloud part of the scheme, *provided that you do
-not alter values of :math:`T` and :math:`q` after the homogeneous
+not alter values of* :math:`T` *and* :math:`q` *after the homogeneous
 forcing section is called* and that the physical interpretation of your
 :math:`q` and :math:`T` increments does not change. You need to be
 careful if you are moving code from one subroutine to another that you
@@ -6585,7 +6587,7 @@ which necessitates that condensate increments are already calculated by
 the scheme, then there is also no need to update the cloud part of the
 scheme. This currently applies to the boundary layer, where
 :math:`q_{cf}` is altered by tracer mixing. Like for the homogeneous
-schemes, this is provided that you *do not alter :math:`T`, :math:`q` or
+schemes, this is provided that you *do not alter* :math:`T` *,* :math:`q` *or
 condensate values after the injection forcing subroutine is called* and
 that the physical interpretation of your :math:`q` and :math:`T`
 increments does not change.
@@ -7083,7 +7085,7 @@ References
 .. _Mellor (1977):
 
    Mellor, G. (1977).
-   *The {Gaussian} cloud model relations*.
+   *The Gaussian cloud model relations*.
    J. Atmos. Sci., 34, 356-358.
 
 .. _Sommeria and Deardorff (1977):
@@ -7143,14 +7145,14 @@ References
 .. _Field et al. (2014):
 
    Field, P.R. and Hill, A.A. and Furtado K. and Korolev, A. (2014).
-   *Mixed-phase clouds in a turbulent environment. {II: A}nalytic treatment*.
+   *Mixed-phase clouds in a turbulent environment. II: Analytic treatment*.
    Q. J. Roy. Meteor. Soc., 140, 870-880.
 
 .. _Jakob et al. (1999):
 
    Jakob, C. and Gregory, D. and Teixeria, J. (1999).
    *A package of cloud and convection changes for CY21R3*.
-   Research Department Memorandum, {ECMWF}, Shinfield Park, Reading {RG2 9AX},
+   Research Department Memorandum, ECMWF, Shinfield Park, Reading RG2 9AX,
    United Kingdom.
 
 .. _Morcrette and Petch (2010):
