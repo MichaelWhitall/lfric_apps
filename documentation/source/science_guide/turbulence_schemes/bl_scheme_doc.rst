@@ -1826,7 +1826,6 @@ Discussion of some of the revisions
    :name: tab:vscales
    :header-rows: 2
 
-
    * - Formulation
      - Convective limit
      -
@@ -5544,7 +5543,6 @@ calculations take place for the scalar variables:
 
 .. list-table::
 
-
    * - CALL bdy_impl3():
      - set up coefficients for :eq:`eq:dX_disc_top`, :eq:`eq:dX_disc` and do a
        downward sweep;
@@ -6876,7 +6874,6 @@ the UKCA code owner before lodging the change.
 
 .. list-table::
 
-
    * - Boundary layer inputs to UKCA
      -
      -
@@ -7034,7 +7031,6 @@ Appendix: Notation
 
 .. list-table::
 
-
    * - Finite difference notation
      -
 
@@ -7060,7 +7056,6 @@ Appendix: Notation
      - across the capping inversion (see :eq:`dbinv` and following text)
 
 .. list-table::
-
 
    * - Model variables
      -
@@ -7092,7 +7087,6 @@ Appendix: Notation
 
 .. list-table::
 
-
    * - Thresholds
      -
 
@@ -7122,7 +7116,6 @@ Appendix: Notation
      - before decoupling occurs
 
 .. list-table::
-
 
    * - Layer definitions and parameters
      -
@@ -7188,7 +7181,6 @@ Appendix: Notation
      - lifting condensation level
 
 .. list-table::
-
 
    * - Other parameters
      -
