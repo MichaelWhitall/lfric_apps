@@ -25,7 +25,8 @@ REAL, INTENT(IN) :: array( 1-offx:nx+offx, 1-offy:ny+offy, nz )
 CHARACTER(LEN=*), INTENT(IN) :: array_name
 
 INTEGER, PARAMETER :: pos = 3 - INT( LOG10( EPSILON(array) ) )
-REAL, PARAMETER :: irrat = SQRT(2.0)
+REAL, PARAMETER :: irr1 = SQRT(2.0)
+REAL, PARAMETER :: irr2 = SQRT(3.0)
 
 CHARACTER(LEN=30) :: array_string
 
@@ -44,7 +45,7 @@ array_names(n_calls) = TRIM(ADJUSTL(array_name))
 DO k = 1, nz
   DO j = 1, ny
     DO i = 1, nx
-      WRITE(array_string,"(es30.23)") array(i,j,k) * irrat
+      WRITE(array_string,"(es30.23)") ( array(i,j,k) + irr1 ) * irr2
       READ(array_string(pos:pos+2),"(I3)") array_int_k(i,j)
     END DO
   END DO
