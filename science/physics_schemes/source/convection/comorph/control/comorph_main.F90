@@ -52,6 +52,8 @@ use conv_closure_ctl_mod, only: conv_closure_ctl
 use conv_incr_ctl_mod, only: conv_incr_ctl
 use calc_diag_conv_cloud_mod, only: zero_diag_conv_cloud
 
+use debug_prints_mod, only: debug_work
+
 implicit none
 
 ! Max size the compression lists can possibly need
@@ -203,6 +205,8 @@ integer :: lb_p(3), ub_p(3)
 ! Loop counters
 integer :: k, i_type, i_layr
 
+integer :: ic, i, j
+
 
 !--------------------------------------------------------------
 ! 1) Calculate initiation mass sources from each model-level
@@ -228,6 +232,75 @@ call conv_genesis_ctl( max_points, ij_first, ij_last,                          &
 ! Note: the _par_gen arrays get allocated inside
 ! conv_genesis_ctl.
 
+if ( n_updraft_layers > 0 ) then
+  do k = k_bot_conv, k_top_conv
+    do i_layr = 1, MIN(n_updraft_layers,5)
+      do i_type = 1, n_updraft_types
+        if ( updraft_par_gen(i_type,i_layr,k) % cmpr % n_points > 0 ) then
+          do ic = 1, updraft_par_gen(i_type,i_layr,k) % cmpr % n_points
+            i = updraft_par_gen(i_type,i_layr,k) % cmpr % index_i(ic)
+            j = updraft_par_gen(i_type,i_layr,k) % cmpr % index_j(ic)
+            debug_work(i,j,k,0+i_layr)  = updraft_par_gen(i_type,i_layr,k)     &
+                                          % par_super(ic,1)
+            debug_work(i,j,k,5+i_layr)  = updraft_par_gen(i_type,i_layr,k)     &
+                                          % par_super(ic,2)
+            debug_work(i,j,k,10+i_layr) = updraft_par_gen(i_type,i_layr,k)     &
+                                          % mean_super(ic,4)
+            debug_work(i,j,k,15+i_layr) = updraft_par_gen(i_type,i_layr,k)     &
+                                          % mean_super(ic,5)
+            debug_work(i,j,k,20+i_layr) = updraft_par_gen(i_type,i_layr,k)     &
+                                          % mean_super(ic,6)
+            debug_work(i,j,k,25+i_layr) = updraft_par_gen(i_type,i_layr,k)     &
+                                          % mean_super(ic,7)
+            debug_work(i,j,k,30+i_layr) = updraft_par_gen(i_type,i_layr,k)     &
+                                          % core_super(ic,4)
+            debug_work(i,j,k,35+i_layr) = updraft_par_gen(i_type,i_layr,k)     &
+                                          % core_super(ic,5)
+            debug_work(i,j,k,40+i_layr) = updraft_par_gen(i_type,i_layr,k)     &
+                                          % core_super(ic,6)
+            debug_work(i,j,k,45+i_layr) = updraft_par_gen(i_type,i_layr,k)     &
+                                          % core_super(ic,7)
+          end do
+        end if
+      end do
+    end do
+  end do
+end if
+
+if ( n_dndraft_layers > 0 ) then
+  do k = k_bot_conv, k_top_conv
+    do i_layr = 1, MIN(n_dndraft_layers,5)
+      do i_type = 1, n_dndraft_types
+        if ( dndraft_par_gen(i_type,i_layr,k) % cmpr % n_points > 0 ) then
+          do ic = 1, dndraft_par_gen(i_type,i_layr,k) % cmpr % n_points
+            i = dndraft_par_gen(i_type,i_layr,k) % cmpr % index_i(ic)
+            j = dndraft_par_gen(i_type,i_layr,k) % cmpr % index_j(ic)
+            debug_work(i,j,k,50+i_layr) = dndraft_par_gen(i_type,i_layr,k)     &
+                                          % par_super(ic,1)
+            debug_work(i,j,k,55+i_layr) = dndraft_par_gen(i_type,i_layr,k)     &
+                                          % par_super(ic,2)
+            debug_work(i,j,k,60+i_layr) = dndraft_par_gen(i_type,i_layr,k)     &
+                                          % mean_super(ic,4)
+            debug_work(i,j,k,65+i_layr) = dndraft_par_gen(i_type,i_layr,k)     &
+                                          % mean_super(ic,5)
+            debug_work(i,j,k,70+i_layr) = dndraft_par_gen(i_type,i_layr,k)     &
+                                          % mean_super(ic,6)
+            debug_work(i,j,k,75+i_layr) = dndraft_par_gen(i_type,i_layr,k)     &
+                                          % mean_super(ic,7)
+            debug_work(i,j,k,80+i_layr) = dndraft_par_gen(i_type,i_layr,k)     &
+                                          % core_super(ic,4)
+            debug_work(i,j,k,85+i_layr) = dndraft_par_gen(i_type,i_layr,k)     &
+                                          % core_super(ic,5)
+            debug_work(i,j,k,90+i_layr) = dndraft_par_gen(i_type,i_layr,k)     &
+                                          % core_super(ic,6)
+            debug_work(i,j,k,95+i_layr) = dndraft_par_gen(i_type,i_layr,k)     &
+                                          % core_super(ic,7)
+          end do
+        end if
+      end do
+    end do
+  end do
+end if
 
 ! Only anything else to do on the current segment if at least
 ! one convective mass-source layer has been found there...
@@ -291,6 +364,23 @@ if ( n_updraft_layers > 0 .or. n_dndraft_layers > 0 ) then
                                 n_updraft_types, n_updraft_layers,             &
                                 updraft_fields_2d )
     end if
+
+    do k = k_bot_conv, k_top_conv
+      do i_layr = 1, MIN(n_updraft_layers,5)
+        do i_type = 1, n_updraft_types
+          if ( updraft_res_source(i_type,i_layr,k) % cmpr % n_points > 0 ) then
+            do ic = 1, updraft_res_source(i_type,i_layr,k) % cmpr % n_points
+              i = updraft_res_source(i_type,i_layr,k) % cmpr % index_i(ic)
+              j = updraft_res_source(i_type,i_layr,k) % cmpr % index_j(ic)
+              debug_work(i,j,k,100+i_layr) =   &
+                updraft_res_source(i_type,i_layr,k) % res_super(ic,1)
+              debug_work(i,j,k,105+i_layr) =   &
+                updraft_res_source(i_type,i_layr,k) % res_super(ic,2)
+            end do
+          end if
+        end do
+      end do
+    end do
 
   end if  ! ( n_updraft_types > 0 .and. n_updraft_layers > 0 )
 
@@ -368,6 +458,23 @@ if ( n_updraft_layers > 0 .or. n_dndraft_layers > 0 ) then
                                 dndraft_fields_2d )
     end if
 
+    do k = k_bot_conv, k_top_conv
+      do i_layr = 1, MIN(n_dndraft_layers,5)
+        do i_type = 1, n_dndraft_types
+          if ( dndraft_res_source(i_type,i_layr,k) % cmpr % n_points > 0 ) then
+            do ic = 1, dndraft_res_source(i_type,i_layr,k) % cmpr % n_points
+              i = dndraft_res_source(i_type,i_layr,k) % cmpr % index_i(ic)
+              j = dndraft_res_source(i_type,i_layr,k) % cmpr % index_j(ic)
+              debug_work(i,j,k,110+i_layr) =   &
+                dndraft_res_source(i_type,i_layr,k) % res_super(ic,1)
+              debug_work(i,j,k,115+i_layr) =   &
+                dndraft_res_source(i_type,i_layr,k) % res_super(ic,2)
+            end do
+          end if
+        end do
+      end do
+    end do
+
   end if  ! ( n_dndraft_types > 0 .and. n_dndraft_layers > 0 )
 
   ! Allocate resolved-scale source term and fall-back
@@ -431,6 +538,43 @@ if ( n_updraft_layers > 0 .or. n_dndraft_layers > 0 ) then
                            dndraft_fallback_diags_super )
   end if
 
+  if ( n_updraft_layers > 0 ) then
+    do k = k_bot_conv, k_top_conv
+      do i_layr = 1, MIN(n_updraft_layers,5)
+        do i_type = 1, n_updraft_types
+          if ( updraft_res_source(i_type,i_layr,k) % cmpr % n_points > 0 ) then
+            do ic = 1, updraft_res_source(i_type,i_layr,k) % cmpr % n_points
+              i = updraft_res_source(i_type,i_layr,k) % cmpr % index_i(ic)
+              j = updraft_res_source(i_type,i_layr,k) % cmpr % index_j(ic)
+              debug_work(i,j,k,120+i_layr) =   &
+                updraft_res_source(i_type,i_layr,k) % res_super(ic,1)
+              debug_work(i,j,k,125+i_layr) =   &
+                updraft_res_source(i_type,i_layr,k) % res_super(ic,2)
+            end do
+          end if
+        end do
+      end do
+    end do
+  end if
+
+  if ( n_dndraft_layers > 0 ) then
+    do k = k_bot_conv, k_top_conv
+      do i_layr = 1, MIN(n_dndraft_layers,5)
+        do i_type = 1, n_dndraft_types
+          if ( dndraft_res_source(i_type,i_layr,k) % cmpr % n_points > 0 ) then
+            do ic = 1, dndraft_res_source(i_type,i_layr,k) % cmpr % n_points
+              i = dndraft_res_source(i_type,i_layr,k) % cmpr % index_i(ic)
+              j = dndraft_res_source(i_type,i_layr,k) % cmpr % index_j(ic)
+              debug_work(i,j,k,130+i_layr) =   &
+                dndraft_res_source(i_type,i_layr,k) % res_super(ic,1)
+              debug_work(i,j,k,135+i_layr) =   &
+                dndraft_res_source(i_type,i_layr,k) % res_super(ic,2)
+            end do
+          end if
+        end do
+      end do
+    end do
+  end if
 
   !------------------------------------------------------------
   ! 6) Calculate the updated primary model fields after
