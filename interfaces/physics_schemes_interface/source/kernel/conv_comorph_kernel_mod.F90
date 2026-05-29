@@ -820,6 +820,8 @@ contains
     use assign_fields_mod, only: assign_fields
     use comorph_conv_cloud_extras_mod, only: comorph_conv_cloud_extras
 
+    use debug_prints_mod, only: debug_prints, debug_prints_final
+
     implicit none
 
     ! Arguments
@@ -2459,6 +2461,61 @@ contains
                            dtheta_conv, q_inc, qcl_inc, qcf_inc,               &
                            qcf2_inc, qrain_inc, qgraup_inc,                    &
                            cf_liquid_inc, cf_frozen_inc, bulk_cf_inc )
+
+    CALL debug_prints( row_length, rows, nlayers-1, 0, 0, u_th_np1,            &
+                       "After calc_conv_incs: u_th_np1" )
+    CALL debug_prints( row_length, rows, nlayers-1, 0, 0, v_th_np1,            &
+                       "After calc_conv_incs: v_th_np1" )
+    CALL debug_prints( row_length, rows, nlayers, 0, 0, theta_conv,            &
+                       "After calc_conv_incs: theta_conv" )
+    CALL debug_prints( row_length, rows, nlayers, 0, 0, q_conv,                &
+                       "After calc_conv_incs: q_conv" )
+    CALL debug_prints( row_length, rows, nlayers, 0, 0, qcl_conv,              &
+                       "After calc_conv_incs: qcl_conv" )
+    CALL debug_prints( row_length, rows, nlayers, 0, 0, qcf_conv,              &
+                       "After calc_conv_incs: qcf_conv" )
+    CALL debug_prints( row_length, rows, nlayers, 0, 0, qrain_conv,            &
+                       "After calc_conv_incs: qrain_conv" )
+    CALL debug_prints( row_length, rows, nlayers, 0, 0, qgraup_conv,           &
+                       "After calc_conv_incs: qgraup_conv" )
+    CALL debug_prints( row_length, rows, nlayers, 0, 0, cf_liquid_conv,        &
+                       "After calc_conv_incs: cf_liquid_conv" )
+    CALL debug_prints( row_length, rows, nlayers, 0, 0, cf_frozen_conv,        &
+                       "After calc_conv_incs: cf_frozen_conv" )
+    CALL debug_prints( row_length, rows, nlayers, 0, 0, bulk_cf_conv,          &
+                       "After calc_conv_incs: bulk_cf_conv" )
+    CALL debug_prints( row_length, rows, nlayers, 0, 0, precfrac_star,         &
+                       "After calc_conv_incs: precfrac_star" )
+
+    CALL debug_prints( row_length, rows, nlayers, 0, 0, dubydt_p,              &
+                       "After calc_conv_incs: dubydt_p" )
+    CALL debug_prints( row_length, rows, nlayers, 0, 0, dvbydt_p,              &
+                       "After calc_conv_incs: dvbydt_p" )
+    CALL debug_prints( row_length, rows, nlayers, 0, 0, dtheta_conv,           &
+                       "After calc_conv_incs: dtheta_conv" )
+    CALL debug_prints( row_length, rows, nlayers, 0, 0, q_inc,                 &
+                       "After calc_conv_incs: q_inc" )
+    CALL debug_prints( row_length, rows, nlayers, 0, 0, qcl_inc,               &
+                       "After calc_conv_incs: qcl_inc" )
+    CALL debug_prints( row_length, rows, nlayers, 0, 0, qcf_inc,               &
+                       "After calc_conv_incs: qcf_inc" )
+
+    CALL debug_prints( row_length, rows, nlayers, 0, 0, frac_bulk_conv,        &
+                       "After calc_conv_incs: frac_bulk_conv" )
+    CALL debug_prints( row_length, rows, nlayers, 0, 0, cca_3d,                &
+                       "After calc_conv_incs: cca_3d" )
+    CALL debug_prints( row_length, rows, nlayers, 0, 0, ccw_3d,                &
+                       "After calc_conv_incs: ccw_3d" )
+    CALL debug_prints( row_length, rows, nlayers, 0, 0, cca_3d0,               &
+                       "After calc_conv_incs: cca_3d0" )
+    CALL debug_prints( row_length, rows, nlayers, 0, 0, ccw_3d0,               &
+                       "After calc_conv_incs: ccw_3d0" )
+    CALL debug_prints( row_length, rows, 1, 0, 0, cca_2d_loc,                  &
+                       "After calc_conv_incs: cca_2d_loc" )
+    CALL debug_prints( row_length, rows, 1, 0, 0, cape_dil,                    &
+                       "After calc_conv_incs: cape_dil" )
+
+    CALL debug_prints_final()
 
     ! Deallocate temporary work array for w
     deallocate( w_work )
