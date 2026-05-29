@@ -2554,9 +2554,6 @@ contains
     cca_bulk => null()
     deallocate( frac_bulk_conv )
 
-    ! Deallocate temporary work array for w
-    deallocate( w_work )
-
     ! single level convection diagnostics
     do i = 1, row_length
       cca_2d(map_2d(1,i)) = cca_2d_loc(i,1)
