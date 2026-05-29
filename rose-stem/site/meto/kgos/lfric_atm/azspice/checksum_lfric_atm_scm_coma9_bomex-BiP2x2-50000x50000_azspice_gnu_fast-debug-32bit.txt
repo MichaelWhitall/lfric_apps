@@ -6,4 +6,4 @@ Inner product checksum mr2 =         3551CBE5
 Inner product checksum mr3 =         31C739A5
 Inner product checksum mr4 =                0
 Inner product checksum mr5 =                0
-Inner product checksum mr6 =                0
+Inner product checksum mr6 =                1

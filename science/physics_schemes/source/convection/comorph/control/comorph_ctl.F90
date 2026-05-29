@@ -59,6 +59,8 @@ use calc_virt_temp_mod, only: calc_virt_temp_3d
 use init_test_mod, only: init_test
 use comorph_main_mod, only: comorph_main
 
+use debug_prints_mod, only: debug_prints, debug_work
+
 implicit none
 
 
@@ -230,6 +232,19 @@ if ( .not. l_init_sublevs_mod )  call sublevs_set_addresses()
 ! required by conv_sweep_ctl)
 n_fields_tot = n_fields
 if ( l_tracer )  n_fields_tot = n_fields_tot + n_tracers
+
+where_string = "On input to CoMorph: latest fields: "
+DO i_field = 1, n_fields_tot
+  lb_1 = LBOUND( fields_np1 % list(i_field)%pt )
+  ub_1 = UBOUND( fields_np1 % list(i_field)%pt )
+  CALL debug_prints( nx_full, ny_full, ub_1(3)-lb_1(3)+1,                      &
+                     1-lb_1(1), 1-lb_1(2), fields_np1 % list(i_field)%pt,      &
+                     TRIM(ADJUSTL(where_string)) //                            &
+                     TRIM(ADJUSTL(field_names(i_field))) )
+END DO
+
+ALLOCATE( debug_work( nx_full, ny_full, k_bot_conv:k_top_conv, 150 ) )
+debug_work(:,:,:,:) = 0.0_real_hmprec
 
 
 ! Check the fields to ensure no bad values on input
@@ -502,6 +517,26 @@ if ( comorph_diags % fields_out % n_diags > 0 ) then
                                     % list(i_diag)%pt % field_3d )
   end do
 end if
+
+
+DO i_field = 1, 150
+  WRITE(where_string,*) "debug_work: ", i_field
+  CALL debug_prints( nx_full, ny_full, k_top_conv-k_bot_conv+1,                &
+                     0, 0, debug_work(:,:,:,i_field),                          &
+                     TRIM(ADJUSTL(where_string)) )
+END DO
+
+DEALLOCATE( debug_work )
+
+where_string = "On output from CoMorph: latest fields: "
+DO i_field = 1, n_fields_tot
+  lb_1 = LBOUND( fields_np1 % list(i_field)%pt )
+  ub_1 = UBOUND( fields_np1 % list(i_field)%pt )
+  CALL debug_prints( nx_full, ny_full, ub_1(3)-lb_1(3)+1,                      &
+                     1-lb_1(1), 1-lb_1(2), fields_np1 % list(i_field)%pt,      &
+                     TRIM(ADJUSTL(where_string)) //                            &
+                     TRIM(ADJUSTL(field_names(i_field))) )
+END DO
 
 
 ! Check the fields to ensure no bad values on output
