@@ -204,7 +204,7 @@ integer :: lb_p(3), ub_p(3)
 ! Loop counters
 integer :: k
 
-integer :: ic, i, j
+integer :: ic, i, j, i_type, i_layr
 
 
 !--------------------------------------------------------------
