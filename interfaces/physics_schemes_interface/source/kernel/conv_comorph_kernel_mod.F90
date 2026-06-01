@@ -2495,6 +2495,12 @@ contains
                            qcf_inc, qcf2_inc )
     end if
 
+    ! Top level not used in these but needs setting to avoid rigorous
+    ! fatal error when printing the array
+    cca_3d(:,:,nlayers) = 0.0_r_um
+    ccw_3d(:,:,nlayers) = 0.0_r_um
+    frac_bulk_conv(:,:,nlayers) = 0.0_r_um
+
     CALL debug_prints( row_length, rows, nlayers-1, 0, 0, u_th_np1,            &
                        "After calc_conv_incs: u_th_np1" )
     CALL debug_prints( row_length, rows, nlayers-1, 0, 0, v_th_np1,            &
