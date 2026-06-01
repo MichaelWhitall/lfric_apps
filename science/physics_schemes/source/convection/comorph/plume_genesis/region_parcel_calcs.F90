@@ -480,7 +480,8 @@ if ( k == 15 .and. l_down .and. i_region == 2 ) then
   write(ummessage,*) " n_points = ", n_points, " nc = ", nc, &
    " index_ic = ", index_ic(1:nc), &
    " par_T = ", fields_par(1:nc,i_temperature), &
-   " init_mass = ", init_mass(1:nc)
+   " init_mass = ", init_mass_t(1:nc,1), &
+   " l_init = ", l_init(1:nc)
   CALL umPrint(umMessage,src="REGION_PARCEL_CALCS")
 end if
 
@@ -570,7 +571,7 @@ if ( nc2 > 0 ) then
       debug_work(i,j,50,141) = fields_par(ic2,i_q_vap)
     end do
     write(ummessage,*) " index_ic2 = ", index_ic2(1:nc2),  &
-      " init_mass = ", init_mass(1:nc2),  &
+      " init_mass = ", init_mass_t(1:nc2,1),  &
       " par_T = ", fields_par(1:nc2,i_temperature)
     CALL umPrint(umMessage,src="REGION_PARCEL_CALCS")
   end if
