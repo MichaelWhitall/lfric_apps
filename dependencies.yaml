@@ -26,8 +26,8 @@ jules:
     ref: 2026.03.2
 
 lfric_apps:
-    source:
-    ref:
+    source: git@github.com:MichaelWhitall/lfric_apps.git
+    ref: main903e018_debug_prints
 
 lfric_core:
     source: git@github.com:MetOffice/lfric_core.git
