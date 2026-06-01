@@ -680,16 +680,16 @@ do i_region = 1, n_regions
       do ic = 1, n_points
         i = cmpr_init % index_i(ic)
         j = cmpr_init % index_j(ic)
-        debug_work(i,j,8+i_region,141) = dndraft_par_gen % par_super(ic,1)
-        debug_work(i,j,12+i_region,141) = dndraft_par_gen % mean_super(ic,4)
-        debug_work(i,j,16+i_region,141) = dndraft_par_gen % mean_super(ic,5)
+        debug_work(i,j,8+i_region,141) = dndraft_par_gen(1) % par_super(ic,1)
+        debug_work(i,j,12+i_region,141) = dndraft_par_gen(1) % mean_super(ic,4)
+        debug_work(i,j,16+i_region,141) = dndraft_par_gen(1) % mean_super(ic,5)
       end do
       do ic2 = 1, nc_dn
         ic = index_ic_dn(ic2)
         i = cmpr_init % index_i(ic)
         j = cmpr_init % index_j(ic)
         debug_work(i,j,20+i_region,141) = fields_par_dn(ic2,5)
-        debug_work(i,j,24+i_region,141) = pert_qt_dn(ic2)
+        debug_work(i,j,24+i_region,141) = pert_qt_dn_t(ic2,1)
       end do
     end if
 
@@ -752,12 +752,12 @@ if ( k == 15 ) then
   do ic = 1, n_points
     i = cmpr_init % index_i(ic)
     j = cmpr_init % index_j(ic)
-    debug_work(i,j,29,141) = dndraft_par_gen % par_super(ic,1)
-    debug_work(i,j,30,141) = dndraft_par_gen % par_super(ic,2)
-    debug_work(i,j,31,141) = dndraft_par_gen % mean_super(ic,4)
-    debug_work(i,j,32,141) = dndraft_par_gen % mean_super(ic,5)
-    debug_work(i,j,33,141) = dndraft_par_gen % core_super(ic,4)
-    debug_work(i,j,34,141) = dndraft_par_gen % core_super(ic,5)
+    debug_work(i,j,29,141) = dndraft_par_gen(1) % par_super(ic,1)
+    debug_work(i,j,30,141) = dndraft_par_gen(1) % par_super(ic,2)
+    debug_work(i,j,31,141) = dndraft_par_gen(1) % mean_super(ic,4)
+    debug_work(i,j,32,141) = dndraft_par_gen(1) % mean_super(ic,5)
+    debug_work(i,j,33,141) = dndraft_par_gen(1) % core_super(ic,4)
+    debug_work(i,j,34,141) = dndraft_par_gen(1) % core_super(ic,5)
   end do
 end if
 
