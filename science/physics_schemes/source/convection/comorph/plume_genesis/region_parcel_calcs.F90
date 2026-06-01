@@ -61,6 +61,7 @@ use calc_init_par_fields_mod, only: calc_init_par_fields
 use check_bad_values_mod, only: check_bad_values_cmpr
 
 use debug_prints_mod, only: debug_work
+USE umPrintMgr, ONLY: umprint, ummessage
 
 implicit none
 
@@ -476,6 +477,11 @@ if ( k == 15 .and. l_down .and. i_region == 2 ) then
     debug_work(i,j,47,141) = fields_par(ic2,i_temperature)
     debug_work(i,j,48,141) = fields_par(ic2,i_q_vap)
   end do
+  write(ummessage,*) " n_points = ", n_points, " nc = ", nc, &
+   " index_ic = ", index_ic(1:nc), &
+   " par_T = ", fields_par(1:nc,i_temperature), &
+   " init_mass = ", init_mass(1:nc)
+  CALL umPrint(umMessage,src="REGION_PARCEL_CALCS")
 end if
 
 ! Recompress onto only points where convection is initiating...
@@ -500,6 +506,16 @@ if ( ic2_first > 0 ) then
 else
   ! If all points are initiating, no need to recompress
   nc2 = nc
+end if
+
+if ( k == 15 .and. l_down .and. i_region == 2 ) then
+  if ( ic2_first > 0 ) then
+    write(ummessage,*) " nc2 = ", nc2, " ic2_first = ", ic2_first,  &
+      " index_ic2 = ", index_ic2(1:nc2)
+  else
+    write(ummessage,*) " nc2 = ", nc2, " ic2_first = ", ic2_first
+  end if
+  CALL umPrint(umMessage,src="REGION_PARCEL_CALCS")
 end if
 
 ! If any initiating points
@@ -553,6 +569,10 @@ if ( nc2 > 0 ) then
       debug_work(i,j,49,141) = fields_par(ic2,i_temperature)
       debug_work(i,j,50,141) = fields_par(ic2,i_q_vap)
     end do
+    write(ummessage,*) " index_ic2 = ", index_ic2(1:nc2),  &
+      " init_mass = ", init_mass(1:nc2),  &
+      " par_T = ", fields_par(1:nc2,i_temperature)
+    CALL umPrint(umMessage,src="REGION_PARCEL_CALCS")
   end if
 
 
