@@ -60,6 +60,8 @@ use calc_init_mass_mod, only: calc_init_mass
 use calc_init_par_fields_mod, only: calc_init_par_fields
 use check_bad_values_mod, only: check_bad_values_cmpr
 
+use debug_prints_mod, only: debug_work
+
 implicit none
 
 ! Total number of points
@@ -235,7 +237,7 @@ logical, parameter :: l_update_q_true = .true.
 logical, parameter :: l_tracer_false = .false.
 
 ! Loop counters
-integer :: ic, ic2, i_field, i_type, i_super
+integer :: ic, ic2, i_field, i_type, i_super, i, j
 
 !CHARACTER(LEN=*), PARAMETER :: routinename                                    &
 !                               = "REGION_PARCEL_CALCS"
@@ -273,6 +275,22 @@ do ic2 = 1, nc
   fields_par_next(ic2,i_temperature)=temperature_r_k(ic,i_region)
   fields_par_next(ic2,i_q_vap)      =q_vap_r_k(ic,i_region)
 end do
+
+if ( k == 15 .and. l_down .and. i_region == 2 ) then
+  do ic = 1, n_points
+    i = cmpr_init % index_i(ic)
+    j = cmpr_init % index_j(ic)
+    debug_work(i,j,41,141) = temperature_r_k(ic,i_region)
+    debug_work(i,j,42,141) = q_vap_r_k(ic,i_region)
+  end do
+  do ic2 = 1, nc
+    ic = index_ic(ic2)
+    i = cmpr_init % index_i(ic)
+    j = cmpr_init % index_j(ic)
+    debug_work(i,j,43,141) = fields_par_next(ic2,i_temperature)
+    debug_work(i,j,44,141) = fields_par_next(ic2,i_q_vap)
+  end do
+end if
 
 ! Set local condensed water species mixing ratios and
 ! cloud-fractions based on current region index:
@@ -337,6 +355,16 @@ do i_field = i_temperature, n_fields
     fields_par(ic2,i_field) = fields_par_next(ic2,i_field)
   end do
 end do
+
+if ( k == 15 .and. l_down .and. i_region == 2 ) then
+  do ic2 = 1, nc
+    ic = index_ic(ic2)
+    i = cmpr_init % index_i(ic)
+    j = cmpr_init % index_j(ic)
+    debug_work(i,j,45,141) = fields_par(ic2,i_temperature)
+    debug_work(i,j,46,141) = fields_par(ic2,i_q_vap)
+  end do
+end if
 
 ! Set dummy array of zeros for unused input arguments
 do ic2 = 1, nc
@@ -440,6 +468,16 @@ do ic2 = 1, nc
   end do
 end do
 
+if ( k == 15 .and. l_down .and. i_region == 2 ) then
+  do ic2 = 1, nc
+    ic = index_ic(ic2)
+    i = cmpr_init % index_i(ic)
+    j = cmpr_init % index_j(ic)
+    debug_work(i,j,47,141) = fields_par(ic2,i_temperature)
+    debug_work(i,j,48,141) = fields_par(ic2,i_q_vap)
+  end do
+end if
+
 ! Recompress onto only points where convection is initiating...
 ic2_first = 0
 over_nc: do ic2 = 1, nc
@@ -506,6 +544,16 @@ if ( nc2 > 0 ) then
       index_ic2(ic2)  = index_ic(ic2)
     end do
   end if  ! ( nc2 < nc )
+
+  if ( k == 15 .and. l_down .and. i_region == 2 ) then
+    do ic2 = 1, nc2
+      ic = index_ic2(ic2)
+      i = cmpr_init % index_i(ic)
+      j = cmpr_init % index_j(ic)
+      debug_work(i,j,49,141) = fields_par(ic2,i_temperature)
+      debug_work(i,j,50,141) = fields_par(ic2,i_q_vap)
+    end do
+  end if
 
 
   do i_type = 1, n_conv_types
