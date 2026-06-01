@@ -80,6 +80,8 @@ use calc_qss_forcing_init_mod, only: calc_qss_forcing_init
 use add_region_parcel_mod, only: add_region_parcel
 use normalise_init_parcel_mod, only: normalise_init_parcel
 
+use debug_prints_mod, only: debug_work
+
 implicit none
 
 ! Number of points
@@ -257,7 +259,7 @@ logical :: l_positive
 character(len=name_length) :: field_name
 
 ! Loop counters
-integer :: ic, ic2, i_region, i_field
+integer :: ic, ic2, i_region, i_field, i, j
 
 !character(len=*), parameter :: routinename                                    &
 !                               = "INIT_MASS_MOIST_FRAC"
@@ -274,6 +276,17 @@ call calc_env_partitions(                                                      &
          frac_r_k, temperature_r_k, q_vap_r_k,                                 &
          q_cond_loc_k,                                                         &
          delta_temp_neut, delta_qvap_neut )
+
+if ( k == 15 ) then
+  do i_region = 1, n_regions
+    do ic = 1, n_points
+      i = cmpr_init % index_i(ic)
+      j = cmpr_init % index_j(ic)
+      debug_work(i,j,0+i_region,141) = temperature_r_k(ic,i_region)
+      debug_work(i,j,4+i_region,141) = q_vap_r_k(ic,i_region)
+    end do
+  end do
+end if
 
 ! Calculate liquid water temperature Tl from level k, and qsat(Tl(k))
 do ic = 1, n_points
@@ -686,6 +699,23 @@ do i_region = 1, n_regions
                               dndraft_par_gen % core_super )
     end if
 
+    if ( k == 15 ) then
+      do ic = 1, n_points
+        i = cmpr_init % index_i(ic)
+        j = cmpr_init % index_j(ic)
+        debug_work(i,j,8+i_region,141) = dndraft_par_gen % par_super(ic,1)
+        debug_work(i,j,12+i_region,141) = dndraft_par_gen % mean_super(ic,4)
+        debug_work(i,j,16+i_region,141) = dndraft_par_gen % mean_super(ic,5)
+      end do
+      do ic2 = 1, nc_dn
+        ic = index_ic_dn(ic2)
+        i = cmpr_init % index_i(ic)
+        j = cmpr_init % index_j(ic)
+        debug_work(i,j,20+i_region,141) = fields_par_dn(ic2,5)
+        debug_work(i,j,24+i_region,141) = pert_qt_dn(ic2)
+      end do
+    end if
+
   end if  ! ( nc > 0 )
 
 
@@ -738,6 +768,20 @@ if ( dndraft_par_gen % cmpr % n_points > 0 ) then
                                 dndraft_par_gen % core_super )
   end if
 end if
+
+if ( k == 15 ) then
+  do ic = 1, n_points
+    i = cmpr_init % index_i(ic)
+    j = cmpr_init % index_j(ic)
+    debug_work(i,j,29,141) = dndraft_par_gen % par_super(ic,1)
+    debug_work(i,j,30,141) = dndraft_par_gen % par_super(ic,2)
+    debug_work(i,j,31,141) = dndraft_par_gen % mean_super(ic,4)
+    debug_work(i,j,32,141) = dndraft_par_gen % mean_super(ic,5)
+    debug_work(i,j,33,141) = dndraft_par_gen % core_super(ic,4)
+    debug_work(i,j,34,141) = dndraft_par_gen % core_super(ic,5)
+  end do
+end if
+
 
 if ( i_check_bad_values_cmpr > i_check_bad_none ) then
   ! Check output initiating parcels for bad values (NaN, Inf, etc)

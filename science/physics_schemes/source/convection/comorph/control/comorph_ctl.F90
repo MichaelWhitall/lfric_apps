@@ -539,6 +539,14 @@ DO i_field = 1, k_top_conv
                      TRIM(ADJUSTL(where_string)) )
 END DO
 
+DO i_field = 1, 40
+  WRITE(where_string,*) "debug_work(141) field: ", i_field
+  CALL debug_prints( nx_full, ny_full, 1,                                      &
+                     0, 0, debug_work(:,:,i_field,141),                        &
+                     TRIM(ADJUSTL(where_string)) )
+END DO
+
+
 DEALLOCATE( debug_work )
 
 where_string = "On output from CoMorph: latest fields: "
