@@ -9,11 +9,10 @@ module mphys_turb_gen_kernel_mod
 
 use argument_mod,         only: arg_type, GH_REAL,   &
                                 GH_FIELD, GH_READ,   &
-                                GH_READWRITE, DOMAIN, GH_SCALAR, GH_INTEGER
+                                GH_READWRITE, DOMAIN
 use fs_continuity_mod,    only: WTHETA, W3
 use kernel_mod,           only: kernel_type
 use constants_mod,        only: r_def, i_def, r_um, i_um
-use log_mod,              only: log_event, LOG_LEVEL_INFO, log_scratch_space
 
 implicit none
 
@@ -24,7 +23,7 @@ private
 !-------------------------------------------------------------------------------
 type, public, extends(kernel_type) :: mphys_turb_gen_kernel_type
   private
-  type(arg_type) :: meta_args(23) = (/           &
+  type(arg_type) :: meta_args(22) = (/           &
        arg_type(GH_FIELD, GH_REAL, GH_READ,      WTHETA), & ! theta
        arg_type(GH_FIELD, GH_REAL, GH_READ,      WTHETA), & ! mr_v
        arg_type(GH_FIELD, GH_REAL, GH_READ,      WTHETA), & ! mr_cl
@@ -46,8 +45,7 @@ type, public, extends(kernel_type) :: mphys_turb_gen_kernel_type
        arg_type(GH_FIELD, GH_REAL, GH_READWRITE, WTHETA), & ! dmr_s
        arg_type(GH_FIELD, GH_REAL, GH_READWRITE, WTHETA), & ! dcfl
        arg_type(GH_FIELD, GH_REAL, GH_READWRITE, WTHETA), & ! dcff
-       arg_type(GH_FIELD, GH_REAL, GH_READWRITE, WTHETA), & ! dbcf
-       arg_type(GH_SCALAR, GH_INTEGER, GH_READ)           & ! step
+       arg_type(GH_FIELD, GH_REAL, GH_READWRITE, WTHETA)  & ! dbcf
        /)
   integer :: operates_on = DOMAIN
 contains
@@ -109,7 +107,6 @@ contains
                                   dcfl,      &
                                   dcff,      &
                                   dbcf,      &
-                                  step,      &
                                   ndf_wth, undf_wth, map_wth)
 
     !---------------------------------------
@@ -123,7 +120,7 @@ contains
     implicit none
 
     integer(i_def), intent(in) :: nlayers, seg_len
-    integer(i_def), intent(in) :: ndf_wth,  undf_wth, step
+    integer(i_def), intent(in) :: ndf_wth,  undf_wth
     integer(i_def), intent(in), dimension(ndf_wth, seg_len) :: map_wth
 
     real(r_def), intent(in), dimension(undf_wth) :: theta
@@ -215,17 +212,6 @@ contains
 
         ! Layer depth
         deltaz(i,j,k) = dz_in_wth(map_wth(1,i) + k)
-
-        if (step > 1070 .and. i == 1) then
-          write(log_scratch_space, *) 'q_n = ', q_n(i,j,k), i, j, k
-          call log_event(log_scratch_space, LOG_LEVEL_INFO)
-          write(log_scratch_space, *) 't_work = ', t_work(i,j,k), i, j, k
-          call log_event(log_scratch_space, LOG_LEVEL_INFO)
-          write(log_scratch_space, *) 'q_inc = ', q_inc(i,j,k), i, j, k
-          call log_event(log_scratch_space, LOG_LEVEL_INFO)
-          write(log_scratch_space, *) 't_inc = ', t_inc(i,j,k), i, j, k
-          call log_event(log_scratch_space, LOG_LEVEL_INFO)
-        end if
       end do
     end do
 
@@ -255,13 +241,6 @@ contains
         dmr_cl(map_wth(1,i) + k) = qcl_inc(i,j,k)
         dcfl(map_wth(1,i) + k) = cfl_inc(i,j,k)
         dbcf(map_wth(1,i) + k) = cf_inc(i,j,k)
-
-        if (step > 1072 .and. i == 1) then
-          write(log_scratch_space, *) 'q_inc after = ', q_inc(i,j,k), i, j, k
-          call log_event(log_scratch_space, LOG_LEVEL_INFO)
-          write(log_scratch_space, *) 't_inc after = ', t_inc(i,j,k), i, j, k
-          call log_event(log_scratch_space, LOG_LEVEL_INFO)
-        end if
       end do
       dtheta(map_wth(1,i) + 0) = dtheta(map_wth(1,i) + 1)
       dmr_v(map_wth(1,i) + 0)   = dmr_v(map_wth(1,i) + 1)

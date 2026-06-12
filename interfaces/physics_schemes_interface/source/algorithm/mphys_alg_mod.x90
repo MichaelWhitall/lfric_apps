@@ -20,8 +20,6 @@ module mphys_alg_mod
 
   use sci_geometric_constants_mod, only: get_height_fv, get_dz_at_wtheta
   use fs_continuity_mod,           only: W3, Wtheta
-  use log_mod,                 only: log_event, log_level, LOG_LEVEL_INFO, log_scratch_space
-  use print_nan_loc_alg_mod, only: print_nan_loc_alg
 
   implicit none
 
@@ -57,7 +55,7 @@ contains
                         microphysics_fields, cloud_fields, aerosol_fields,     &
                         turbulence_fields, orography_fields, f_arr,            &
                         dmr_mphys, dtheta_mphys,                               &
-                        dcfl_mphys, dcff_mphys, dbcf_mphys, dt, step )
+                        dcfl_mphys, dcff_mphys, dbcf_mphys, dt )
 
     use pc2_conv_coupling_kernel_mod, only: pc2_conv_coupling_kernel_type
     use lsp_prognostic_tnuc_kernel_mod, only: lsp_prognostic_tnuc_kernel_type
@@ -82,7 +80,6 @@ contains
     type( field_collection_type ), intent(in)    :: orography_fields
     type( field_type ),            intent(in)    :: f_arr
     real( kind=r_def ),            intent(in)    :: dt
-    integer( kind=i_def ),         intent(in)    :: step
 
     type( field_type ), intent( inout ) :: dmr_mphys ( nummr )
     type( field_type ), intent( inout ) :: dtheta_mphys
@@ -207,7 +204,7 @@ contains
                                                  dmr_mphys(imr_v),             &
                                                  dmr_mphys(imr_cl),            &
                                                  dcfl_mphys, dcff_mphys,       &
-                                                 dbcf_mphys, dt, step) )
+                                                 dbcf_mphys, dt) )
     end if
 
     if (prog_tnuc) then
@@ -221,7 +218,6 @@ contains
                                                      tnuc)  )
     end if
 
-    call print_nan_loc_alg(mr_n(imr_v), LOG_LEVEL_INFO, 'mphys_alg, before mphys: m_v')
     call invoke( mphys_kernel_type ( mr_n(imr_v), mr_n(imr_cl), mr_n(imr_s),   &
                                      mr_n(imr_r), mr_n(imr_g),                 &
                                      bcf_in, cfl_in, cff_in,                   &
@@ -246,7 +242,6 @@ contains
 
     if (turb_gen_mixph) then
       dz_in_wth => get_dz_at_wtheta( mesh%get_id() )
-      call print_nan_loc_alg(mr_n(imr_v), LOG_LEVEL_INFO, 'mphys_alg, before mphys_turb: m_v')
       call invoke( mphys_turb_gen_kernel_type(theta, mr_n(imr_v), mr_n(imr_cl),&
                                               mr_n(imr_ci), mr_n(imr_s),       &
                                               ns_mphys, ni_mphys,              &
@@ -258,7 +253,7 @@ contains
                                               dmr_mphys(imr_ci),               &
                                               dmr_mphys(imr_s),                &
                                               dcfl_mphys, dcff_mphys,          &
-                                              dbcf_mphys, step) )
+                                              dbcf_mphys) )
     end if
 
     ! Save mv increment for stochastic physics

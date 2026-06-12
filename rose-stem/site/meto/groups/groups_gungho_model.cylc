@@ -211,10 +211,6 @@
     "gungho_model_ex1a_canned": [
         "gungho_model_canned_ex1a_gnu_fast-debug-64bit",
     ],
-    "gungho_model_dcmip200": [
-        "gungho_model_dcmip200-C24_MG_ex1a_gnu_fast-debug-64bit",
-        "gungho_model_dcmip200-C96_MG_ex1a_gnu_fast-debug-64bit",
-    ],
      "gungho_model_ex1a_cce_tests": [
         "gungho_model_agnesi_hyd_cart-BiP120x8-2000x2000_ex1a_cce_full-debug-64bit",
         "gungho_model_baroclinic-C24_MG_ex1a_cce_full-debug-64bit",

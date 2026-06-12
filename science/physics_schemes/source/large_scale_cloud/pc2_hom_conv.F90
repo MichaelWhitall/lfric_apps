@@ -282,11 +282,11 @@ do j = tdims%j_start, tdims%j_end
         if (qcl(i,j) > smallp .and. sd > smallp) then
 
           cfl_to_m = cfl(i,j)**pdf_merge_power
-          sky_to_m = max(1.0 - cfl(i,j), 0.0)**pdf_merge_power  ! 27
+          sky_to_m = (1.0 - cfl(i,j))**pdf_merge_power
 
-          g_mqc = b_factor * ( max(1.0-cfl(i,j),0.0)**2 *                        &
+          g_mqc = b_factor * ( (1.0-cfl(i,j))**2 *                             &
            cfl_to_m / (sd * (cfl_to_m + sky_to_m))                             &
-                +                   max(cfl(i,j), 0.0)**2 *                      &  ! 30
+                +                   cfl(i,j)**2 *                              &
            sky_to_m / (qcl(i,j) * (cfl_to_m + sky_to_m)) )
 
         else
@@ -602,7 +602,7 @@ do j = tdims%j_start, tdims%j_end
                                    0.0 )**(1.0/(1.0-b_term))
 
                 ! Compute updated cfl consistent with this
-                cfl2 = cfl0 * max(qcl2/qcl0, 0.0)**b_term  ! 30
+                cfl2 = cfl0 * (qcl2/qcl0)**b_term
 
               end do
 
@@ -639,12 +639,12 @@ do j = tdims%j_start, tdims%j_end
                 b_term = min( b_term, 0.999 )
 
                 ! Compute new value of sde using mid-point cfc
-                sde1 = sde0 * max( 1.0 + b_term * factor                       & ! 24
-                                      * ( 1.0 - 0.5*(cfc0+cfc1) ), 0.0         &
-                                 )**(-1.0/b_term)
+                sde1 = sde0 * ( 1.0 + b_term * factor                          &
+                                      * ( 1.0 - 0.5*(cfc0+cfc1) )              &
+                              )**(-1.0/b_term)
 
                 ! Compute updated cfc consistent with this
-                cfc1 = cfc0 * max(sde1/sde0, 0.0)**b_term  ! 26
+                cfc1 = cfc0 * (sde1/sde0)**b_term
 
               end do
 

@@ -25,7 +25,7 @@ module slow_physics_alg_mod
                                        cv_scheme_gregory_rowntree, &
                                        cv_scheme_comorph
   use constants_mod,             only: i_def, r_def, l_def
-  use log_mod,                   only: LOG_LEVEL_INFO, log_event
+  use log_mod,                   only: LOG_LEVEL_INFO
   use lfric_xios_write_mod,      only: write_field_generic
   use mesh_mod,                  only: mesh_type
   use driver_modeldb_mod,        only: modeldb_type
@@ -158,7 +158,6 @@ module slow_physics_alg_mod
                             only: aerosol_mesh_name, &
                                   coarse_rad_aerosol
   use initialization_config_mod, only: coarse_aerosol_ancil
-  use print_nan_loc_alg_mod, only: print_nan_loc_alg
 
   implicit none
 
@@ -242,7 +241,6 @@ contains
 
     real( kind=r_def )                    :: time_now
     real( kind=r_def )                    :: Rv, cpv, cl
-    integer(kind=i_def)                   :: step
 
     ! Local fields...
     ! ...for external forcing
@@ -418,7 +416,6 @@ contains
     !--------------------------------------------------------------------
     if ( external_forcing ) then
       time_now = real( clock%get_step(), r_def ) * dt
-      call log_event('Slow: external forcing', LOG_LEVEL_INFO)
       call external_forcing_alg(derived_fields, u, theta, exner, exner_in_wth, &
                                 rho, mr_n, cloud_fields, twod_mesh, dt,        &
                                 time_now,                                      &
@@ -527,8 +524,6 @@ contains
                  ( glomap_mode == glomap_mode_radaer_test ) ) .and.            &
                l_radaer ) ) then
 
-          call log_event('Slow: locate tropopause', LOG_LEVEL_INFO)
-
           call locate_tropopause_alg( trop_level, theta_aero, exner_in_wth_aero, &
                                       aerosol_twod_mesh )
         end if
@@ -540,9 +535,6 @@ contains
                ( glomap_mode == glomap_mode_dust_and_clim ) ) .and.  &
              ( ( activation_scheme == activation_scheme_jones ) .or. &
                ( l_radaer ) ) ) then
-
-          call log_event('Slow: glomap aerosol', LOG_LEVEL_INFO)
-
           call glomap_aerosol_alg ( aerosol_fields, cloud_fields, theta_aero,       &
                                     exner_in_wth_aero, mr_n_aero, clock%get_step() )
         end if
@@ -551,7 +543,6 @@ contains
         ! Stratospheric aerosol climatology
         !--------------------------------------------------------------------
         if ( sulphuric_strat_climatology ) then
-          call log_event('Slow: strat_aerosol', LOG_LEVEL_INFO)
           call strat_aerosol_alg ( aerosol_fields, trop_level, exner_aero )
         end if
 
@@ -566,23 +557,20 @@ contains
     call set_bundle_scalar(0.0_r_def, dmr_mphys, nummr)
     if ( microphysics == microphysics_um .and. &
          microphysics_placement == microphysics_placement_slow) then
-      step = int(clock%get_step(), i_def)
       if ( microphysics_casim ) then
-        call log_event('Slow: casim', LOG_LEVEL_INFO)
         call casim_alg( mr_n, theta, rho, derived_fields, microphysics_fields, &
                         cloud_fields, aerosol_fields, turbulence_fields,       &
                         mesh, dmr_mphys, dtheta_mphys,                         &
-                        dcfl_pc2_mphys, dcff_pc2_mphys, dbcf_pc2_mphys, step )
+                        dcfl_pc2_mphys, dcff_pc2_mphys, dbcf_pc2_mphys )
       else
         ! Switch UM to running i-first on whole domain
         ncells = mesh%get_last_edge_cell()
         call um_sizes_init(ncells)
-        call log_event('Slow: mphys', LOG_LEVEL_INFO)
         call mphys_alg( mr_n, theta, rho, derived_fields, microphysics_fields, &
                       cloud_fields, aerosol_fields, turbulence_fields,       &
                       orography_fields,                                      &
                       f_arr, dmr_mphys, dtheta_mphys, dcfl_pc2_mphys,        &
-                      dcff_pc2_mphys, dbcf_pc2_mphys, dt, step )
+                      dcff_pc2_mphys, dbcf_pc2_mphys, dt )
         ! Switch UM back to columns
         call um_sizes_init(1_i_def)
       end if
@@ -599,8 +587,6 @@ contains
 
       ! Call electric_main_alg with the start of the model timestep
       ! information... this differs from the UM (called after microphysics).
-
-      call log_event('Slow: electric main', LOG_LEVEL_INFO)
 
       call electric_main_alg( mr_n, theta, derived_fields, electric_fields, dt )
 
@@ -640,7 +626,6 @@ contains
 
     if (chem_scheme == chem_scheme_flexchem .and. &
         flexchem_opt /= flexchem_opt_none) then
-      call log_event('Slow: flexchem', LOG_LEVEL_INFO)
       call flexchem_alg(pressure_in_wth, temperature_in_wth, chemistry_fields)
     end if ! call to flexchem
 
@@ -663,7 +648,6 @@ contains
       !--------------------------------------------------------------------
       ! Radiatively active cloud for Socrates and COSP
       !--------------------------------------------------------------------
-      call log_event('Slow: rad cloud', LOG_LEVEL_INFO)
       call rad_cloud_alg(rand_seed, n_cloud_layer, &
                          radiative_cloud_fraction, radiative_conv_fraction, &
                          conv_liquid_fraction, conv_frozen_fraction, &
@@ -676,7 +660,6 @@ contains
       !--------------------------------------------------------------------
       ! Socrates illumination scheme: solar position
       !--------------------------------------------------------------------
-      call log_event('Slow: illuminate', LOG_LEVEL_INFO)
       call illuminate_alg( radiation_fields, clock%get_step(), &
                            dt )
 
@@ -689,8 +672,6 @@ contains
              ( glomap_mode == glomap_mode_ukca ) .or.                          &
              ( glomap_mode == glomap_mode_radaer_test) ) .and.                 &
            l_radaer ) then
-        call log_event('Slow: radaer', LOG_LEVEL_INFO)
-
         call radaer_alg( aerosol_fields,                                       &
                          radiation_fields,                                     &
                          rho_in_wth_aero,                                      &
@@ -717,7 +698,6 @@ contains
       ! Easy Aerosol climatology
       !--------------------------------------------------------------------
       if (easyaerosol_sw .or. easyaerosol_lw) then
-        call log_event('Slow: easyaerosol', LOG_LEVEL_INFO)
         call easyaerosol_alg(radiation_fields, aerosol_fields, &
                              derived_fields, clock%get_step() )
       end if
@@ -731,7 +711,6 @@ contains
       ncells = mesh%get_last_edge_cell()
       call um_sizes_init(ncells)
 
-      call log_event('Slow: rad_tile', LOG_LEVEL_INFO)
       call rad_tile_alg(tile_sw_direct_albedo, tile_sw_diffuse_albedo,       &
                         tile_swinc_direct_albedo, tile_swinc_diffuse_albedo, &
                         tile_lw_albedo, tile_lwinc_albedo, derived_fields,   &
@@ -752,8 +731,6 @@ contains
       call radiation_fields%get_field('dmv_pc2_rad', dmv_pc2_rad)
       ncells = mesh%get_last_edge_cell()
       call um_sizes_init(ncells)
-      call log_event('Slow: radiation_alg', LOG_LEVEL_INFO)
-
       call radiation_alg( dtheta_rad, theta, exner, mr_n, moist_dyn,           &
                           pressure_in_wth, temperature_in_wth,                 &
                           derived_fields, radiation_fields, cloud_fields,      &
@@ -782,8 +759,6 @@ contains
       !--------------------------------------------------------------------
       if (cloud == cloud_um .and. scheme == scheme_pc2) then
         ! PC2 code will be called with dtheta_rad as the only forcing.
-        call log_event('Slow: pc2_rad_response', LOG_LEVEL_INFO)
-
         call pc2_rad_response_alg(                 & ! Current state
                                    mr_n,           & ! IN
                                    theta,          & ! IN
@@ -804,8 +779,6 @@ contains
       ! CFMIP Observation Simulator Package (COSP)
       !--------------------------------------------------------------------
       if (cosp_this_tstep) then
-        call log_event('Slow: cosp', LOG_LEVEL_INFO)
-
         call cosp_alg(pressure_in_wth, temperature_in_wth, exner, mr_n, &
                       derived_fields, radiation_fields, cloud_fields, &
                       aerosol_fields, convection_fields, microphysics_fields, &
@@ -835,8 +808,6 @@ contains
     if (spectral_gwd == spectral_gwd_um .and. &
         spectral_gwd_placement == spectral_gwd_placement_slow) then
       call dtheta%copy_field_properties(dtheta_spectral_gwd)
-      call log_event('Slow: spectral_gwd', LOG_LEVEL_INFO)
-
       call spectral_gwd_alg(du_spectral_gwd,     &
                             dv_spectral_gwd,     &
                             dtheta_spectral_gwd, &
@@ -853,7 +824,6 @@ contains
     if (orographic_drag == orographic_drag_um .and. &
         orographic_drag_placement == orographic_drag_placement_slow) then
       call dtheta%copy_field_properties(dtheta_orographic_drag)
-      call log_event('Slow: orographic_drag', LOG_LEVEL_INFO)
       call orographic_drag_alg(du_orographic_drag,     &
                                dv_orographic_drag,     &
                                dtheta_orographic_drag, &
@@ -866,7 +836,6 @@ contains
 
     ! Call methane oxidation code
     if (methane_oxidation) then
-      call log_event('Slow: methox_alg', LOG_LEVEL_INFO)
       call methox_alg(dmv_methox, mr_n, clock)
       methox_done = .true.
     end if
@@ -876,7 +845,6 @@ contains
     !---------------------------------------------------------------------
     if ( l_planet_grey_surface .and. &
          surf_temp_forcing /= surf_temp_forcing_none ) then
-      call log_event('Slow: surf_temp_forcing', LOG_LEVEL_INFO)
       call surf_temp_forcing_alg(radiation_fields, surface_fields)
     end if
 
@@ -884,7 +852,6 @@ contains
     ! UM explicit boundary layer and Jules surface schemes
     !--------------------------------------------------------------------
     if (boundary_layer == boundary_layer_um ) then
-      call log_event('Slow: jules_exp', LOG_LEVEL_INFO)
       call jules_exp_alg(modeldb, theta, mr_n,                               &
                          derived_fields, radiation_fields,                   &
                          orography_fields,                                   &
@@ -892,7 +859,6 @@ contains
                          surface_fields, soil_fields, snow_fields,           &
                          aerosol_fields, recip_l_mo_sea, rhostar,            &
                          t1_sd_2d, q1_sd_2d)
-      call log_event('Slow: bl_exp', LOG_LEVEL_INFO)
       call bl_exp_alg(theta, rho, exner, mr_n,                            &
                       derived_fields, radiation_fields,                   &
                       microphysics_fields, dmr_mphys, orography_fields,   &
@@ -943,7 +909,6 @@ contains
       call u%copy_field_properties(u_inc_leonard)
       call turbulence_fields%get_field('mt_inc_leonard', mt_inc_leonard)
       call turbulence_fields%get_field('thetal_inc_leonard', thetal_inc_leonard)
-      call log_event('Slow: leonard', LOG_LEVEL_INFO)
       call leonard_term_alg(mt_inc_leonard, thetal_inc_leonard,           &
                             u_inc_leonard, mr_n, theta, u, rho,           &
                             turbulence_fields, derived_fields,            &
@@ -959,7 +924,6 @@ contains
     if ( cloud == cloud_um .and. ( scheme == scheme_bimodal .or.          &
         ( scheme == scheme_pc2 .and. pc2ini == pc2ini_bimodal ) ) ) then
 
-      call log_event('Slow: bm_tau', LOG_LEVEL_INFO)
       call bm_tau_alg(mr_n, theta, derived_fields, turbulence_fields,     &
                      cloud_fields, microphysics_fields)
 
@@ -1121,7 +1085,6 @@ contains
         call invoke(name="estimate_theta_at_end_of_slow_before_check", &
                     setval_X(theta_updated, theta),                    &
                     inc_X_plus_Y(theta_updated,dtheta) )
-        call log_event('Slow: pc2_checks', LOG_LEVEL_INFO)
         call pc2_checks_alg( mr,                & ! Current state IN
                              theta_updated,     & ! Current state IN
                              exner,             & ! Current state IN
@@ -1166,8 +1129,6 @@ contains
     if (convection == convection_um .and.                       &
         convection_placement == convection_placement_slow) then
 
-      call log_event('Slow: slow_conv', LOG_LEVEL_INFO)
-
       if ( cv_scheme == cv_scheme_lambert_lewis ) then
         ! Call the UM Lambert-Lewis convection scheme
         call conv_ll_alg(du_tmp, theta_latest, mr, exner, derived_fields, &
@@ -1190,10 +1151,8 @@ contains
 
       if ( cloud == cloud_um .and. scheme == scheme_pc2 ) then
         ! Update the cloud fields if using PC2
-        call log_event('Slow: p2c_conv', LOG_LEVEL_INFO)
-        step = int(clock%get_step(), i_def)
         call pc2_conv_coupling_alg( theta_latest, mr, derived_fields,     &
-                                    convection_fields, cloud_fields, dt, step )
+                                    convection_fields, cloud_fields, dt )
       else
         ! Without PC2, just update vapour field
         call convection_fields%get_field('dmv_conv', dmv_conv)
@@ -1216,7 +1175,6 @@ contains
     !--------------------------------------------------------------------
     if (boundary_layer == boundary_layer_um) then
       if(blayer_placement == blayer_placement_slow) then
-        call log_event('Slow: bl_imp', LOG_LEVEL_INFO)
         call bl_imp_alg(dtheta_tmp, du_tmp, theta_latest, u_latest, mr,     &
                         surf_heat_flux, canopy_evap, water_extraction,      &
                         lake_evap, theta_star_surf, qv_star_surf,           &
@@ -1237,7 +1195,6 @@ contains
     ! Jules surface and sub-surface (snow and hydrology)
     !--------------------------------------------------------------------
         if ( surface == surface_jules ) then
-          call log_event('Slow: jules_extra', LOG_LEVEL_INFO)
           call jules_extra_alg(microphysics_fields, convection_fields,        &
                                surface_fields, soil_fields, snow_fields,      &
                                surf_heat_flux, canopy_evap,                   &

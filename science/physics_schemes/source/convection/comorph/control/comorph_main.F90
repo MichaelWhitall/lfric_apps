@@ -51,8 +51,6 @@ use find_cmpr_any_mod, only: find_cmpr_any
 use conv_closure_ctl_mod, only: conv_closure_ctl
 use conv_incr_ctl_mod, only: conv_incr_ctl
 use calc_diag_conv_cloud_mod, only: zero_diag_conv_cloud
-use log_mod, only: log_event, LOG_LEVEL_INFO, log_scratch_space
-use, intrinsic :: ieee_arithmetic, only: ieee_is_finite
 
 implicit none
 
@@ -203,7 +201,8 @@ logical :: l_output_fallback
 integer :: lb_p(3), ub_p(3)
 
 ! Loop counters
-integer :: k, i_type, i_layr, i, j, l, m
+integer :: k, i_type, i_layr
+
 
 !--------------------------------------------------------------
 ! 1) Calculate initiation mass sources from each model-level
@@ -234,8 +233,6 @@ call conv_genesis_ctl( max_points, ij_first, ij_last,                          &
 ! one convective mass-source layer has been found there...
 if ( n_updraft_layers > 0 .or. n_dndraft_layers > 0 ) then
 
-  write(log_scratch_space, *) 'CoMorph logging test: ', n_updraft_layers, n_dndraft_layers, max_points
-  call log_event(log_scratch_space, LOG_LEVEL_INFO)
 
   !------------------------------------------------------------
   ! 2) Perform the updraft parcel ascent calculations
@@ -265,9 +262,6 @@ if ( n_updraft_layers > 0 .or. n_dndraft_layers > 0 ) then
                          updraft_diags_super,                                  &
       fallback_par_gen = updraft_fallback_par_gen )
 
-    write(log_scratch_space, *) 'CoMorph after primary_updraft: ', fields%temperature(:,:,45)
-    call log_event(log_scratch_space, LOG_LEVEL_INFO)
-
     ! If updraft fall-backs are on:
     if ( l_updraft_fallback ) then
 
@@ -290,9 +284,6 @@ if ( n_updraft_layers > 0 .or. n_dndraft_layers > 0 ) then
                            updraft_fallback_diags_super )
 
     end if  ! ( l_updraft_fallback )
-
-    write(log_scratch_space, *) 'CoMorph after updraft_fallback: ', fields%temperature(:,:,45)
-    call log_event(log_scratch_space, LOG_LEVEL_INFO)
 
     if ( l_calc_mfw_cape ) then
       ! Apply any final normalisations needed to 2D output quantities
@@ -347,9 +338,6 @@ if ( n_updraft_layers > 0 .or. n_dndraft_layers > 0 ) then
                          dndraft_diags_super,                                  &
       fallback_par_gen = dndraft_fallback_par_gen )
 
-    write(log_scratch_space, *) 'CoMorph after primary_downdraft: ', fields%temperature(:,:,45)
-    call log_event(log_scratch_space, LOG_LEVEL_INFO)
-
     ! If downdraft fall-backs are on:
     if ( l_dndraft_fallback ) then
 
@@ -372,9 +360,6 @@ if ( n_updraft_layers > 0 .or. n_dndraft_layers > 0 ) then
                            dndraft_fallback_diags_super )
 
     end if  ! ( l_dndraft_fallback )
-
-    write(log_scratch_space, *) 'CoMorph after downdraft_fallback: ', fields%temperature(:,:,45)
-    call log_event(log_scratch_space, LOG_LEVEL_INFO)
 
     if ( l_calc_mfw_cape ) then
       ! Apply any final normalisations needed to 2D output quantities
@@ -446,9 +431,6 @@ if ( n_updraft_layers > 0 .or. n_dndraft_layers > 0 ) then
                            dndraft_fallback_diags_super )
   end if
 
-  write(log_scratch_space, *) 'CoMorph after conv_closure_ctl: ', fields%temperature(:,:,45)
-  call log_event(log_scratch_space, LOG_LEVEL_INFO)
-
 
   !------------------------------------------------------------
   ! 6) Calculate the updated primary model fields after
@@ -472,39 +454,6 @@ if ( n_updraft_layers > 0 .or. n_dndraft_layers > 0 ) then
                       layer_mass, fields, cloudfracs,                          &
                       comorph_diags )
 
-  write(log_scratch_space, *) 'CoMorph after conv_incr_ctl: ', fields%temperature(:,:,45)
-  call log_event(log_scratch_space, LOG_LEVEL_INFO)
-
-  if (.not. ieee_is_finite(fields%temperature(3,1,45))) then
-    do i = 1, SIZE(updraft_res_source(:,1,1))
-      do j = 1, SIZE(updraft_res_source(i,:,1))
-        do k = 1, SIZE(updraft_res_source(i,j,:))
-          do l = 1, SIZE(updraft_res_source(i,j,k)%res_super(:,1))
-            do m = 1, SIZE(updraft_res_source(i,j,k)%res_super(1,:))
-              write(log_scratch_space, *) &
-                'CoMorph updraft_res_source(',i,',',j,',',k,')%res_super(',l,',',m,'): ', &
-                updraft_res_source(i,j,k)%res_super(l,m)
-              call log_event(log_scratch_space, LOG_LEVEL_INFO)
-            end do
-          end do
-        end do
-      end do
-    end do
-    do i = 1, SIZE(dndraft_res_source(:,1,1))
-      do j = 1, SIZE(dndraft_res_source(i,:,1))
-        do k = 1, SIZE(dndraft_res_source(i,j,:))
-          do l = 1, SIZE(dndraft_res_source(i,j,k)%res_super(:,1))
-            do m = 1, SIZE(dndraft_res_source(i,j,k)%res_super(1,:))
-              write(log_scratch_space, *) &
-                'CoMorph dndraft_res_source(',i,',',j,',',k,')%res_super(',l,',',m,'): ', &
-                dndraft_res_source(i,j,k)%res_super(l,m)
-              call log_event(log_scratch_space, LOG_LEVEL_INFO)
-            end do
-          end do
-        end do
-      end do
-    end do
-  end if
 
   !------------------------------------------------------------
   ! 7) Compute means of draft diagnostics over types / layers

@@ -174,19 +174,8 @@
         "mpi_parts": 6,
         "threads": 3,
         "tsteps": 864,
-        "use_xios": true
-    }) %}
-
-{% elif task_ns.conf_name == "dcmip200-C96_MG" %}
-
-    {% do task_dict.update({
-        "opt_confs": ["dcmip200"],
-        "resolution": "C96_MG",
-        "DT": 600,
-        "mpi_parts": 96,
-        "threads": 3,
-        "tsteps": 864,
-        "use_xios": true
+        "use_xios": false,
+        "plot_str": "slices_orography.py diagGungho $NODAL_DATA_DIR u T000864 0 0 0 $PLOT_DIR 2-0-0"
     }) %}
 
 {% elif task_ns.conf_name == "dcmip200_realorog-C48_MG" %}

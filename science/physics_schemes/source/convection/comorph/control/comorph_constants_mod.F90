@@ -357,15 +357,15 @@ integer, parameter :: i_check_bad_warn = 1  ! Print warning if bad value found
 integer, parameter :: i_check_bad_fatal = 2 ! Fatal error if bad value found
 
 ! Switch for checking the full 3-D fields input and output from comorph
-integer, parameter :: i_check_bad_values_3d = i_check_bad_warn
+integer, parameter :: i_check_bad_values_3d = i_check_bad_none
 ! Switch for checking compressed fields inside comorph
-integer, parameter :: i_check_bad_values_cmpr = i_check_bad_warn
+integer, parameter :: i_check_bad_values_cmpr = i_check_bad_none
 
 ! Switch for checking consistency of turbulence fields on input
-integer, parameter :: i_check_turb_consistent = i_check_bad_warn
+integer, parameter :: i_check_turb_consistent = i_check_bad_none
 
 ! Switch for printing caps on turb perts
-integer, parameter :: i_print_turb_perts_exceeded = i_check_bad_warn
+integer, parameter :: i_print_turb_perts_exceeded = i_check_bad_none
 
 ! Indirect indexing threshold
 real(kind=real_cvprec) :: indi_thresh = 0.5_real_cvprec
