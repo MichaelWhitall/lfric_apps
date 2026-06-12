@@ -28,7 +28,7 @@ use comorph_constants_mod, only: real_cvprec, zero, one, min_float,            &
                                  l_turb_par_gen, par_gen_qpert,                &
                                  par_gen_radius, par_gen_radius_fac,           &
                                  ass_min_radius, min_radius_fac,               &
-                                 name_length,                                  &
+                                 name_length, newline,                         &
                                  i_check_bad_values_cmpr, i_check_bad_none
 use cmpr_type_mod, only: cmpr_type
 use grid_type_mod, only: n_grid, i_height
@@ -43,6 +43,7 @@ use lat_heat_mod, only: lat_heat_incr, i_phase_change_evp
 use calc_fields_next_mod, only: calc_fields_next
 use calc_turb_perts_mod, only: calc_turb_perts
 use check_bad_values_mod, only: check_bad_values_cmpr
+use raise_error_mod, only: raise_fatal
 
 implicit none
 
@@ -130,6 +131,8 @@ logical :: l_positive
 
 ! Loop counters
 integer :: ic, i_field
+
+character(len=10000) :: info_str
 
 
 if ( l_turb_par_gen ) then
@@ -269,6 +272,22 @@ if ( l_turb_par_gen ) then
   ! Amplify the parcel radius using input variable scaling factor...
   do ic = 1, n_points
     par_radius(ic) = par_radius(ic) * par_radius_amp(ic)
+  end do
+
+  do ic = 1, n_points
+    if ( .not. ( par_radius(ic) >= zero .and.   &
+                 par_radius(ic) <= 1.0E6_real_cvprec ) ) then
+      write(info_str,*) "Bad value in parcel initial radius",         newline, &
+        "i,j,k = ", cmpr_init%index_i(ic), cmpr_init%index_j(ic), k,  newline, &
+        "turb_len_k = ", turb_len_k(ic),                              newline, &
+        "grid_k = ", grid_k(ic,:),                                    newline, &
+        "par_radius_amp = ", par_radius_amp(ic),                      newline, &
+        "par_gen_radius_fac = ", par_gen_radius_fac,                  newline, &
+        "min_radius_fac = ", min_radius_fac,                          newline, &
+        "ass_min_radius = ", ass_min_radius,                          newline, &
+        "par_radius = ", par_radius(ic)
+      call raise_fatal( "calc_turb_parcel", trim(adjustl(info_str)) )
+    end if
   end do
 
 

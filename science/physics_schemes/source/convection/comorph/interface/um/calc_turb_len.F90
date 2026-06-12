@@ -32,6 +32,8 @@ use comorph_um_namelist_mod, only:                                             &
                       par_radius_knob, par_radius_knob_max, par_radius_ppn_max,&
                       l_resdep_precipramp, dx_ref
 use cv_param_mod, only: refqsat
+use comorph_constants_mod, only: newline
+use raise_error_mod, only: raise_fatal
 
 implicit none
 
@@ -139,6 +141,8 @@ real(kind=real_umphys) ::                                                      &
 
 ! Loop counters
 integer :: i, j, k
+
+character(len=10000) :: info_str
 
 
 !$OMP PARALLEL DEFAULT(none) private( i, j, k, ppnrate )                       &
@@ -295,6 +299,25 @@ end do
 !$OMP end do NOWAIT
 
 !$OMP end PARALLEL
+
+do k = 1, bl_levels-1
+  do j = pdims%j_start, pdims%j_end
+    do i = pdims%i_start, pdims%i_end
+      if ( .not. ( turb_len(i,j,k) >= 0.0 .and.   &
+                   turb_len(i,j,k) <= 1.0E6 ) ) then
+        write(info_str,*) "Bad value in turb_len",                    newline, &
+          "i,j,k = ", i, j, k,                                        newline, &
+          "bl_levels = ", bl_levels,                                  newline, &
+          "k_end = ", pdims%k_end,                                    newline, &
+          "rhokm = ", rhokm(i,j,k),                                   newline, &
+          "rho_wet_th = ", rho_wet_th(i,j,k),                         newline, &
+          "bl_w_var = ", bl_w_var(i,j,k),                             newline, &
+          "turb_len = ", turb_len(i,j,k)
+        call raise_fatal( "calc_turb_len", trim(adjustl(info_str)) )
+      end if
+    end do
+  end do
+end do
 
 
 return
