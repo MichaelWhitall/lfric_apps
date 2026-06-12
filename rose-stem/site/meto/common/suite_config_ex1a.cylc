@@ -8,7 +8,11 @@
 {% if site_vars.ex_trustzone == "collab" %}
 {% set ex1a_base = 'module use /projects/metoff/spackadmin.mon/releases/2025.12.18/ngms' %}
 {% else %}
-{% set ex1a_base = 'module use /common/internal/spack/releases/2025.10.1/ngms' %}
+{% set ex1a_base = 'module use /common/internal/spack/releases/2025.10.1/ngms ; ' ~
+                   'module load atp/3.15.2.1 ; ' ~
+                   'module load cray-dyninst/12.3.1.11 ; ' ~
+                   'module load cray-cti/2.18.2.25 ; ' ~
+                   'export ATP_ENABLED=1' %}
 {% endif %}
 
 {% set ex1a_compiler_gnu =  'module switch cpe/22.11 cpe/23.05 ; ' ~

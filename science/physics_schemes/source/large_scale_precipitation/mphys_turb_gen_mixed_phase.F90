@@ -8,6 +8,7 @@
 module mphys_turb_gen_mixed_phase_mod
 
 use um_types, only: real_umphys
+use log_mod, only: log_scratch_space, log_level_info, log_event
 
 implicit none
 
@@ -37,8 +38,7 @@ use lsp_dif_mod,           only: air_conductivity0, air_diffusivity0, tcor1,   &
                                  tcor2, cpwr
 
 ! Stochastic physics
-use stochastic_physics_run_mod, only: l_rp2, i_rp_scheme, i_rp2b,              &
-                                      rp_idx, mp_czero_rp
+use stochastic_physics_run_mod, only:  l_rp2, rp_idx, mp_czero_rp
 
 ! General and constants modules
 use gen_phys_inputs_mod,   only: l_mr_physics
@@ -356,8 +356,10 @@ if (lhook) call dr_hook(ModuleName//':'//RoutineName,zhook_in,zhook_handle)
 ! START OF PHYSICS
 !=============================================================================
 
-! If RP2B scheme is in use, set parameters to their perturbed values
-if (l_rp2 .and. i_rp_scheme == i_rp2b) then
+call log_event('Start mphys_turb_gen_mixed_phase', LOG_LEVEL_INFO)
+
+! If RP scheme is in use, set parameters to their perturbed values
+if ( l_rp2 ) then
   mp_czero = mp_czero_rp(rp_idx)
 end if
 
@@ -481,10 +483,16 @@ do k = 1, bl_levels-1
   !  Done level-by-level for efficiency and generates the values
   !  of mom1, qsi_2d and qsw_2d
 
+  ! write(log_scratch_space, *) 'mphys_turb_gen_mixed_phase, level: ', k, 'qsat_mix'
+  ! call log_event(log_scratch_space, LOG_LEVEL_INFO)
+
   ! Always request saturated values as mixing ratios
   ! for subsequent calculation of liquid cloud
   call qsat_mix(qsi_2d, t_local2d, p_layer_centres(:,:,k),                     &
                     tdims%j_len,tdims%i_len)
+
+  ! write(log_scratch_space, *) 'mphys_turb_gen_mixed_phase, level: ', k, 'qsat_wat_mix'
+  ! call log_event(log_scratch_space, LOG_LEVEL_INFO)
 
   call qsat_wat_mix(qsw_2d, t_local2d, p_layer_centres(:,:,k),                 &
                         tdims%j_len,tdims%i_len)
@@ -493,6 +501,9 @@ do k = 1, bl_levels-1
   ! to keep things simple.
   ! Note: this may not be consistent with assumptions in the microphysical
   ! deposition rate calculation in lsp_deposition
+
+  ! write(log_scratch_space, *) 'mphys_turb_gen_mixed_phase, level: ', k, 'big loop'
+  ! call log_event(log_scratch_space, LOG_LEVEL_INFO)
 
   do j = tdims%j_start, tdims%j_end
 
@@ -665,6 +676,8 @@ do k = 1, bl_levels-1
 end do             ! k
 !$OMP end do NOWAIT
 !$OMP end PARALLEL
+
+call log_event('End mphys_turb_gen_mixed_phase', LOG_LEVEL_INFO)
 
 if (lhook) call dr_hook(ModuleName//':'//RoutineName,zhook_out,zhook_handle)
 return

@@ -149,8 +149,7 @@ if [ "${RUN_METHOD}" = "mpiexec" ] ; then
       if [ "${xios_nodes}" = "0" ] ; then
 	XIOS_OPTS=" : --cpu-bind=depth --np ${XIOS_SERVER_RANKS} "
       else
-        # ensure ceiling rounding for division
-        XIOS_CORES_PER_NODE="$(( (mpi_parts_xios / xios_nodes) + (mpi_parts_xios % xios_nodes > 0 ) ))"
+        XIOS_CORES_PER_NODE="$(( mpi_parts_xios / xios_nodes ))"
 
         XIOS_FRACTIONAL_DEPTH="$(( CORES_PER_NODE / XIOS_CORES_PER_NODE ))"
         if (( "${XIOS_FRACTIONAL_DEPTH}" >= 128 )) ; then

@@ -9,15 +9,14 @@
 
 module fractional_horizontal_wind_kernel_mod
 
-use argument_mod,                  only : arg_type, GH_INTEGER,                &
-                                          GH_FIELD, GH_REAL,                   &
-                                          CELL_COLUMN, GH_WRITE,               &
-                                          GH_READ, STENCIL, CROSS,             &
-                                          ANY_DISCONTINUOUS_SPACE_3
-use constants_mod,                 only : i_def, r_tran
-use fs_continuity_mod,             only : W3, W2h
-use kernel_mod,                    only : kernel_type
-use sci_face_selector_support_mod, only : face_from_face_selector
+use argument_mod,       only : arg_type, GH_INTEGER,    &
+                               GH_FIELD, GH_REAL,       &
+                               CELL_COLUMN, GH_WRITE,   &
+                               GH_READ, STENCIL, CROSS, &
+                               ANY_DISCONTINUOUS_SPACE_3
+use constants_mod,      only : i_def, r_tran
+use fs_continuity_mod,  only : W3, W2h
+use kernel_mod,         only : kernel_type
 
 implicit none
 
@@ -135,8 +134,8 @@ subroutine fractional_horizontal_wind_code( nlayers,          &
   if (stencil_size == 5) then
 
     ! Loop through E/W DoFs
-    do df_idx = 1, ABS(face_selector_ew(map_w3_2d(1)))
-      df = x_dofs(df_idx - MIN(0, face_selector_ew(map_w3_2d(1))))
+    do df_idx = 1, face_selector_ew(map_w3_2d(1))
+      df = x_dofs(df_idx)
       w2h_idx = map_w2h(df)
       pos_stencil_idx = stencil_map(1, pos_wind_cells(df))
       neg_stencil_idx = stencil_map(1, neg_wind_cells(df))
@@ -153,8 +152,8 @@ subroutine fractional_horizontal_wind_code( nlayers,          &
     end do
 
     ! Loop through N/S DoFs
-    do df_idx = 1, ABS(face_selector_ns(map_w3_2d(1)))
-      df = y_dofs(df_idx - MIN(0, face_selector_ns(map_w3_2d(1))))
+    do df_idx = 1, face_selector_ns(map_w3_2d(1))
+      df = y_dofs(df_idx)
       w2h_idx = map_w2h(df)
       pos_stencil_idx = stencil_map(1, pos_wind_cells(df))
       neg_stencil_idx = stencil_map(1, neg_wind_cells(df))

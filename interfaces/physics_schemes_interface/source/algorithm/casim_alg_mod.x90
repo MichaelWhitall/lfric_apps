@@ -52,7 +52,7 @@ contains
   subroutine casim_alg( mr_n, theta, dry_rho_in_w3, derived_fields,            &
                         microphysics_fields, cloud_fields, aerosol_fields,     &
                         turbulence_fields, mesh,                               &
-                        dmr_mphys, theta_inc, dcfl, dcff, dbcf )
+                        dmr_mphys, theta_inc, dcfl, dcff, dbcf, step)
 
     use casim_kernel_mod, only: casim_kernel_type
     use mphys_turb_gen_kernel_mod, only: mphys_turb_gen_kernel_type
@@ -78,6 +78,7 @@ contains
     type( field_type ), intent( inout ) :: dcfl, dcff, dbcf
 
     type(mesh_type), intent(in), pointer :: mesh
+    integer(kind=i_def), intent(in) :: step
 
     ! Temporary unpacked fields from collections
     type( field_type ), pointer :: exner_in_wth        => null()
@@ -207,7 +208,7 @@ contains
                                               dmr_mphys(imr_cl),               &
                                               dmr_mphys(imr_ci),               &
                                               dmr_mphys(imr_s),                &
-                                              dcfl, dcff, dbcf) )
+                                              dcfl, dcff, dbcf, step) )
       ! Switch UM back to columns
       call um_sizes_init(1_i_def)
     end if

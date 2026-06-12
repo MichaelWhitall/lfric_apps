@@ -103,7 +103,8 @@
     {% for item in ["casim",
                     "ukca",
                     "socrates",
-                    "socrates-spectral"] %}
+                    "socrates-spectral",
+                    "um_aux"] %}
 
         {% do dependencies.pop(item, None) %}
 

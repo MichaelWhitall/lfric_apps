@@ -10,9 +10,10 @@ module pc2_conv_coupling_kernel_mod
 use argument_mod,      only: arg_type,              &
                              GH_FIELD, GH_REAL,     &
                              GH_READ, GH_READWRITE, &
-                             GH_SCALAR, DOMAIN
+                             GH_SCALAR, DOMAIN, GH_INTEGER
 use fs_continuity_mod, only: WTHETA
 use kernel_mod,        only: kernel_type
+use log_mod,          only: log_event, LOG_LEVEL_INFO, log_scratch_space
 
 implicit none
 
@@ -25,7 +26,7 @@ private
 
 type, public, extends(kernel_type) :: pc2_conv_coupling_kernel_type
   private
-  type(arg_type) :: meta_args(15) = (/                         &
+  type(arg_type) :: meta_args(16) = (/                         &
        arg_type(GH_FIELD,  GH_REAL, GH_READ,      WTHETA),      & ! theta_wth
        arg_type(GH_FIELD,  GH_REAL, GH_READ,      WTHETA),      & ! mv_wth
        arg_type(GH_FIELD,  GH_REAL, GH_READ,      WTHETA),      & ! ml_wth
@@ -40,7 +41,8 @@ type, public, extends(kernel_type) :: pc2_conv_coupling_kernel_type
        arg_type(GH_FIELD,  GH_REAL, GH_READWRITE, WTHETA),      & ! dcfl_conv_wth
        arg_type(GH_FIELD,  GH_REAL, GH_READWRITE, WTHETA),      & ! dcff_conv_wth
        arg_type(GH_FIELD,  GH_REAL, GH_READWRITE, WTHETA),      & ! dbcf_conv_wth
-       arg_type(GH_SCALAR, GH_REAL, GH_READ)                    & ! dt
+       arg_type(GH_SCALAR, GH_REAL, GH_READ),                   & ! dt
+       arg_type(GH_SCALAR, GH_INTEGER, GH_READ)                 & ! step
        /)
    integer :: operates_on = DOMAIN
 contains
@@ -96,7 +98,7 @@ subroutine pc2_conv_coupling_code( nlayers, seg_len,                           &
                                    dcff_conv_wth,                              &
                                    dbcf_conv_wth,                              &
                                    ! Other
-                                   dt, ndf_wth, undf_wth, map_wth )
+                                   dt, step, ndf_wth, undf_wth, map_wth )
 
     use constants_mod, only: r_def, i_def, r_um, i_um
 
@@ -112,7 +114,7 @@ subroutine pc2_conv_coupling_code( nlayers, seg_len,                           &
     implicit none
 
     ! Arguments
-    integer(kind=i_def), intent(in) :: nlayers, seg_len
+    integer(kind=i_def), intent(in) :: nlayers, seg_len, step
     integer(kind=i_def), intent(in) :: ndf_wth
     integer(kind=i_def), intent(in) :: undf_wth
     integer(kind=i_def), intent(in), dimension(ndf_wth, seg_len) :: map_wth
@@ -200,6 +202,31 @@ subroutine pc2_conv_coupling_code( nlayers, seg_len,                           &
           qcl_incr(i,j)   = 0.0_r_um
           cfl_incr(i,j)   = 0.0_r_um
           bcf_incr(i,j)   = 0.0_r_um
+
+          if (step > 1070 .and. i == 3 .and. k == 45) then
+            write(log_scratch_space, *) 'pc2_conv_coupling t_work = ', t_work(i,j), i, j, k
+            call log_event(log_scratch_space, LOG_LEVEL_INFO)
+            write(log_scratch_space, *) 'pc2_conv_coupling qv_work = ', qv_work(i,j), i, j, k
+            call log_event(log_scratch_space, LOG_LEVEL_INFO)
+            write(log_scratch_space, *) 'pc2_conv_coupling qcl_work = ', qcl_work(i,j), i, j, k
+            call log_event(log_scratch_space, LOG_LEVEL_INFO)
+            write(log_scratch_space, *) 'pc2_conv_coupling cfl_work = ', cfl_work(i,j), i, j, k
+            call log_event(log_scratch_space, LOG_LEVEL_INFO)
+            write(log_scratch_space, *) 'pc2_conv_coupling cff_work = ', cff_work(i,j), i, j, k
+            call log_event(log_scratch_space, LOG_LEVEL_INFO)
+            write(log_scratch_space, *) 'pc2_conv_coupling bcf_work = ', bcf_work(i,j), i, j, k
+            call log_event(log_scratch_space, LOG_LEVEL_INFO)
+            write(log_scratch_space, *) 'pc2_conv_coupling p_work = ', p_work(i,j), i, j, k
+            call log_event(log_scratch_space, LOG_LEVEL_INFO)
+            write(log_scratch_space, *) 'pc2_conv_coupling t_forcing = ', t_forcing(i,j), i, j, k
+            call log_event(log_scratch_space, LOG_LEVEL_INFO)
+            write(log_scratch_space, *) 'pc2_conv_coupling p_forcing = ', p_forcing(i,j), i, j, k
+            call log_event(log_scratch_space, LOG_LEVEL_INFO)
+            write(log_scratch_space, *) 'pc2_conv_coupling qv_forcing = ', qv_forcing(i,j), i, j, k
+            call log_event(log_scratch_space, LOG_LEVEL_INFO)
+            write(log_scratch_space, *) 'pc2_conv_coupling cfl_forcing = ', cfl_forcing(i,j), i, j, k
+            call log_event(log_scratch_space, LOG_LEVEL_INFO)
+          end if
         end do
 
       else
@@ -234,8 +261,32 @@ subroutine pc2_conv_coupling_code( nlayers, seg_len,                           &
           qcl_incr(i,j)   = 0.0_r_um
           cfl_incr(i,j)   = 0.0_r_um
           bcf_incr(i,j)   = 0.0_r_um
-        end do
 
+          if (step > 1070 .and. i == 3 .and. k == 45) then
+            write(log_scratch_space, *) 'pc2_conv_coupling t_work = ', t_work(i,j), i, j, k
+            call log_event(log_scratch_space, LOG_LEVEL_INFO)
+            write(log_scratch_space, *) 'pc2_conv_coupling qv_work = ', qv_work(i,j), i, j, k
+            call log_event(log_scratch_space, LOG_LEVEL_INFO)
+            write(log_scratch_space, *) 'pc2_conv_coupling qcl_work = ', qcl_work(i,j), i, j, k
+            call log_event(log_scratch_space, LOG_LEVEL_INFO)
+            write(log_scratch_space, *) 'pc2_conv_coupling cfl_work = ', cfl_work(i,j), i, j, k
+            call log_event(log_scratch_space, LOG_LEVEL_INFO)
+            write(log_scratch_space, *) 'pc2_conv_coupling cff_work = ', cff_work(i,j), i, j, k
+            call log_event(log_scratch_space, LOG_LEVEL_INFO)
+            write(log_scratch_space, *) 'pc2_conv_coupling bcf_work = ', bcf_work(i,j), i, j, k
+            call log_event(log_scratch_space, LOG_LEVEL_INFO)
+            write(log_scratch_space, *) 'pc2_conv_coupling p_work = ', p_work(i,j), i, j, k
+            call log_event(log_scratch_space, LOG_LEVEL_INFO)
+            write(log_scratch_space, *) 'pc2_conv_coupling t_forcing = ', t_forcing(i,j), i, j, k
+            call log_event(log_scratch_space, LOG_LEVEL_INFO)
+            write(log_scratch_space, *) 'pc2_conv_coupling p_forcing = ', p_forcing(i,j), i, j, k
+            call log_event(log_scratch_space, LOG_LEVEL_INFO)
+            write(log_scratch_space, *) 'pc2_conv_coupling qv_forcing = ', qv_forcing(i,j), i, j, k
+            call log_event(log_scratch_space, LOG_LEVEL_INFO)
+            write(log_scratch_space, *) 'pc2_conv_coupling cfl_forcing = ', cfl_forcing(i,j), i, j, k
+            call log_event(log_scratch_space, LOG_LEVEL_INFO)
+          end if
+        end do
       end if
 
       call pc2_hom_conv(p_work,           & ! Pressure
@@ -270,6 +321,20 @@ subroutine pc2_conv_coupling_code( nlayers, seg_len,                           &
         dmcl_conv_wth(map_wth(1,i) + k) = dmcl_conv_wth(map_wth(1,i) + k) + qcl_incr  (i,j)
         dcfl_conv_wth(map_wth(1,i) + k) = dcfl_conv_wth(map_wth(1,i) + k) + cfl_incr  (i,j)
         dbcf_conv_wth(map_wth(1,i) + k) = dbcf_conv_wth(map_wth(1,i) + k) + bcf_incr  (i,j)
+
+        if (step > 1070) then
+          write(log_scratch_space, *) 'pc2_conv_coupling t_incr = ', t_incr(i,j), i, j, k
+          call log_event(log_scratch_space, LOG_LEVEL_INFO)
+          write(log_scratch_space, *) 'pc2_conv_coupling qv_incr = ', qv_incr(i,j), i, j, k
+          call log_event(log_scratch_space, LOG_LEVEL_INFO)
+          write(log_scratch_space, *) 'pc2_conv_coupling qcl_incr = ', qcl_incr(i,j), i, j, k
+          call log_event(log_scratch_space, LOG_LEVEL_INFO)
+          write(log_scratch_space, *) 'pc2_conv_coupling cfl_incr = ', cfl_incr(i,j), i, j, k
+          call log_event(log_scratch_space, LOG_LEVEL_INFO)
+          write(log_scratch_space, *) 'pc2_conv_coupling bcf_incr = ', bcf_incr(i,j), i, j, k
+          call log_event(log_scratch_space, LOG_LEVEL_INFO)
+        end if
+
       end do
     end do
 
@@ -282,6 +347,12 @@ subroutine pc2_conv_coupling_code( nlayers, seg_len,                           &
       dmcl_conv_wth(map_wth(1,i) + 0) = dmcl_conv_wth(map_wth(1,i) + 1)
       dcfl_conv_wth(map_wth(1,i) + 0) = dcfl_conv_wth(map_wth(1,i) + 1)
       dbcf_conv_wth(map_wth(1,i) + 0) = dbcf_conv_wth(map_wth(1,i) + 1)
+
+      if (step > 1070) then
+        k = model_levels
+        write(log_scratch_space, *) 'pc2_conv_coupling dmv_conv_wth top = ', dmv_conv_wth(map_wth(1,i) + k), k
+        call log_event(log_scratch_space, LOG_LEVEL_INFO)
+      end if
     end do
 
 end subroutine pc2_conv_coupling_code

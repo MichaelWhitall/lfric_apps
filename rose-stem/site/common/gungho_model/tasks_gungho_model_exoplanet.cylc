@@ -132,31 +132,31 @@
 {% elif task_ns.conf_name == "exo-dhj-C24_MG" %}
 
     {% do task_dict.update({
-        "opt_confs": ["deep-hot-jupiter", "io_clim_daily"],
+        "opt_confs": ["deep-hot-jupiter", "io_clim"],
         "resolution": "C24_MG",
         "DT": 30,
         "mpi_parts": 54,
-        "tsteps": 5760,
+        "tsteps": 2880,
         "crun": 2,
         "crun_compare": false,
-        "wallclock": 30,
+        "wallclock": 180,
         "kgo_checks": [],
-        "plot_str": "plot_zonal.py $NODAL_DATA_DIR/lfric_averages.nc $PLOT_DIR deep-hot-jupiter deep-hot-jupiter uniform 66 67"
+        "plot_str": "plot_zonal.py $NODAL_DATA_DIR/lfric_averages.nc $PLOT_DIR deep-hot-jupiter deep-hot-jupiter uniform 32 33"
     }) %}
 
 {% elif task_ns.conf_name == "exo-dhj-C48_MG" %}
 
     {% do task_dict.update({
-        "opt_confs": ["deep-hot-jupiter", "io_clim_daily"],
+        "opt_confs": ["deep-hot-jupiter", "io_clim"],
         "resolution": "C48_MG",
         "DT": 30,
         "mpi_parts": 216,
-        "tsteps": 5760,
+        "tsteps": 2880,
         "crun": 2,
         "crun_compare": false,
-        "wallclock": 30,
+        "wallclock": 180,
         "kgo_checks": [],
-        "plot_str": "plot_zonal.py $NODAL_DATA_DIR/lfric_averages.nc $PLOT_DIR deep-hot-jupiter deep-hot-jupiter uniform 66 67"
+        "plot_str": "plot_zonal.py $NODAL_DATA_DIR/lfric_averages.nc $PLOT_DIR deep-hot-jupiter deep-hot-jupiter uniform 32 33"
     }) %}
 
 {% endif %}

@@ -126,6 +126,7 @@ subroutine check_bad_values_cmpr( cmpr, k, field, where_string,                &
 use comorph_constants_mod, only: real_cvprec, zero, name_length, newline,      &
                                  i_check_bad_values_cmpr
 use cmpr_type_mod, only: cmpr_type
+use, intrinsic :: ieee_arithmetic, only: ieee_is_finite
 
 implicit none
 
@@ -183,8 +184,7 @@ end if
 do ic = 1, cmpr%n_points
 
   ! Bad value test; should trip if NaN or Inf or if outside range
-  l_bad(ic) =  ( .not. ( field(ic) >= min_val .and.                            &
-                         field(ic) <= max_val ) )
+  l_bad(ic) =  ( .not. ieee_is_finite(field(ic)) )
 
 end do
 
