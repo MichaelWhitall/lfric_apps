@@ -125,6 +125,9 @@ use free_tracers_inputs_mod, only: l_wtrac, n_wtrac
 use wtrac_bl_mod,            only: bl_wtrac_type
 use wtrac_atm_step_mod,      only: atm_step_wtrac_type
 
+use comorph_constants_mod, only: newline
+use raise_error_mod, only: raise_fatal
+
 implicit none
 
 !  Inputs :-
@@ -806,6 +809,8 @@ real(kind=r_bl), parameter :: max_ri = 0.01_r_bl*sqrt(huge(one))
                  ! Maximum (absolute) Richardson number which ensures that
                  ! the stability functions (~ri^2) remain real-valued at
                  ! the given model precision
+
+character(len=10000) :: info_str
 
 integer(kind=jpim), parameter :: zhook_in  = 0
 integer(kind=jpim), parameter :: zhook_out = 1
@@ -2218,6 +2223,27 @@ if (BL_diag%l_tke) then
   end do
 !$OMP end PARALLEL do
 
+  do k = 2, bl_levels
+    do j = pdims%j_start, pdims%j_end
+      do i = pdims%i_start, pdims%i_end
+        if ( .not. ( bl_diag%tke(i,j,k) >= 0.0_r_bl .and.                      &
+                     bl_diag%tke(i,j,k) <= 1.0E6_r_bl ) ) then
+          write(info_str,*) "  Bad value of bl_diag%tke.",  newline, &
+            "i,j,k = ", i, j, k,  newline, &
+            "rho_wet_tq = ", rho_wet_tq(i,j,k-1),  newline, &
+            "weight_1dbl = ", weight_1dbl(i,j,k),  newline, &
+            "tke_nl = ", tke_nl(i,j,k),  newline, &
+            "tke_loc = ", tke_loc(i,j,k),  newline, &
+            "tke_diag_fac = ", tke_diag_fac,  newline, &
+            "max_tke = ", max_tke,  newline, &
+            "bl_diag%tke = ", BL_diag%tke(i,j,k)
+          call raise_fatal( "bdy_expl2", trim(adjustl(info_str)) )
+        end if
+      end do
+    end do
+ end do
+
+
   if ( i_bm_ez_opt == i_bm_ez_entpar ) then
     ! Calculate mixing-length to pass to bimodal cloud scheme,
     ! using Km and TKE.
@@ -2320,6 +2346,21 @@ if (BL_diag%l_tke) then
     end do
 !$OMP end do
 !$OMP end PARALLEL
+
+    do k = 2, bl_levels
+      do j = pdims%j_start, pdims%j_end
+        do i = pdims%i_start, pdims%i_end
+          if ( .not. ( bl_w_var(i,j,k) >= 0.0_r_bl .and.                       &
+                       bl_w_var(i,j,k) <= 1.0E6_r_bl ) ) then
+            write(info_str,*) "Bad value of bl_w_var.",  newline, &
+              "i,j,k = ", i, j, k,  newline, &
+              "bl_diag%tke = ", BL_diag%tke(i,j,k),  newline, &
+              "bl_w_var = ", bl_w_var(i,j,k)
+            call raise_fatal( "bdy_expl2", trim(adjustl(info_str)) )
+          end if
+        end do
+      end do
+   end do
 
   end if ! l_subgrid_qcl_mp .or. l_wvar_for_conv
 
