@@ -66,6 +66,10 @@ use yomhook, only: lhook, dr_hook
 use parkind1, only: jprb, jpim
 
 use sblequil_mod, only: sblequil
+
+use comorph_constants_mod, only: newline
+use raise_error_mod, only: raise_fatal
+
 implicit none
 
 integer, intent(in) ::                                                         &
@@ -317,6 +321,8 @@ integer, parameter :: j = 1 ! Loop counter, horizontal - LFRic Parameter
 
 logical ::                                                                     &
  subcrit       ! flag for being in a subcritical ri layer
+
+character(len=10000) :: info_str
 
 integer(kind=jpim), parameter :: zhook_in  = 0
 integer(kind=jpim), parameter :: zhook_out = 1
@@ -570,7 +576,8 @@ if ( local_fa==smooth_to_bdys  ) then
 
 !$OMP PARALLEL DEFAULT(none)                                                   &
 !$OMP SHARED( pdims, bl_levels, z_uv, z_tq, turb_length, ri, ricrit ,          &
-!$OMP         ntpar, ntml_nl, nbdsc, ntdsc, zh_local, zhnl, zhsc, zdsc_base)   &
+!$OMP         ntpar, ntml_nl, nbdsc, ntdsc, zh_local, zhnl, zhsc, zdsc_base,   &
+!$OMP         info_str, newline)   &
 !$OMP private( i, k, kl, kb, kt, zbot, ztop, interp )
 
   ! Initialise turb_length to zero;
@@ -633,6 +640,29 @@ if ( local_fa==smooth_to_bdys  ) then
             * 4.0_r_bl / ( ztop - zbot )
         end do
 
+        do kl = kb, kt
+          if ( .not. ( turb_length(i,j,kl) >= 0.0_r_bl .and.                   &
+                       turb_length(i,j,kl) <= 1.0E6_r_bl ) ) then
+            write(info_str,*) "  Bad value of turb_length.",  newline, &
+              "i,j,kl = ", i,j,kl,  newline, &
+              "ricrit = ", ricrit(i,j),  newline, &
+              "ri(i,j,kl-1) = ", ri(i,j,kl-1),  newline, &
+              "ri(i,j,kl) = ", ri(i,j,kl),  newline, &
+              "ri(i,j,kl+1) = ", ri(i,j,kl+1),  newline, &
+              "ri(i,j,kl+2) = ", ri(i,j,kl+2),  newline, &
+              "kb = ", kb,  newline, &
+              "kt = ", kt,  newline, &
+              "zbot = ", zbot,  newline, &
+              "ztop = ", ztop,  newline, &
+              "z_tq(i,j,kl-1) = ", z_tq(i,j,kl-1),  newline, &
+              "turb_length(i,j,kl-1) = ", turb_length(i,j,kl-1),  newline, &
+              "turb_length(i,j,kl) = ", turb_length(i,j,kl),  newline, &
+              "turb_length(i,j,kl+1) = ", turb_length(i,j,kl+1),  newline, &
+              "turb_length(i,j,kl+2) = ", turb_length(i,j,kl+2)
+            call raise_fatal( "ex_coef", trim(adjustl(info_str)) )
+          end if
+        end do
+
         ! If this sub-critical layer is at the surface
         if ( kb == 2 ) then
           ! Reset zh_local consistently
@@ -690,6 +720,35 @@ if ( local_fa==smooth_to_bdys  ) then
               * 4.0_r_bl / ( ztop - zbot ) )
       end do
     end if
+
+    do k = 2, bl_levels
+      if ( .not. ( turb_length(i,j,k) >= 0.0_r_bl .and.                        &
+                   turb_length(i,j,k) <= 1.0E6_r_bl ) ) then
+        write(info_str,*) "  Bad value of turb_length.",  newline, &
+          "i,j,k = ", i, j, k,  newline, &
+          "ricrit = ", ricrit(i,j),  newline, &
+          "ri(i,j,k-1) = ", ri(i,j,k-1),  newline, &
+          "ri(i,j,k) = ", ri(i,j,k),  newline, &
+          "ri(i,j,k+1) = ", ri(i,j,k+1),  newline, &
+          "ri(i,j,k+2) = ", ri(i,j,k+2),  newline, &
+          "z_tq(i,j,k-2) = ", z_tq(i,j,k-2),  newline, &
+          "z_tq(i,j,k-1) = ", z_tq(i,j,k-1),  newline, &
+          "z_tq(i,j,k) = ", z_tq(i,j,k),  newline, &
+          "z_tq(i,j,k+1) = ", z_tq(i,j,k+1),  newline, &
+          "zh_local = ", zh_local(i,j),  newline, &
+          "zhnl = ", zhnl(i,j),  newline, &
+          "ntml_nl = ", ntml_nl(i,j),  newline, &
+          "nbdsc = ", nbdsc(i,j),  newline, &
+          "ntdsc = ", ntdsc(i,j),  newline, &
+          "zhsc = ", zhsc(i,j),  newline, &
+          "zdsc_base = ", zdsc_base(i,j),  newline, &
+          "turb_length(i,j,k-1) = ", turb_length(i,j,k-1),  newline, &
+          "turb_length(i,j,k) = ", turb_length(i,j,k),  newline, &
+          "turb_length(i,j,k+1) = ", turb_length(i,j,k+1),  newline, &
+          "turb_length(i,j,k+2) = ", turb_length(i,j,k+2)
+        call raise_fatal( "ex_coef", trim(adjustl(info_str)) )
+      end if
+    end do
 
   end do ! loop over i
 !$OMP end do
@@ -798,7 +857,7 @@ do k = 2, bl_levels
 !$OMP  l_rp2,lambda_min,par_mezcla_rp,zh_local,turb_length,k_log_layr,         &
 !$OMP  z_uv,z0m,elm,elh,elh_rho,blending_option,cumulus,l_shallow_cth,zhpar,   &
 !$OMP  ntdsc,weight_1dbl,weight_bltop,delta_smag,rneutml_sq,BL_diag,local_fa,  &
-!$OMP  lambda_min_use)
+!$OMP  lambda_min_use, info_str, newline)
 !$OMP do SCHEDULE(STATIC)
   do i = pdims%i_start, pdims%i_end
     !------------------------------------------------------------------------
@@ -874,6 +933,23 @@ do k = 2, bl_levels
       vkz = vkman * ( z_uv(i,j,k) + z0m(i,j) )
       elh_rho(i,j,k) = vkz / (one + vkz/lambdah )
     end if
+
+    if ( .not. ( elm(i,j,k) >= 0.0_r_bl .and.                                  &
+                 elm(i,j,k) <= 1.0E6_r_bl ) ) then
+      write(info_str,*) "  Bad value of elm.",  newline, &
+        "i,j,k = ", i, j, k,  newline, &
+        "turb_length = ", turb_length(i,j,k),  newline, &
+        "z_scale = ", z_scale,  newline, &
+        "lambdam = ", lambdam,  newline, &
+        "k_log_layr = ", k_log_layr,  newline, &
+        "z0m = ", z0m(i,j),  newline, &
+        "z_tq(i,j,k-1) = ", z_tq(i,j,k-1),  newline, &
+        "vkman = ", vkman,  newline, &
+        "vkz = ", vkz,  newline, &
+        "elm = ", elm(i,j,k)
+      call raise_fatal( "ex_coef", trim(adjustl(info_str)) )
+    end if
+
   end do
 !$OMP end do
 !----------------------------------------------------------------
@@ -1340,7 +1416,7 @@ do k = 2, bl_levels
 !$OMP SHARED( k, pdims,BL_diag,elm,elh,ri,func,prandtl_number,cbl_op,r_pr_n,   &
 !$OMP         l_subfilter_vert,l_subfilter_horiz,fm_3d,fh_3d,rhokm,rhokh,      &
 !$OMP         rho_wet_tq,dvdzm,l_mr_physics,local_fa,tke_loc,subb,subc,g0,dm,  &
-!$OMP         dh  )       &
+!$OMP         dh, info_str, newline  )       &
 !$OMP PRIVATE( i, fm, fh, rtmri, rpr )
 !$OMP do SCHEDULE(STATIC)
   do i = pdims%i_start, pdims%i_end
@@ -1411,11 +1487,33 @@ do k = 2, bl_levels
                           *max( one_half, min( 10.0_r_bl,                      &
                           one - ri(i,j,k)*rpr ) )                              &
                         )**two_thirds
+
+      if ( .not. ( tke_loc(i,j,k) >= 0.0_r_bl .and.                            &
+                   tke_loc(i,j,k) <= 1.0E6_r_bl ) ) then
+        write(info_str,*) "  Bad value of tke_loc.",  newline, &
+          "i,j,k = ", i, j, k,  newline, &
+          "fh = ", fh,  newline, &
+          "fm = ", fm,  newline, &
+          "rpr = ", rpr,  newline, &
+          "r_c_tke = ", r_c_tke,  newline, &
+          "elm = ", elm(i,j,k),  newline, &
+          "dvdzm = ", dvdzm(i,j,k),  newline, &
+          "rhokm = ", rhokm(i,j,k),  newline, &
+          "rho_wet_tq = ", rho_wet_tq(i,j,k-1),  newline, &
+          "ri = ", ri(i,j,k),  newline, &
+          "huge = ", huge(one),  newline, &
+          "tiny = ", tiny(one),  newline, &
+          "tke_loc = ", tke_loc(i,j,k)
+        call raise_fatal( "ex_coef", trim(adjustl(info_str)) )
+      end if
+
     end if
   end do !i
 !$OMP end do
 !$OMP end PARALLEL
 end do ! bl_levels
+
+
 
 if (lhook) call dr_hook(ModuleName//':'//RoutineName,zhook_out,zhook_handle)
 return
