@@ -551,7 +551,7 @@ type(cond_params_type), target :: params_graup =cond_params_type(              &
   fac_tdep_n= zero,                  &  ! T-dependent number conc. off.
   area_coef = 1.0_real_cvprec,       &  ! 1.0 for spheres
   r_min     = 0.0_real_cvprec,       &  ! No CCN for graupel
-  i_sg      = i_sg_homog,            &  ! Assumed homogeneous across grid-box
+  i_sg      = i_sg_frac_prec,        &  ! Lives in the precip fraction
   i_frzmlt  = i_rain                )   ! Melt into rain
 
 ! Density of rimed ice (used for graupel)
@@ -701,8 +701,6 @@ real(kind=real_cvprec), parameter :: max_water_frac = 0.8_real_cvprec
 ! a) Those used if NOT using turbulence-based parcel properties
 !    (l_turb_par_gen = .FALSE.)
 
-! Prescribed initial parcel radius
-real(kind=real_cvprec), parameter :: par_gen_radius = 500.0_real_cvprec
 ! Fractional moisture perturbation to apply to the initial parcel
 real(kind=real_cvprec), parameter :: par_gen_qpert = 0.05_real_cvprec
 

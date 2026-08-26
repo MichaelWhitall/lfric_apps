@@ -25,8 +25,8 @@ subroutine set_par_fields( n_points, n_points_super, n_fields_tot,             &
                            par_gen_par, par_gen_mean, par_gen_core,            &
                            rhpert_t, frac_r_t )
 
-use comorph_constants_mod, only: real_cvprec, zero, one, l_turb_par_gen,       &
-                                 par_gen_radius, par_gen_radius_fac,           &
+use comorph_constants_mod, only: real_cvprec, zero, one,                       &
+                                 par_gen_radius_fac,                           &
                                  ass_min_radius, min_radius_fac,               &
                                  par_gen_core_fac,                             &
                                  n_tracers, name_length, l_par_core,           &
@@ -118,29 +118,18 @@ character(len=name_length) :: field_name
 integer :: ic, i_field, i_region
 
 
-if ( l_turb_par_gen ) then
+! Use max of turbulence-based radius and an arbitrary linear
+! ramp from the surface
+do ic = 1, n_points
+  par_gen_par(ic,i_radius) = max( par_gen_radius_fac * turb_len_k(ic),       &
+                                  min( min_radius_fac * grid_k(ic,i_height), &
+                                       ass_min_radius ) )
+end do
 
-  ! Use max of turbulence-based radius and an arbitrary linear
-  ! ramp from the surface
-  do ic = 1, n_points
-    par_gen_par(ic,i_radius) = max( par_gen_radius_fac * turb_len_k(ic),       &
-                                    min( min_radius_fac * grid_k(ic,i_height), &
-                                         ass_min_radius ) )
-  end do
-
-  ! Amplify the parcel radius using input variable scaling factor...
-  do ic = 1, n_points
-    par_gen_par(ic,i_radius) = par_gen_par(ic,i_radius) * par_radius_amp(ic)
-  end do
-
-else
-
-  ! Set arbitrary fixed parcel radius
-  do ic = 1, n_points
-    par_gen_par(ic,i_radius) = par_gen_radius
-  end do
-
-end if
+! Amplify the parcel radius using input variable scaling factor...
+do ic = 1, n_points
+  par_gen_par(ic,i_radius) = par_gen_par(ic,i_radius) * par_radius_amp(ic)
+end do
 
 ! Set environment virtual temperature stored in the parcel
 call calc_virt_temp( n_points, n_points_super,                                 &
