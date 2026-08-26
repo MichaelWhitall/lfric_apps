@@ -60,7 +60,7 @@ class vn32_t717(MacroUpgrade):
         nml1 = "namelist:convection"
         nml2 = "namelist:comorph"
         for entry in ["par_gen_mass_fac", "par_gen_rhpert",
-                      "par_radius_ppn_max", "resdep_precipramp", "dx_ref"]
+                      "par_radius_ppn_max", "resdep_precipramp", "dx_ref"]:
             source = self.get_setting_value(config, [nml1, entry])
             self.remove_setting(config, [nml1, entry])
             self.add_setting(config, [nml2, entry], source)
