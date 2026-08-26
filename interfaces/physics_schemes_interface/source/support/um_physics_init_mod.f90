@@ -151,12 +151,15 @@ module um_physics_init_mod
                                         c_mass_sh_in => c_mass_sh,           &
                                 l_conv_prog_dtheta_in => l_conv_prog_dtheta, &
                                      l_conv_prog_dq_in => l_conv_prog_dq,    &
-                                     par_gen_mass_fac_in => par_gen_mass_fac, &
-                                     par_gen_rhpert_in => par_gen_rhpert,     &
-                                     par_radius_ppn_max_in => par_radius_ppn_max, &
-                                     resdep_precipramp, dx_ref_in => dx_ref,   &
                                      l_cvdiag_ctop_qmax_in => l_cvdiag_ctop_qmax, &
                                      llcs_first_outer
+
+  use comorph_config_mod,        only :                                        &
+           par_gen_mass_fac_in       => par_gen_mass_fac,                      &
+           par_gen_rhpert_in         => par_gen_rhpert,                        &
+           par_radius_ppn_max_in     => par_radius_ppn_max,                    &
+                                        resdep_precipramp,                     &
+           dx_ref_in                 => dx_ref
 
   use extrusion_config_mod,      only : domain_height, number_of_layers
 
