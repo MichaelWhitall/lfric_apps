@@ -47,8 +47,8 @@ class vn32_t717(MacroUpgrade):
             config, ["file:configuration.nml", "source"]
         )
         source = re.sub(
-            r"( *)(\(?)namelist:convection(\)?)(\n)",
-            r"\1\2namelist:convection\3\4\1(namelist:comorph)\4",
+            r"(\(?)namelist:convection(\)?)(\n)",
+            r"\1namelist:convection\2\3 (namelist:comorph)\n",
             source
         )
         self.change_setting_value(
