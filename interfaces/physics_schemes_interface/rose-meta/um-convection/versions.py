@@ -48,7 +48,7 @@ class vn32_t717(MacroUpgrade):
         )
         source = re.sub(
             r"( *)(\(?)namelist:convection(\)?)(\n)",
-            r"\1\2namelist:convection\3\4\1\2namelist:comorph\3\4",
+            r"\1\2namelist:convection\3\4\1(namelist:comorph)\4",
             source
         )
         self.change_setting_value(
