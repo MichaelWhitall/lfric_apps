@@ -60,6 +60,7 @@ gfortran -O0 -g -Wall -Wextra \
       "$comorph/control/env_half_mod.F90" \
       "$comorph/control/cloudfracs_type_mod.F90" \
       "$comorph/control/turb_type_mod.F90" \
+      "$comorph/control/core_combine.F90" \
       "$comorph/control/parcel_type_mod.F90" \
       "$comorph/control/res_source_type_mod.F90" \
       "$comorph/control/subregion_mod.F90" \
