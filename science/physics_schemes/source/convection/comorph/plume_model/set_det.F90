@@ -268,8 +268,7 @@ if ( l_par_core ) then
 
     field_name = "core_mean_ratio"
     call check_bad_values_cmpr( cmpr, k, core_mean_ratio,                      &
-                                where_string,                                  &
-                                field_name, field_min = zero )
+                                where_string, field_name, field_min=zero )
 
   end if
 
@@ -480,12 +479,12 @@ if ( l_par_core ) then
                    trim(adjustl(draft_string))
 
     field_name = "x_edge"
-    call check_bad_values_cmpr( cmpr, k, x_edge, where_string,                 &
-                                field_name, field_min = zero, field_max = one )
+    call check_bad_values_cmpr( cmpr, k, x_edge, where_string, field_name,     &
+                                field_min=zero, field_max=one )
 
     field_name = "frac (non-detrained fraction)"
-    call check_bad_values_cmpr( cmpr, k, frac, where_string,                   &
-                                field_name, field_min = zero, field_max = one )
+    call check_bad_values_cmpr( cmpr, k, frac, where_string, field_name,       &
+                                field_min=zero, field_max=one )
 
   end if
 
@@ -914,15 +913,14 @@ if ( i_check_bad_values_cmpr > i_check_bad_none ) then
 
   ! Check detrained mass
   field_name = "det_mass_d"
-  call check_bad_values_cmpr( cmpr, k, det_mass_d, where_string,               &
-                              field_name,                                      &
+  call check_bad_values_cmpr( cmpr, k, det_mass_d,                             &
+                              where_string, field_name,                        &
                               field_min = par_min(i_massflux_d),               &
                               field_max = par_max(i_massflux_d) )
   ! Check mass-flux
   field_name = "next_massflux_d"
   call check_bad_values_cmpr( cmpr, k, par_conv_super(:,i_massflux_d),         &
-                              where_string,                                    &
-                              field_name,                                      &
+                              where_string, field_name,                        &
                               field_min = par_min(i_massflux_d),               &
                               field_max = par_max(i_massflux_d) )
 
