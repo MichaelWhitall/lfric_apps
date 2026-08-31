@@ -155,11 +155,56 @@ module um_physics_init_mod
                                      llcs_first_outer
 
   use comorph_config_mod,        only :                                        &
+           ass_min_radius_in         => ass_min_radius,                        &
+           autoc_opt_in              => autoc_opt,                             &
+                                        autoc_opt_linear,                      &
+                                        autoc_opt_quadratic,                   &
+           cf_area_coef_in           => cf_area_coef,                          &
+           cf_conv_fac_in            => cf_conv_fac,                           &
+           coef_auto_in              => coef_auto,                             &
+           col_eff_coef_in           => col_eff_coef,                          &
+           core_ent_cmr_in           => core_ent_cmr,                          &
+           core_ent_fac_in           => core_ent_fac,                          &
+           drag_coef_cond_in         => drag_coef_cond,                        &
+           drag_coef_par_in          => drag_coef_par,                         &
+           dx_ref_in                 => dx_ref,                                &
+           ent_coef_in               => ent_coef,                              &
+           hetnuc_temp_in            => hetnuc_temp,                           &
+           max_cmr_in                => max_cmr,                               &
+           min_cmr_in                => min_cmr,                               &
+           n_dndraft_types_in        => n_dndraft_types,                       &
+           nconc_cf_in               => nconc_cf,                              &
+           nconc_cl_in               => nconc_cl,                              &
+           nconc_graup_in            => nconc_graup,                           &
+           nconc_rain_in             => nconc_rain,                            &
+           nconc_snow_in             => nconc_snow,                            &
+           overlap_power_in          => overlap_power,                         &
+           par_gen_core_fac_in       => par_gen_core_fac,                      &
            par_gen_mass_fac_in       => par_gen_mass_fac,                      &
+           par_gen_pert_fac_in       => par_gen_pert_fac,                      &
            par_gen_rhpert_in         => par_gen_rhpert,                        &
+           par_radius_evol_method_in => par_radius_evol_method,                &
+                                        par_radius_evol_method_constant,       &
+                                        par_radius_evol_method_volume,         &
+                                        par_radius_evol_method_no_decrease,    &
+                                        par_radius_evol_method_no_detrain,     &
+           par_radius_init_method_in => par_radius_init_method,                &
+                                        par_radius_init_method_constant,       &
+                                        par_radius_init_method_linear_p,       &
+                                        par_radius_init_method_linear_prq,     &
+                                        par_radius_init_method_linear_prq_w,   &
+                                        par_radius_init_method_linear_p_q,     &
+           par_radius_knob_in        => par_radius_knob,                       &
+           par_radius_knob_max_in    => par_radius_knob_max,                   &
            par_radius_ppn_max_in     => par_radius_ppn_max,                    &
-                                        resdep_precipramp,                     &
-           dx_ref_in                 => dx_ref
+           rain_area_min_in          => rain_area_min,                         &
+           rho_rim_in                => rho_rim,                               &
+           resdep_precipramp_in      => resdep_precipramp,                     &
+           tdep_n_cf_in              => tdep_n_cf,                             &
+           tdep_n_cl_in              => tdep_n_cl,                             &
+           vent_factor_in            => vent_factor,                           &
+           wind_w_buoy_fac_in        => wind_w_buoy_fac,                       &
+           wind_w_fac_in             => wind_w_fac
 
   use extrusion_config_mod,      only : domain_height, number_of_layers
 
@@ -389,17 +434,27 @@ contains
          l_pc2_homog_conv_pressure, l_cloud_call_b4_conv,                  &
          i_bm_ez_orig, i_bm_ez_subcrit, i_bm_ez_entpar
     use cloud_config_mod, only: cld_fsd_hill
-    use comorph_um_namelist_mod, only: ass_min_radius, autoc_opt,            &
-         cf_conv_fac, coef_auto, col_eff_coef, core_ent_fac, drag_coef_cond, &
-         drag_coef_par, ent_coef, hetnuc_temp, l_core_ent_cmr,               &
-         min_cmr, max_cmr, cf_area_coef,                                     &
-         nconc_cf, nconc_cl, nconc_graup, nconc_rain, nconc_snow,            &
-         n_dndraft_types, overlap_power, par_gen_core_fac, par_gen_mass_fac, &
-         par_gen_pert_fac, par_gen_rhpert, par_radius_evol_method,           &
-         par_radius_init_method, par_radius_knob, par_radius_knob_max,       &
-         par_radius_ppn_max, tdep_n_cf, tdep_n_cl, rain_area_min, rho_rim,   &
-         vent_factor, wind_w_buoy_fac, wind_w_fac, check_run_comorph,        &
-         l_resdep_precipramp, dx_ref
+    use comorph_um_namelist_mod, only:                                         &
+         ! UM namelist entries
+         ass_min_radius, autoc_opt, cf_area_coef, cf_conv_fac, coef_auto,      &
+         col_eff_coef, core_ent_fac, drag_coef_cond, drag_coef_par, dx_ref,    &
+         ent_coef, hetnuc_temp, l_core_ent_cmr, l_resdep_precipramp,           &
+         max_cmr, min_cmr, n_dndraft_types,                                    &
+         nconc_cf, nconc_cl, nconc_graup, nconc_rain, nconc_snow,              &
+         overlap_power, par_gen_core_fac, par_gen_mass_fac,                    &
+         par_gen_pert_fac, par_gen_rhpert, par_radius_evol_method,             &
+         par_radius_init_method, par_radius_knob, par_radius_knob_max,         &
+         par_radius_ppn_max, rain_area_min, rho_rim, tdep_n_cf, tdep_n_cl,     &
+         vent_factor, wind_w_buoy_fac, wind_w_fac,                             &
+         ! Namelis checking subroutine
+         check_run_comorph,                                                    &
+         ! Allowed values for multi-option switches
+         no_dependence, rain_dependence, qfacrain_dependence, w_dependence,    &
+         linear_qfacrain_dep
+    use comorph_constants_mod, only:                                           &
+         autoc_linear, autoc_quadratic,                                        &
+         par_radius_evol_const, par_radius_evol_volume,                        &
+         par_radius_evol_no_decrease, par_radius_evol_no_detrain
     use cv_run_mod, only: icvdiag, cvdiag_inv, cvdiag_sh_wtest,            &
          limit_pert_opt, tv1_sd_opt, iconv_congestus, iconv_deep,          &
          ent_fac_dp, cldbase_opt_dp, cldbase_opt_sh, w_cape_limit,         &
@@ -880,57 +935,90 @@ contains
         tau_conv_prog_dtheta = 2700.0_r_um
         tau_conv_prog_dq    =  2700.0_r_um
 
-        ! main Comorph options
-        ass_min_radius = 500.0_r_um
-        autoc_opt = 2
-        cf_area_coef = 10.0_r_um
-        cf_conv_fac = 2.0_r_um
-        coef_auto = 0.025_r_um
-        col_eff_coef = 1.0_r_um
-        core_ent_fac = 1.0_r_um
-        drag_coef_cond = 0.5_r_um
-        drag_coef_par = 0.5_r_um
-        dx_ref = dx_ref_in
-        ent_coef = 0.2_r_um
-        hetnuc_temp = 263.0_r_um
-        l_core_ent_cmr = .true.
-        l_resdep_precipramp = resdep_precipramp
-        max_cmr = 6.0_r_um
-        min_cmr = 2.0_r_um
-        nconc_cf = 300.0_r_um
-        nconc_cl = 1.0E8_r_um
-        nconc_graup = 100.0_r_um
-        nconc_rain = 1000.0_r_um
-        nconc_snow = 300.0_r_um
-        n_dndraft_types = 1
-        overlap_power = 0.5_r_um
-        par_gen_core_fac = 3.0_r_um
-        par_gen_mass_fac = par_gen_mass_fac_in
-        par_gen_pert_fac = 0.333_r_um
-        par_gen_rhpert = par_gen_rhpert_in
-        par_radius_evol_method = 3
-        par_radius_init_method = 4
-        par_radius_knob = 0.45_r_um
-        par_radius_knob_max = 2.0_r_um
-        par_radius_ppn_max = par_radius_ppn_max_in
-        tdep_n_cf = 8.18_r_um
-        tdep_n_cl = 0.0_r_um
-        rain_area_min = 0.05_r_um
-        rho_rim = 600.0_r_um
-        vent_factor = 0.25_r_um
-        wind_w_buoy_fac = 1.0_r_um
-        wind_w_fac = 1.0_r_um
+        ! CoMorph namelist settings...
+
+        ! Top-level settings:
+        n_dndraft_types        = n_dndraft_types_in
+        cf_conv_fac            = cf_conv_fac_in
+        wind_w_buoy_fac        = wind_w_buoy_fac_in
+        overlap_power          = overlap_power_in
+        rain_area_min          = rain_area_min_in
+
+        ! Conv triggering and parcel initialisation
+        par_gen_mass_fac       = par_gen_mass_fac_in
+        par_gen_pert_fac       = par_gen_pert_fac_in
+        par_gen_core_fac       = par_gen_core_fac_in
+        par_gen_rhpert         = par_gen_rhpert_in
+        select case ( par_radius_init_method_in )
+          case ( par_radius_init_method_constant )
+            par_radius_init_method = no_dependence
+          case ( par_radius_init_method_linear_p )
+            par_radius_init_method = rain_dependence
+          case ( par_radius_init_method_linear_prq )
+            par_radius_init_method = qfacrain_dependence
+          case ( par_radius_init_method_linear_prq_w )
+            par_radius_init_method = w_dependence
+          case ( par_radius_init_method_linear_p_q )
+            par_radius_init_method = linear_qfacrain_dep
+        end select
+        par_radius_knob        = par_radius_knob_in
+        par_radius_knob_max    = par_radius_knob_max_in
+        par_radius_ppn_max     = par_radius_ppn_max_in
+        l_resdep_precipramp    = resdep_precipramp_in
+        dx_ref                 = dx_ref_in
+        ass_min_radius         = ass_min_radius_in
+
+        ! Plume model
+        ent_coef               = ent_coef_in
+        l_core_ent_cmr         = core_ent_cmr_in
+        core_ent_fac           = core_ent_fac_in
+        min_cmr                = min_cmr_in
+        max_cmr                = max_cmr_in
+        drag_coef_par          = drag_coef_par_in
+        select case ( par_radius_evol_method_in )
+          case ( par_radius_evol_method_constant )
+            par_radius_evol_method = par_radius_evol_const
+          case ( par_radius_evol_method_volume )
+            par_radius_evol_method = par_radius_evol_volume
+          case ( par_radius_evol_method_no_decrease )
+            par_radius_evol_method = par_radius_evol_no_decrease
+          case ( par_radius_evol_method_no_detrain )
+            par_radius_evol_method = par_radius_evol_no_detrain
+        end select
+
+        ! In-plume microphysics
+        select case ( autoc_opt_in )
+          case ( autoc_opt_linear )
+            autoc_opt = autoc_linear
+          case (autoc_opt_quadratic )
+            autoc_opt = autoc_quadratic
+        end select
+        coef_auto              = coef_auto_in
+        hetnuc_temp            = hetnuc_temp_in
+        cf_area_coef           = cf_area_coef_in
+        wind_w_fac             = wind_w_fac_in
+        col_eff_coef           = col_eff_coef_in
+        drag_coef_cond         = drag_coef_cond_in
+        vent_factor            = vent_factor_in
+        rho_rim                = rho_rim_in
+        nconc_cl               = nconc_cl_in
+        nconc_rain             = nconc_rain_in
+        nconc_cf               = nconc_cf_in
+        nconc_snow             = nconc_snow_in
+        nconc_graup            = nconc_graup_in
+        tdep_n_cf              = tdep_n_cf_in
+        tdep_n_cl              = tdep_n_cl_in
 
         ! check the namelist
         call check_run_comorph()
 
       case(cv_scheme_gregory_rowntree)
 
-      if ( boundary_layer /= boundary_layer_um ) then
-        write( log_scratch_space, '(A)' )                                   &
-            'UM boundary layer is required for GR convection - please switch on'
-        call log_event( log_scratch_space, LOG_LEVEL_ERROR )
-      end if
+        if ( boundary_layer /= boundary_layer_um ) then
+          write( log_scratch_space, '(A)' )                                    &
+           'UM boundary layer is required for GR convection - please switch on'
+          call log_event( log_scratch_space, LOG_LEVEL_ERROR )
+        end if
 
         i_convection_vn     = i_convection_vn_6a
         adapt               = 8
