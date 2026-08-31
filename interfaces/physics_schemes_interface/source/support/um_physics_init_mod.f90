@@ -1006,8 +1006,8 @@ contains
         nconc_cf               = nconc_cf_in
         nconc_snow             = nconc_snow_in
         nconc_graup            = nconc_graup_in
-        tdep_n_cf              = tdep_n_cf_in
         tdep_n_cl              = tdep_n_cl_in
+        tdep_n_cf              = tdep_n_cf_in
 
         ! check the namelist
         call check_run_comorph()
