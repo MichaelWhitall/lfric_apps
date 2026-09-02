@@ -1009,6 +1009,16 @@ contains
         tdep_n_cl              = tdep_n_cl_in
         tdep_n_cf              = tdep_n_cf_in
 
+        ! TEMPORARY CODE TO PRESERVE KGO
+        ! If par_radius_knob is within a numerical tolerance of its previously
+        ! hardwired value, set it to exactly that value in r_um precision
+        ! (moving it to the namelist where it gets set in r_def precision
+        !  slightly changes the value in r_um precision even if the value in
+        !  the namelist is the same).
+        if ( abs(par_radius_knob_in - 0.45_r_def) < epsilon(0.45_r_def) ) then
+          par_radius_knob = 0.45_r_um
+        end if
+
         ! check the namelist
         call check_run_comorph()
 
