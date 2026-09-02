@@ -108,7 +108,7 @@ real(kind=real_cvprec) :: dtv_dqsat_ice(n_points)
 
 ! Local total condensed water within each region
 real(kind=real_cvprec) :: qc_tot_loc(n_points,n_regions)
-! Excess of the local total condensed water above the grid-mean value
+! Condensate water-loading excess of each region relative to the grid-mean
 real(kind=real_cvprec) :: qc_excess(n_points,n_regions)
 ! Local total condensed water outside the liquid-cloud
 real(kind=real_cvprec) :: qc_tot_noliq
@@ -190,8 +190,7 @@ do i_cond = 1, n_cond_species
   end select
 end do  ! i_cond = 1, n_cond_species
 
-! Store the excess of the local total-condensed-water in each region
-! above the grid-mean value
+! Set water-loading excess of each region used in buoyancy calculations
 do i_region = 1, n_regions
   do ic = 1, n_points
     qc_excess(ic,i_region) = qc_tot_loc(ic,i_region) - qc_tot(ic)

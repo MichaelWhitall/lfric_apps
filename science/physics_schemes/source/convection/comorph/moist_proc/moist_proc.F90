@@ -284,6 +284,16 @@ call set_cp_tot( n_points, n_points_super,                                     &
 call calc_q_tot( n_points, n_points_super,                                     &
                  q_vap, q_cond, q_tot )
 
+! Calculate air dry-density
+call calc_rho_dry( n_points, temperature, q_vap, pressure,                     &
+                   rho_dry )
+
+! Calculate rho_wet
+! (dry-mass to wet-mass conversion factor = 1 + q_tot)
+do ic = 1, n_points
+  rho_wet(ic) = rho_dry(ic) * ( one + q_tot(ic) )
+end do
+
 
 !----------------------------------------------------------------
 ! 2) Fall-in of each hydrometeor species from the environment...
@@ -337,16 +347,6 @@ do i_cond = 1, n_cond_species
       index_ic(nc(i_cond),i_cond) = ic
     end if
   end do
-end do
-
-! Calculate air dry-density
-call calc_rho_dry( n_points, temperature, q_vap, pressure,                     &
-                   rho_dry )
-
-! Complete calculation of rho_wet
-! (dry-mass to wet-mass conversion factor = 1 + q_tot)
-do ic = 1, n_points
-  rho_wet(ic) = rho_dry(ic) * ( one + q_tot(ic) )
 end do
 
 ! Call microphysics routine:
