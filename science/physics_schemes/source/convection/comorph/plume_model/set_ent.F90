@@ -16,22 +16,23 @@ contains
 ! Subroutine sets the entrained mass from the current layer,
 ! and sets the properties of the entrained air
 subroutine set_ent( n_points, n_fields_tot, max_points,                        &
-                    max_ent_frac,                                              &
-                    par_conv_mean_fields, ent_fields,                          &
+                    l_to_full_level, max_ent_frac,                             &
+                    par_conv_mean_fields, env_k_fields,                        &
                     grid_prev_super, grid_next_super,                          &
                     par_conv_super,                                            &
                     l_within_bl, core_mean_ratio,                              &
                     layer_mass_step, sum_massflux,                             &
-                    ent_mass_d, core_ent_ratio )
+                    ent_fields, exner_ratio, ent_mass_d, core_ent_ratio )
 
 use comorph_constants_mod, only: real_cvprec, min_float, one,                  &
                                  ent_coef, comorph_timestep,                   &
                                  core_ent_fac, l_core_ent_cmr,                 &
                                  i_cfl_local, i_cfl_local_all,                 &
                                  i_cfl_local_nobl
-use fields_type_mod, only: i_temperature, i_q_vap
+use fields_type_mod, only: i_temperature, i_q_vap, i_qc_first, i_qc_last
 use grid_type_mod, only: n_grid, i_height, i_pressure
 use parcel_type_mod, only: n_par, i_massflux_d, i_radius
+use dry_adiabat_mod, only: dry_adiabat
 use calc_rho_dry_mod, only: calc_rho_dry
 
 implicit none
@@ -48,15 +49,19 @@ integer, intent(in) :: n_fields_tot
 !  which will often be bigger than the number of points here)
 integer, intent(in) :: max_points
 
+! Flag for first half-level ascent from half-level to full-level
+logical, intent(in) :: l_to_full_level
+
 ! Maximum allowed entrained fraction of layer mass for current draft
 real(kind=real_cvprec), intent(in) :: max_ent_frac
 
 ! Super-array containing the parcel mean primary fields
 real(kind=real_cvprec), intent(in) :: par_conv_mean_fields                     &
                                       ( max_points, n_fields_tot )
-! Entrained primary field values
-real(kind=real_cvprec), intent(in) :: ent_fields                               &
-                                      ( n_points, n_fields_tot )
+! Super-array containing the environment primary fields
+! at the current thermodynamic level k;
+real(kind=real_cvprec), intent(in) :: env_k_fields                             &
+                                      ( max_points, n_fields_tot )
 
 ! Height and pressure of parcel before and after the level-step
 real(kind=real_cvprec), intent(in) :: grid_prev_super ( max_points, n_grid )
@@ -77,6 +82,13 @@ real(kind=real_cvprec), intent(in) :: layer_mass_step(n_points)
 ! Sum of previous level-interface mass-fluxes over all convection types/layers
 real(kind=real_cvprec), intent(in) :: sum_massflux(n_points)
 
+! Entrained primary field values
+real(kind=real_cvprec), intent(out) :: ent_fields                              &
+                                       ( n_points, n_fields_tot )
+
+! Exner pressure factor for dry-adiabatic adjustment to prev
+real(kind=real_cvprec), intent(out) :: exner_ratio(n_points)
+
 ! Rate of entrainment of dry-mass from current level / kg m-2 s-1
 real(kind=real_cvprec), intent(out) :: ent_mass_d(n_points)
 
@@ -92,11 +104,44 @@ real(kind=real_cvprec) :: par_rho_dry(n_points)
 real(kind=real_cvprec) :: max_ent(n_points)
 
 ! Loop counters
-integer :: ic
+integer :: ic, i_field
 
 
 !------------------------------------------------------------------------------
-! 1) Calculate 1/R "mixing" entrainment rate
+! 1) Set properties of the entrained air
+!------------------------------------------------------------------------------
+
+! Set entrained air properties the same as the mean environment at level k
+do i_field = 1, n_fields_tot
+  do ic = 1, n_points
+    ent_fields(ic,i_field) = env_k_fields(ic,i_field)
+  end do
+end do
+
+if ( l_to_full_level ) then
+  ! If this is the first of the two half-level-steps
+  ! (from previous half-level to level k),
+  ! then the environment fields to entrain are at level k, but the
+  ! parcel is at a different pressure, at the previous half-level.
+  ! Adjust the environment temperature to what it would be at the
+  ! start of the level-step, so that we entrain it into the parcel
+  ! consistently...
+  do ic = 1, n_points
+    exner_ratio(ic) = one
+  end do
+  call dry_adiabat( n_points, n_points,                                        &
+                  grid_next_super(:,i_pressure), grid_prev_super(:,i_pressure),&
+                    ent_fields(:,i_q_vap),                                     &
+                    ent_fields(:,i_qc_first:i_qc_last),                        &
+                    exner_ratio )
+  do ic = 1, n_points
+    ent_fields(ic,i_temperature) = ent_fields(ic,i_temperature)                &
+                                 * exner_ratio(ic)
+  end do
+end if
+
+!------------------------------------------------------------------------------
+! 2) Calculate 1/R "mixing" entrainment rate
 !------------------------------------------------------------------------------
 
 ! Set the fractional volume entrainment rate in m-1
@@ -152,7 +197,7 @@ end if
 
 
 !------------------------------------------------------------------------------
-! 2) Apply CFL limit to entrainment for numerical stability
+! 3) Apply CFL limit to entrainment for numerical stability
 !------------------------------------------------------------------------------
 
 ! Compute maximum allowed total entrainment rate
