@@ -939,16 +939,16 @@ contains
 
         ! Top-level settings:
         n_dndraft_types        = n_dndraft_types_in
-        cf_conv_fac            = cf_conv_fac_in
-        wind_w_buoy_fac        = wind_w_buoy_fac_in
-        overlap_power          = overlap_power_in
-        rain_area_min          = rain_area_min_in
+        cf_conv_fac            = real( cf_conv_fac_in,            r_um )
+        wind_w_buoy_fac        = real( wind_w_buoy_fac_in,        r_um )
+        overlap_power          = real( overlap_power_in,          r_um )
+        rain_area_min          = real( rain_area_min_in,          r_um )
 
         ! Conv triggering and parcel initialisation
-        par_gen_mass_fac       = par_gen_mass_fac_in
-        par_gen_pert_fac       = par_gen_pert_fac_in
-        par_gen_core_fac       = par_gen_core_fac_in
-        par_gen_rhpert         = par_gen_rhpert_in
+        par_gen_mass_fac       = real( par_gen_mass_fac_in,       r_um )
+        par_gen_pert_fac       = real( par_gen_pert_fac_in,       r_um )
+        par_gen_core_fac       = real( par_gen_core_fac_in,       r_um )
+        par_gen_rhpert         = real( par_gen_rhpert_in,         r_um )
         select case ( par_radius_init_method_in )
           case ( par_radius_init_method_constant )
             par_radius_init_method = no_dependence
@@ -961,20 +961,20 @@ contains
           case ( par_radius_init_method_linear_p_q )
             par_radius_init_method = linear_qfacrain_dep
         end select
-        par_radius_knob        = par_radius_knob_in
-        par_radius_knob_max    = par_radius_knob_max_in
-        par_radius_ppn_max     = par_radius_ppn_max_in
+        par_radius_knob        = real( par_radius_knob_in,        r_um )
+        par_radius_knob_max    = real( par_radius_knob_max_in,    r_um )
+        par_radius_ppn_max     = real( par_radius_ppn_max_in,     r_um )
         l_resdep_precipramp    = resdep_precipramp_in
-        dx_ref                 = dx_ref_in
-        ass_min_radius         = ass_min_radius_in
+        dx_ref                 = real( dx_ref_in,                 r_um )
+        ass_min_radius         = real( ass_min_radius_in,         r_um )
 
         ! Plume model
-        ent_coef               = ent_coef_in
+        ent_coef               = real( ent_coef_in,               r_um )
         l_core_ent_cmr         = core_ent_cmr_in
-        core_ent_fac           = core_ent_fac_in
-        min_cmr                = min_cmr_in
-        max_cmr                = max_cmr_in
-        drag_coef_par          = drag_coef_par_in
+        core_ent_fac           = real( core_ent_fac_in,           r_um )
+        min_cmr                = real( min_cmr_in,                r_um )
+        max_cmr                = real( max_cmr_in,                r_um )
+        drag_coef_par          = real( drag_coef_par_in,          r_um )
         select case ( par_radius_evol_method_in )
           case ( par_radius_evol_method_constant )
             par_radius_evol_method = par_radius_evol_const
@@ -993,31 +993,21 @@ contains
           case (autoc_opt_quadratic )
             autoc_opt = autoc_quadratic
         end select
-        coef_auto              = coef_auto_in
-        hetnuc_temp            = hetnuc_temp_in
-        cf_area_coef           = cf_area_coef_in
-        wind_w_fac             = wind_w_fac_in
-        col_eff_coef           = col_eff_coef_in
-        drag_coef_cond         = drag_coef_cond_in
-        vent_factor            = vent_factor_in
-        rho_rim                = rho_rim_in
-        nconc_cl               = nconc_cl_in
-        nconc_rain             = nconc_rain_in
-        nconc_cf               = nconc_cf_in
-        nconc_snow             = nconc_snow_in
-        nconc_graup            = nconc_graup_in
-        tdep_n_cl              = tdep_n_cl_in
-        tdep_n_cf              = tdep_n_cf_in
-
-        ! TEMPORARY CODE TO PRESERVE KGO
-        ! If par_radius_knob is within a numerical tolerance of its previously
-        ! hardwired value, set it to exactly that value in r_um precision
-        ! (moving it to the namelist where it gets set in r_def precision
-        !  slightly changes the value in r_um precision even if the value in
-        !  the namelist is the same).
-        if ( abs(par_radius_knob_in - 0.45_r_def) < epsilon(0.45_r_def) ) then
-          par_radius_knob = 0.45_r_um
-        end if
+        coef_auto              = real( coef_auto_in,              r_um )
+        hetnuc_temp            = real( hetnuc_temp_in,            r_um )
+        cf_area_coef           = real( cf_area_coef_in,           r_um )
+        wind_w_fac             = real( wind_w_fac_in,             r_um )
+        col_eff_coef           = real( col_eff_coef_in,           r_um )
+        drag_coef_cond         = real( drag_coef_cond_in,         r_um )
+        vent_factor            = real( vent_factor_in,            r_um )
+        rho_rim                = real( rho_rim_in,                r_um )
+        nconc_cl               = real( nconc_cl_in,               r_um )
+        nconc_rain             = real( nconc_rain_in,             r_um )
+        nconc_cf               = real( nconc_cf_in,               r_um )
+        nconc_snow             = real( nconc_snow_in,             r_um )
+        nconc_graup            = real( nconc_graup_in,            r_um )
+        tdep_n_cl              = real( tdep_n_cl_in,              r_um )
+        tdep_n_cf              = real( tdep_n_cf_in,              r_um )
 
         ! check the namelist
         call check_run_comorph()
