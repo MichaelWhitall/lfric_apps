@@ -41,10 +41,9 @@ subroutine init_mass_moist_frac( n_points, n_points_super,                     &
                                  turb_kmh, turb_kph,                           &
                                  grid_km1, grid_kmh, grid_k,                   &
                                  grid_kph, grid_kp1,                           &
-                                 fields_km1, fields_k,                         &
-                                 fields_kp1, cloudfracs_k,                     &
-                                 virt_temp_km1, virt_temp_k,                   &
-                                 virt_temp_kp1,                                &
+                                 fields_km1, fields_k, fields_kp1,             &
+                                 cloudfracs_k,                                 &
+                                 virt_temp_km1, virt_temp_k, virt_temp_kp1,    &
                                  updraft_par_gen, dndraft_par_gen,             &
                                  genesis_diags, diags_super )
 

@@ -57,11 +57,11 @@ use comorph_um_namelist_mod, only:                                             &
                       par_gen_core_fac_um       => par_gen_core_fac,           &
                       ent_coef_um               => ent_coef,                   &
                       overlap_power_um          => overlap_power,              &
+                      min_cmr_um                => min_cmr,                    &
+                      max_cmr_um                => max_cmr,                    &
                       rho_rim_um                => rho_rim,                    &
                       hetnuc_temp_um            => hetnuc_temp,                &
                       cf_area_coef_um           => cf_area_coef,               &
-                      min_cmr_um                => min_cmr,                    &
-                      max_cmr_um                => max_cmr,                    &
                       drag_coef_cond_um         => drag_coef_cond,             &
                       vent_factor_um            => vent_factor,                &
                       col_eff_coef_um           => col_eff_coef,               &

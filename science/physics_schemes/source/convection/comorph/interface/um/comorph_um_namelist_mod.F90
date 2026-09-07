@@ -56,13 +56,13 @@ integer, parameter :: qfacrain_dependence = 2 ! scale precip dependence by 1/q
 integer, parameter :: w_dependence        = 3 ! add further dependence on max w
 integer, parameter :: linear_qfacrain_dep = 4 ! scale precip dependence by q
 
+! Comorph internal switches
+! (allowed values are stored in comorph_constants_mod).
+
 integer :: par_radius_evol_method = imdi  ! Switch for how parcel radius evolves
                                           ! with height in the plume
-! (allowed values are stored in comorph_constants_mod).
 
 integer :: autoc_opt = imdi               ! Switch for autoconversion option
-! (allowed values are stored in comorph_constants_mod).
-
 
 integer :: n_dndraft_types = imdi         ! Number of independent downdraft
                                           ! types
@@ -265,6 +265,8 @@ call chk_var(n_dndraft_types,'n_dndraft_types','[0,1]')
 
 ! Checking reals within allowed range - ranges as in meta-data used for GUI
 
+if (l_resdep_precipramp) call chk_var(dx_ref,'dx_ref','[100.0:1000000.0]')
+
 call chk_var(par_gen_mass_fac,'par_gen_mass_fac','[0.01:1.0]')
 
 call chk_var(drag_coef_cond,'drag_coef_cond','[0.2:1.0]')
@@ -274,6 +276,8 @@ call chk_var(vent_factor,'vent_factor','[0.0:1.0]')
 call chk_var(col_eff_coef,'col_eff_coef','[0.0:10.0]')
 
 call chk_var(hetnuc_temp,'hetnuc_temp','[230.0:273.0]')
+
+call chk_var(cf_area_coef,'cf_area_coef','[1.0:1000.0]')
 
 call chk_var(wind_w_fac,'wind_w_fac','[0.1:10.0]')
 
@@ -287,12 +291,8 @@ call chk_var(overlap_power,'overlap_power','[1.0E-6:1.0]')
 
 call chk_var(ent_coef,'ent_coef','[0.1:0.4]')
 
-call chk_var(cf_area_coef,'cf_area_coef','[1.0:1000.0]')
-
 call chk_var(min_cmr,'min_cmr','[1.0:3.0]')
 call chk_var(max_cmr,'max_cmr','[3.0:10.0]')
-
-if (l_resdep_precipramp) call chk_var(dx_ref,'dx_ref','[100.0:1000000.0]')
 
 !---------------------------------------------------------------------------
 if (lhook) call dr_hook(ModuleName//':'//RoutineName,zhook_out,zhook_handle)
@@ -381,7 +381,6 @@ call umPrint(lineBuffer,src=ModuleName)
 write(lineBuffer,"(A,ES14.6)")' par_gen_rhpert = ',par_gen_rhpert
 call umPrint(lineBuffer,src=ModuleName)
 
-
 write(lineBuffer,"(A,ES14.6)")' hetnuc_temp = ',hetnuc_temp
 call umPrint(lineBuffer,src=ModuleName)
 write(lineBuffer,"(A,ES14.6)")' cf_area_coef = ',cf_area_coef
@@ -406,7 +405,6 @@ write(lineBuffer,"(A,ES14.6)")' nconc_snow = ',nconc_snow
 call umPrint(lineBuffer,src=ModuleName)
 write(lineBuffer,"(A,ES14.6)")' nconc_graup = ',nconc_graup
 call umPrint(lineBuffer,src=ModuleName)
-
 
 ! Logicals
 

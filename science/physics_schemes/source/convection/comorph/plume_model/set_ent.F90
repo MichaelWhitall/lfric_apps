@@ -16,13 +16,15 @@ contains
 ! Subroutine sets the entrained mass from the current layer,
 ! and sets the properties of the entrained air
 subroutine set_ent( n_points, n_fields_tot, max_points,                        &
+                    n_points_diag, n_diags_super,                              &
                     l_to_full_level, max_ent_frac,                             &
                     par_conv_mean_fields, env_k_fields,                        &
                     grid_prev_super, grid_next_super,                          &
                     par_conv_super,                                            &
                     l_within_bl, core_mean_ratio,                              &
                     layer_mass_step, sum_massflux,                             &
-                    ent_fields, exner_ratio, ent_mass_d, core_ent_ratio )
+                    ent_fields, exner_ratio, ent_mass_d, core_ent_ratio,       &
+                    plume_model_diags, diags_super )
 
 use comorph_constants_mod, only: real_cvprec, min_float, one,                  &
                                  ent_coef, comorph_timestep,                   &
@@ -32,6 +34,7 @@ use comorph_constants_mod, only: real_cvprec, min_float, one,                  &
 use fields_type_mod, only: i_temperature, i_q_vap, i_qc_first, i_qc_last
 use grid_type_mod, only: n_grid, i_height, i_pressure
 use parcel_type_mod, only: n_par, i_massflux_d, i_radius
+use plume_model_diags_type_mod, only: plume_model_diags_type
 use dry_adiabat_mod, only: dry_adiabat
 use calc_rho_dry_mod, only: calc_rho_dry
 
@@ -48,6 +51,10 @@ integer, intent(in) :: n_fields_tot
 !  they are dimensioned with the biggest size they will need,
 !  which will often be bigger than the number of points here)
 integer, intent(in) :: max_points
+
+! Dimensions of the diagnostics super-array
+integer, intent(in) :: n_points_diag
+integer, intent(in) :: n_diags_super
 
 ! Flag for first half-level ascent from half-level to full-level
 logical, intent(in) :: l_to_full_level
@@ -95,6 +102,12 @@ real(kind=real_cvprec), intent(out) :: ent_mass_d(n_points)
 ! Weight used to calculate properties of air entrained into the core
 real(kind=real_cvprec), intent(out) :: core_ent_ratio(n_points)
 
+! Structure storing flags and super-array addresses for
+! various diagnostics
+type(plume_model_diags_type), intent(in) :: plume_model_diags
+! Super-array to contain output diagnostics
+real(kind=real_cvprec), intent(in out) :: diags_super                          &
+                                          ( n_points_diag, n_diags_super )
 
 ! Dry-density of the entrained air and the parcel
 real(kind=real_cvprec) :: ent_rho_dry(n_points)
@@ -104,7 +117,7 @@ real(kind=real_cvprec) :: par_rho_dry(n_points)
 real(kind=real_cvprec) :: max_ent(n_points)
 
 ! Loop counters
-integer :: ic, i_field
+integer :: ic, i_field, i_diag
 
 
 !------------------------------------------------------------------------------
@@ -236,6 +249,19 @@ case ( i_cfl_local_nobl )
     end if
   end do
 end select
+
+
+!------------------------------------------------------------------------------
+! 4) Copy diagnostics into a super-array for output
+!------------------------------------------------------------------------------
+
+! Core environment entrainment ratio diagnostic
+if ( plume_model_diags % core_ent_ratio % flag ) then
+  i_diag = plume_model_diags % core_ent_ratio % i_super
+  do ic = 1, n_points
+    diags_super(ic,i_diag) = core_ent_ratio(ic)
+  end do
+end if
 
 
 return

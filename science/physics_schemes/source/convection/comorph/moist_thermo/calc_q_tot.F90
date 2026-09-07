@@ -78,8 +78,6 @@ end subroutine calc_q_tot
 !----------------------------------------------------------------
 ! Version for full 2-D arrays
 !----------------------------------------------------------------
-! Note this routine is always used one model-level at a time,
-! so it only needs to work on horizontal 2-D fields.
 subroutine calc_q_tot_2d( lb_v, ub_v, q_vap,  lb_l, ub_l, q_cl,                &
                           lb_r, ub_r, q_rain, lb_f, ub_f, q_cf,                &
                           lb_s, ub_s, q_snow, lb_g, ub_g, q_graup,             &

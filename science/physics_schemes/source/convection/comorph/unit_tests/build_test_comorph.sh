@@ -102,6 +102,7 @@ gfortran -O0 -g -Wall -Wextra \
       "$comorph/microphysics/collision_rate.F90" \
       "$comorph/microphysics/ice_rain_to_graupel.F90" \
       "$comorph/microphysics/collision_ctl.F90" \
+      "$comorph/microphysics/autoconversion.F90" \
       "$comorph/microphysics/microphysics_1.F90" \
       "$comorph/microphysics/microphysics_2.F90" \
       "$comorph/moist_proc/moist_proc.F90" \

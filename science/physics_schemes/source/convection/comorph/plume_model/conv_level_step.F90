@@ -395,13 +395,15 @@ end select  ! i_impl_det
 ! Set amount of entrained dry-mass over the current half-level-step,
 ! and properties of the entrained air.
 call set_ent( n_points, n_fields_tot, max_points,                              &
+              n_points_diag, n_diags_super,                                    &
               l_to_full_level, max_ent_frac,                                   &
               par_conv_mean_fields, env_k_fields,                              &
               grid_prev_super, grid_next_super,                                &
               par_conv_super,                                                  &
               l_within_bl, core_mean_ratio,                                    &
               layer_mass_step, sum_massflux,                                   &
-              ent_fields, exner_ratio, ent_mass_d, core_ent_ratio )
+              ent_fields, exner_ratio, ent_mass_d, core_ent_ratio,             &
+              plume_model_diags, diags_super )
 
 ! Add the entrained mass onto the mass-flux
 do ic = 1, n_points
@@ -494,14 +496,6 @@ call entdet_res_source( n_points, n_points,                                    &
                         n_points_res, n_fields_tot, l_ent,                     &
                         ent_mass_d, ent_fields,                                &
                         res_source_super, res_source_fields )
-
-! Core environment entrainment ratio diagnostic
-if ( plume_model_diags % core_ent_ratio % flag ) then
-  i_diag = plume_model_diags % core_ent_ratio % i_super
-  do ic = 1, n_points
-    diags_super(ic,i_diag) = core_ent_ratio(ic)
-  end do
-end if
 
 ! Save diagnostics of entrained mass and air properties
 ! (in conserved variable form ready for finding mean over types)

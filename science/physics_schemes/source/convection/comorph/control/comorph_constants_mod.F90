@@ -741,8 +741,6 @@ real(kind=real_cvprec) :: par_gen_core_fac = 3.0_real_cvprec
 ! Minimum and maximum allowed values of the core/mean ratio of parcel
 ! buoyancies, which sets the power of the assumed power-law PDF of
 ! in-parcel buoyancy used for detrainment
-! (settable from the Run_Comorph namelist; defaults reproduce the
-!  previously hard-wired values)
 real(kind=real_cvprec) :: min_cmr = 2.0_real_cvprec
 real(kind=real_cvprec) :: max_cmr = 6.0_real_cvprec
 
