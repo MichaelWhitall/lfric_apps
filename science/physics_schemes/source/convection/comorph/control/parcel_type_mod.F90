@@ -650,11 +650,11 @@ logical, intent(in) :: l_tracer
 ! Flag for downdraft versus updraft
 logical, intent(in) :: l_down
 
-! Input properties of one of the parcels to combine
+! "_a": Input properties of the "added" parcel (one of the parcels to combine)
 type(parcel_type), intent(in) :: parcel_a
 
-! IN:  properties of the other parcel to combine
-! OUT: combined merged parcel properties
+! "_m": IN:  properties of the other parcel to combine "_a" into
+!       OUT: properties of the "merged" parcel after combining with "_a"
 type(parcel_type), intent(in out) :: parcel_m
 
 ! Index list for referencing the parcel_m compression list

@@ -49,19 +49,19 @@ integer, intent(in) :: n_points_super_m
 integer, intent(in) :: i_field_first
 integer, intent(in) :: i_field_last
 
-! Flaf for downdraft versus updraft
+! Flag for downdraft versus updraft
 logical, intent(in) :: l_down
 
-! Parcel core fields:
-! "_a": Input properties of one of the parcels to combine
+! Parcel core fields to be combined:
+! "_a": Input properties of the "added" parcel (one of the parcels to combine)
 real(kind=real_cvprec), intent(in) :: core_a_fields                            &
                                ( n_points_super_a, i_field_first:i_field_last )
-! "_m": IN:  properties of the other parcel to combine
-!       OUT: combined merged parcel properties
+! "_m": IN:  properties of the other parcel to combine "_a" into
+!       OUT: properties of the "merged" parcel after combining with "_a"
 real(kind=real_cvprec), intent(in out) :: core_m_fields                        &
                                ( n_points_super_m, i_field_first:i_field_last )
 
-! Parcel edge virtual temperature for the new versus existing parcel
+! Parcel edge virtual temperatures to be combined
 real(kind=real_cvprec), intent(in) :: edge_a_virt_temp(n_points_a)
 real(kind=real_cvprec), intent(in out) :: edge_m_virt_temp(n_points_m)
 
