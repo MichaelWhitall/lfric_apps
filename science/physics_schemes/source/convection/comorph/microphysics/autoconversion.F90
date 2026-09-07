@@ -42,12 +42,12 @@ real(kind=real_cvprec), intent(in) :: delta_t(n_points)
 ! Vertical length-scale of the parcel.
 real(kind=real_cvprec), intent(in) :: vert_len(n_points)
 
-! Fall-speed of autoconverted species
+! Fall-speed of cloud-water species
 real(kind=real_cvprec), intent(in) :: wf_cond1(n_points)
 
-! Mixing ratio of autoconverted species
+! Mixing ratio of cloud-water species
 real(kind=real_cvprec), intent(in out) :: q_cond1(n_points)
-! Mixing ratio of species q_cl converts to
+! Mixing ratio of precipitation-water species which q_cond1 autoconverts to
 real(kind=real_cvprec), intent(in out) :: q_cond2(n_points)
 
 ! Master switch for whether or not to calculate any diagnostics
