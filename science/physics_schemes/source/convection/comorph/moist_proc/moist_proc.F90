@@ -289,7 +289,6 @@ call calc_rho_dry( n_points, temperature, q_vap, pressure,                     &
                    rho_dry )
 
 ! Calculate rho_wet
-! (dry-mass to wet-mass conversion factor = 1 + q_tot)
 do ic = 1, n_points
   rho_wet(ic) = rho_dry(ic) * ( one + q_tot(ic) )
 end do

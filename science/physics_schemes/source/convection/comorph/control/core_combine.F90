@@ -52,9 +52,12 @@ integer, intent(in) :: i_field_last
 ! Flaf for downdraft versus updraft
 logical, intent(in) :: l_down
 
-! New parcel core fields to be added and existing parcel core fields
+! Parcel core fields:
+! "_a": Input properties of one of the parcels to combine
 real(kind=real_cvprec), intent(in) :: core_a_fields                            &
                                ( n_points_super_a, i_field_first:i_field_last )
+! "_m": IN:  properties of the other parcel to combine
+!       OUT: combined merged parcel properties
 real(kind=real_cvprec), intent(in out) :: core_m_fields                        &
                                ( n_points_super_m, i_field_first:i_field_last )
 

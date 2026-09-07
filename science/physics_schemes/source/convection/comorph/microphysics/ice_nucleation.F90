@@ -31,7 +31,7 @@ subroutine ice_nucleation( n_points,                                           &
                            n_points_diag, n_diags, diags_super )
 
 use comorph_constants_mod, only: real_cvprec, zero,                            &
-                     homnuc_temp, hetnuc_temp, coef_hetnuc
+                                 homnuc_temp, hetnuc_temp, coef_hetnuc
 use moist_proc_diags_type_mod, only: moist_proc_diags_type
 
 use lat_heat_mod, only: lat_heat_incr, i_phase_change_frz

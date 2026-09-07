@@ -35,8 +35,7 @@ subroutine calc_cond_properties( n_points,                                     &
                                  kq_cond, kt_cond )
 
 use comorph_constants_mod, only: real_cvprec, zero, cond_params_type,          &
-                     melt_temp, homnuc_temp,                                   &
-                     solve_wf_tolerance
+                                 melt_temp, homnuc_temp, solve_wf_tolerance
 use set_cond_radius_mod, only: set_cond_radius
 use fall_speed_mod, only: fall_speed
 use fall_out_mod, only: fall_out

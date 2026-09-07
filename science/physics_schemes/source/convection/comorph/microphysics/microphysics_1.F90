@@ -50,8 +50,8 @@ subroutine microphysics_1( n_points, n_points_super,  nc, index_ic,            &
                            n_points_diag, n_diags, diags_super )
 
 use comorph_constants_mod, only: real_cvprec, cond_params, zero,               &
-                     n_cond_species,                                           &
-                     n_cond_species_liq, n_cond_species_ice
+                                 n_cond_species,                               &
+                                 n_cond_species_liq, n_cond_species_ice
 use moist_proc_diags_type_mod, only: moist_proc_diags_type
 
 use activate_cond_mod, only: activate_cond
