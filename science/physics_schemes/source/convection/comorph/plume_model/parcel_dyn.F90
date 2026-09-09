@@ -615,9 +615,8 @@ end if  ! ( i_call == i_call_genesis )
 
 ! Update in-parcel cloud-fractions and precipitation fraction
 if ( l_cv_cloudfrac ) then
-  call set_par_cloudfrac( n_points, n_points_next,                             &
-                          par_next_fields(:,i_q_cl),                           &
-                          par_next_fields(:,i_q_cf),                           &
+  call set_par_cloudfrac( n_points, n_points_next, n_points_next,              &
+                          par_next_fields(:,i_qc_first:i_qc_last),             &
                           par_next_fields(:,i_cf_liq:i_cf_bulk) )
 end if
 
