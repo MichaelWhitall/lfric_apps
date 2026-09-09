@@ -64,7 +64,6 @@ use entrain_fields_mod, only: entrain_fields
 use entdet_res_source_mod, only: entdet_res_source
 use init_sublevs_mod, only: init_sublevs
 use parcel_dyn_mod, only: parcel_dyn, i_call_mean, i_call_core, i_call_det
-use set_par_cloudfrac_mod, only: set_par_cloudfrac
 use calc_rho_dry_mod, only: calc_rho_dry
 use update_edge_virt_temp_mod, only: update_edge_virt_temp
 use update_par_radius_mod, only: update_par_radius
