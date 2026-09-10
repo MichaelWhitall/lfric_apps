@@ -3842,14 +3842,16 @@ at this point and adjust the temperature accordingly.
    \theta_{\mathrm{k + 1}}^{\mathrm{P}} = \theta_{\mathrm{k + 1}}^{\mathrm{P}} -
    \left(\frac{L_{\mathrm{F}}}{C_{p} \, \Pi_{\mathrm{k + 1}}} \right)\,
    l_{\mathrm{f \, k + 1}}^{\mathrm{P}}
-    \; \ldots \;  \mathrm{ if l_{\mathrm{f \, k + 1}}^{\mathrm{P}} is melted }
+    \; \ldots \; \mathrm{if} \; l_{\mathrm{f \, k + 1}}^{\mathrm{P}}
+              \; \mathrm{is \; melted}
 
 .. math:: :label: eqn:freezell
 
    \theta_{\mathrm{k + 1}}^{\mathrm{P}} = \theta_{\mathrm{k + 1}}^{\mathrm{P}} +
    \left(\frac{L_{\mathrm{F}}}{C_{p} \, \Pi_{\mathrm{k + 1}}} \right)\,
    l_{\mathrm{l \, k + 1}}^{\mathrm{P}}
-    \; \ldots \;  \mathrm{ if l_{\mathrm{l \, k + 1}}^{\mathrm{P}} is frozen }
+    \; \ldots \; \mathrm{if} \; l_{\mathrm{l \, k + 1}}^{\mathrm{P}}
+              \; \mathrm{is \; frozen}
 
 Once a final value for the condensation term
 :math:`{\overline{Q}}_{\mathrm{x} \, \mathrm{k} + 1} \, / \, M_{\mathrm{k} +
