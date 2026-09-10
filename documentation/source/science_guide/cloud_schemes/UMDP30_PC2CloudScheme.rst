@@ -7063,7 +7063,7 @@ convection itself has ceased). This is perhaps not surprising since the
 `Brooks et al. (2005)`_ area cloud fraction scheme was evaluated
 against mid-latitude cloud and it is known that tropical clouds have
 greater vertical coherence. Tuning the parameters in
-:math:`large_scale_cloud/ls_acf_brooks.F90` may be beneficial.
+**large_scale_cloud/ls_acf_brooks.F90** may be beneficial.
 
 .. figure:: blank.svg
    :name: fig:schematic
