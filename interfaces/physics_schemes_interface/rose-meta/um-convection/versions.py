@@ -32,11 +32,11 @@ class vnXX_txxx(MacroUpgrade):
         return config, self.reports
 """
 
-class vn32_t717(MacroUpgrade):
-    # Upgrade macro for PR#717 by Mike Whitall
+class vn32_t776(MacroUpgrade):
+    # Upgrade macro for PR#776 by Mike Whitall
 
     BEFORE_TAG = "vn3.2"
-    AFTER_TAG = "vn3.2_t717"
+    AFTER_TAG = "vn3.2_t776"
 
     def upgrade(self, config, meta_config=None):
         # Add settings
@@ -112,17 +112,7 @@ class vn32_t717(MacroUpgrade):
         self.add_setting(config, [nml, "tdep_n_cl"], "0.0")
         self.add_setting(config, [nml, "tdep_n_cf"], "8.18")
 
-        return config, self.reports
 
-
-class vn32_t776(MacroUpgrade):
-    # Upgrade macro for PR#776 by Mike Whitall
-
-    BEFORE_TAG = "vn3.2_t717"
-    AFTER_TAG = "vn3.2_t776"
-
-    def upgrade(self, config, meta_config=None):
-        # Add settings
 
         # CoMorph settings
         nml = "namelist:comorph"
