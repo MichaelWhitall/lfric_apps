@@ -136,7 +136,7 @@ if ( l_to_full_level ) then
   ! (from previous half-level to level k),
   ! then the environment fields to entrain are at level k, but the
   ! parcel is at a different pressure, at the previous half-level.
-  ! Adjust the environment temperature to what it would be at the
+  ! Adjust the temperature of the entrained air to what it would be at the
   ! start of the level-step, so that we entrain it into the parcel
   ! consistently...
   do ic = 1, n_points
@@ -152,6 +152,7 @@ if ( l_to_full_level ) then
                                  * exner_ratio(ic)
   end do
 end if
+
 
 !------------------------------------------------------------------------------
 ! 2) Calculate 1/R "mixing" entrainment rate
