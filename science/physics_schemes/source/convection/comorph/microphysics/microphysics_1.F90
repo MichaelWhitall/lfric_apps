@@ -220,7 +220,7 @@ if ( maxval(nc) > 0 ) then
                              dq_frz_cond(:,i_ice), l_diags,                    &
                              i_liq, i_ice, moist_proc_diags,                   &
                              n_points_diag, n_diags, diags_super )
-        ! Note: q_cond maybe more of a numerical rather than physical quantity 
+        ! Note: q_cond maybe more of a numerical rather than physical quantity
         ! at this point, as fall-in has been added to q_cond but fall-out
         ! has not.  Therefore, q_cond should not be used to estimate the
         ! heterogeneous freezing rate here.  Currently heterogeneous nucleation
