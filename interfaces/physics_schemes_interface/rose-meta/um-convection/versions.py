@@ -115,11 +115,11 @@ class vn32_t717(MacroUpgrade):
         return config, self.reports
 
 
-class vn32_t251(MacroUpgrade):
-    # Upgrade macro for Issue#251 by Mike Whitall
+class vn32_t776(MacroUpgrade):
+    # Upgrade macro for PR#776 by Mike Whitall
 
     BEFORE_TAG = "vn3.2_t717"
-    AFTER_TAG = "vn3.2_t251"
+    AFTER_TAG = "vn3.2_t776"
 
     def upgrade(self, config, meta_config=None):
         # Add settings
