@@ -33,7 +33,7 @@ private
 
 type, public, extends(kernel_type) :: casim_kernel_type
   private
-  type(arg_type) :: meta_args(41) = (/                                      &
+  type(arg_type) :: meta_args(43) = (/                                      &
        arg_type(GH_FIELD, GH_REAL, GH_READ,  WTHETA),                       & ! mv_wth
        arg_type(GH_FIELD, GH_REAL, GH_READ,  WTHETA),                       & ! ml_wth
        arg_type(GH_FIELD, GH_REAL, GH_READ,  WTHETA),                       & ! mi_wth
@@ -61,6 +61,8 @@ type, public, extends(kernel_type) :: casim_kernel_type
        arg_type(GH_FIELD, GH_REAL, GH_WRITE, WTHETA),                       & ! dmr_wth
        arg_type(GH_FIELD, GH_REAL, GH_WRITE, WTHETA),                       & ! dmg_wth
        arg_type(GH_FIELD, GH_REAL, GH_WRITE, WTHETA),                       & ! dms_wth
+       arg_type(GH_FIELD, GH_REAL, GH_READWRITE,  WTHETA),                  & ! dcfl_wth
+       arg_type(GH_FIELD, GH_REAL, GH_READWRITE,  WTHETA),                  & ! dcff_wth
        arg_type(GH_FIELD, GH_REAL, GH_WRITE, ANY_DISCONTINUOUS_SPACE_1),    & ! ls_rain_2d
        arg_type(GH_FIELD, GH_REAL, GH_WRITE, ANY_DISCONTINUOUS_SPACE_1),    & ! ls_snow_2d
        arg_type(GH_FIELD, GH_REAL, GH_WRITE, ANY_DISCONTINUOUS_SPACE_1),    & ! ls_graup_2d
@@ -121,6 +123,8 @@ contains
 !> @param[in,out] dmr_wth             Increment to rain mass mixing ratio
 !> @param[in,out] dmg_wth             Increment to graupel mass mixing ratio
 !> @param[in,out] dms_wth             Increment to snow mass mixing ratio
+!> @param[in,out] dcfl_wth            Increment to liquid cloud fraction
+!> @param[in,out] dcff_wth            Increment to ice cloud fraction
 !> @param[in,out] ls_rain_2d          Large scale rain from twod_fields
 !> @param[in,out] ls_snow_2d          Large scale snow from twod_fields
 !> @param[in,out] ls_graup_2d         Large scale graupel from twod_fields
@@ -168,6 +172,7 @@ subroutine casim_code( nlayers,                     &
                        height_w3, height_wth,       &
                        dmv_wth,  dml_wth,  dmi_wth, &
                        dmr_wth,  dmg_wth,  dms_wth, &
+                       dcfl_wth, dcff_wth,          &
                        ls_rain_2d, ls_snow_2d,      &
                        ls_graup_2d, lsca_2d,        &
                        ls_rain_3d, ls_snow_3d,      &
@@ -203,7 +208,8 @@ subroutine casim_code( nlayers,                     &
                                           deallocate_diagnostic_space, &
                                           casdiags
     use number_droplet_mod,         only: min_cdnc_sea_ice
-    use calc_cfrain_mod,            only: calc_cfrain
+    use casim_calc_cfrain_mod,      only: casim_calc_cfrain
+    use casim_update_precfrac_mod,  only: casim_update_precfrac
     use mphys_air_density_mod,      only: mphys_air_density
     use mphys_radar_mod,            only: ref_lim
     use variable_precision,         only: wp
@@ -245,6 +251,8 @@ subroutine casim_code( nlayers,                     &
     real(kind=r_def), intent(inout), dimension(undf_wth) :: dmr_wth
     real(kind=r_def), intent(inout), dimension(undf_wth) :: dmg_wth
     real(kind=r_def), intent(inout), dimension(undf_wth) :: dms_wth
+    real(kind=r_def), intent(inout), dimension(undf_wth) :: dcfl_wth
+    real(kind=r_def), intent(inout), dimension(undf_wth) :: dcff_wth
     real(kind=r_def), intent(inout), dimension(undf_2d)  :: ls_rain_2d
     real(kind=r_def), intent(inout), dimension(undf_2d)  :: ls_snow_2d
     real(kind=r_def), intent(inout), dimension(undf_2d)  :: ls_graup_2d
@@ -288,7 +296,7 @@ subroutine casim_code( nlayers,                     &
          dqv_casim, dqc_casim,  dqr_casim, dnc_casim,                          &
          dnr_casim, dm3r_casim, dqi_casim, dqs_casim,                          &
          dqg_casim, dni_casim, dns_casim,  dng_casim,                          &
-         dm3s_casim, dm3g_casim, dth_casim,                                    &
+         dm3s_casim, dm3g_casim, dth_casim, dcfliq_casim, dcfice_casim,        &
          daitken_sol_mass, daitken_sol_number,                                 &
          daccum_sol_mass, daccum_sol_number,                                   &
          dcoarse_sol_mass, dcoarse_sol_number,                                 &
@@ -324,7 +332,7 @@ subroutine casim_code( nlayers,                     &
     !-------------------------------------------------------------------------
 
     ! Configure optional diagnostics
-    casdiags % l_graupfall_3d = ls_graup_3d_flag
+    casdiags % l_graupfall_3d = ls_graup_3d_flag .or. l_mcr_precfrac
 
     ! Set CDNC for radiation here as we need the start of timestep value
     if (casim_cdnc_opt == casim_cdnc_opt_fixed) then
@@ -470,10 +478,10 @@ subroutine casim_code( nlayers,                     &
       do k = 1, nlayers
         precfrac_casim(k,1,1) = precfrac(map_wth(1) + k)
       end do
-      call calc_cfrain( nlayers,                                               &
-                        qc_casim, qi_casim, qs_casim, qr_casim, qg_casim,      &
-                        cfliq_casim, cfice_casim, precfrac_casim,              &
-                        cfrain_casim, cfgr_casim )
+      call casim_calc_cfrain( nlayers, dz_casim, rho_casim,                    &
+                              qc_casim, qi_casim, qs_casim, qr_casim, qg_casim,&
+                              cfliq_casim, cfice_casim, precfrac_casim,        &
+                              cfrain_casim, cfgr_casim )
     else
       ! Otherwise just copy max cloud-fraction in the column downwards
       do k =  nlayers-1, 1, -1
@@ -601,16 +609,24 @@ subroutine casim_code( nlayers,                     &
     lsca_2d(map_2d(1)) = cfrain_casim(1,1,1)
 
     if (l_mcr_precfrac) then
-      ! Update the prognostic precip fraction
+      ! Update prognostic precip fraction based on the precip mass
+      ! increments from CASIM...
       do k = 1, nlayers
-        if ( qr_casim(k,1,1) + dqr_casim(k,1,1) > 0.0_wp .or.                  &
-             qg_casim(k,1,1) + dqg_casim(k,1,1) > 0.0_wp ) then
-          ! If rain or graup then set fraction to rain frac(=graup frac)
-          precfrac(map_wth(1)+k) = cfrain_casim(k,1,1)
-        else
-          ! If no rain or graup then zero precip fraction
-          precfrac(map_wth(1)+k) = 0.0_wp
-        end if
+        ! Copy cloud-fraction increments into local arrays
+        dcfliq_casim(1,1,k) = dcfl_wth(map_wth(1) + k)
+        dcfice_casim(1,1,k) = dcff_wth(map_wth(1) + k)
+      end do
+      call casim_update_precfrac( nlayers, dz_casim, rho_casim,                &
+                                  casdiags%rainfall_3d, casdiags%graupfall_3d, &
+                                  qc_casim, qi_casim, qs_casim,                &
+                                  qr_casim, qg_casim,                          &
+                                  cfliq_casim, cfice_casim, precfrac_casim,    &
+                                  dqc_casim, dqi_casim, dqs_casim,             &
+                                  dqr_casim, dqg_casim,                        &
+                                  dcfliq_casim, dcfice_casim )
+      do k = 1, nlayers
+        ! Copy updated precip fraction to output
+        precfrac(map_wth(1) + k) = precfrac_casim(k,1,1)
       end do
     end if
 

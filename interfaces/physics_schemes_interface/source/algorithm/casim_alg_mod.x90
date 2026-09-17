@@ -193,6 +193,7 @@ contains
                                      dmr_mphys(imr_v),  dmr_mphys(imr_cl),     &
                                      dmr_mphys(imr_ci), dmr_mphys(imr_r),      &
                                      dmr_mphys(imr_g), dmr_mphys(imr_s),       &
+                                     dcfl, dcff,                               &
                                      ls_rain, ls_snow, ls_graup, lsca_2d,      &
                                      ls_rain_3d, ls_snow_3d, ls_graup_3d,      &
                                      theta_inc, cloud_drop_no_conc, murk,      &
