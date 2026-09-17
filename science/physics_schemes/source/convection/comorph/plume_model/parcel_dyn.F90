@@ -361,24 +361,19 @@ if ( i_check_bad_values_cmpr > i_check_bad_none ) then
                  trim(adjustl(call_string))   // "; "                       // &
                  "par_next_fields"
   do i_field = 1, n_fields_tot
-    call check_bad_values_cmpr( cmpr, k,                                       &
-                                par_next_fields(:,i_field),                    &
-                                where_string,                                  &
-                                field_names(i_field),                          &
+    call check_bad_values_cmpr( cmpr, k, par_next_fields(:,i_field),           &
+                                where_string, field_names(i_field),            &
                                 field_min = field_min(i_field),                &
                                 field_max = field_max(i_field) )
   end do
   if ( present( res_source_fields ) ) then
     ! Check resolved-scale source-terms
-    ! (source terms may be positive or negative, so no limits imposed)
     where_string = "Start of parcel_dyn call for "                          // &
                    trim(adjustl(call_string))   // "; "                     // &
                    "res_source_fields"
     do i_field = 1, n_fields_tot
-      call check_bad_values_cmpr( cmpr, k,                                     &
-                                  res_source_fields(:,i_field),                &
-                                  where_string,                                &
-                                  field_names(i_field) )
+      call check_bad_values_cmpr( cmpr, k, res_source_fields(:,i_field),       &
+                                  where_string, field_names(i_field) )
     end do
   end if
 end if
@@ -769,24 +764,19 @@ if ( i_check_bad_values_cmpr > i_check_bad_none ) then
                  trim(adjustl(call_string))   // "; "                       // &
                  "par_next_fields"
   do i_field = 1, n_fields_tot
-    call check_bad_values_cmpr( cmpr, k,                                       &
-                                par_next_fields(:,i_field),                    &
-                                where_string,                                  &
-                                field_names(i_field),                          &
+    call check_bad_values_cmpr( cmpr, k, par_next_fields(:,i_field),           &
+                                where_string, field_names(i_field),            &
                                 field_min = field_min(i_field),                &
                                 field_max = field_max(i_field) )
   end do
   if ( present( res_source_fields ) ) then
     ! Check resolved-scale source-terms
-    ! (source terms may be positive or negative, so no limits imposed)
     where_string = "End of parcel_dyn call for "                            // &
                    trim(adjustl(call_string))   // "; "                     // &
                    "res_source_fields"
     do i_field = 1, n_fields_tot
-      call check_bad_values_cmpr( cmpr, k,                                     &
-                                  res_source_fields(:,i_field),                &
-                                  where_string,                                &
-                                  field_names(i_field) )
+      call check_bad_values_cmpr( cmpr, k, res_source_fields(:,i_field),       &
+                                  where_string, field_names(i_field) )
     end do
   end if
 end if
