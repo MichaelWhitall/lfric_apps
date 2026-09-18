@@ -33,7 +33,7 @@ module conv_comorph_kernel_mod
   !>
   type, public, extends(kernel_type) :: conv_comorph_kernel_type
     private
-    type(arg_type) :: meta_args(195) = (/                                         &
+    type(arg_type) :: meta_args(200) = (/                                         &
          arg_type(GH_SCALAR, GH_INTEGER, GH_READ),                                &! outer
          arg_type(GH_FIELD,  GH_REAL,    GH_READ,      W3),                       &! rho_in_w3
          arg_type(GH_FIELD,  GH_REAL,    GH_READ,      WTHETA),                   &! rho_in_wth
@@ -71,6 +71,11 @@ module conv_comorph_kernel_mod
          arg_type(GH_FIELD,  GH_REAL,    GH_READWRITE, WTHETA),                   &! m_r
          arg_type(GH_FIELD,  GH_REAL,    GH_READWRITE, WTHETA),                   &! m_g
          arg_type(GH_FIELD,  GH_REAL,    GH_READWRITE, WTHETA),                   &! m_s
+         arg_type(GH_FIELD,  GH_REAL,    GH_READWRITE, WTHETA),                   &! nl_mphys
+         arg_type(GH_FIELD,  GH_REAL,    GH_READWRITE, WTHETA),                   &! nr_mphys
+         arg_type(GH_FIELD,  GH_REAL,    GH_READWRITE, WTHETA),                   &! ni_mphys
+         arg_type(GH_FIELD,  GH_REAL,    GH_READWRITE, WTHETA),                   &! ns_mphys
+         arg_type(GH_FIELD,  GH_REAL,    GH_READWRITE, WTHETA),                   &! ng_mphys
          arg_type(GH_FIELD,  GH_REAL,    GH_READ,      WTHETA),                   &! cf_ice
          arg_type(GH_FIELD,  GH_REAL,    GH_READ,      WTHETA),                   &! cf_liq
          arg_type(GH_FIELD,  GH_REAL,    GH_READ,      WTHETA),                   &! cf_bulk
@@ -277,6 +282,11 @@ contains
   !> @param[in,out] m_r                  Rain mixing ratio after advection
   !> @param[in,out] m_g                  Graupel mixing ratio after advection
   !> @param[in,out] m_s                  Snow mixing ratio after advection
+  !> @param[in,out] nl_mphys             Cloud liq number conc after advection
+  !> @param[in,out] nr_mphys             Rain number conc after advection
+  !> @param[in,out] ni_mphys             Cloud ice number conc after advection
+  !> @param[in,out] ns_mphys             Snow number conc after advection
+  !> @param[in,out] ng_mphys             Graupel number conc after advection
   !> @param[in]     cf_ice               Ice cloud fraction
   !> @param[in]     cf_liq               Liquid cloud fraction
   !> @param[in]     cf_bulk              Bulk cloud fraction
@@ -488,6 +498,11 @@ contains
                           m_r,                               &
                           m_g,                               &
                           m_s,                               &
+                          nl_mphys,                          &
+                          nr_mphys,                          &
+                          ni_mphys,                          &
+                          ns_mphys,                          &
+                          ng_mphys,                          &
                           cf_ice,                            &
                           cf_liq,                            &
                           cf_bulk,                           &
@@ -874,7 +889,9 @@ contains
                                           massflux_up, massflux_down,          &
                                           tke_bl, pressure_inc_env,            &
                                           conv_prog_dtheta, conv_prog_dmv,     &
-                                          precfrac, m_r, m_g, m_ci
+                                          precfrac, m_r, m_g, m_ci,            &
+                                          nl_mphys, nr_mphys,                  &
+                                          ni_mphys, ns_mphys, ng_mphys
 
     real(kind=r_def), dimension(undf_w3), intent(inout) :: du_conv, dv_conv
 
@@ -1025,7 +1042,7 @@ contains
     integer(i_def) :: k, i, n
 
     ! local switches and scalars
-    integer(i_um) :: segments, n_conv_levels, ntra_fld
+    integer(i_um) :: segments, n_conv_levels, ntra_fld, nukca_tra
 
     logical :: l_tracer
 
@@ -1064,6 +1081,8 @@ contains
     character(len=ukca_maxlen_fieldname), target  ::                         &
                  local_dust_tracer_list(4) = [ 'Acc_INS_N ' , 'Acc_INS_DU' , &
                                                'Cor_INS_N ' , 'Cor_INS_DU' ]
+
+    character(len=ukca_maxlen_fieldname), target :: empty_list(0)
 
     ! Heat and moisture fluxs from BL scheme
     real(r_um), dimension(row_length,rows,bl_levels) :: fqw, ftl
@@ -1290,12 +1309,27 @@ contains
     if ( glomap_mode == glomap_mode_dust_and_clim ) then
       ukca_tracer_names => local_dust_tracer_list
       l_tracer = .true.
-    else
+    else if (glomap_mode == glomap_mode_ukca) then
       call ukca_get_tracer_varlist( ukca_tracer_names, ukca_errcode )
       l_tracer = ( ukca_errcode == 0 )
+    else
+      l_tracer = .false.
+      ukca_tracer_names => empty_list
     end if
+    ! If we're running with CASIM, use tracer array to also transport
+    ! number concentrations
+    if (microphysics_casim) l_tracer = .true.
+
     if (l_tracer) then
       ntra_fld = size(ukca_tracer_names)
+      nukca_tra = ntra_fld
+      if (microphysics_casim) then
+        ! Add nl if that is prognosed
+        if ( .not. casim_iopt_act==0 )  ntra_fld = ntra_fld + 1
+        ! CASIM always prognoses nr, ni, ns, ng
+        ntra_fld = ntra_fld + 4
+
+      end if
     else
       ntra_fld = 1
     end if
@@ -1379,7 +1413,7 @@ contains
 
       allocate(tot_tracer( row_length, 1, nlayers, ntra_fld ))
 
-      do n = 1, ntra_fld
+      do n = 1, nukca_tra
         select case(ukca_tracer_names(n))
         case(fldname_o3p)
           do i = 1, row_length
@@ -1943,6 +1977,32 @@ contains
           call log_event( log_scratch_space, LOG_LEVEL_ERROR )
         end select
       end do
+
+! Copy number concentrations into final tracer fields
+      if (microphysics_casim) then
+        do i = 1, row_length
+          tot_tracer(i,1,:,nukca_tra+1) =                                      &
+               real(nr_mphys(map_wth(1,i)+1:map_wth(1,i)+nlayers), r_um)
+        end do
+        do i = 1, row_length
+          tot_tracer(i,1,:,nukca_tra+2) =                                      &
+               real(ni_mphys(map_wth(1,i)+1:map_wth(1,i)+nlayers), r_um)
+        end do
+        do i = 1, row_length
+          tot_tracer(i,1,:,nukca_tra+3) =                                      &
+               real(ns_mphys(map_wth(1,i)+1:map_wth(1,i)+nlayers), r_um)
+        end do
+        do i = 1, row_length
+          tot_tracer(i,1,:,nukca_tra+4) =                                      &
+               real(ng_mphys(map_wth(1,i)+1:map_wth(1,i)+nlayers), r_um)
+        end do
+        if ( .not. casim_iopt_act==0 )
+          do i = 1, row_length
+            tot_tracer(i,1,:,nukca_tra+5) =                                    &
+                 real(nl_mphys(map_wth(1,i)+1:map_wth(1,i)+nlayers), r_um)
+          end do
+        end if
+      end if
 
     end if  ! outer == outer_iterations .AND. l_tracer
 
@@ -2800,7 +2860,7 @@ contains
 
     ! Copy tracers back to LFRic fields
     if ( outer == outer_iterations .and. l_tracer ) then
-      do n = 1, ntra_fld
+      do n = 1, nukca_tra
         select case(ukca_tracer_names(n))
          case(fldname_o3p)
            do i = 1, row_length
@@ -3464,6 +3524,38 @@ contains
           end do
         end select
       end do
+
+      ! Copy number concentrations out of final tracer fields
+      if (microphysics_casim) then
+        do i = 1, row_length
+          nr_mphys(map_wth(1,i)+1:map_wth(1,i)+nlayers) =                      &
+               real(tot_tracer(i,1,:,nukca_tra+1), r_def)
+          nr_mphys(map_wth(1,i)) = nr_mphys(map_wth(1,i)+1)
+        end do
+        do i = 1, row_length
+          ni_mphys(map_wth(1,i)+1:map_wth(1,i)+nlayers) =                      &
+               real(tot_tracer(i,1,:,nukca_tra+2), r_def)
+          ni_mphys(map_wth(1,i)) = ni_mphys(map_wth(1,i)+1)
+        end do
+        do i = 1, row_length
+          ns_mphys(map_wth(1,i)+1:map_wth(1,i)+nlayers) =                      &
+               real(tot_tracer(i,1,:,nukca_tra+3), r_def)
+          ns_mphys(map_wth(1,i)) = ns_mphys(map_wth(1,i)+1)
+        end do
+        do i = 1, row_length
+          ng_mphys(map_wth(1,i)+1:map_wth(1,i)+nlayers) =                      &
+               real(tot_tracer(i,1,:,nukca_tra+4), r_def)
+          ng_mphys(map_wth(1,i)) = ng_mphys(map_wth(1,i)+1)
+        end do
+        if ( .not. casim_iopt_act==0 )
+          do i = 1, row_length
+            nl_mphys(map_wth(1,i)+1:map_wth(1,i)+nlayers) =                    &
+                 real(tot_tracer(i,1,:,nukca_tra+5), r_def)
+            nl_mphys(map_wth(1,i)) = nl_mphys(map_wth(1,i)+1)
+          end do
+        end if
+      end if
+
       deallocate(tot_tracer)
     end if  ! outer == outer_iterations .AND. l_tracer
 
