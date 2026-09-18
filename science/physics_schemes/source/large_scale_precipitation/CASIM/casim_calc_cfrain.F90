@@ -140,7 +140,7 @@ do k = nlayers-1, 1, -1
 
   ! Total guess for the mass of precip that might be produced by the cloud;
   ! Model as decay of cloud into precip over a fixed time-scale
-  prec_cl = rhodz(k) * dt_rtau_cl * max(ql_casim(k),zero)
+  prec_cl = rhodz(k) * dt_rtau_cl * max(qc_casim(k),zero)
   prec_cf = rhodz(k) * dt_rtau_cf * ( max(qi_casim(k),zero)                    &
                                     + max(qs_casim(k),zero) )
   ! Add cloud sources onto precip mass at k
@@ -160,7 +160,7 @@ do k = nlayers-1, 1, -1
   v_dt_rdz = v_dt/dz_casim(k)
   q_precip = prec_k_f / ( rhodz(k) * ( one + v_dt_rdz ) )
   ! Fraction of mixing-ratio that is "precip" vs "cloud"
-  accfac = q_precip / max( max(ql_casim(k),zero) + max(qi_casim(k),zero)       &
+  accfac = q_precip / max( max(qc_casim(k),zero) + max(qi_casim(k),zero)       &
                          + max(qs_casim(k),zero) + q_precip, min_float )
   ! Partition sources of precip from cloud in proportion
   prec_accl = accfac * prec_cl
@@ -171,8 +171,8 @@ do k = nlayers-1, 1, -1
   ! Compute updated precfrac after combining with cloud-sources:
   ! 1/sqrt(frac) = sum( m/sqrt(frac) ) / sum( m )
   ! => frac = ( sum( m ) / sum( m/sqrt(frac) ) )**2
-  min_frac = max( min_frac, 0.01*max( cfl(i,j,k), cff(i,j,k) ) )
-  precfrac_new(i,j,k) = ( prec_k_f_c / max(                                    &
+  min_frac = max( min_frac, 0.01*max( cfliq_casim(k), cfice_casim(k) ) )
+  cfrain_casim(k) = ( prec_k_f_c / max(                                        &
        prec_k_f  / sqrt( max(precfrac_k_f,                      min_frac) )    &
      + prec_cl   / sqrt( max(cfliq_casim(k),                    min_frac) )    &
      + prec_cf   / sqrt( max(cfice_casim(k),                    min_frac) )    &

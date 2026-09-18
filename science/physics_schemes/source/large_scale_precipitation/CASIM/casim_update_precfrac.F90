@@ -214,16 +214,11 @@ do k = nlayers-1, 1, -1
 end do  ! k = nlayers-1, 1, -1
 
 ! Final check; reset precfrac to zero where all precip has evaporated
-!$OMP DO SCHEDULE(STATIC)
-do k = 1, tdims%k_end
-  do j = tdims%j_start, tdims%j_end
-    do i = tdims%i_start, tdims%i_end
-      if ( .not. ( qr_casim(k) + dqr_casim(k) > zero .or.                      &
-                   qg_casim(k) + dqg_casim(k) > zero ) ) then
-        precfrac_casim(k) = zero
-      end if
-    end do
-  end do
+do k = 1, nlayers
+  if ( .not. ( qr_casim(k) + dqr_casim(k) > zero .or.                          &
+               qg_casim(k) + dqg_casim(k) > zero ) ) then
+    precfrac_casim(k) = zero
+  end if
 end do
 
 
