@@ -165,7 +165,7 @@ module um_physics_init_mod
            col_eff_coef_in           => col_eff_coef,                          &
            core_ent_cmr_in           => core_ent_cmr,                          &
            core_ent_fac_in           => core_ent_fac,                          &
-           cv_numconcs_in            => l_cv_numconcs,                         &
+           cv_numconcs_in            => cv_numconcs,                           &
            drag_coef_cond_in         => drag_coef_cond,                        &
            drag_coef_par_in          => drag_coef_par,                         &
            dx_ref_in                 => dx_ref,                                &
