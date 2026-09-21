@@ -1498,7 +1498,7 @@ contains
           ! away the rain-mass to use the same value as the other hydrometeor
           ! species.  This fixes a problem where moderate rain mass / number
           ! would be spuriously evaporated at coarse resolution when
-          ! when the rain fraction is small (since the grid-mean rain-number
+          ! the rain fraction is small (since the grid-mean rain-number
           ! is often below the default threshold of 10 kg-1).
           nr_small = 1.0E-6_wp
           nr_tidy  = 1.0E-6_wp
