@@ -15,12 +15,8 @@ module conv_comorph_kernel_mod
                                       ANY_DISCONTINUOUS_SPACE_1, &
                                       ANY_DISCONTINUOUS_SPACE_2, &
                                       ANY_DISCONTINUOUS_SPACE_3
-  use constants_mod,           only : i_def, i_um, r_def, r_um
-  use empty_data_mod,          only : empty_real_data
   use fs_continuity_mod,       only : W3, Wtheta
   use kernel_mod,              only : kernel_type
-  use timestepping_config_mod, only : outer_iterations
-  use microphysics_config_mod, only : prog_tnuc, microphysics_casim
 
   implicit none
 
@@ -793,12 +789,16 @@ contains
                                          glomap_mode_dust_and_clim,            &
                                          glomap_mode_ukca
 
+    use constants_mod,             only : i_def, i_um, r_def, r_um
+    use empty_data_mod,            only : empty_real_data
     use log_mod, only : log_event, log_scratch_space, LOG_LEVEL_ERROR
 !$  use omp_lib, only : omp_get_max_threads
 
     !---------------------------------------
     ! Physics modules containing switches or global constants
     !---------------------------------------
+    use timestepping_config_mod, only : outer_iterations
+    use microphysics_config_mod, only : prog_tnuc, microphysics_casim
     use bl_option_mod, only: max_tke
     use cloud_inputs_mod, only: l_pc2_homog_conv_pressure,                     &
                                 l_cloud_call_b4_conv,                          &
@@ -826,10 +826,12 @@ contains
     use comorph_constants_mod, only: l_init_constants, l_turb_par_gen,         &
          l_cv_rain, l_cv_cf, l_cv_snow, l_cv_graup,                            &
          i_convcloud, i_convcloud_liqonly
+    use tracer_source_mod,  only: i_tr_n_cl, i_tr_n_rain,                      &
+                                  i_tr_n_cf, i_tr_n_snow, i_tr_n_graup
     use calc_conv_incs_mod, only: calc_conv_incs, i_call_save_before_conv,     &
-         i_call_diff_to_get_incs
-    use calc_qcf2_incs_mod, ONLY: calc_qcf2_incs, i_call_combine_in_qcf2,      &
-         i_call_subtract_qcf, i_call_repartition
+                                  i_call_diff_to_get_incs
+    use calc_qcf2_incs_mod, only: calc_qcf2_incs, i_call_combine_in_qcf2,      &
+                                  i_call_subtract_qcf, i_call_repartition
     use fracs_consistency_mod, only: fracs_consistency
     use conv_update_precfrac_mod, only: conv_update_precfrac
     use interp_turb_mod, only: interp_turb
@@ -1978,8 +1980,14 @@ contains
         end select
       end do
 
-! Copy number concentrations into final tracer fields
       if (microphysics_casim) then
+        ! Store tracer-array indices of the number concentrations for use
+        ! inside CoMorph, for setting detrained number consistent with mass
+        i_tr_n_rain  = nukca_tra+1
+        i_tr_n_cf    = nukca_tra+2
+        i_tr_n_snow  = nukca_tra+3
+        i_tr_n_graup = nukca_tra+4
+        ! Copy number concentrations into final tracer fields
         do i = 1, row_length
           tot_tracer(i,1,:,nukca_tra+1) =                                      &
                real(nr_mphys(map_wth(1,i)+1:map_wth(1,i)+nlayers), r_um)
@@ -1997,6 +2005,7 @@ contains
                real(ng_mphys(map_wth(1,i)+1:map_wth(1,i)+nlayers), r_um)
         end do
         if ( .not. casim_iopt_act==0 )
+          i_tr_n_cl  = nukca_tra+5
           do i = 1, row_length
             tot_tracer(i,1,:,nukca_tra+5) =                                    &
                  real(nl_mphys(map_wth(1,i)+1:map_wth(1,i)+nlayers), r_um)
