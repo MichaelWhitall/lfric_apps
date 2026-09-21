@@ -31,3 +31,18 @@ class vnXX_txxx(MacroUpgrade):
         # Add settings
         return config, self.reports
 """
+
+class vn32_t241(MacroUpgrade):
+    # Upgrade macro for Issue#241 by Mike Whitall
+
+    BEFORE_TAG = "vn3.2"
+    AFTER_TAG = "vn3.2_t241"
+
+    def upgrade(self, config, meta_config=None):
+        # Add settings
+
+        # Microphysics settings
+        nml = "namelist:microphysics"
+        self.add_setting(config, [nml,"fix_casim_tidy"], ".false.")
+
+        return config, self.reports
