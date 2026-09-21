@@ -806,6 +806,7 @@ contains
     use cv_run_mod, only: l_mom,                                               &
                           l_conv_prog_dtheta, l_conv_prog_dq,                  &
                           tau_conv_prog_dtheta, tau_conv_prog_dq
+    use comorph_um_namelist_mod, only: l_cv_numconcs
     use jules_surface_mod, only: srf_ex_cnv_gust, IP_SrfExWithCnv
     use mphys_inputs_mod, only: l_mcr_qgraup, l_mcr_qrain, l_mcr_qcf2,         &
                                 l_mcr_precfrac, l_improve_precfrac_checks
@@ -1318,19 +1319,27 @@ contains
       l_tracer = .false.
       ukca_tracer_names => empty_list
     end if
-    ! If we're running with CASIM, use tracer array to also transport
-    ! number concentrations
-    if (microphysics_casim) l_tracer = .true.
+    ! If CoMorph is updating CASIM prognostic number concentrations,
+    ! use tracer array to also transport number concentrations
+    if (l_cv_numconcs) l_tracer = .true.
 
     if (l_tracer) then
-      ntra_fld = size(ukca_tracer_names)
-      nukca_tra = ntra_fld
-      if (microphysics_casim) then
-        ! Add nl if that is prognosed
-        if ( .not. casim_iopt_act==0 )  ntra_fld = ntra_fld + 1
+      nukca_tra = size(ukca_tracer_names)
+      ntra_fld = nukca_tra
+      if (l_cv_numconcs) then
         ! CASIM always prognoses nr, ni, ns, ng
+        ! Store tracer-array indices of the number concentrations for use
+        ! inside CoMorph, for setting detrained number consistent with mass
+        i_tr_n_rain  = ntra_fld + 1
+        i_tr_n_cf    = ntra_fld + 2
+        i_tr_n_snow  = ntra_fld + 3
+        i_tr_n_graup = ntra_fld + 4
         ntra_fld = ntra_fld + 4
-
+        ! Add nl if that is prognosed
+        if ( .not. casim_iopt_act==0 ) then
+          i_tr_n_cl    = ntra_fld + 1
+          ntra_fld = ntra_fld + 1
+        end if
       end if
     else
       ntra_fld = 1
@@ -1980,34 +1989,27 @@ contains
         end select
       end do
 
-      if (microphysics_casim) then
-        ! Store tracer-array indices of the number concentrations for use
-        ! inside CoMorph, for setting detrained number consistent with mass
-        i_tr_n_rain  = nukca_tra+1
-        i_tr_n_cf    = nukca_tra+2
-        i_tr_n_snow  = nukca_tra+3
-        i_tr_n_graup = nukca_tra+4
+      if (l_cv_numconcs) then
         ! Copy number concentrations into final tracer fields
         do i = 1, row_length
-          tot_tracer(i,1,:,nukca_tra+1) =                                      &
+          tot_tracer(i,1,:,i_tr_n_rain) =                                      &
                real(nr_mphys(map_wth(1,i)+1:map_wth(1,i)+nlayers), r_um)
         end do
         do i = 1, row_length
-          tot_tracer(i,1,:,nukca_tra+2) =                                      &
+          tot_tracer(i,1,:,i_tr_n_cf) =                                        &
                real(ni_mphys(map_wth(1,i)+1:map_wth(1,i)+nlayers), r_um)
         end do
         do i = 1, row_length
-          tot_tracer(i,1,:,nukca_tra+3) =                                      &
+          tot_tracer(i,1,:,i_tr_n_snow) =                                      &
                real(ns_mphys(map_wth(1,i)+1:map_wth(1,i)+nlayers), r_um)
         end do
         do i = 1, row_length
-          tot_tracer(i,1,:,nukca_tra+4) =                                      &
+          tot_tracer(i,1,:,i_tr_n_graup) =                                     &
                real(ng_mphys(map_wth(1,i)+1:map_wth(1,i)+nlayers), r_um)
         end do
         if ( .not. casim_iopt_act==0 )
-          i_tr_n_cl  = nukca_tra+5
           do i = 1, row_length
-            tot_tracer(i,1,:,nukca_tra+5) =                                    &
+            tot_tracer(i,1,:,i_tr_n_cl) =                                      &
                  real(nl_mphys(map_wth(1,i)+1:map_wth(1,i)+nlayers), r_um)
           end do
         end if
@@ -3534,32 +3536,32 @@ contains
         end select
       end do
 
-      ! Copy number concentrations out of final tracer fields
-      if (microphysics_casim) then
+      if (l_cv_numconcs) then
+        ! Copy number concentrations out of final tracer fields
         do i = 1, row_length
           nr_mphys(map_wth(1,i)+1:map_wth(1,i)+nlayers) =                      &
-               real(tot_tracer(i,1,:,nukca_tra+1), r_def)
+               real(tot_tracer(i,1,:,i_tr_n_rain), r_def)
           nr_mphys(map_wth(1,i)) = nr_mphys(map_wth(1,i)+1)
         end do
         do i = 1, row_length
           ni_mphys(map_wth(1,i)+1:map_wth(1,i)+nlayers) =                      &
-               real(tot_tracer(i,1,:,nukca_tra+2), r_def)
+               real(tot_tracer(i,1,:,i_tr_n_cf), r_def)
           ni_mphys(map_wth(1,i)) = ni_mphys(map_wth(1,i)+1)
         end do
         do i = 1, row_length
           ns_mphys(map_wth(1,i)+1:map_wth(1,i)+nlayers) =                      &
-               real(tot_tracer(i,1,:,nukca_tra+3), r_def)
+               real(tot_tracer(i,1,:,i_tr_n_snow), r_def)
           ns_mphys(map_wth(1,i)) = ns_mphys(map_wth(1,i)+1)
         end do
         do i = 1, row_length
           ng_mphys(map_wth(1,i)+1:map_wth(1,i)+nlayers) =                      &
-               real(tot_tracer(i,1,:,nukca_tra+4), r_def)
+               real(tot_tracer(i,1,:,i_tr_n_graup), r_def)
           ng_mphys(map_wth(1,i)) = ng_mphys(map_wth(1,i)+1)
         end do
         if ( .not. casim_iopt_act==0 )
           do i = 1, row_length
             nl_mphys(map_wth(1,i)+1:map_wth(1,i)+nlayers) =                    &
-                 real(tot_tracer(i,1,:,nukca_tra+5), r_def)
+                 real(tot_tracer(i,1,:,i_tr_n_cl), r_def)
             nl_mphys(map_wth(1,i)) = nl_mphys(map_wth(1,i)+1)
           end do
         end if
