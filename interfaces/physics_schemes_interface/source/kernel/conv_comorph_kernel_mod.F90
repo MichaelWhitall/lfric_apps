@@ -809,7 +809,8 @@ contains
     use comorph_um_namelist_mod, only: l_cv_numconcs
     use jules_surface_mod, only: srf_ex_cnv_gust, IP_SrfExWithCnv
     use mphys_inputs_mod, only: l_mcr_qgraup, l_mcr_qrain, l_mcr_qcf2,         &
-                                l_mcr_precfrac, l_improve_precfrac_checks
+                                l_mcr_precfrac, l_improve_precfrac_checks,     &
+                                casim_iopt_act
     use nlsizes_namelist_mod, only: row_length, rows, bl_levels
     use planet_constants_mod, only: p_zero, kappa, planet_radius, g
     use timestep_mod, only: timestep
@@ -2007,7 +2008,7 @@ contains
           tot_tracer(i,1,:,i_tr_n_graup) =                                     &
                real(ng_mphys(map_wth(1,i)+1:map_wth(1,i)+nlayers), r_um)
         end do
-        if ( .not. casim_iopt_act==0 )
+        if ( .not. casim_iopt_act==0 ) then
           do i = 1, row_length
             tot_tracer(i,1,:,i_tr_n_cl) =                                      &
                  real(nl_mphys(map_wth(1,i)+1:map_wth(1,i)+nlayers), r_um)
@@ -3558,7 +3559,7 @@ contains
                real(tot_tracer(i,1,:,i_tr_n_graup), r_def)
           ng_mphys(map_wth(1,i)) = ng_mphys(map_wth(1,i)+1)
         end do
-        if ( .not. casim_iopt_act==0 )
+        if ( .not. casim_iopt_act==0 ) then
           do i = 1, row_length
             nl_mphys(map_wth(1,i)+1:map_wth(1,i)+nlayers) =                    &
                  real(tot_tracer(i,1,:,i_tr_n_cl), r_def)
