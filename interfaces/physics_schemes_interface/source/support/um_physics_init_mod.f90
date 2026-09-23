@@ -543,7 +543,7 @@ contains
                               casim_moments_option, n_casim_tracers,     &
                               l_casim_warm_only,                         &
                               l_ukca_aerosol, no_aerosol_modes
-    use threshold, nr_small, nr_tidy  ! CASIM rain-number thresholds
+    use thresholds, only: nr_small, nr_tidy  ! CASIM rain-number thresholds
     use variable_precision, only: wp
     use casim_stph, only: l_rp2_casim
     use casim_set_dependent_switches_mod, only:                                &
