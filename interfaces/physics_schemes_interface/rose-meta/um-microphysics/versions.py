@@ -32,7 +32,7 @@ class vnXX_txxx(MacroUpgrade):
         return config, self.reports
 """
 
-class vnXX_t258(MacroUpgrade):
+class vn32_t258(MacroUpgrade):
     # Upgrade macro for Issue #258 by Mike Whitall
 
     BEFORE_TAG = "vn3.2"
