@@ -31,3 +31,16 @@ class vnXX_txxx(MacroUpgrade):
         # Add settings
         return config, self.reports
 """
+
+class vnXX_t258(MacroUpgrade):
+    # Upgrade macro for Issue #258 by Mike Whitall
+
+    BEFORE_TAG = "vn3.2"
+    AFTER_TAG = "vn3.2_t258"
+
+    def upgrade(self, config, meta_config=None):
+        # Add settings
+
+        # Blank macro needed due to meta-data changes.
+
+        return config, self.reports
