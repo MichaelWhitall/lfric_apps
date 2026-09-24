@@ -72,7 +72,7 @@ real(kind=wp) :: prec_accl  ! Source from liquid-cloud (accretion)
 real(kind=wp) :: prec_accf  ! Source from ice-cloud (riming)
 real(kind=wp) :: prec_fall  ! Mass falling in from above
 
-! Precip fraction at k 
+! Precip fraction at k
 real(kind=wp) :: precfrac_k_f    ! After fall-in mass added
 real(kind=wp) :: precfrac_k_f_c  ! After fall-in mass and cloud added
 
