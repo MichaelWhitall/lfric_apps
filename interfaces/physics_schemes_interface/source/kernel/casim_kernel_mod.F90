@@ -613,8 +613,8 @@ subroutine casim_code( nlayers,                     &
       ! increments from CASIM...
       do k = 1, nlayers
         ! Copy cloud-fraction increments into local arrays
-        dcfliq_casim(1,1,k) = dcfl_wth(map_wth(1) + k)
-        dcfice_casim(1,1,k) = dcff_wth(map_wth(1) + k)
+        dcfliq_casim(k,1,1) = dcfl_wth(map_wth(1) + k)
+        dcfice_casim(k,1,1) = dcff_wth(map_wth(1) + k)
       end do
       call casim_update_precfrac( nlayers, dz_casim, rho_casim,                &
                                   casdiags%rainfall_3d, casdiags%graupfall_3d, &
