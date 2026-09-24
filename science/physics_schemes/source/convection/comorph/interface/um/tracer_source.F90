@@ -170,11 +170,11 @@ if ( l_cv_numconcs ) then
 
   ! Setup indices for addressing the number concentration for each condensate
   ! species in the tracer super-array
-  i_tr_n_cond(i_cond_cl)    = i_tr_n_cl
-  i_tr_n_cond(i_cond_rain)  = i_tr_n_rain
-  i_tr_n_cond(i_cond_cf)    = i_tr_n_cf
-  i_tr_n_cond(i_cond_snow)  = i_tr_n_snow
-  i_tr_n_cond(i_cond_graup) = i_tr_n_graup
+  if ( i_cond_cl > 0    )  i_tr_n_cond(i_cond_cl)    = i_tr_n_cl
+  if ( i_cond_rain > 0  )  i_tr_n_cond(i_cond_rain)  = i_tr_n_rain
+  if ( i_cond_cf > 0    )  i_tr_n_cond(i_cond_cf)    = i_tr_n_cf
+  if ( i_cond_snow > 0  )  i_tr_n_cond(i_cond_snow)  = i_tr_n_snow
+  if ( i_cond_graup > 0 )  i_tr_n_cond(i_cond_graup) = i_tr_n_graup
 
   ! Loop over active condensate species
   do i_cond = 1, n_cond_species
