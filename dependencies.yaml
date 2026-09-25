@@ -18,8 +18,10 @@
 # local clone. These can be filled to set a different source if desired.
 
 casim:
-    source: git@github.com:MetOffice/casim.git
-    ref: 2026.07.1
+    - source: git@github.com:MetOffice/casim.git
+      ref: 2026.07.1
+    - source: git@github.com:MichaelWhitall/casim.git
+      ref: vn3.2_inhom_rain
 
 jules:
     source: git@github.com:MetOffice/jules.git
