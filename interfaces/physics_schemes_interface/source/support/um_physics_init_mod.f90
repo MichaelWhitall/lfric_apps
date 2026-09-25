@@ -166,6 +166,7 @@ module um_physics_init_mod
            core_ent_cmr_in           => core_ent_cmr,                          &
            core_ent_fac_in           => core_ent_fac,                          &
            cv_numconcs_in            => cv_numconcs,                           &
+           cv_snow_in                => cv_snow,                               &
            drag_coef_cond_in         => drag_coef_cond,                        &
            drag_coef_par_in          => drag_coef_par,                         &
            dx_ref_in                 => dx_ref,                                &
@@ -441,7 +442,7 @@ contains
          ! UM namelist entries
          ass_min_radius, autoc_opt, cf_area_coef, cf_conv_fac, coef_auto,      &
          col_eff_coef, core_ent_fac, drag_coef_cond, drag_coef_par, dx_ref,    &
-         ent_coef, hetnuc_temp, l_core_ent_cmr, l_cv_numconcs,                 &
+         ent_coef, hetnuc_temp, l_core_ent_cmr, l_cv_numconcs, l_cv_snow,      &
          l_resdep_precipramp,                                                  &
          max_cmr, min_cmr, min_radius_fac, n_dndraft_types,                    &
          nconc_cf, nconc_cl, nconc_graup, nconc_rain, nconc_snow,              &
@@ -950,6 +951,7 @@ contains
         overlap_power          = real( overlap_power_in,          r_um )
         rain_area_min          = real( rain_area_min_in,          r_um )
         l_cv_numconcs          = cv_numconcs_in
+        l_cv_snow              = cv_snow_in
 
         ! Conv triggering and parcel initialisation
         par_gen_mass_fac       = real( par_gen_mass_fac_in,       r_um )

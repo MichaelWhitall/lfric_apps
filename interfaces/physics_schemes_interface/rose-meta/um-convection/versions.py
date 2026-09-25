@@ -141,10 +141,24 @@ class vn32_t776(MacroUpgrade):
         return config, self.reports
 
 
+class vn32_t240(MacroUpgrade):
+    # Upgrade macro for Issue#240 by Mike Whitall
+
+    BEFORE_TAG = "vn3.2_t776"
+    AFTER_TAG = "vn3.2_t240"
+
+    def upgrade(self, config, meta_config=None):
+        # Add settings
+
+        self.add_setting(config, [nml,"cv_snow"], ".false.")
+
+        return config, self.reports
+
+
 class vn32_t241(MacroUpgrade):
     # Upgrade macro for Issue#241 by Mike Whitall
 
-    BEFORE_TAG = "vn3.2_t776"
+    BEFORE_TAG = "vn3.2_t240"
     AFTER_TAG = "vn3.2_t241"
 
     def upgrade(self, config, meta_config=None):
