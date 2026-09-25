@@ -182,6 +182,7 @@ module um_physics_init_mod
                                         ci_input_in => ci_input,             &
                                         cic_input_in => cic_input,           &
                                         c_r_correl_in => c_r_correl,         &
+                                        casim_inhom_rain,                    &
                                         aut_qc_in => aut_qc,                 &
                                         ai_in => ai,                         &
                                         l_proc_fluxes_in => l_proc_fluxes,   &
@@ -471,7 +472,7 @@ contains
         max_step_length, max_sed_length,                     &
         iopt_inuc, iopt_act, process_level, l_separate_rain, &
         l_ukca_casim, l_abelshipway, l_warm,                 &
-        l_cfrac_casim_diag_scheme, l_prf_cfrac
+        l_cfrac_casim_diag_scheme, l_prf_cfrac, l_inhom_rain
     use murk_inputs_mod, only: l_murk_advect
     use casim_switches, only: its, ite, jts, jte, kts, kte,              &
                               ils, ile, jls, jle, kls, kle,              &
@@ -1368,6 +1369,7 @@ contains
         l_mcr_qcf2 = .true.
         l_mcr_qgraup = .true.
         wvarfac = 1.0_r_um
+        l_inhom_rain = casim_inhom_rain
 
         ! Transport all prognostic variables (include graupel and snow)
         nummr_to_transport = 6_i_def
