@@ -32,11 +32,11 @@ class vnXX_txxx(MacroUpgrade):
         return config, self.reports
 """
 
-class vn32_t717(MacroUpgrade):
-    # Upgrade macro for PR#717 by Mike Whitall
+class vn32_t241(MacroUpgrade):
+    # Upgrade macro for Issue#241 by Mike Whitall
 
     BEFORE_TAG = "vn3.2"
-    AFTER_TAG = "vn3.2_t717"
+    AFTER_TAG = "vn3.2_t241"
 
     def upgrade(self, config, meta_config=None):
         # Add settings
@@ -112,17 +112,6 @@ class vn32_t717(MacroUpgrade):
         self.add_setting(config, [nml, "tdep_n_cl"], "0.0")
         self.add_setting(config, [nml, "tdep_n_cf"], "8.18")
 
-        return config, self.reports
-
-
-class vn32_t776(MacroUpgrade):
-    # Upgrade macro for PR#776 by Mike Whitall
-
-    BEFORE_TAG = "vn3.2_t717"
-    AFTER_TAG = "vn3.2_t776"
-
-    def upgrade(self, config, meta_config=None):
-        # Add settings
 
         # CoMorph settings
         nml = "namelist:comorph"
@@ -138,31 +127,9 @@ class vn32_t776(MacroUpgrade):
         # Was the hard-wired comorph_constants_mod value par_gen_radius_fac
         self.add_setting(config, [nml,"turb_len_fac"], "8.0")
 
-        return config, self.reports
-
-
-class vn32_t240(MacroUpgrade):
-    # Upgrade macro for Issue#240 by Mike Whitall
-
-    BEFORE_TAG = "vn3.2_t776"
-    AFTER_TAG = "vn3.2_t240"
-
-    def upgrade(self, config, meta_config=None):
-        # Add settings
 
         self.add_setting(config, [nml,"cv_snow"], ".false.")
 
-        return config, self.reports
-
-
-class vn32_t241(MacroUpgrade):
-    # Upgrade macro for Issue#241 by Mike Whitall
-
-    BEFORE_TAG = "vn3.2_t240"
-    AFTER_TAG = "vn3.2_t241"
-
-    def upgrade(self, config, meta_config=None):
-        # Add settings
 
         # CoMorph settings
         nml = "namelist:comorph"
