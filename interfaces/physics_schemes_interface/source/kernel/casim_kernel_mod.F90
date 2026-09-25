@@ -19,7 +19,7 @@ use kernel_mod,        only: kernel_type
 use empty_data_mod,    only: empty_real_data
 use aerosol_config_mod, only: murk_prognostic
 use microphysics_config_mod, only: casim_cdnc_opt, casim_cdnc_opt_external, &
-                                   casim_cdnc_opt_fixed
+                                   casim_cdnc_opt_fixed, casim_inhom_rain
 
 implicit none
 
@@ -296,6 +296,8 @@ subroutine casim_code( nlayers,                     &
          dact_insol_liq_casim, daccum_dust_mass,                               &
          daccum_dust_number,   dact_sol_number_casim,                          &
          dact_insol_number_casim
+
+    ! Variables for passing subgrid cloud and rain inhomogeneity into CASIM
     real(wp), dimension(nlayers) :: fsd_l, fsd_r
     real(wp) :: x_in_km
 
@@ -424,7 +426,6 @@ subroutine casim_code( nlayers,                     &
       cfliq_casim(k,1,1) = cfl_wth(map_wth(1) + k)
       cfsnow_casim(k,1,1) = cff_wth(map_wth(1) + k)
       cfice_casim(k,1,1) = cfsnow_casim(k,1,1)
-      fsd_l(k) = sigma_ml(map_wth(1) + k)
 
       dqv_casim(k,1,1) = 0.0_wp
       dqc_casim(k,1,1) = 0.0_wp
@@ -469,14 +470,28 @@ subroutine casim_code( nlayers,                     &
       cfgr_casim(k,1,1)=cfrain_casim(k,1,1)
     end do
 
-    x_in_km = fsd_eff_lam * planet_radius * 0.001_wp
-    do k = 1, nlayers
-      fsd_r(k) = (1.1_wp-0.8_wp*cfrain_casim(k,1,1))                          &
-               *(((x_in_km*cfrain_casim(k,1,1))**0.333_wp)                    &
-               *((0.11_wp*x_in_km*cfrain_casim(k,1,1))                        &
-               **1.14_wp+1.0_wp)**(-0.22_wp))
-      fsd_r(k) = fsd_r(k)*two_d_fsd_factor
-    end do
+    if ( casim_inhom_rain ) then
+      ! If enhancing warm rain to account for sub-grid inhomogeneity,
+      ! Set the fractional standard deviation of liquid-cloud and rain
+      ! needed for that calculation inside CASIM
+      x_in_km = fsd_eff_lam * planet_radius * 0.001_wp
+      do k = 1, nlayers
+        ! Copy liquid-cloud FSD from input array
+        fsd_l(k) = sigma_ml(map_wth(1) + k)
+        ! Calculate ice-cloud FSD as is done in Wilson-Ballard
+        fsd_r(k) = (1.1_wp-0.8_wp*cfrain_casim(k,1,1))                         &
+                 *(((x_in_km*cfrain_casim(k,1,1))**0.333_wp)                   &
+                 *((0.11_wp*x_in_km*cfrain_casim(k,1,1))                       &
+                 **1.14_wp+1.0_wp)**(-0.22_wp))
+        fsd_r(k) = fsd_r(k)*two_d_fsd_factor
+      end do
+    else
+      ! Set to zero if not used
+      do k = 1, nlayers
+        fsd_l(k) = 0.0_wp
+        fsd_r(k) = 0.0_wp
+      end do
+    end if
 
     ! Set up diagnostic flags for CASIM
     l_refl_tot = .not. associated(refl_tot, empty_real_data)
