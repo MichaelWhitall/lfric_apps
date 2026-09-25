@@ -20,31 +20,27 @@ class UpgradeError(Exception):
 
 """
 Copy this template and complete to add your macro
-
 class vnXX_txxx(MacroUpgrade):
     # Upgrade macro for <TICKET> by <Author>
-
     BEFORE_TAG = "vnX.X"
     AFTER_TAG = "vnX.X_txxx"
-
     def upgrade(self, config, meta_config=None):
         # Add settings
         return config, self.reports
 """
 
+
 class vn32_t241(MacroUpgrade):
-    # Upgrade macro for Issue #241 by Mike Whitall
+    """Upgrade macro for ticket #241 by Mike Whitall."""
 
     BEFORE_TAG = "vn3.2"
     AFTER_TAG = "vn3.2_t241"
 
     def upgrade(self, config, meta_config=None):
-        # Add settings
-
+        # Commands From: rose-meta/um-microphysics
         # Blank macro needed due to meta-data changes.
-
         # Microphysics settings
         nml = "namelist:microphysics"
-        self.add_setting(config, [nml,"fix_casim_tidy"], ".false.")
+        self.add_setting(config, [nml, "fix_casim_tidy"], ".false.")
 
         return config, self.reports
