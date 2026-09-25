@@ -31,3 +31,17 @@ class vnXX_txxx(MacroUpgrade):
         # Add settings
         return config, self.reports
 """
+
+
+class vn32_t014(MacroUpgrade):
+    """Upgrade macro for ticket None by None."""
+
+    BEFORE_TAG = "vn3.2"
+    AFTER_TAG = "vn3.2_t014"
+
+    def upgrade(self, config, meta_config=None):
+        # Commands From: rose-meta/um-microphysics
+        nml = "namelist:microphysics"
+        self.add_setting(config, [nml, "casim_inhom_rain"], ".false.")
+
+        return config, self.reports
