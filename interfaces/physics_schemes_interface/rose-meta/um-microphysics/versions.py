@@ -32,44 +32,22 @@ class vnXX_txxx(MacroUpgrade):
         return config, self.reports
 """
 
-class vn32_t258(MacroUpgrade):
+class vn32_t014(MacroUpgrade):
     # Upgrade macro for Issue #258 by Mike Whitall
 
     BEFORE_TAG = "vn3.2"
-    AFTER_TAG = "vn3.2_t258"
+    AFTER_TAG = "vn3.2_t014"
 
     def upgrade(self, config, meta_config=None):
         # Add settings
 
         # Blank macro needed due to meta-data changes.
 
-        return config, self.reports
-
-
-class vn32_t241(MacroUpgrade):
-    # Upgrade macro for Issue#241 by Mike Whitall
-
-    BEFORE_TAG = "vn3.2"
-    AFTER_TAG = "vn3.2_t241"
-
-    def upgrade(self, config, meta_config=None):
-        # Add settings
 
         # Microphysics settings
         nml = "namelist:microphysics"
         self.add_setting(config, [nml,"fix_casim_tidy"], ".false.")
 
-        return config, self.reports
-
-
-class vn32_t014(MacroUpgrade):
-    # Upgrade macro for casim Issue#14 by Mike Whitall
-
-    BEFORE_TAG = "vn3.2_t241"
-    AFTER_TAG = "vn3.2_t014"
-
-    def upgrade(self, config, meta_config=None):
-        # Add settings
 
         nml = "namelist:microphysics"
         self.add_setting(config, [nml, "casim_inhom_rain"], ".false.")
