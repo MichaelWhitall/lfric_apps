@@ -22,7 +22,7 @@ use kernel_mod,        only: kernel_type
 use empty_data_mod,    only: empty_real_data
 use aerosol_config_mod, only: murk_prognostic
 use microphysics_config_mod, only: casim_cdnc_opt, casim_cdnc_opt_external, &
-                                   casim_cdnc_opt_fixed
+                                   casim_cdnc_opt_fixed, casim_inhom_rain
 
 implicit none
 
@@ -36,7 +36,7 @@ private
 
 type, public, extends(kernel_type) :: casim_kernel_type
   private
-  type(arg_type) :: meta_args(48) = (/                                      &
+  type(arg_type) :: meta_args(49) = (/                                      &
        arg_type(GH_FIELD, GH_REAL, GH_READ,  WTHETA),                       & ! mv_wth
        arg_type(GH_FIELD, GH_REAL, GH_READ,  WTHETA),                       & ! ml_wth
        arg_type(GH_FIELD, GH_REAL, GH_READ,  WTHETA),                       & ! mi_wth
@@ -47,6 +47,7 @@ type, public, extends(kernel_type) :: casim_kernel_type
        arg_type(GH_FIELD, GH_REAL, GH_READ,  WTHETA),                       & ! cff_wth
        arg_type(GH_FIELD, GH_REAL, GH_READ,  WTHETA),                       & ! bcf_wth
        arg_type(GH_FIELD, GH_REAL, GH_READWRITE,  WTHETA),                  & ! precfrac
+       arg_type(GH_FIELD, GH_REAL, GH_READ,  WTHETA),                       & ! sigma_ml
        arg_type(GH_FIELD, GH_REAL, GH_READWRITE,  WTHETA),                  & ! nl_mphys
        arg_type(GH_FIELD, GH_REAL, GH_READWRITE,  WTHETA),                  & ! nr_mphys
        arg_type(GH_FIELD, GH_REAL, GH_READWRITE,  WTHETA),                  & ! ni_mphys
@@ -176,7 +177,7 @@ subroutine casim_code( nlayers,                     &
                        mv_wth,   ml_wth,   mi_wth,  &
                        mr_wth,   mg_wth,   ms_wth,  &
                        cfl_wth,  cff_wth,  bcf_wth, &
-                       precfrac,                    &
+                       precfrac, sigma_ml,          &
                        nl_mphys, nr_mphys,          &
                        ni_mphys, ns_mphys, ng_mphys,&
                        w_phys,                      &
@@ -214,6 +215,8 @@ subroutine casim_code( nlayers,                     &
 
     use planet_constants_mod,       only: p_zero, kappa, planet_radius
     use water_constants_mod,        only: tm
+    use fsd_parameters_mod,         only: fsd_eff_lam
+    use rad_input_mod,              only: two_d_fsd_factor
 
     use micro_main,                 only: shipway_microphysics
     use casim_switches,             only: its, ite, jts, jte, kts, kte, &
@@ -254,6 +257,7 @@ subroutine casim_code( nlayers,                     &
     real(kind=r_def), intent(in),  dimension(undf_wth) :: cff_wth
     real(kind=r_def), intent(in),  dimension(undf_wth) :: bcf_wth
     real(kind=r_def), intent(inout), dimension(undf_wth) :: precfrac
+    real(kind=r_def), intent(in),  dimension(undf_wth) :: sigma_ml
 
     real(kind=r_def), intent(in),  dimension(undf_wth) :: w_phys
     real(kind=r_def), intent(in),  dimension(undf_wth) :: theta_in_wth
@@ -333,6 +337,9 @@ subroutine casim_code( nlayers,                     &
          daccum_dust_number,   dact_sol_number_casim,                          &
          dact_insol_number_casim
 
+    ! Variables for passing subgrid cloud and rain inhomogeneity into CASIM
+    real(wp), dimension(nlayers) :: fsd_l, fsd_r
+    real(wp) :: x_in_km
 
     ! Local variables for the kernel
     real(r_um), parameter :: alt_1km = 1000.0_r_um ! metres
@@ -566,6 +573,29 @@ subroutine casim_code( nlayers,                     &
       end do
     end if
 
+    if ( casim_inhom_rain ) then
+      ! If enhancing warm rain to account for sub-grid inhomogeneity,
+      ! Set the fractional standard deviation of liquid-cloud and rain
+      ! needed for that calculation inside CASIM
+      x_in_km = fsd_eff_lam * planet_radius * 0.001_wp
+      do k = 1, nlayers
+        ! Copy liquid-cloud FSD from input array
+        fsd_l(k) = sigma_ml(map_wth(1) + k)
+        ! Calculate ice-cloud FSD as is done in Wilson-Ballard
+        fsd_r(k) = (1.1_wp-0.8_wp*cfrain_casim(k,1,1))                         &
+                 *(((x_in_km*cfrain_casim(k,1,1))**0.333_wp)                   &
+                 *((0.11_wp*x_in_km*cfrain_casim(k,1,1))                       &
+                 **1.14_wp+1.0_wp)**(-0.22_wp))
+        fsd_r(k) = fsd_r(k)*two_d_fsd_factor
+      end do
+    else
+      ! Set to zero if not used
+      do k = 1, nlayers
+        fsd_l(k) = 0.0_wp
+        fsd_r(k) = 0.0_wp
+      end do
+    end if
+
     ! Set up diagnostic flags for CASIM
     l_refl_tot = .not. associated(refl_tot, empty_real_data)
     l_refl_1km = .not. associated(refl_1km, empty_real_data)
@@ -600,7 +630,7 @@ subroutine casim_code( nlayers,                     &
                             rho_casim, w_casim, tke_casim,                    &
                             dz_casim,                                         &
                             cfliq_casim, cfice_casim, cfsnow_casim,           &
-                            cfrain_casim, cfgr_casim,                         &
+                            cfrain_casim, cfgr_casim, fsd_l, fsd_r,           &
     !!                input variables above  || in/out variables below
                             dqv_casim, dqc_casim,  dqr_casim, dnc_casim,      &
                             dnr_casim, dm3r_casim, dqi_casim, dqs_casim,      &

@@ -60,3 +60,18 @@ class vn32_t241(MacroUpgrade):
         self.add_setting(config, [nml,"fix_casim_tidy"], ".false.")
 
         return config, self.reports
+
+
+class vn32_t014(MacroUpgrade):
+    # Upgrade macro for casim Issue#14 by Mike Whitall
+
+    BEFORE_TAG = "vn3.2_t241"
+    AFTER_TAG = "vn3.2_t014"
+
+    def upgrade(self, config, meta_config=None):
+        # Add settings
+
+        nml = "namelist:microphysics"
+        self.add_setting(config, [nml, "casim_inhom_rain"], ".false.")
+
+        return config, self.reports

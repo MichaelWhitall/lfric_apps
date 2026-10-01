@@ -234,6 +234,7 @@ module um_physics_init_mod
                                         ci_input_in => ci_input,             &
                                         cic_input_in => cic_input,           &
                                         c_r_correl_in => c_r_correl,         &
+                                        casim_inhom_rain,                    &
                                         aut_qc_in => aut_qc,                 &
                                         ai_in => ai,                         &
                                         l_proc_fluxes_in => l_proc_fluxes,   &
@@ -532,11 +533,15 @@ contains
         l_mcr_precfrac,                                                      &
         i_update_precfrac, i_homog_areas, i_sg_correl, heavy_rain_evap_fac
     use mphys_psd_mod, only: x1g, x2g, x4g, x1gl, x2gl, x4gl
+    ! CASIM modules
+    use variable_precision, only: wp
     use mphys_switches, only: set_mphys_switches,            &
         max_step_length, max_sed_length,                     &
         iopt_inuc, iopt_act, process_level, l_separate_rain, &
         l_ukca_casim, l_abelshipway, l_warm,                 &
-        l_cfrac_casim_diag_scheme, l_prf_cfrac
+        l_cfrac_casim_diag_scheme, l_prf_cfrac, l_inhom_rain
+    use mphys_parameters, only: c_r_correl_casim => c_r_correl
+
     use murk_inputs_mod, only: l_murk_advect
     use casim_switches, only: its, ite, jts, jte, kts, kte,              &
                               ils, ile, jls, jle, kls, kle,              &
@@ -1396,7 +1401,9 @@ contains
       l_mphys_nonshallow = .true.
       l_rain         = .true.
       l_subgrid_qcl_mp = turb_gen_mixph
-      mp_dz_scal     = real(mp_dz_scal_in, r_um)
+      mp_dz_scal       = real(mp_dz_scal_in, r_um)
+      c_r_correl       = real(c_r_correl_in, r_um)
+      c_r_correl_casim = real(c_r_correl_in, wp)  ! Set copy in CASIM module
 
       ! Domain top used in microphysics - contained in mphys_bypass_mod
       mphys_mod_top  = real(domain_height, r_um)
@@ -1444,7 +1451,6 @@ contains
         a_ratio_exp    = real(a_ratio_exp_in, r_um)
         a_ratio_fac    = real(a_ratio_fac_in, r_um)
         ar             = 1.00_r_um
-        c_r_correl     = real(c_r_correl_in, r_um)
         ci_input       = real(ci_input_in, r_um)
         cic_input      = real(cic_input_in, r_um)
         di_input       = 0.416_r_um
@@ -1482,6 +1488,7 @@ contains
         l_mcr_qcf2 = .true.
         l_mcr_qgraup = .true.
         wvarfac = 1.0_r_um
+        l_inhom_rain = casim_inhom_rain
 
         ! Transport all prognostic variables (include graupel and snow)
         nummr_to_transport = 6_i_def
