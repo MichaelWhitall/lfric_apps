@@ -374,13 +374,14 @@
   <field id="convection__dd_dq" name="dd_dq" long_name="water_vapour_increment_from_downdraughts" unit="kg kg-1 s-1" grid_ref="full_level_face_grid" />
   <field id="convection__conv_rain" name="conv_rain" long_name="surface_convective_rainfall_rate" unit="kg m-2 s-1" domain_ref="face" />
   <field id="convection__conv_snow" name="conv_snow" long_name="surface_convective_snowfall_rate" unit="kg m-2 s-1" domain_ref="face" />
+  <field id="convection__conv_graup" name="conv_graup" long_name="surface_convective_graupel_rate" unit="kg m-2 s-1" domain_ref="face" />
   <field id="convection__conv_prec" name="conv_prec" long_name="surface_convective_precipitation_rate" unit="kg m-2 s-1" domain_ref="face"> convection__conv_rain + convection__conv_snow </field>
   <field id="convection__conv_rain_acc" name="conv_rain_acc" long_name="surface_convective_rainfall_amount" unit="kg m-2" domain_ref="face"> $DT * convection__conv_rain </field>
   <field id="convection__conv_snow_acc" name="conv_snow_acc" long_name="surface_convective_snowfall_amount" unit="kg m-2" domain_ref="face"> $DT * convection__conv_snow </field>
   <field id="convection__conv_prec_acc" name="conv_prec_acc" long_name="surface_convective_precipitation_amount" unit="kg m-2" domain_ref="face"> $DT * convection__conv_prec </field>
   <field id="convection__conv_rain_3d" name="conv_rain_3d" long_name="convective_rainfall_rate" unit="kg m-2 s-1" grid_ref="full_level_face_grid" />
   <field id="convection__conv_snow_3d" name="conv_snow_3d" long_name="convective_snowfall_rate" unit="kg m-2 s-1" grid_ref="full_level_face_grid" />
-  <field id="convection__conv_ppn_frac" name="conv_ppn_frac" long_name="fraction_of_large_scale_rain_which_is_convective" unit="1" domain_ref="face" />
+  <field id="convection__cv_qw_sink" name="cv_qw_sink" long_name="column-integrated sink of water-vapour+liquid-cloud from the convection scheme (precip production rate)" unit="kg m-2 s-1" domain_ref="face" />
   <field id="convection__deep_dt" name="deep_dt" long_name="temperature_increment_from_deep_convection" unit="K s-1" grid_ref="full_level_face_grid" />
   <field id="convection__deep_dq" name="deep_dq" long_name="water_vapour_increment_from_deep_convection" unit="kg kg-1 s-1" grid_ref="full_level_face_grid" />
   <field id="convection__deep_massflux" name="deep_massflux" long_name="massflux_for_deep_convection" unit="Pa s-1" grid_ref="full_level_face_grid" />
@@ -434,6 +435,8 @@
   <field id="microphysics__ls_graup_3d" name="ls_graup_3d" long_name="microphysical_graupelfall_rate" unit="kg m-2 s-1" grid_ref="full_level_face_grid" />
   <field id="microphysics__superc_liq" name="supercooled_liq_mphys" long_name="supercooled_liquid_cloud_after_microphysics" unit="kg kg-1" grid_ref="full_level_face_grid" />
   <field id="microphysics__superc_rain" name="supercooled_rain_mphys" long_name="supercooled_rain_after_microphysics" unit="kg kg-1" grid_ref="full_level_face_grid" />
+  <field id="microphysics__ls_qw_sink" name="ls_qw_sink" long_name="column-integrated sink of water-vapour+liquid-cloud from the microphysics scheme (precip production rate)" unit="kg m-2 s-1" domain_ref="face" />
+  <field id="microphysics__ls_qw_srce" name="ls_qw_srce" long_name="column-integrated source of water-vapour+liquid-cloud from the microphysics scheme (precip evaporation rate)" unit="kg m-2 s-1" domain_ref="face" />
   <field id="microphysics__autoconv" name="autoconv" long_name="rain_autoconversion_rate" unit="kg kg-1 s-1" grid_ref="full_level_face_grid" />
   <field id="microphysics__accretion" name="accretion" long_name="rain_accretion_rate" unit="kg kg-1 s-1" grid_ref="full_level_face_grid" />
   <field id="microphysics__rim_cry" name="rim_cry" long_name="riming_rate_for_ice_crystals" unit="kg kg-1 s-1" grid_ref="full_level_face_grid" />

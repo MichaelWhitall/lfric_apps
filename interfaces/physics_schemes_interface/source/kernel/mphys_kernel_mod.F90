@@ -32,7 +32,7 @@ private
 
 type, public, extends(kernel_type) :: mphys_kernel_type
   private
-  type(arg_type) :: meta_args(49) = (/                                      &
+  type(arg_type) :: meta_args(50) = (/                                      &
        arg_type(GH_FIELD, GH_REAL, GH_READ,  WTHETA),                       & ! mv_wth
        arg_type(GH_FIELD, GH_REAL, GH_READ,  WTHETA),                       & ! ml_wth
        arg_type(GH_FIELD, GH_REAL, GH_READ,  WTHETA),                       & ! ms_wth
@@ -81,7 +81,8 @@ type, public, extends(kernel_type) :: mphys_kernel_type
        arg_type(GH_FIELD, GH_REAL, GH_WRITE, WTHETA),                       & ! sfsnow
        arg_type(GH_FIELD, GH_REAL, GH_WRITE, WTHETA),                       & ! refl_tot
        arg_type(GH_FIELD, GH_REAL, GH_WRITE, ANY_DISCONTINUOUS_SPACE_1),    & ! refl_1km
-       arg_type(GH_FIELD, GH_REAL, GH_WRITE, ANY_DISCONTINUOUS_SPACE_1)     & ! conv_ppn_frac
+       arg_type(GH_FIELD, GH_REAL, GH_WRITE, ANY_DISCONTINUOUS_SPACE_1),    & ! ls_qw_sink
+       arg_type(GH_FIELD, GH_REAL, GH_WRITE, ANY_DISCONTINUOUS_SPACE_1)     & ! ls_qw_srce
        /)
    integer :: operates_on = DOMAIN
 contains
@@ -189,7 +190,7 @@ subroutine mphys_code( nlayers, seg_len,            &
                        superc_rain_wth,             &
                        sfwater, sfrain, sfsnow,     &
                        refl_tot, refl_1km,          &
-                       conv_ppn_frac,               &
+                       ls_qw_sink, ls_qw_srce,      &
                        ndf_wth, undf_wth, map_wth,  &
                        ndf_w3,  undf_w3,  map_w3,   &
                        ndf_2d,  undf_2d,  map_2d,   &
@@ -300,7 +301,9 @@ subroutine mphys_code( nlayers, seg_len,            &
     real(kind=r_def), pointer, intent(inout) :: sfsnow(:)
     real(kind=r_def), pointer, intent(inout) :: refl_tot(:)
     real(kind=r_def), pointer, intent(inout) :: refl_1km(:)
-    real(kind=r_def), pointer, intent(inout) :: conv_ppn_frac(:)
+
+    real(kind=r_def), intent(out) :: ls_qw_sink(:)
+    real(kind=r_def), intent(out) :: ls_qw_srce(:)
 
     integer(kind=i_def), intent(in), dimension(ndf_wth, seg_len) :: map_wth
     integer(kind=i_def), intent(in), dimension(ndf_w3, seg_len)  :: map_w3
@@ -896,22 +899,24 @@ subroutine mphys_code( nlayers, seg_len,            &
     end do
   end if
 
-  ! Vertical integral of qw sink - written to conv_ppn_frac field for
-  ! further use in comorph_kernel
-  if (.not. associated(conv_ppn_frac, empty_real_data)) then
+  ! Vertical integrals of qw sink (precip formation) and source
+  ! (precip evaporation)
+  do i = 1, seg_len
+    ls_qw_sink(map_2d(1,i)) = 0.0_r_def
+    ls_qw_srce(map_2d(1,i)) = 0.0_r_def
+  end do
+  do k = 1, nlayers
     do i = 1, seg_len
-      conv_ppn_frac(map_2d(1,i)) = 0.0_r_def
+      dqw = ( dmv_wth(map_wth(1,i)+k) + dml_wth(map_wth(1,i)+k) )              &
+            * rhodz_dry(i,1,k)
+      ls_qw_sink(map_2d(1,i)) = ls_qw_sink(map_2d(1,i)) + max(-dqw, 0.0_r_def)
+      ls_qw_srce(map_2d(1,i)) = ls_qw_srce(map_2d(1,i)) + max( dqw, 0.0_r_def)
     end do
-    do k = 1, nlayers
-      do i = 1, seg_len
-        dqw = (dmv_wth(map_wth(1,i)+k)+dml_wth(map_wth(1,i)+k))*rhodz_dry(i,1,k)
-        conv_ppn_frac(map_2d(1,i)) = conv_ppn_frac(map_2d(1,i)) + max(-dqw, 0.0_r_def)
-      end do
-    end do
-    do i = 1, seg_len
-      conv_ppn_frac(map_2d(1,i)) = conv_ppn_frac(map_2d(1,i)) * recip_timestep
-    end do
-  end if
+  end do
+  do i = 1, seg_len
+    ls_qw_sink(map_2d(1,i)) = ls_qw_sink(map_2d(1,i)) * recip_timestep
+    ls_qw_srce(map_2d(1,i)) = ls_qw_srce(map_2d(1,i)) * recip_timestep
+  end do
 
   if (allocated(psacw)) deallocate (psacw)
   if (allocated(piacw)) deallocate (piacw)

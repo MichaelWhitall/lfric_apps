@@ -102,7 +102,7 @@ module conv_comorph_kernel_mod
          arg_type(GH_FIELD,  GH_REAL,    GH_READ,      ANY_DISCONTINUOUS_SPACE_1),&! ustar
          arg_type(GH_FIELD,  GH_REAL,    GH_READ,      ANY_DISCONTINUOUS_SPACE_1),&! ls_rain_2d
          arg_type(GH_FIELD,  GH_REAL,    GH_READ,      ANY_DISCONTINUOUS_SPACE_1),&! ls_snow_2d
-         arg_type(GH_FIELD,  GH_REAL,    GH_READWRITE, ANY_DISCONTINUOUS_SPACE_1),&! conv_ppn_frac
+         arg_type(GH_FIELD,  GH_REAL,    GH_WRITE,     ANY_DISCONTINUOUS_SPACE_1),&! cv_qw_sink
          arg_type(GH_FIELD,  GH_REAL,    GH_READWRITE, WTHETA),                   &! dcfl_conv
          arg_type(GH_FIELD,  GH_REAL,    GH_READWRITE, WTHETA),                   &! dcff_conv
          arg_type(GH_FIELD,  GH_REAL,    GH_READWRITE, WTHETA),                   &! dbcf_conv
@@ -520,7 +520,7 @@ contains
                           ustar,                             &
                           ls_rain_2d,                        &
                           ls_snow_2d,                        &
-                          conv_ppn_frac,                     &
+                          cv_qw_sink,                        &
                           dcfl_conv,                         &
                           dcff_conv,                         &
                           dbcf_conv,                         &
@@ -888,8 +888,9 @@ contains
     real(kind=r_def), dimension(undf_surf), intent(inout) :: surf_interp
 
     real(kind=r_def), dimension(undf_2d), intent(inout) :: cape_diluted,  &
-                                                           cca_2d, dd_mf_cb, &
-                                                           conv_ppn_frac
+                                                           cca_2d, dd_mf_cb
+    real(kind=r_def), dimension(undf_2d), intent(out) :: cv_qw_sink
+
     real(kind=r_def), intent(in out), dimension(undf_wth) :: o3p
     real(kind=r_def), intent(in out), dimension(undf_wth) :: o1d
     real(kind=r_def), intent(in out), dimension(undf_wth) :: o3
@@ -1224,7 +1225,6 @@ contains
     real(kind=r_um) :: cclwp0  (row_length,rows)
     real(kind=r_um) :: cca_2d_loc (row_length,rows)
     real(kind=r_um) :: lcca   (row_length,rows)
-    real(kind=r_um) :: cv_qw_sink
 
     ! Diagnostic fields
     real(kind=r_um), target :: cape_dil(row_length, rows)
@@ -2527,24 +2527,16 @@ contains
         r_sq_fact = 1.0_r_def
       end if
       do i = 1, row_length
-        cv_qw_sink = -rho_dry_tq(i,1,1) * z_rho(i,1,2) * r_sq_fact(i,1,1) &
-                   * (q_inc(i,1,1) + qcl_inc(i,1,1))
+        cv_qw_sink(map_2d(1,i)) =                                              &
+                      -rho_dry_tq(i,1,1) * z_rho(i,1,2)                        &
+                       * r_sq_fact(i,1,1) * (q_inc(i,1,1) + qcl_inc(i,1,1))
         do k = 2, nlayers-1
-          cv_qw_sink = cv_qw_sink &
-                     - rho_dry_tq(i,1,k) * (z_rho(i,1,k+1) - z_rho(i,1,k)) &
-                     * r_sq_fact(i,1,k) * (q_inc(i,1,k) + qcl_inc(i,1,k))
+          cv_qw_sink(map_2d(1,i)) = cv_qw_sink(map_2d(1,i))                    &
+                     - rho_dry_tq(i,1,k) * (z_rho(i,1,k+1) - z_rho(i,1,k))     &
+                       * r_sq_fact(i,1,k) * (q_inc(i,1,k) + qcl_inc(i,1,k))
         end do
         ! Convert to tendency
-        cv_qw_sink = cv_qw_sink * recip_timestep
-
-        ! Calculate convective fraction
-        if (cv_qw_sink > 0.0_r_def) then
-          ! conv_ppn_frac holds the large-scale qw sink on input and is
-          ! updated in place to hold the convective fraction on output
-          conv_ppn_frac(map_2d(1,i)) = cv_qw_sink / (cv_qw_sink + conv_ppn_frac(map_2d(1,i)))
-        else
-          conv_ppn_frac(map_2d(1,i)) = 0.0_r_def
-        end if
+        cv_qw_sink(map_2d(1,i)) = cv_qw_sink(map_2d(1,i)) * recip_timestep
       end do
     end if ! outer_iterations
 

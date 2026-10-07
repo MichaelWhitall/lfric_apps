@@ -45,7 +45,6 @@ contains
   !>@param[in]     cloud_fields           Fields for cloud scheme
   !>@param[in]     aerosol_fields         Fields for aerosol scheme
   !>@param[in]     turbulence_fields      Fields for turbulence scheme
-  !>@param[in]     convection_fields      Fields for convection scheme
   !>@param[in]     orography_fields       Fields for orog drag scheme
   !>@param[in]     f_arr                  Fractional standard dev params
   !>@param[in,out] dmr_mphys      Mixing ratio increment due to microphysics
@@ -57,8 +56,7 @@ contains
   subroutine mphys_alg( config,                                                &
                         mr_n, theta, dry_rho_in_w3, derived_fields,            &
                         microphysics_fields, cloud_fields, aerosol_fields,     &
-                        turbulence_fields, convection_fields, orography_fields,&
-                        f_arr,                                                 &
+                        turbulence_fields, orography_fields, f_arr,            &
                         dmr_mphys, dtheta_mphys,                               &
                         dcfl_mphys, dcff_mphys, dbcf_mphys, dt )
 
@@ -83,7 +81,6 @@ contains
     type( field_collection_type ), intent(in)    :: cloud_fields
     type( field_collection_type ), intent(in)    :: aerosol_fields
     type( field_collection_type ), intent(in)    :: turbulence_fields
-    type( field_collection_type ), intent(in)    :: convection_fields
     type( field_collection_type ), intent(in)    :: orography_fields
     type( field_type ),            intent(in)    :: f_arr
     real( kind=r_def ),            intent(in)    :: dt
@@ -118,7 +115,6 @@ contains
     type( field_type ), pointer :: precfrac
     type( field_type ), pointer :: ni_mphys
     type( field_type ), pointer :: ns_mphys
-    type( field_type ), pointer :: conv_ppn_frac
 
     type( field_type ), pointer :: cloud_drop_no_conc  => null()
     type( field_type ), pointer :: n_acc_ins           => null()
@@ -144,6 +140,9 @@ contains
     type( field_type ) :: refl_1km
 
     type( field_type ) :: pressure_inc
+
+    type( field_type ), pointer :: ls_qw_sink => null()
+    type( field_type ) :: ls_qw_srce
 
     type(mesh_type), pointer :: mesh
     integer(tik)             :: id
@@ -190,7 +189,6 @@ contains
     call microphysics_fields%get_field('precfrac', precfrac)
     call microphysics_fields%get_field('ni_mphys',ni_mphys)
     call microphysics_fields%get_field('ns_mphys',ns_mphys)
-    call convection_fields%get_field('conv_ppn_frac',conv_ppn_frac)
 
     call aerosol_fields%get_field('cloud_drop_no_conc', cloud_drop_no_conc)
     call aerosol_fields%get_field('murk', murk)
@@ -198,6 +196,11 @@ contains
     call turbulence_fields%get_field('wvar', wvar)
 
     call orography_fields%get_field('sd_orog', sd_orog)
+
+    ! Get large-scale moisture sink (passed elsewhere in the model)
+    call microphysics_fields%get_field('ls_qw_sink',ls_qw_sink)
+    ! Allocate space for large-scale moisture source
+    call ls_qw_sink%copy_field_properties(ls_qw_srce)
 
     call initialise_diags_for_mphys(superc_liq, superc_rain,                   &
                                     sfwater, sfrain, sfsnow,                   &
@@ -247,7 +250,8 @@ contains
                                      dbcf_mphys, f_arr, tnuc, superc_liq,      &
                                      superc_rain,                              &
                                      sfwater, sfrain, sfsnow,                  &
-                                     refl_tot, refl_1km, conv_ppn_frac ) )
+                                     refl_tot, refl_1km,                       &
+                                     ls_qw_sink, ls_qw_srce ) )
 
     if (turb_gen_mixph) then
       dz_in_wth => get_dz_at_wtheta(config, mesh)
@@ -292,7 +296,8 @@ contains
                                      autoconv, accretion,          &
                                      rim_cry, rim_agg, tnuc,       &
                                      sfwater, sfrain, sfsnow,      &
-                                     refl_tot, refl_1km )
+                                     refl_tot, refl_1km,           &
+                                     ls_qw_sink, ls_qw_srce )
 
     end if
 

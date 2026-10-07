@@ -81,7 +81,10 @@ contains
                                     ng_mphys, exner_in_wth, theta_inc,         &
                                     dmv_mphys, dmcl_mphys, dmci_mphys,         &
                                     dmr_mphys, dmg_mphys, dms_mphys,           &
-                                    superc_liq, superc_rain)
+                                    superc_liq, superc_rain,                   &
+                                    ls_qw_sink, ls_qw_srce)
+
+    use convection_config_mod, only: cv_scheme, cv_scheme_comorph
 
     implicit none
 
@@ -92,7 +95,8 @@ contains
                                        ng_mphys, exner_in_wth, theta_inc,      &
                                        dmv_mphys, dmcl_mphys, dmci_mphys,      &
                                        dmr_mphys, dmg_mphys, dms_mphys,        &
-                                       superc_liq, superc_rain
+                                       superc_liq, superc_rain,                &
+                                       ls_qw_sink, ls_qw_srce
 
     type ( field_type ) :: dt_mphys
     integer(tik)        :: id
@@ -106,9 +110,15 @@ contains
     ! Output 2D precipitation rates
     !----------------------------------------------------
 
-    call ls_rain%write_field('microphysics__ls_rain')
-    call ls_snow%write_field('microphysics__ls_snow')
-    call ls_graup%write_field('microphysics__ls_graup')
+    if (cv_scheme /= cv_scheme_comorph) then
+      ! With comorph we write these in the convection diagnostics
+      call ls_rain%write_field('microphysics__ls_rain')
+      call ls_snow%write_field('microphysics__ls_snow')
+      call ls_graup%write_field('microphysics__ls_graup')
+    end if
+
+    call ls_qw_sink%write_field('microphysics__ls_qw_sink')
+    call ls_qw_srce%write_field('microphysics__ls_qw_srce')
 
     !-----------------------------------------------------
     ! Output 3D precipitation rates

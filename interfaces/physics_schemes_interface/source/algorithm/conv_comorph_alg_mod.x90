@@ -135,7 +135,6 @@ contains
     type( field_type ), pointer :: massflux_down
     type( field_type ), pointer :: cape_diluted
     type( field_type ), pointer :: pressure_inc_env
-    type( field_type ), pointer :: conv_ppn_frac
 
     type( field_type ), pointer :: cf_fro
     type( field_type ), pointer :: cf_liq
@@ -260,6 +259,7 @@ contains
     type( field_type ), pointer :: precfrac
     type( field_type ), pointer :: ls_rain
     type( field_type ), pointer :: ls_snow
+    type( field_type ), pointer :: ls_graup
 
     type( field_type ), pointer :: height_w3
     type( field_type ), pointer :: height_wth
@@ -272,6 +272,8 @@ contains
     type( field_type ) :: pres_lowest_cv_base,pres_lowest_cv_top, lowest_cca_2d
     type( field_type ) :: massflux_up_half
     type( field_type ) :: u_in_w3_latest, v_in_w3_latest, w_in_w3_latest, dw_conv
+    type( field_type ), pointer :: ls_qw_sink
+    type( field_type ) :: cv_qw_sink
 
     type( mesh_type ), pointer  :: mesh
     integer(i_def) :: ncells
@@ -337,7 +339,6 @@ contains
     call convection_fields%get_field('cv_base', cv_base)
     call convection_fields%get_field('cv_top', cv_top)
     call convection_fields%get_field('pressure_inc_env', pressure_inc_env)
-    call convection_fields%get_field('conv_ppn_frac',conv_ppn_frac)
 
     ! Unpack cloud fields
     call cloud_fields%get_field('frozen_fraction', cf_fro)
@@ -465,6 +466,12 @@ contains
     call microphysics_fields%get_field('precfrac', precfrac)
     call microphysics_fields%get_field('ls_rain', ls_rain)
     call microphysics_fields%get_field('ls_snow', ls_snow)
+    call microphysics_fields%get_field('ls_graup', ls_graup)
+
+    ! Get large-scale moisture sink from microphysics
+    call microphysics_fields%get_field('ls_qw_sink',ls_qw_sink)
+    ! Allocate space for convective moisture sink
+    call ls_qw_sink%copy_field_properties(cv_qw_sink)
 
     height_wth => get_height_fv(config, mesh, Wtheta)
     height_w3  => get_height_fv(config, mesh, W3)
@@ -517,7 +524,7 @@ contains
                           zh, zh_nonloc, inv_depth, zhsc, bl_type_ind,        &
                           wvar, rhokm_bl, moist_flux, heat_flux, taux, tauy,  &
                           surf_interp, ustar, ls_rain, ls_snow,               &
-                          conv_ppn_frac,                                      &
+                          cv_qw_sink,                                         &
                           dcfl_conv, dcff_conv, dbcf_conv,                    &
                           o3p,                                                &
                           o1d,                                                &
@@ -679,7 +686,9 @@ contains
                                   cca_2d,                &
                                   ls_rain,               &
                                   ls_snow,               &
-                                  conv_ppn_frac,         &
+                                  ls_graup,              &
+                                  ls_qw_sink,            &
+                                  cv_qw_sink,            &
                                   lowest_cv_base,        &
                                   lowest_cv_top,         &
                                   cv_base,               &
