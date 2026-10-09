@@ -141,6 +141,9 @@ contains
 
     type( field_type ) :: pressure_inc
 
+    type( field_type ), pointer :: ls_qw_sink => null()
+    type( field_type ) :: ls_qw_srce
+
     type(mesh_type), pointer :: mesh
     integer(tik)             :: id
 
@@ -194,6 +197,11 @@ contains
 
     call orography_fields%get_field('sd_orog', sd_orog)
 
+    ! Get large-scale moisture sink (passed elsewhere in the model)
+    call microphysics_fields%get_field('ls_qw_sink',ls_qw_sink)
+    ! Allocate space for large-scale moisture source
+    call ls_qw_sink%copy_field_properties(ls_qw_srce)
+
     call initialise_diags_for_mphys(superc_liq, superc_rain,                   &
                                     sfwater, sfrain, sfsnow,                   &
                                     refl_tot, refl_1km)
@@ -242,7 +250,8 @@ contains
                                      dbcf_mphys, f_arr, tnuc, superc_liq,      &
                                      superc_rain,                              &
                                      sfwater, sfrain, sfsnow,                  &
-                                     refl_tot, refl_1km ) )
+                                     refl_tot, refl_1km,                       &
+                                     ls_qw_sink, ls_qw_srce ) )
 
     if (turb_gen_mixph) then
       dz_in_wth => get_dz_at_wtheta(config, mesh)
@@ -287,7 +296,8 @@ contains
                                      autoconv, accretion,          &
                                      rim_cry, rim_agg, tnuc,       &
                                      sfwater, sfrain, sfsnow,      &
-                                     refl_tot, refl_1km )
+                                     refl_tot, refl_1km,           &
+                                     ls_qw_sink, ls_qw_srce )
 
     end if
 

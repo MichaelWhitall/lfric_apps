@@ -129,6 +129,11 @@ contains
                                     conv_rain_3d,           &
                                     conv_snow_3d,           &
                                     cca_2d,                 &
+                                    ls_rain,                &
+                                    ls_snow,                &
+                                    ls_graup,               &
+                                    ls_qw_sink,             &
+                                    cv_qw_sink,             &
                                     lowest_cv_base,         &
                                     lowest_cv_top,          &
                                     cv_base,                &
@@ -143,6 +148,8 @@ contains
                                     detrain_up,             &
                                     detrain_down,           &
                                     massflux_up_half)
+
+    use comorph_ppn_frac_kernel_mod, only: comorph_ppn_frac_kernel_type
 
     implicit none
 
@@ -167,7 +174,12 @@ contains
                                        conv_snow,     &
                                        conv_rain_3d,  &
                                        conv_snow_3d,  &
-                                       cca_2d
+                                       cca_2d,        &
+                                       ls_rain,       &
+                                       ls_snow,       &
+                                       ls_graup,      &
+                                       ls_qw_sink,    &
+                                       cv_qw_sink
     ! local diagnostic fields to output
     type( field_type ), intent(in)  :: lowest_cv_base,         &
                                        lowest_cv_top,          &
@@ -184,6 +196,8 @@ contains
                                        detrain_down,           &
                                        massflux_up_half
     integer(tik)  :: id
+
+    type(field_type) :: cv_ppn_frac, ls_ppn_frac, tmp_ppn_diag
 
     if ( LPROF ) call start_timing( id, 'diags.comorph' )
 
@@ -206,11 +220,38 @@ contains
     call massflux_up%write_field('convection__massflux_up')
     call massflux_down%write_field('convection__massflux_down')
     call cape_diluted%write_field('convection__cape_diluted')
-    call conv_rain%write_field('convection__conv_rain')
-    call conv_snow%write_field('convection__conv_snow')
     call conv_rain_3d%write_field('convection__conv_rain_3d')
     call conv_snow_3d%write_field('convection__conv_snow_3d')
     call cca_2d%write_field('convection__cca_2d')
+    call cv_qw_sink%write_field('convection__cv_qw_sink')
+
+    ! So-far ls_rain, ls_snow, ls_graup store large-scale + convective precip.
+    ! partition them into separate large-scale and convective diagnostics...
+
+    ! Allocate required work arrays
+    call cv_qw_sink%copy_field_properties(cv_ppn_frac)
+    call cv_qw_sink%copy_field_properties(ls_ppn_frac)
+    call cv_qw_sink%copy_field_properties(tmp_ppn_diag)
+
+    ! Compute fraction of moisture sinks from convection versus large-scale
+    call invoke( comorph_ppn_frac_kernel_type( ls_qw_sink,  cv_qw_sink,        &
+                                               ls_ppn_frac, cv_ppn_frac ) )
+
+    ! Output large-scale precip = total * ls_ppn_frac
+    call invoke(X_times_Y(tmp_ppn_diag, ls_ppn_frac, ls_rain))
+    call tmp_ppn_diag%write_field('microphysics__ls_rain')
+    call invoke(X_times_Y(tmp_ppn_diag, ls_ppn_frac, ls_snow))
+    call tmp_ppn_diag%write_field('microphysics__ls_snow')
+    call invoke(X_times_Y(tmp_ppn_diag, ls_ppn_frac, ls_graup))
+    call tmp_ppn_diag%write_field('microphysics__ls_graup')
+
+    ! Output convective precip = total * cv_ppn_frac
+    call invoke(X_times_Y(tmp_ppn_diag, cv_ppn_frac, ls_rain))
+    call tmp_ppn_diag%write_field('convection__conv_rain')
+    call invoke(X_times_Y(tmp_ppn_diag, cv_ppn_frac, ls_snow))
+    call tmp_ppn_diag%write_field('convection__conv_snow')
+    call invoke(X_times_Y(tmp_ppn_diag, cv_ppn_frac, ls_graup))
+    call tmp_ppn_diag%write_field('convection__conv_graup')
 
     ! Diagnostics computed within the kernel
     ! 2D

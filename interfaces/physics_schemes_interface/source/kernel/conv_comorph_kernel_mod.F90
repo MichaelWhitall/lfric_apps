@@ -29,7 +29,7 @@ module conv_comorph_kernel_mod
   !>
   type, public, extends(kernel_type) :: conv_comorph_kernel_type
     private
-    type(arg_type) :: meta_args(200) = (/                                         &
+    type(arg_type) :: meta_args(201) = (/                                         &
          arg_type(GH_SCALAR, GH_INTEGER, GH_READ),                                &! outer
          arg_type(GH_FIELD,  GH_REAL,    GH_READ,      W3),                       &! rho_in_w3
          arg_type(GH_FIELD,  GH_REAL,    GH_READ,      WTHETA),                   &! rho_in_wth
@@ -103,6 +103,7 @@ module conv_comorph_kernel_mod
          arg_type(GH_FIELD,  GH_REAL,    GH_READ,      ANY_DISCONTINUOUS_SPACE_1),&! ustar
          arg_type(GH_FIELD,  GH_REAL,    GH_READ,      ANY_DISCONTINUOUS_SPACE_1),&! ls_rain_2d
          arg_type(GH_FIELD,  GH_REAL,    GH_READ,      ANY_DISCONTINUOUS_SPACE_1),&! ls_snow_2d
+         arg_type(GH_FIELD,  GH_REAL,    GH_WRITE,     ANY_DISCONTINUOUS_SPACE_1),&! cv_qw_sink
          arg_type(GH_FIELD,  GH_REAL,    GH_READWRITE, WTHETA),                   &! dcfl_conv
          arg_type(GH_FIELD,  GH_REAL,    GH_READWRITE, WTHETA),                   &! dcff_conv
          arg_type(GH_FIELD,  GH_REAL,    GH_READWRITE, WTHETA),                   &! dbcf_conv
@@ -530,6 +531,7 @@ contains
                           ustar,                             &
                           ls_rain_2d,                        &
                           ls_snow_2d,                        &
+                          cv_qw_sink,                        &
                           dcfl_conv,                         &
                           dcff_conv,                         &
                           dbcf_conv,                         &
@@ -813,7 +815,7 @@ contains
                                 casim_iopt_act
     use nlsizes_namelist_mod, only: row_length, rows, bl_levels
     use planet_constants_mod, only: p_zero, kappa, planet_radius, g
-    use timestep_mod, only: timestep
+    use timestep_mod, only: timestep, recip_timestep
     use conversions_mod, only: zerodegc
 
     ! subroutines used
@@ -827,7 +829,7 @@ contains
     use set_constants_from_um_mod, only: set_constants_from_um
     use comorph_constants_mod, only: l_init_constants, l_turb_par_gen,         &
          l_cv_rain, l_cv_cf, l_cv_snow, l_cv_graup,                            &
-         i_convcloud, i_convcloud_liqonly
+         i_convcloud, i_convcloud_liqonly, l_spherical_coord
     use tracer_source_mod,  only: i_tr_n_cl, i_tr_n_rain,                      &
                                   i_tr_n_cf, i_tr_n_snow, i_tr_n_graup
     use calc_conv_incs_mod, only: calc_conv_incs, i_call_save_before_conv,     &
@@ -908,6 +910,8 @@ contains
 
     real(kind=r_def), dimension(undf_2d), intent(inout) :: cape_diluted,  &
                                                            cca_2d, dd_mf_cb
+    real(kind=r_def), dimension(undf_2d), intent(out) :: cv_qw_sink
+
     real(kind=r_def), intent(in out), dimension(undf_wth) :: o3p
     real(kind=r_def), intent(in out), dimension(undf_wth) :: o1d
     real(kind=r_def), intent(in out), dimension(undf_wth) :: o3
@@ -1068,6 +1072,7 @@ contains
     real(r_um), dimension(row_length,rows,0:nlayers) ::                      &
          p_theta_levels, w, r_theta_levels, exner_theta_levels
     real(r_um), dimension(row_length,rows,nlayers+1) :: p_rho_levels
+    real(r_um), dimension(row_length,rows,nlayers-1) :: r_sq_fact
 
     ! single level real fields
     real(r_um), dimension(row_length,rows) :: zh
@@ -2581,6 +2586,30 @@ contains
           lowest_cca_2d(map_2d(1,i)) = lcca(i,1)
         end do
       end if
+
+      if (l_spherical_coord) then
+        do i = 1, row_length
+          do k = 1, nlayers-1
+            ! Spherical geometry factor
+            r_sq_fact(i,1,k) = (r_theta_levels(i,1,k)/r_theta_levels(i,1,0))**2
+          end do
+        end do
+      else
+        ! Cartesian domain, grid area constant with height
+        r_sq_fact = 1.0_r_def
+      end if
+      do i = 1, row_length
+        cv_qw_sink(map_2d(1,i)) =                                              &
+                      -rho_dry_tq(i,1,1) * z_rho(i,1,2)                        &
+                       * r_sq_fact(i,1,1) * (q_inc(i,1,1) + qcl_inc(i,1,1))
+        do k = 2, nlayers-1
+          cv_qw_sink(map_2d(1,i)) = cv_qw_sink(map_2d(1,i))                    &
+                     - rho_dry_tq(i,1,k) * (z_rho(i,1,k+1) - z_rho(i,1,k))     &
+                       * r_sq_fact(i,1,k) * (q_inc(i,1,k) + qcl_inc(i,1,k))
+        end do
+        ! Convert to tendency
+        cv_qw_sink(map_2d(1,i)) = cv_qw_sink(map_2d(1,i)) * recip_timestep
+      end do
     end if ! outer_iterations
 
     ! update input fields

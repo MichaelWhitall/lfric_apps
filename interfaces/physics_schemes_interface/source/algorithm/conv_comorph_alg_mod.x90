@@ -259,6 +259,7 @@ contains
     type( field_type ), pointer :: precfrac
     type( field_type ), pointer :: ls_rain
     type( field_type ), pointer :: ls_snow
+    type( field_type ), pointer :: ls_graup
     type( field_type ), pointer :: nl_mphys
     type( field_type ), pointer :: nr_mphys
     type( field_type ), pointer :: ni_mphys
@@ -276,6 +277,8 @@ contains
     type( field_type ) :: pres_lowest_cv_base,pres_lowest_cv_top, lowest_cca_2d
     type( field_type ) :: massflux_up_half
     type( field_type ) :: u_in_w3_latest, v_in_w3_latest, w_in_w3_latest, dw_conv
+    type( field_type ), pointer :: ls_qw_sink
+    type( field_type ) :: cv_qw_sink
 
     type( mesh_type ), pointer  :: mesh
     integer(i_def) :: ncells
@@ -468,6 +471,13 @@ contains
     call microphysics_fields%get_field('precfrac', precfrac)
     call microphysics_fields%get_field('ls_rain', ls_rain)
     call microphysics_fields%get_field('ls_snow', ls_snow)
+    call microphysics_fields%get_field('ls_graup', ls_graup)
+
+    ! Get large-scale moisture sink from microphysics
+    call microphysics_fields%get_field('ls_qw_sink',ls_qw_sink)
+    ! Allocate space for convective moisture sink
+    call ls_qw_sink%copy_field_properties(cv_qw_sink)
+
     call microphysics_fields%get_field('nl_mphys',nl_mphys)
     call microphysics_fields%get_field('nr_mphys',nr_mphys)
     call microphysics_fields%get_field('ni_mphys',ni_mphys)
@@ -526,6 +536,7 @@ contains
                           zh, zh_nonloc, inv_depth, zhsc, bl_type_ind,        &
                           wvar, rhokm_bl, moist_flux, heat_flux, taux, tauy,  &
                           surf_interp, ustar, ls_rain, ls_snow,               &
+                          cv_qw_sink,                                         &
                           dcfl_conv, dcff_conv, dbcf_conv,                    &
                           o3p,                                                &
                           o1d,                                                &
@@ -685,6 +696,11 @@ contains
                                   conv_rain_3d,          &
                                   conv_snow_3d,          &
                                   cca_2d,                &
+                                  ls_rain,               &
+                                  ls_snow,               &
+                                  ls_graup,              &
+                                  ls_qw_sink,            &
+                                  cv_qw_sink,            &
                                   lowest_cv_base,        &
                                   lowest_cv_top,         &
                                   cv_base,               &

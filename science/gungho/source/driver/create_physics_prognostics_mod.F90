@@ -568,6 +568,8 @@ contains
     ! 2D fields, don't need checkpointing
     call processor%apply(make_spec('ls_rain', main%microphysics, W3, twod=.true.))
     call processor%apply(make_spec('ls_snow', main%microphysics, W3, twod=.true.))
+    call processor%apply(make_spec('ls_qw_sink', main%microphysics,            &
+                                   W3, twod=.true.))
     call processor%apply(make_spec('lsca_2d', main%microphysics, W3, twod=.true.))
 
     call processor%apply(make_spec('ls_graup', main%microphysics, W3, twod=.true.))
