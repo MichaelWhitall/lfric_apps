@@ -32,7 +32,7 @@ private
 
 type, public, extends(kernel_type) :: mphys_kernel_type
   private
-  type(arg_type) :: meta_args(48) = (/                                      &
+  type(arg_type) :: meta_args(50) = (/                                      &
        arg_type(GH_FIELD, GH_REAL, GH_READ,  WTHETA),                       & ! mv_wth
        arg_type(GH_FIELD, GH_REAL, GH_READ,  WTHETA),                       & ! ml_wth
        arg_type(GH_FIELD, GH_REAL, GH_READ,  WTHETA),                       & ! ms_wth
@@ -80,7 +80,9 @@ type, public, extends(kernel_type) :: mphys_kernel_type
        arg_type(GH_FIELD, GH_REAL, GH_WRITE, WTHETA),                       & ! sfrain
        arg_type(GH_FIELD, GH_REAL, GH_WRITE, WTHETA),                       & ! sfsnow
        arg_type(GH_FIELD, GH_REAL, GH_WRITE, WTHETA),                       & ! refl_tot
-       arg_type(GH_FIELD, GH_REAL, GH_WRITE, ANY_DISCONTINUOUS_SPACE_1)     & ! refl_1km
+       arg_type(GH_FIELD, GH_REAL, GH_WRITE, ANY_DISCONTINUOUS_SPACE_1),    & ! refl_1km
+       arg_type(GH_FIELD, GH_REAL, GH_WRITE, ANY_DISCONTINUOUS_SPACE_1),    & ! ls_qw_sink
+       arg_type(GH_FIELD, GH_REAL, GH_WRITE, ANY_DISCONTINUOUS_SPACE_1)     & ! ls_qw_srce
        /)
    integer :: operates_on = DOMAIN
 contains
@@ -188,6 +190,7 @@ subroutine mphys_code( nlayers, seg_len,            &
                        superc_rain_wth,             &
                        sfwater, sfrain, sfsnow,     &
                        refl_tot, refl_1km,          &
+                       ls_qw_sink, ls_qw_srce,      &
                        ndf_wth, undf_wth, map_wth,  &
                        ndf_w3,  undf_w3,  map_w3,   &
                        ndf_2d,  undf_2d,  map_2d,   &
@@ -233,6 +236,7 @@ subroutine mphys_code( nlayers, seg_len,            &
     use microphysics_config_mod,    only: orog_rain, orog_block, nsigmasf
 
     use lsp_froude_moist_mod,       only: lsp_froude_moist
+    use timestep_mod,               only: recip_timestep
 
     use free_tracers_inputs_mod,    only: n_wtrac
     use wtrac_atm_step_mod,         only: atm_step_wtrac_type
@@ -298,12 +302,16 @@ subroutine mphys_code( nlayers, seg_len,            &
     real(kind=r_def), pointer, intent(inout) :: refl_tot(:)
     real(kind=r_def), pointer, intent(inout) :: refl_1km(:)
 
+    real(kind=r_def), intent(out) :: ls_qw_sink(:)
+    real(kind=r_def), intent(out) :: ls_qw_srce(:)
+
     integer(kind=i_def), intent(in), dimension(ndf_wth, seg_len) :: map_wth
     integer(kind=i_def), intent(in), dimension(ndf_w3, seg_len)  :: map_w3
     integer(kind=i_def), intent(in), dimension(ndf_2d, seg_len)  :: map_2d
     integer(kind=i_def), intent(in), dimension(ndf_farr, seg_len):: map_farr
 
     ! Local variables for the kernel
+    real(r_def) :: dqw
 
     real(r_um), dimension(seg_len,1,nlayers) ::                                &
          u_on_p, v_on_p, q_work, qcl_work, qcf_work, deltaz, cfl_work,         &
@@ -890,6 +898,25 @@ subroutine mphys_code( nlayers, seg_len,            &
       end do
     end do
   end if
+
+  ! Vertical integrals of qw sink (precip formation) and source
+  ! (precip evaporation)
+  do i = 1, seg_len
+    ls_qw_sink(map_2d(1,i)) = 0.0_r_def
+    ls_qw_srce(map_2d(1,i)) = 0.0_r_def
+  end do
+  do k = 1, nlayers
+    do i = 1, seg_len
+      dqw = ( dmv_wth(map_wth(1,i)+k) + dml_wth(map_wth(1,i)+k) )              &
+            * rhodz_dry(i,1,k)
+      ls_qw_sink(map_2d(1,i)) = ls_qw_sink(map_2d(1,i)) + max(-dqw, 0.0_r_def)
+      ls_qw_srce(map_2d(1,i)) = ls_qw_srce(map_2d(1,i)) + max( dqw, 0.0_r_def)
+    end do
+  end do
+  do i = 1, seg_len
+    ls_qw_sink(map_2d(1,i)) = ls_qw_sink(map_2d(1,i)) * recip_timestep
+    ls_qw_srce(map_2d(1,i)) = ls_qw_srce(map_2d(1,i)) * recip_timestep
+  end do
 
   if (allocated(psacw)) deallocate (psacw)
   if (allocated(piacw)) deallocate (piacw)
