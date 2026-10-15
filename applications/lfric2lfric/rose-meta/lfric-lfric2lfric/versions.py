@@ -140,7 +140,8 @@ class vn32_t699(MacroUpgrade):
         self.add_setting(
             config,
             ["namelist:transport", "native_w2_wind_transport"],
-            ".false.",
+            ".false."
+        )
 
         return config, self.reports
 
