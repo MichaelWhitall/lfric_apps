@@ -712,3 +712,18 @@ class vn32_t46(MacroUpgrade):
             )
 
         return config, self.reports
+
+
+class vn32_t240(MacroUpgrade):
+    """Upgrade macro for ticket None by None."""
+
+    BEFORE_TAG = "vn3.2_t46"
+    AFTER_TAG = "vn3.2_t240"
+
+    def upgrade(self, config, meta_config=None):
+        # Commands From: rose-meta/um-convection
+        # CoMorph settings
+        nml = "namelist:comorph"
+        self.add_setting(config, [nml, "cv_snow"], ".false.")
+
+        return config, self.reports
