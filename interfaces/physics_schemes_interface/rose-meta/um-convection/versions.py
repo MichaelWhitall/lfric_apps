@@ -133,21 +133,19 @@ class vn32_t776(MacroUpgrade):
         self.add_setting(config, [nml, "min_radius_fac"], str(0.25 / prk))
         # Was the hard-wired comorph_constants_mod value par_gen_radius_fac
         self.add_setting(config, [nml, "turb_len_fac"], "8.0")
-
         return config, self.reports
 
 
 class vn32_t241(MacroUpgrade):
-    # Upgrade macro for Issue#241 by Mike Whitall
+    """Upgrade macro for ticket TTTT by Unknown."""
 
     BEFORE_TAG = "vn3.2_t776"
     AFTER_TAG = "vn3.2_t241"
 
     def upgrade(self, config, meta_config=None):
-        # Add settings
-
+        # Commands From: rose-meta/um-convection
         # CoMorph settings
         nml = "namelist:comorph"
-        self.add_setting(config, [nml,"cv_numconcs"], ".false.")
+        self.add_setting(config, [nml, "cv_numconcs"], ".false.")
 
         return config, self.reports

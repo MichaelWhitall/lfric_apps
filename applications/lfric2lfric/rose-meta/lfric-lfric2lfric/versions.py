@@ -819,3 +819,23 @@ class vn32_t46(MacroUpgrade):
             )
 
         return config, self.reports
+
+
+class vn32_t241(MacroUpgrade):
+    """Upgrade macro for ticket None by None."""
+
+    BEFORE_TAG = "vn3.2_t46"
+    AFTER_TAG = "vn3.2_t241"
+
+    def upgrade(self, config, meta_config=None):
+        # Commands From: rose-meta/um-microphysics
+        # Microphysics settings
+        nml = "namelist:microphysics"
+        self.add_setting(config, [nml, "fix_casim_tidy"], ".false.")
+
+        # Commands From: rose-meta/um-convection
+        # CoMorph settings
+        nml = "namelist:comorph"
+        self.add_setting(config, [nml, "cv_numconcs"], ".false.")
+
+        return config, self.reports
