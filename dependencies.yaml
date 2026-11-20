@@ -26,7 +26,7 @@ jules:
     ref: 056beaf218777c4480450dfc2177d62b627e7c23
 
 lfric_apps:
-    source: git@github.com:MichaelWhitall/lfri_apps.git
+    source: git@github.com:MichaelWhitall/lfric_apps.git
     ref: comorph_nconcs_test
 
 lfric_core:
