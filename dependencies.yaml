@@ -26,8 +26,8 @@ jules:
     ref: 056beaf218777c4480450dfc2177d62b627e7c23
 
 lfric_apps:
-    source:
-    ref:
+    source: git@github.com:MichaelWhitall/lfric_apps.git
+    ref: casim_precfrac_test
 
 lfric_core:
     source: git@github.com:MetOffice/lfric_core.git
