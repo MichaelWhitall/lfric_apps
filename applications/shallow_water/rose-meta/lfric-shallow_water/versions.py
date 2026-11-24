@@ -738,3 +738,16 @@ class vn32_t46(MacroUpgrade):
             )
 
         return config, self.reports
+
+
+class vn32_t258(MacroUpgrade):
+    """Upgrade macro for ticket #258 by Mike Whitall."""
+
+    BEFORE_TAG = "vn3.2_t46"
+    AFTER_TAG = "vn3.2_t258"
+
+    def upgrade(self, config, meta_config=None):
+        # Commands From: rose-meta/um-microphysics
+        # Blank macro needed due to meta-data changes.
+
+        return config, self.reports
