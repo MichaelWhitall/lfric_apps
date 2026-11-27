@@ -20,7 +20,8 @@ contains
 subroutine assign_fields( z_theta, z_rho, p_layer_centres, p_layer_boundaries, &
                           r_theta_levels,                                      &
                           rho_dry_th, w_var_rh, ftl, fqw, fu_rh, fv_rh,        &
-                          turb_len, par_radius_amp_um, zh_homog,               &
+                          turb_len, par_radius_amp_um, entrain_fac_3d,         &
+                          zh_homog,                                            &
                           cca, ccw, frac_bulk_conv,                            &
                           u_th_n, v_th_n, w, temperature_n,                    &
                           m_v, m_cl, m_cf,                                     &
@@ -49,7 +50,8 @@ use comorph_constants_mod, only: l_cv_rain, l_cv_cf, l_cv_snow, l_cv_graup,    &
                                  l_cv_cloudfrac, l_turb_par_gen,               &
                                  i_convcloud,                                  &
                                  i_convcloud_bulkonly, i_convcloud_liqonly,    &
-                                 i_convcloud_mph
+                                 i_convcloud_mph,                              &
+                                 l_entrain_fac_3d
 
 use raise_error_mod, only: raise_fatal
 use umPrintMgr, only: newline
@@ -120,6 +122,11 @@ real(kind=real_umphys), target, intent(in) :: turb_len                         &
 real(kind=real_umphys), target, intent(in) :: par_radius_amp_um                &
                             ( pdims%i_start:pdims%i_end,                       &
                               pdims%j_start:pdims%j_end )
+! Optional 3D entrainment factor passed into comorph
+real(kind=real_umphys), target, intent(in) :: entrain_fac_3d                   &
+                            ( tdims%i_start:tdims%i_end,                       &
+                              tdims%j_start:tdims%j_end,                       &
+                              1:tdims%k_end )
 ! BL height up-to-which to homogenize convective tendencies inside comorph
 real(kind=real_umphys), target, intent(in) :: zh_homog                         &
                             ( pdims%i_start:pdims%i_end,                       &
@@ -350,6 +357,11 @@ end if
 turb % lengthscale => turb_len
 turb % par_radius_amp => par_radius_amp_um(:,:)
 turb % z_bl_top => zh_homog
+
+! Optionally input 3D entrainment factor
+if ( l_entrain_fac_3d ) then
+  turb % entrain_fac_3d => entrain_fac_3d
+end if
 
 
 ! ASSIGN POINTERS FOR CLOUD AND PRECIP FRACTIONS

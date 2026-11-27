@@ -35,8 +35,10 @@ use water_constants_mod, only: tm, lc, lf,                                     &
                                um_rho_ice => rho_ice
 use gen_phys_inputs_mod, only: l_mr_physics
 use mphys_inputs_mod, only: l_mcr_precfrac, l_subgrid_graupel_frac
+use cv_run_mod, only: l_conv_prog_precip
 
 use comorph_um_namelist_mod, only:                                             &
+                      i_prog_ent_opt, i_prog_ent_3d, i_prog_ent_3d_qfac,       &
                       par_radius_evol_method_um => par_radius_evol_method,     &
                       n_dndraft_types_um        => n_dndraft_types,            &
                       l_core_ent_cmr_um         => l_core_ent_cmr,             &
@@ -85,6 +87,7 @@ use comorph_constants_mod, only: real_cvprec, nx_full, ny_full,                &
                                  par_gen_pert_fac, par_gen_rhpert,             &
                                  par_radius_evol_method,                       &
                                  l_core_ent_cmr, core_ent_fac, cf_conv_fac,    &
+                                 l_entrain_fac_3d,                             &
                                  autoc_opt, coef_auto, q_cl_auto,              &
                                  drag_coef_par, rho_rim,                       &
                                  par_gen_mass_fac, wind_w_fac, wind_w_buoy_fac,&
@@ -254,6 +257,10 @@ par_gen_rhpert = real( par_gen_rhpert_um, real_cvprec )
 ! Overwrite parameter controlling parcel core dilution
 l_core_ent_cmr = l_core_ent_cmr_um
 core_ent_fac   = real( core_ent_fac_um, real_cvprec )
+
+! Switch for height-varying scaling-factor applied to the entrainment rates.
+l_entrain_fac_3d = l_conv_prog_precip.and.(i_prog_ent_opt==i_prog_ent_3d .or.  &
+                                           i_prog_ent_opt==i_prog_ent_3d_qfac)
 
 ! Parameter scaling convective cloud fraction
 cf_conv_fac    = real( cf_conv_fac_um, real_cvprec )

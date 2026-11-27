@@ -19,17 +19,20 @@ contains
 ! apply sundry optional scalings to par_radius via par_radius_amp...
 subroutine calc_turb_len( zh_eff, z_theta, z_rho, rho_wet_th, m_v,             &
                           rhokm, bl_w_var, ls_rain, ls_snow, w,                &
-                          delta_x, delta_y,                                    &
-                          turb_len, par_radius_amp_um )
+                          delta_x, delta_y, conv_prog_precip,                  &
+                          turb_len, par_radius_amp_um, entrain_fac_3d )
 
 use atm_fields_bounds_mod, only: pdims, tdims, tdims_s, wdims_s
 use nlsizes_namelist_mod, only: bl_levels
-use cv_run_mod, only: w_cape_limit
+use cv_run_mod, only: l_conv_prog_precip, w_cape_limit
 use comorph_um_namelist_mod, only:                                             &
                       par_radius_init_method,                                  &
                       rain_dependence, qfacrain_dependence, w_dependence,      &
                       linear_qfacrain_dep,                                     &
                       par_radius_knob, par_radius_knob_max, par_radius_ppn_max,&
+                      par_radius_ppn_min, par_radius_ppn_pow,                  &
+                      i_prog_ent_opt,                                          &
+                      i_prog_ent_off, i_prog_ent_3d, i_prog_ent_3d_qfac,       &
                       l_resdep_precipramp, dx_ref,                             &
                       turb_len_fac, min_radius_fac, ass_min_radius
 use cv_param_mod, only: refqsat
@@ -94,6 +97,12 @@ real(kind=real_umphys), intent(in) :: delta_x ( pdims%i_start:pdims%i_end,     &
 real(kind=real_umphys), intent(in) :: delta_y ( pdims%i_start:pdims%i_end,     &
                                                 pdims%j_start:pdims%j_end )
 
+! Convective precip prognostics used for convective organisation memory
+real(kind=real_umphys), intent (in) :: conv_prog_precip                        &
+                                   ( tdims_s%i_start:tdims_s%i_end,            &
+                                     tdims_s%j_start:tdims_s%j_end,            &
+                                     tdims_s%k_start:tdims_s%k_end )
+
 ! Turbulence lengthscale
 real(kind=real_umphys), intent(out) :: turb_len                                &
                                    ( pdims%i_start:pdims%i_end,                &
@@ -105,9 +114,18 @@ real(kind=real_umphys), intent(out) :: turb_len                                &
 real(kind=real_umphys), intent(out) ::                                         &
                      par_radius_amp_um ( pdims%i_start:pdims%i_end,            &
                                          pdims%j_start:pdims%j_end )
+! Optional 3D entrainment factor passed into comorph
+real(kind=real_umphys), intent(out) :: entrain_fac_3d                          &
+                                  ( tdims%i_start:tdims%i_end,                 &
+                                    tdims%j_start:tdims%j_end,                 &
+                                    1:tdims%k_end )
 
 ! Precipitation rate normalised by mean mixing-ratio
 real(kind=real_umphys) :: ppnrate
+! Numerator in precip ramp formula (par_radius_knob_max/par_radius_knob - 1.0)
+real(kind=real_umphys) :: rampn
+! Denominator in precip ramp formula (par_radius_ppn_max - par_radius_ppn_min)
+real(kind=real_umphys) :: rampd
 
 ! Scaling factor from the surface precip rate
 real(kind=real_umphys) ::                                                      &
@@ -142,11 +160,19 @@ real(kind=real_umphys) ::                                                      &
 integer :: i, j, k
 
 
-!$OMP PARALLEL DEFAULT(NONE) PRIVATE( i, j, k, ppnrate )                       &
+! Precompute factors in the parcel radius precip ramp
+rampn = par_radius_knob_max / par_radius_knob - 1.0
+rampd = par_radius_ppn_max - par_radius_ppn_min
+
+!$OMP PARALLEL default(none) PRIVATE( i, j, k, ppnrate )                       &
 !$OMP SHARED( pdims, tdims, bl_levels, par_radius_init_method,                 &
-!$OMP         turb_len, rhokm, rho_wet_th, bl_w_var, w_fac, qfac, rainfac,     &
+!$OMP         l_conv_prog_precip, i_prog_ent_opt,                              &
+!$OMP         entrain_fac_3d, conv_prog_precip,                                &
+!$OMP         turb_len, rhokm, rho_wet_th, bl_w_var,                           &
+!$OMP         w_fac, qfac, rainfac, rampn, rampd,                              &
 !$OMP         mv_bl_mean, m_v, z_rho, zh_eff, ktop, ls_rain, ls_snow,          &
 !$OMP         par_radius_knob_max, par_radius_knob, par_radius_ppn_max,        &
+!$OMP         par_radius_ppn_min, par_radius_ppn_pow,                          &
 !$OMP         w_max, z_theta, w, w_cape_limit,                                 &
 !$OMP         turb_len_fac, min_radius_fac, ass_min_radius,                    &
 !$OMP         l_resdep_precipramp, dx_ref, delta_x, delta_y, dxfac,            &
@@ -290,15 +316,29 @@ if ( par_radius_init_method == rain_dependence .or.                            &
 !$OMP END DO
   end if
 
+  if ( l_conv_prog_precip .and. i_prog_ent_opt /= i_prog_ent_off ) then
+    ! Use time-damped surface precip rate to set the radius ramp.
 !$OMP DO SCHEDULE(STATIC)
-  do j = pdims%j_start, pdims%j_end
-    do i = pdims%i_start, pdims%i_end
-      ppnrate = dxfac(i,j) * qfac(i,j) * (ls_rain(i,j) + ls_snow(i,j))
-      rainfac(i,j) = 1.0 + ( (par_radius_knob_max/par_radius_knob)-1.0 ) *     &
-                                  min( 1.0, ppnrate/par_radius_ppn_max )
+    do j = pdims%j_start, pdims%j_end
+      do i = pdims%i_start, pdims%i_end
+        ppnrate = dxfac(i,j) * qfac(i,j) * conv_prog_precip(i,j,1)
+        rainfac(i,j) = 1.0 + rampn*min(max( (ppnrate-par_radius_ppn_min)/rampd,&
+                                            0.0 ),1.0)**par_radius_ppn_pow
+      end do
     end do
-  end do
 !$OMP END DO
+  else
+    ! Use instantaneous precip rate from last timestep to set the radius ramp.
+!$OMP DO SCHEDULE(STATIC)
+    do j = pdims%j_start, pdims%j_end
+      do i = pdims%i_start, pdims%i_end
+        ppnrate = dxfac(i,j) * qfac(i,j) * (ls_rain(i,j) + ls_snow(i,j))
+        rainfac(i,j) = 1.0 + rampn*min(max( (ppnrate-par_radius_ppn_min)/rampd,&
+                                            0.0 ),1.0)**par_radius_ppn_pow
+      end do
+    end do
+!$OMP END DO
+  end if
 
   ! Second a w-dependence
   if ( par_radius_init_method == w_dependence ) then
@@ -332,7 +372,60 @@ if ( par_radius_init_method == rain_dependence .or.                            &
       par_radius_amp_um(i,j) = par_radius_knob*max( w_fac(i,j), rainfac(i,j) )
     end do
   end do
-!$OMP END DO NOWAIT
+!$OMP END DO
+
+  if ( i_prog_ent_opt == i_prog_ent_3d .or.                                    &
+       i_prog_ent_opt == i_prog_ent_3d_qfac ) then
+    ! 3D prognostic entrainment...
+    do k = 1, tdims%k_end
+
+      if ( i_prog_ent_opt == i_prog_ent_3d_qfac .and. k < tdims%k_end ) then
+        ! Option for height-varying q normalisation...
+        ! Adjust vertical mean vapour mixing-ratio up to current height
+        ! and update "qfac" if we're now above the BL-top, to account for
+        ! typical precip rates being smaller higher-up where q is smaller
+!$OMP DO SCHEDULE(STATIC)
+        do j = pdims%j_start, pdims%j_end
+          do i = pdims%i_start, pdims%i_end
+            if ( z_rho(i,j,k+1) > zh_eff(i,j) ) then
+              mv_bl_mean(i,j) = ( mv_bl_mean(i,j) * z_rho(i,j,k)               &
+                                + m_v(i,j,k) * (z_rho(i,j,k+1) - z_rho(i,j,k)) &
+                                ) / z_rho(i,j,k+1)
+              if (par_radius_init_method == linear_qfacrain_dep) then
+                qfac(i,j) = 2.0 + 1.25*max(-1.0,                               &
+                                           100.0*(0.5*refqsat-mv_bl_mean(i,j)))
+              else
+                qfac(i,j) = refqsat/mv_bl_mean(i,j)
+              end if
+            end if
+          end do
+        end do
+!$OMP END DO
+      end if  ! ( i_prog_ent_opt == i_prog_ent_3d_qfac .AND. k < tdims%k_end )
+
+!$OMP DO SCHEDULE(STATIC)
+      do j = pdims%j_start, pdims%j_end
+        do i = pdims%i_start, pdims%i_end
+          ! Repeat calculation of par_radius_amp but using the value of
+          ! conv_prog_precip from the current level k
+          ppnrate = dxfac(i,j) * qfac(i,j) * conv_prog_precip(i,j,k)
+          rainfac(i,j) = 1.0+rampn*min(max( (ppnrate-par_radius_ppn_min)/rampd,&
+                                            0.0 ),1.0)**par_radius_ppn_pow
+          ! Since ent ~ 1/radius, ent factor ~ 1/radius_amp.
+          ! Normalise by surface radius_amp factor to get change in ent.
+          entrain_fac_3d(i,j,k) = max( par_radius_amp_um(i,j)                  &
+                        / ( par_radius_knob*max( w_fac(i,j), rainfac(i,j) ) ), &
+                                       1.0 )
+          ! Only allow this to increase entrainment relative to the
+          ! surface-based radius ramp, not decrease it.  Otherwise elevated
+          ! rain that doesn't reach the surface will reduce entrainment,
+          ! and we presumably don't want that?
+        end do
+      end do
+!$OMP END DO
+
+    end do  ! k = 1, tdims%k_end
+  end if  ! ( i_prog_ent_opt )
 
 else
 

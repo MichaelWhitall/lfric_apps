@@ -21,7 +21,7 @@ subroutine set_ent( n_points, n_fields_tot, max_points,                        &
                     par_conv_mean_fields, env_k_fields,                        &
                     grid_prev_super, grid_next_super,                          &
                     par_conv_super,                                            &
-                    l_within_bl, core_mean_ratio,                              &
+                    l_within_bl, core_mean_ratio, entrain_fac_k,               &
                     layer_mass_step, sum_massflux,                             &
                     ent_fields, ent_mass_d, core_ent_ratio,                    &
                     plume_model_diags, diags_super )
@@ -29,6 +29,7 @@ subroutine set_ent( n_points, n_fields_tot, max_points,                        &
 use comorph_constants_mod, only: real_cvprec, min_float, one,                  &
                                  ent_coef, comorph_timestep,                   &
                                  core_ent_fac, l_core_ent_cmr,                 &
+                                 l_entrain_fac_3d,                             &
                                  i_cfl_local, i_cfl_local_all,                 &
                                  i_cfl_local_nobl
 use fields_type_mod, only: i_temperature, i_q_vap, i_qc_first, i_qc_last
@@ -82,6 +83,9 @@ logical, intent(in) :: l_within_bl(n_points)
 
 ! Ratio of parcel core buoyancy over parcel mean buoyancy
 real(kind=real_cvprec), intent(in) :: core_mean_ratio(n_points)
+
+! Optional height-varying entrainment scaling factor at current level
+real(kind=real_cvprec), intent(in) :: entrain_fac_k(max_points)
 
 ! Dry-mass on the current half-level-step, per m2 at surface.
 real(kind=real_cvprec), intent(in) :: layer_mass_step(n_points)
@@ -183,6 +187,13 @@ do ic = 1, n_points
                  * ( ent_rho_dry(ic) / par_rho_dry(ic) )                       &
                  * par_conv_super(ic,i_massflux_d)
 end do
+
+if ( l_entrain_fac_3d ) then
+  ! Apply input height-varying entrainment scaling
+  do ic = 1, n_points
+    ent_mass_d(ic) = ent_mass_d(ic) * entrain_fac_k(ic)
+  end do
+end if
 
 ! Set fractional reduction of entrainment of environment air by the
 ! parcel core compared to the parcel mean...

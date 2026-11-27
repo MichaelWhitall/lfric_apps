@@ -20,8 +20,8 @@ subroutine conv_level_step(                                                    &
              n_points, max_points, n_points_res,                               &
              n_points_diag, n_diags_super, n_fields_tot,                       &
              l_down, l_tracer, l_last_level, l_to_full_level,                  &
-             l_within_bl,                                                      &
-             sum_massflux, max_ent_frac, index_ij, ij_first, ij_last,          &
+             l_within_bl, entrain_fac_k, sum_massflux,                         &
+             max_ent_frac, index_ij, ij_first, ij_last,                        &
              cmpr, k, draft_string,                                            &
              grid_prev_super, grid_next_super,                                 &
              env_prev_super, env_next_super,                                   &
@@ -109,6 +109,9 @@ logical, intent(in) :: l_to_full_level
 
 ! Flag for whether each point is within the boundary-layer
 logical, intent(in) :: l_within_bl(n_points)
+
+! Optional height-varying entrainment scaling factor at current level
+real(kind=real_cvprec), intent(in) :: entrain_fac_k(n_points)
 
 ! Sum of parcel mass-fluxes over types/layers at start of this half-level step
 real(kind=real_cvprec), intent(in) :: sum_massflux(n_points)
@@ -396,7 +399,7 @@ call set_ent( n_points, n_fields_tot, max_points,                              &
               par_conv_mean_fields, env_k_fields,                              &
               grid_prev_super, grid_next_super,                                &
               par_conv_super,                                                  &
-              l_within_bl, core_mean_ratio,                                    &
+              l_within_bl, core_mean_ratio, entrain_fac_k,                     &
               layer_mass_step, sum_massflux,                                   &
               ent_fields, ent_mass_d, core_ent_ratio,                          &
               plume_model_diags, diags_super )

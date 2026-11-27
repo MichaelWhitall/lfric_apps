@@ -786,6 +786,9 @@ logical :: l_core_ent_cmr = .true.
 ! ELSE:
 !   core_ent = core_ent_fac * mean_ent
 
+! Switch for height-varying scaling-factor applied to the entrainment rates
+logical :: l_entrain_fac_3d = .false.
+
 ! How to treat in-plume condensation due to in-plume moisture variability:
 ! 0 - Assume parcel mean is homogeneous, ignoring the parcel core q_cl
 integer, parameter :: i_mean_q_cl_hom = 0

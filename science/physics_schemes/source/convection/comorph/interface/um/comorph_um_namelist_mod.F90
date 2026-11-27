@@ -47,6 +47,13 @@ logical :: l_conv_inc_w = .false.         ! Switch to apply vertical velocity
 ! Integer options in CoMorph namelist
 !==============================================================================
 
+integer :: i_prog_ent_opt = imdi          ! Options for prognostic entrainment
+
+integer, parameter :: i_prog_ent_off = 0     ! No prognostic entrainment
+integer, parameter :: i_prog_ent_2d = 1      ! 2D prognostic ramp
+integer, parameter :: i_prog_ent_3d = 2      ! 3D prognostic entrainment
+integer, parameter :: i_prog_ent_3d_qfac = 3 ! 3D prog ent + height-vary q-norm
+
 integer :: par_radius_init_method = imdi  ! Switch for sundry enhancements to
                                           ! parcel radius with options:
 
@@ -86,6 +93,12 @@ real(kind=real_umphys) :: par_radius_knob_max = rmdi
 ! Precip rate for max tuning knob for comorph turbulence-based parcel
 ! initial radius.
 real(kind=real_umphys) :: par_radius_ppn_max = rmdi
+
+! Minimum precip rate above-which the parcel radius ramp begins
+real(kind=real_umphys) :: par_radius_ppn_min = rmdi
+
+! Power in power-law for parcel radius dependence on precip rate
+real(kind=real_umphys) :: par_radius_ppn_pow = rmdi
 
 ! Reference grid-length for resolution-dependence / m
 real(kind=real_umphys) :: dx_ref = rmdi
@@ -203,11 +216,12 @@ real(kind=real_umphys) :: nconc_graup = rmdi
 namelist/Run_Comorph/                                                          &
 
 ! Integers
-par_radius_init_method, par_radius_evol_method, autoc_opt,                     &
+i_prog_ent_opt, par_radius_init_method, par_radius_evol_method, autoc_opt,     &
 n_dndraft_types,                                                               &
 
 ! Plume model
-par_radius_knob, par_radius_knob_max, par_radius_ppn_max, dx_ref,              &
+par_radius_knob, par_radius_knob_max, par_radius_ppn_max,                      &
+par_radius_ppn_min, par_radius_ppn_pow, dx_ref,                                &
 core_ent_fac, rain_area_min, cf_conv_fac, drag_coef_par, par_gen_rhpert,       &
 par_gen_mass_fac, wind_w_fac, wind_w_buoy_fac, par_gen_pert_fac,               &
 ass_min_radius, min_radius_fac, turb_len_fac, par_gen_core_fac, overlap_power, &
@@ -243,6 +257,7 @@ use comorph_constants_mod, only: par_radius_evol_const,                        &
                                  par_radius_evol_no_decrease,                  &
                                  par_radius_evol_no_detrain,                   &
                                  autoc_linear,autoc_quadratic
+use cv_run_mod, only: l_conv_prog_precip
 
 implicit none
 
@@ -257,6 +272,12 @@ if (lhook) call dr_hook(ModuleName//':'//RoutineName,zhook_in,zhook_handle)
 def_src = ModuleName//':'//RoutineName
 
 ! Checking integer switches have allowed values
+
+if ( l_conv_prog_precip ) then
+  call chk_var( i_prog_ent_opt,'i_prog_ent_opt',                               &
+                [i_prog_ent_off, i_prog_ent_2d, i_prog_ent_3d,                 &
+                 i_prog_ent_3d_qfac] )
+end if
 
 call chk_var( par_radius_init_method,'par_radius_init_method',                 &
               [no_dependence, rain_dependence, qfacrain_dependence,            &
@@ -335,6 +356,8 @@ call umPrint('Contents of namelist run_comorph', src=ModuleName)
 
 ! Integers
 
+write(lineBuffer,'(A,I0)')' i_prog_ent_opt = ',i_prog_ent_opt
+call umPrint(lineBuffer,src=ModuleName)
 write(lineBuffer,"(A,I0)")' par_radius_init_method = ',par_radius_init_method
 call umPrint(lineBuffer,src=ModuleName)
 write(lineBuffer,"(A,I0)")' par_radius_evol_method = ',par_radius_evol_method
@@ -382,6 +405,10 @@ call umPrint(lineBuffer,src=ModuleName)
 write(lineBuffer,"(A,ES14.6)")' par_radius_knob_max = ',par_radius_knob_max
 call umPrint(lineBuffer,src=ModuleName)
 write(lineBuffer,"(A,ES14.6)")' par_radius_ppn_max = ',par_radius_ppn_max
+call umPrint(lineBuffer,src=ModuleName)
+write(lineBuffer,"(A,ES14.6)")' par_radius_ppn_min = ',par_radius_ppn_min
+call umPrint(lineBuffer,src=ModuleName)
+write(lineBuffer,"(A,ES14.6)")' par_radius_ppn_pow = ',par_radius_ppn_pow
 call umPrint(lineBuffer,src=ModuleName)
 write(lineBuffer,"(A,ES14.6)")' dx_ref = ',dx_ref
 call umPrint(lineBuffer,src=ModuleName)
@@ -461,12 +488,13 @@ character(len=*), parameter :: RoutineName='READ_NML_RUN_COMORPH'
 
 ! set number of each type of variable in my_namelist type
 integer, parameter :: no_of_types = 3
-integer, parameter :: n_int = 4
-integer, parameter :: n_real = 36
+integer, parameter :: n_int = 5
+integer, parameter :: n_real = 38
 integer, parameter :: n_log = 2
 
 type :: my_namelist
   sequence
+  integer :: i_prog_ent_opt
   integer :: par_radius_init_method
   integer :: par_radius_evol_method
   integer :: autoc_opt
@@ -477,6 +505,8 @@ type :: my_namelist
   real(kind=real_umphys) :: par_radius_knob
   real(kind=real_umphys) :: par_radius_knob_max
   real(kind=real_umphys) :: par_radius_ppn_max
+  real(kind=real_umphys) :: par_radius_ppn_min
+  real(kind=real_umphys) :: par_radius_ppn_pow
   real(kind=real_umphys) :: dx_ref
   real(kind=real_umphys) :: core_ent_fac
   real(kind=real_umphys) :: rain_area_min
@@ -528,6 +558,7 @@ if (mype == 0) then
   call check_iostat(errorstatus, "namelist RUN_Comorph", iomessage)
 
   ! Integers
+  my_nml % i_prog_ent_opt          = i_prog_ent_opt
   my_nml % par_radius_init_method  = par_radius_init_method
   my_nml % par_radius_evol_method  = par_radius_evol_method
   my_nml % autoc_opt               = autoc_opt
@@ -540,6 +571,8 @@ if (mype == 0) then
   my_nml % par_radius_knob      = par_radius_knob
   my_nml % par_radius_knob_max  = par_radius_knob_max
   my_nml % par_radius_ppn_max   = par_radius_ppn_max
+  my_nml % par_radius_ppn_min   = par_radius_ppn_min
+  my_nml % par_radius_ppn_pow   = par_radius_ppn_pow
   my_nml % dx_ref               = dx_ref
   my_nml % core_ent_fac         = core_ent_fac
   my_nml % rain_area_min        = rain_area_min
@@ -581,6 +614,7 @@ end if
 call mpl_bcast(my_nml,1,mpl_nml_type,0,my_comm,icode)
 
 if (mype /= 0) then
+  i_prog_ent_opt          = my_nml % i_prog_ent_opt
   par_radius_init_method  = my_nml % par_radius_init_method
   par_radius_evol_method  = my_nml % par_radius_evol_method
   autoc_opt               = my_nml % autoc_opt
@@ -592,6 +626,8 @@ if (mype /= 0) then
   par_radius_knob      = my_nml % par_radius_knob
   par_radius_knob_max  = my_nml % par_radius_knob_max
   par_radius_ppn_max   = my_nml % par_radius_ppn_max
+  par_radius_ppn_min   = my_nml % par_radius_ppn_min
+  par_radius_ppn_pow   = my_nml % par_radius_ppn_pow
   dx_ref               = my_nml % dx_ref
   core_ent_fac         = my_nml % core_ent_fac
   rain_area_min        = my_nml % rain_area_min

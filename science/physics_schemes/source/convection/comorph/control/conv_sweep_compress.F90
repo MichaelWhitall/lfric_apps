@@ -22,14 +22,14 @@ subroutine conv_sweep_compress(                                                &
                  cmpr, grid, turb, fields,                                     &
                  virt_temp, virt_temp_half,                                    &
                  layer_mass, sum_massflux, delta_tv,                           &
-                 l_within_bl,  grid_k_super, grid_half_super,                  &
+                 l_within_bl, entrain_fac_k, grid_k_super, grid_half_super,    &
                  env_k_fields, env_k_super, env_half_super,                    &
                  layer_mass_step, frac_level_step,                             &
                  delta_tv_cmpr, sum_massflux_cmpr, index_ij )
 
 use comorph_constants_mod, only: real_cvprec, real_hmprec, zero,               &
                                  nx_full, ny_full, k_bot_conv, k_top_conv,     &
-                                 l_cv_cloudfrac
+                                 l_cv_cloudfrac, l_entrain_fac_3d
 use cmpr_type_mod, only: cmpr_type
 use grid_type_mod, only: grid_type, i_height, n_grid, grid_compress
 use turb_type_mod, only: turb_type
@@ -104,6 +104,9 @@ real(kind=real_cvprec), intent(in) :: delta_tv(ij_first:ij_last)
 ! (as defined by the BL-scheme's BL-top height passed in)
 logical, intent(out) :: l_within_bl(max_points)
 
+! Optional height-varying entrainment scaling factor at current level
+real(kind=real_cvprec), intent(out) :: entrain_fac_k(max_points)
+
 ! Height and pressure
 real(kind=real_cvprec), intent(out) :: grid_k_super(max_points,n_grid)
 real(kind=real_cvprec), intent(out) :: grid_half_super(max_points,n_grid)
@@ -177,6 +180,14 @@ ub2 = ubound( turb % z_bl_top )
 call set_l_within_bl( cmpr, k, lb, ub, grid % height_half,                     &
                       lb2, ub2, turb % z_bl_top,                               &
                       l_within_bl )
+
+if ( l_entrain_fac_3d ) then
+  ! Compress height-varying entrainment scaling factor from level k if used
+  lb = lbound( turb % entrain_fac_3d )
+  ub = ubound( turb % entrain_fac_3d )
+  call compress( cmpr, lb(1:2), ub(1:2), turb % entrain_fac_3d(:,:,k),         &
+                 entrain_fac_k )
+end if
 
 ! Compress grid fields into super-arrays for the
 ! current level k and the model-level interface

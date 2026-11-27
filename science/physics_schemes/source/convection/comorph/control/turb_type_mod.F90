@@ -56,6 +56,8 @@ type :: turb_type
 
   ! Parcel radius amplification factor
   real(kind=real_hmprec), pointer :: par_radius_amp(:,:) => null()
+  ! Optional 3D entrainment factor
+  real(kind=real_hmprec), pointer :: entrain_fac_3d(:,:,:) => null()
 
   ! Boundary-layer top height from the boundary-layer scheme
   real(kind=real_hmprec), pointer :: z_bl_top(:,:) => null()
@@ -108,6 +110,7 @@ turb % f_wind_v => null()
 
 turb % lengthscale => null()
 turb % par_radius_amp => null()
+turb % entrain_fac_3d => null()
 turb % z_bl_top => null()
 
 return
@@ -124,6 +127,7 @@ end subroutine turb_nullify
 subroutine turb_list_make( turb )
 
 use comorph_constants_mod, only: nx_full, ny_full, k_bot_conv, k_top_init,     &
+                                 k_top_conv, l_entrain_fac_3d,                 &
                                  newline
 use raise_error_mod, only: raise_fatal
 
@@ -218,6 +222,28 @@ else
   end if
 end if
 
+if ( l_entrain_fac_3d ) then
+  ! Check 3D entrainment factor
+  if ( .not. associated( turb % entrain_fac_3d) ) then
+    call raise_fatal( routinename,                                             &
+           "A required input turbulence field has not been "               //  &
+           "assigned to any memory.  You must point:"             //newline//  &
+           "turb % entrain_fac_3d"                                //newline//  &
+           "at a target array before the call to comorph_ctl." )
+  else
+    lb = lbound( turb % entrain_fac_3d )
+    ub = ubound( turb % entrain_fac_3d )
+    if ( .not. ( lb(1) <= 1 .and. ub(1) >= nx_full                             &
+           .and. lb(2) <= 1 .and. ub(2) >= ny_full                             &
+           .and. lb(3) <= k_bot_conv .and. ub(3) >= k_top_conv ) ) then
+      call raise_fatal( routinename,                                           &
+             "A required input turbulence field has "                      //  &
+             "insufficient extent / the wrong shape."             //newline//  &
+             "Field: turb % entrain_fac_3d" )
+    end if
+  end if
+end if  ! ( l_entrain_fac_3d )
+
 ! Check for the 2-D BL-top height field
 if ( .not. associated( turb % z_bl_top ) ) then
   call raise_fatal( routinename,                                               &
@@ -270,7 +296,7 @@ end subroutine turb_list_clear
 !----------------------------------------------------------------
 subroutine turb_check_bad_values( turb, where_string )
 
-use comorph_constants_mod, only: name_length, zero
+use comorph_constants_mod, only: name_length, zero, l_entrain_fac_3d
 use check_bad_values_mod, only: check_bad_values_3d
 
 implicit none
@@ -307,6 +333,16 @@ ub = ubound( turb % lengthscale )
 call check_bad_values_3d( lb, ub, turb % lengthscale,                          &
                           where_string, field_name,                            &
                           field_min=zero, l_init=.true. )
+
+if ( l_entrain_fac_3d ) then
+  ! 3D entrainment factor
+  field_name = "entrain_fac_3d"
+  lb = lbound( turb % entrain_fac_3d )
+  ub = ubound( turb % entrain_fac_3d )
+  call check_bad_values_3d( lb, ub, turb % entrain_fac_3d,                     &
+                            where_string, field_name,                          &
+                            field_min=zero )
+end if
 
 
 return

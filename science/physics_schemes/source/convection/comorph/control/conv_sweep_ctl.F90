@@ -292,6 +292,9 @@ real(kind=real_cvprec) :: env_next_super(max_points,n_env_half)
 ! (as defined by the BL-scheme's BL-top height passed in)
 logical :: l_within_bl(max_points)
 
+! Optional height-varying entrainment scaling factor at current level
+real(kind=real_cvprec) :: entrain_fac_k(max_points)
+
 ! Maximum allowed entrained fraction of layer mass for current draft
 real(kind=real_cvprec) :: max_ent_frac
 
@@ -720,7 +723,7 @@ do k = k_first, k_last, dk
                  grid, turb, fields,                                           &
                  virt_temp, virt_temp_half,                                    &
                  layer_mass, sum_massflux, delta_tv,                           &
-                 l_within_bl, grid_k_super, grid_prev_super,                   &
+                 l_within_bl, entrain_fac_k, grid_k_super, grid_prev_super,    &
                  env_k_fields, env_k_super, env_prev_super,                    &
                  layer_mass_step, frac_level_step,                             &
                  delta_tv_cmpr, sum_massflux_cmpr, index_ij )
@@ -744,8 +747,8 @@ do k = k_first, k_last, dk
                  cmpr_combined(i_type,i_layr)%n_points,                        &
                  dgdims(1), dgdims(2), n_fields_tot,                           &
                  l_down, l_tracer, l_last_level, l_to_full_level,              &
-                 l_within_bl,                                                  &
-                 sum_massflux_cmpr, max_ent_frac, index_ij, ij_first, ij_last, &
+                 l_within_bl, entrain_fac_k, sum_massflux_cmpr,                &
+                 max_ent_frac, index_ij, ij_first, ij_last,                    &
                  par_conv(i_type,i_layr)%cmpr, k, draft_string,                &
                  grid_prev_super, grid_k_super,                                &
                  env_prev_super, env_k_super,                                  &
@@ -986,7 +989,7 @@ do k = k_first, k_last, dk
                  grid, turb, fields,                                           &
                  virt_temp, virt_temp_half,                                    &
                  layer_mass, sum_massflux, delta_tv,                           &
-                 l_within_bl, grid_k_super, grid_next_super,                   &
+                 l_within_bl, entrain_fac_k, grid_k_super, grid_next_super,    &
                  env_k_fields, env_k_super, env_next_super,                    &
                  layer_mass_step, frac_level_step,                             &
                  delta_tv_cmpr, sum_massflux_cmpr, index_ij )
@@ -1010,8 +1013,8 @@ do k = k_first, k_last, dk
                  res_source(i_type,i_layr,k)%cmpr%n_points,                    &
                  dgdims(1), dgdims(2), n_fields_tot,                           &
                  l_down, l_tracer, l_last_level, l_to_full_level,              &
-                 l_within_bl,                                                  &
-                 sum_massflux_cmpr, max_ent_frac, index_ij, ij_first, ij_last, &
+                 l_within_bl, entrain_fac_k, sum_massflux_cmpr,                &
+                 max_ent_frac, index_ij, ij_first, ij_last,                    &
                  par_conv(i_type,i_layr)%cmpr, k, draft_string,                &
                  grid_k_super, grid_next_super,                                &
                  env_k_super, env_next_super,                                  &
