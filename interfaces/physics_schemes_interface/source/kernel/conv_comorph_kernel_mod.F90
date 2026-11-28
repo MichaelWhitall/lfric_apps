@@ -33,7 +33,7 @@ module conv_comorph_kernel_mod
   !>
   type, public, extends(kernel_type) :: conv_comorph_kernel_type
     private
-    type(arg_type) :: meta_args(195) = (/                                         &
+    type(arg_type) :: meta_args(196) = (/                                         &
          arg_type(GH_SCALAR, GH_INTEGER, GH_READ),                                &! outer
          arg_type(GH_FIELD,  GH_REAL,    GH_READ,      W3),                       &! rho_in_w3
          arg_type(GH_FIELD,  GH_REAL,    GH_READ,      WTHETA),                   &! rho_in_wth
@@ -57,6 +57,7 @@ module conv_comorph_kernel_mod
          arg_type(GH_FIELD,  GH_REAL,    GH_READWRITE, WTHETA),                   &! dms_conv
          arg_type(GH_FIELD,  GH_REAL,    GH_READWRITE, W3),                       &! du_conv
          arg_type(GH_FIELD,  GH_REAL,    GH_READWRITE, W3),                       &! dv_conv
+         arg_type(GH_FIELD,  GH_REAL,    GH_READ,      WTHETA),                   &! conv_prog_precip
          arg_type(GH_FIELD,  GH_REAL,    GH_READWRITE, WTHETA),                   &! conv_prog_dtheta
          arg_type(GH_FIELD,  GH_REAL,    GH_READWRITE, WTHETA),                   &! conv_prog_dmv
          arg_type(GH_FIELD,  GH_REAL,    GH_READ,      WTHETA),                   &! mv_n
@@ -269,6 +270,7 @@ contains
   !> @param[in,out] dms_conv             Convection cloud frozen increment
   !> @param[in,out] du_conv              Convection 'zonal' wind increment
   !> @param[in,out] dv_conv              Convection 'meridional' wind increment
+  !> @param[in]     conv_prog_precip     Time-damped precip rate (kg/m2/s)
   !> @param[in,out] conv_prog_dtheta     Time smoothed convective theta inc
   !> @param[in,out] conv_prog_dmv        Time smoothed convective humidity inc
   !> @param[in]     m_v                  Vapour mixing ratio after advection
@@ -474,6 +476,7 @@ contains
                           dms_conv,                          &
                           du_conv,                           &
                           dv_conv,                           &
+                          conv_prog_precip,                  &
                           conv_prog_dtheta,                  &
                           conv_prog_dmv,                     &
                           mv_n,                              &
@@ -788,9 +791,11 @@ contains
     use cloud_inputs_mod, only: l_pc2_homog_conv_pressure,                     &
                                 l_cloud_call_b4_conv,                          &
                                 l_ensure_max_in_cloud_pc2
-    use cv_run_mod, only: l_mom,                                               &
+    use cv_run_mod, only: l_mom, l_conv_prog_precip,                           &
                           l_conv_prog_dtheta, l_conv_prog_dq,                  &
                           tau_conv_prog_dtheta, tau_conv_prog_dq
+    use comorph_um_namelist_mod, only: i_prog_ent_opt, i_prog_ent_3d,          &
+                                       i_prog_ent_3d_qfac
     use jules_surface_mod, only: srf_ex_cnv_gust, IP_SrfExWithCnv
     use mphys_inputs_mod, only: l_mcr_qgraup, l_mcr_qrain, l_mcr_qcf2,         &
                                 l_mcr_precfrac, l_improve_precfrac_checks
@@ -867,7 +872,8 @@ contains
                                                          height_wth,        &
                                                          rhokm_bl, wvar,    &
                                                          cf_liq_n, cf_fro_n,&
-                                                         cf_bulk_n
+                                                         cf_bulk_n,         &
+                                                         conv_prog_precip
 
     real(kind=r_def), dimension(undf_wth), intent(inout) :: dt_conv, dmv_conv, &
                                           dmcl_conv, dms_conv, cca, ccw,       &
@@ -1038,7 +1044,7 @@ contains
          theta_conv, q_conv, qcl_conv, qcf_conv, dtheta_conv,                &
          qrain_conv, qcf2_conv, qgraup_conv, cf_liquid_conv, cf_frozen_conv, &
          bulk_cf_conv, u_conv, v_conv, dubydt_p,                             &
-         dvbydt_p, tnuc_new, cca_3d0, ccw_3d0
+         dvbydt_p, tnuc_new, cca_3d0, ccw_3d0, conv_prog_precip_conv
 
     real(r_um), target :: cca_3d ( row_length, rows, nlayers )
     real(r_um), target :: ccw_3d ( row_length, rows, nlayers )
@@ -1180,6 +1186,8 @@ contains
 
     ! Parcel radius amplification factor passed into comorph
     real(kind=r_um), target :: par_radius_amp_um(row_length,rows)
+    ! Optional 3D entrainment factor passed into comorph
+    real(KIND=r_um), allocatable, target :: entrain_fac_3d(:,:,:)
 
     character(len=*), parameter :: routinename = "conv_comorph_kernel"
 
@@ -1371,6 +1379,14 @@ contains
           u_conv(i,1,k) = u_in_w3_latest(map_w3(1,i) + k-1)
           v_conv(i,1,k) = v_in_w3_latest(map_w3(1,i) + k-1)
         end do ! k
+      end do
+    end if
+
+    if (l_conv_prog_precip) then
+      do i = 1, row_length
+        do k = 1, nlayers
+          conv_prog_precip_conv(i,1,k) = conv_prog_precip(map_wth(1,i) + k)
+        end do
       end do
     end if
 
@@ -2163,11 +2179,18 @@ contains
         end do
       end do
 
+      if ( i_prog_ent_opt == i_prog_ent_3d .or.                                &
+           i_prog_ent_opt == i_prog_ent_3d_qfac ) then
+        allocate( entrain_fac_3d ( row_length, rows, nlayers ) )
+      else
+        allocate( entrain_fac_3d (1,1,1) )
+      end if
+
       ! Calculate turbulence lengthscale used to set parcel initial radius
       call calc_turb_len( zh_eff, z_theta, z_rho, rho_wet_tq, qv_n,            &
                           rhokm, bl_w_var, ls_rain, ls_snow, w,                &
-                          delta_x, delta_x,                                    &
-                          turb_len, par_radius_amp_um )
+                          delta_x, delta_x, conv_prog_precip_conv,             &
+                          turb_len, par_radius_amp_um, entrain_fac_3d )
 
       ! Check for instances of fluxes too big relative to the turbulent
       ! w-variance (causes excessive parcel perturbations);
@@ -2242,7 +2265,8 @@ contains
     call assign_fields  ( z_theta, z_rho, p_theta_levels, p_rho_levels,        &
                           r_theta_levels,                                      &
                           rho_dry_tq, w_var_rh, ftl, fqw, fu_rh, fv_rh,        &
-                          turb_len, par_radius_amp_um, zh_homog,               &
+                          turb_len, par_radius_amp_um, entrain_fac_3d,         &
+                          zh_homog,                                            &
                           cca_3d, ccw_3d, frac_bulk_conv,                      &
                           u_th_n, v_th_n, w, temperature_n,                    &
                           qv_n, qcl_n, qcf_n,                                  &
@@ -2456,6 +2480,7 @@ contains
 
     ! If using turbulence-based parcel perturbations
     if ( l_turb_par_gen ) then
+      deallocate( entrain_fac_3d )
       ! Deallocate the interpolated momentum diffusivity and fluxes
       ! on rho-levels
       deallocate( fv_rh )

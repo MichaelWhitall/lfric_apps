@@ -128,6 +128,7 @@ contains
     type( field_type ), pointer :: dbcf_conv
     type( field_type ), pointer :: du_conv
     type( field_type ), pointer :: dv_conv
+    type( field_type ), pointer :: conv_prog_precip
     type( field_type ), pointer :: conv_prog_dtheta
     type( field_type ), pointer :: conv_prog_dmv
     type( field_type ), pointer :: dd_mf_cb
@@ -327,6 +328,7 @@ contains
     call convection_fields%get_field('dbcf_conv', dbcf_conv)
     call convection_fields%get_field('du_conv', du_conv)
     call convection_fields%get_field('dv_conv', dv_conv)
+    call convection_fields%get_field('conv_prog_precip', conv_prog_precip)
     call convection_fields%get_field('conv_prog_dtheta', conv_prog_dtheta)
     call convection_fields%get_field('conv_prog_dmv', conv_prog_dmv)
     call convection_fields%get_field('dd_mf_cb', dd_mf_cb)
@@ -502,7 +504,7 @@ contains
                           height_w3, height_wth,                              &
                           dt_conv, dmv_conv, dmcl_conv,                       &
                           dms_conv, du_conv, dv_conv,                         &
-                          conv_prog_dtheta, conv_prog_dmv,                    &
+                          conv_prog_precip, conv_prog_dtheta, conv_prog_dmv,  &
                           mr_n(imr_v), mr_n(imr_cl), mr_n(imr_ci),            &
                           mr_n(imr_r), mr_n(imr_g), mr_n(imr_s),              &
                           mr(imr_v), mr(imr_cl), mr(imr_ci),                  &

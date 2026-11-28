@@ -920,9 +920,6 @@ contains
       mparwtr      = mparwtr_in
       qlmin        = qlmin_in
 
-      ! Needed by both Gregory-Rowntree and CoMorph
-      tau_conv_prog_precip = tau_conv_prog_precip_in
-
       ! Options which are bespoke to the choice of scheme
       select case (cv_scheme)
 
@@ -945,8 +942,12 @@ contains
         l_mom       = .true.
         l_ccrad     = .true.
         l_3d_cca    = .true.
+        l_conv_prog_precip  = prog_ent_opt_in==prog_ent_opt_2d .or.            &
+                              prog_ent_opt_in==prog_ent_opt_3d .or.            &
+                              prog_ent_opt_in==prog_ent_opt_3d_qfac
         l_conv_prog_dtheta  = l_conv_prog_dtheta_in
         l_conv_prog_dq      = l_conv_prog_dq_in
+        tau_conv_prog_precip = tau_conv_prog_precip_in
         tau_conv_prog_dtheta = 2700.0_r_um
         tau_conv_prog_dq    =  2700.0_r_um
 
@@ -1118,6 +1119,7 @@ contains
         thpixs_mid          = thpixs_mid_in
         tower_factor        = 1.0000_r_um
         ud_factor           = 1.0000_r_um
+        tau_conv_prog_precip = tau_conv_prog_precip_in
         tau_conv_prog_dtheta = 2700.0_r_um
         tau_conv_prog_dq    =  2700.0_r_um
         prog_ent_grad       = prog_ent_grad_in
