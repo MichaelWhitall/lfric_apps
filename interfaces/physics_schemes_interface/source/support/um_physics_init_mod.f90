@@ -142,6 +142,8 @@ module um_physics_init_mod
                                         prog_ent_int_in => prog_ent_int,     &
                                         prog_ent_max_in => prog_ent_max,     &
                                         prog_ent_min_in => prog_ent_min,     &
+                                        tau_conv_prog_precip_in              &
+                                                   => tau_conv_prog_precip,  &
                                         orig_mdet_fac_in => orig_mdet_fac,   &
                                         r_det_in => r_det,                   &
                                         cca_md_scaling,                      &
@@ -198,6 +200,11 @@ module um_physics_init_mod
            par_radius_knob_in        => par_radius_knob,                       &
            par_radius_knob_max_in    => par_radius_knob_max,                   &
            par_radius_ppn_max_in     => par_radius_ppn_max,                    &
+           par_radius_ppn_min_in     => par_radius_ppn_min,                    &
+           par_radius_ppn_pow_in     => par_radius_ppn_pow,                    &
+           prog_ent_opt_in           => prog_ent_opt,                          &
+                                        prog_ent_opt_off, prog_ent_opt_2d,     &
+                                        prog_ent_opt_3d, prog_ent_opt_3d_qfac, &
            rain_area_min_in          => rain_area_min,                         &
            rho_rim_in                => rho_rim,                               &
            resdep_precipramp_in      => resdep_precipramp,                     &
@@ -446,7 +453,10 @@ contains
          overlap_power, par_gen_core_fac, par_gen_mass_fac,                    &
          par_gen_pert_fac, par_gen_rhpert, par_radius_evol_method,             &
          par_radius_init_method, par_radius_knob, par_radius_knob_max,         &
-         par_radius_ppn_max, rain_area_min, rho_rim, tdep_n_cf, tdep_n_cl,     &
+         par_radius_ppn_max, par_radius_ppn_min, par_radius_ppn_pow,           &
+         i_prog_ent_opt,                                                       &
+         i_prog_ent_off, i_prog_ent_2d, i_prog_ent_3d, i_prog_ent_3d_qfac,     &
+         rain_area_min, rho_rim, tdep_n_cf, tdep_n_cl,                         &
          turb_len_fac, vent_factor, wind_w_buoy_fac, wind_w_fac,               &
          ! Namelis checking subroutine
          check_run_comorph,                                                    &
@@ -910,6 +920,9 @@ contains
       mparwtr      = mparwtr_in
       qlmin        = qlmin_in
 
+      ! Needed by both Gregory-Rowntree and CoMorph
+      tau_conv_prog_precip = tau_conv_prog_precip_in
+
       ! Options which are bespoke to the choice of scheme
       select case (cv_scheme)
 
@@ -966,6 +979,18 @@ contains
         par_radius_knob        = real( par_radius_knob_in,        r_um )
         par_radius_knob_max    = real( par_radius_knob_max_in,    r_um )
         par_radius_ppn_max     = real( par_radius_ppn_max_in,     r_um )
+        par_radius_ppn_min     = real( par_radius_ppn_min_in,     r_um )
+        par_radius_ppn_pow     = real( par_radius_ppn_pow_in,     r_um )
+        select case ( prog_ent_opt_in )
+          case ( prog_ent_opt_off )
+            i_prog_ent_opt = i_prog_ent_off
+          case ( prog_ent_opt_2d )
+            i_prog_ent_opt = i_prog_ent_2d
+          case ( prog_ent_opt_3d )
+            i_prog_ent_opt = i_prog_ent_3d
+          case ( prog_ent_opt_3d_qfac )
+            i_prog_ent_opt = i_prog_ent_3d_qfac
+        end select
         l_resdep_precipramp    = resdep_precipramp_in
         dx_ref                 = real( dx_ref_in,                 r_um )
         ass_min_radius         = real( ass_min_radius_in,         r_um )
@@ -1093,7 +1118,6 @@ contains
         thpixs_mid          = thpixs_mid_in
         tower_factor        = 1.0000_r_um
         ud_factor           = 1.0000_r_um
-        tau_conv_prog_precip = 10800.0_r_um
         tau_conv_prog_dtheta = 2700.0_r_um
         tau_conv_prog_dq    =  2700.0_r_um
         prog_ent_grad       = prog_ent_grad_in

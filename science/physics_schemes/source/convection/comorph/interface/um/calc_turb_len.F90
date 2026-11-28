@@ -429,11 +429,11 @@ if ( par_radius_init_method == rain_dependence .or.                            &
 
 else
 
-  ! Set factor to unity when not using any of the above options
+  ! Set factor to constant when not using any of the above options
 !$OMP DO SCHEDULE(STATIC)
   do j = pdims%j_start, pdims%j_end
     do i = pdims%i_start, pdims%i_end
-      par_radius_amp_um(i,j) = 1.0
+      par_radius_amp_um(i,j) = par_radius_knob
     end do
   end do
 !$OMP END DO NOWAIT

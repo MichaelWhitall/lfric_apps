@@ -139,3 +139,24 @@ class vn32_t776(MacroUpgrade):
         self.add_setting(config, [nml,"turb_len_fac"], "8.0")
 
         return config, self.reports
+
+
+class vn32_t844(MacroUpgrade):
+    # Upgrade macro for Issue#844 by Mike Whitall
+
+    BEFORE_TAG = "vn3.2_t776"
+    AFTER_TAG = "vn3.2_t844"
+
+    def upgrade(self, config, meta_config=None):
+        # Add settings
+
+        # CoMorph settings
+        nml = "namelist:comorph"
+        self.add_setting(config, [nml,"prog_ent_opt"], "0")
+        self.add_setting(config, [nml,"par_radius_ppn_min"], "0.0")
+        self.add_setting(config, [nml,"par_radius_ppn_pow"], "1.0")
+
+        nml = "namelist:convection"
+        self.add_setting(config, [nml,"tau_conv_prog_precip"], "10800.0")
+
+        return config, self.reports
