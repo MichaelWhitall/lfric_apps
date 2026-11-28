@@ -164,7 +164,7 @@ integer :: i, j, k
 rampn = par_radius_knob_max / par_radius_knob - 1.0
 rampd = par_radius_ppn_max - par_radius_ppn_min
 
-!$OMP PARALLEL default(none) PRIVATE( i, j, k, ppnrate )                       &
+!$OMP PARALLEL DEFAULT(NONE) PRIVATE( i, j, k, ppnrate )                       &
 !$OMP SHARED( pdims, tdims, bl_levels, par_radius_init_method,                 &
 !$OMP         l_conv_prog_precip, i_prog_ent_opt,                              &
 !$OMP         entrain_fac_3d, conv_prog_precip,                                &
