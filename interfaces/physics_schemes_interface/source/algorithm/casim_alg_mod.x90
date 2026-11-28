@@ -116,6 +116,7 @@ contains
     type( field_type ), pointer :: murk                => null()
 
     type( field_type ), pointer :: wvar
+
     type( field_type ), pointer :: conv_prog_precip
 
     type( field_type ), pointer :: height_w3 => null()
@@ -174,6 +175,7 @@ contains
     call aerosol_fields%get_field('murk', murk)
 
     call turbulence_fields%get_field('wvar', wvar)
+
     call convection_fields%get_field('conv_prog_precip', conv_prog_precip)
 
     height_w3  => get_height_fv(config, theta%get_mesh(), W3)

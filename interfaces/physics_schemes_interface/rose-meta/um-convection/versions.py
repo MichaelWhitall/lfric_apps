@@ -152,7 +152,7 @@ class vn32_t844(MacroUpgrade):
 
         # CoMorph settings
         nml = "namelist:comorph"
-        self.add_setting(config, [nml,"prog_ent_opt"], "0")
+        self.add_setting(config, [nml,"prog_ent_opt"], "'off'")
         self.add_setting(config, [nml,"par_radius_ppn_min"], "0.0")
         self.add_setting(config, [nml,"par_radius_ppn_pow"], "1.0")
 
