@@ -33,7 +33,7 @@ private
 
 type, public, extends(kernel_type) :: casim_kernel_type
   private
-  type(arg_type) :: meta_args(40) = (/                                      &
+  type(arg_type) :: meta_args(41) = (/                                      &
        arg_type(GH_FIELD, GH_REAL, GH_READ,  WTHETA),                       & ! mv_wth
        arg_type(GH_FIELD, GH_REAL, GH_READ,  WTHETA),                       & ! ml_wth
        arg_type(GH_FIELD, GH_REAL, GH_READ,  WTHETA),                       & ! mi_wth
@@ -60,6 +60,7 @@ type, public, extends(kernel_type) :: casim_kernel_type
        arg_type(GH_FIELD, GH_REAL, GH_WRITE, WTHETA),                       & ! dmr_wth
        arg_type(GH_FIELD, GH_REAL, GH_WRITE, WTHETA),                       & ! dmg_wth
        arg_type(GH_FIELD, GH_REAL, GH_WRITE, WTHETA),                       & ! dms_wth
+       arg_type(GH_FIELD, GH_REAL, GH_READWRITE, WTHETA),                   & ! conv_prog_precip
        arg_type(GH_FIELD, GH_REAL, GH_WRITE, ANY_DISCONTINUOUS_SPACE_1),    & ! ls_rain_2d
        arg_type(GH_FIELD, GH_REAL, GH_WRITE, ANY_DISCONTINUOUS_SPACE_1),    & ! ls_snow_2d
        arg_type(GH_FIELD, GH_REAL, GH_WRITE, ANY_DISCONTINUOUS_SPACE_1),    & ! ls_graup_2d
@@ -119,6 +120,7 @@ contains
 !> @param[in,out] dmr_wth             Increment to rain mass mixing ratio
 !> @param[in,out] dmg_wth             Increment to graupel mass mixing ratio
 !> @param[in,out] dms_wth             Increment to snow mass mixing ratio
+!> @param[in,out] conv_prog_precip    Time-damped 3D total precip rate
 !> @param[in,out] ls_rain_2d          Large scale rain from twod_fields
 !> @param[in,out] ls_snow_2d          Large scale snow from twod_fields
 !> @param[in,out] ls_graup_2d         Large scale graupel from twod_fields
@@ -166,6 +168,7 @@ subroutine casim_code( nlayers,                     &
                        height_w3, height_wth,       &
                        dmv_wth,  dml_wth,  dmi_wth, &
                        dmr_wth,  dmg_wth,  dms_wth, &
+                       conv_prog_precip,            &
                        ls_rain_2d, ls_snow_2d,      &
                        ls_graup_2d, lsca_2d,        &
                        ls_rain_3d, ls_snow_3d,      &
@@ -191,6 +194,10 @@ subroutine casim_code( nlayers,                     &
 
     use planet_constants_mod,       only: p_zero, kappa, planet_radius
     use water_constants_mod,        only: tm
+
+    use cv_run_mod,                 only: i_convection_vn, i_cv_comorph,       &
+                                          l_conv_prog_precip,                  &
+                                          tau_conv_prog_precip
 
     use micro_main,                 only: shipway_microphysics
     use casim_switches,             only: its, ite, jts, jte, kts, kte, &
@@ -239,6 +246,7 @@ subroutine casim_code( nlayers,                     &
     real(kind=r_def), intent(inout), dimension(undf_wth) :: dmr_wth
     real(kind=r_def), intent(inout), dimension(undf_wth) :: dmg_wth
     real(kind=r_def), intent(inout), dimension(undf_wth) :: dms_wth
+    real(kind=r_def), intent(inout), dimension(undf_wth) :: conv_prog_precip
     real(kind=r_def), intent(inout), dimension(undf_2d)  :: ls_rain_2d
     real(kind=r_def), intent(inout), dimension(undf_2d)  :: ls_snow_2d
     real(kind=r_def), intent(inout), dimension(undf_2d)  :: ls_graup_2d
@@ -299,6 +307,7 @@ subroutine casim_code( nlayers,                     &
 
     real(r_um) :: t_work ! Local working temperature
     real(r_um) :: rrain, rsnow
+    real(r_um) :: decay_amount  ! Used for relaxing conv_prog_precip
     ! Scavenging rates, given in units of hr/mm
     real(r_um), parameter :: krain=2.0e-5_r_um, ksnow=2.0e-5_r_um
 
@@ -470,6 +479,12 @@ subroutine casim_code( nlayers,                     &
     if (l_refl_tot .or. l_refl_1km) casdiags % l_radar = .true.
     if (murk_prognostic) casdiags % l_snowfall_3d = .true.
 
+    ! CoMorph prognostic entrainment needs 3D rain and ice+snow+graupel fluxes
+    if ( l_conv_prog_precip .and. i_convection_vn == i_cv_comorph ) then
+      casdiags % l_rainfall_3d = .true.
+      casdiags % l_snowfall_3d = .true.
+    end if
+
     call allocate_diagnostic_space(its, ite, jts, jte, kts, kte)
 
     ! --------------------------------------------------------------------------
@@ -526,6 +541,19 @@ subroutine casim_code( nlayers,                     &
                          rsnow * casdiags%snowfall_3d(1,1,k) )
       end do
       murk(map_wth(1)) = murk(map_wth(1)+1)
+    end if
+
+    ! Update conv precip prognostic used for convective organisation.
+    ! if using comorph, the prognostic is relaxed towards 3D total precip rate
+    if ( l_conv_prog_precip .and. i_convection_vn == i_cv_comorph ) then
+      decay_amount = min( timestep/tau_conv_prog_precip, 1.0 )
+      do k = 1, nlayers
+        conv_prog_precip(map_wth(1)+k)                                         &
+           = (1.0-decay_amount) * conv_prog_precip(map_wth(1)+k)               &
+           + decay_amount       * ( casdiags%rainfall_3d(1,1,k)                &
+                                  + casdiags%snowfall_3d(1,1,k) )
+      end do
+      conv_prog_precip(map_wth(1)+0) = conv_prog_precip(map_wth(1)+1)
     end if
 
     ! CASIM Update theta and compulsory prognostic variables

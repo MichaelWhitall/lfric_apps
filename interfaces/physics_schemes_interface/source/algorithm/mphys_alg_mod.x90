@@ -46,6 +46,7 @@ contains
   !>@param[in]     aerosol_fields         Fields for aerosol scheme
   !>@param[in]     turbulence_fields      Fields for turbulence scheme
   !>@param[in]     orography_fields       Fields for orog drag scheme
+  !>@param[in,out] convection_fields      Fields for convection scheme
   !>@param[in]     f_arr                  Fractional standard dev params
   !>@param[in,out] dmr_mphys      Mixing ratio increment due to microphysics
   !>@param[in,out] dtheta_mphys   Potential temperature increment in wth space
@@ -56,7 +57,8 @@ contains
   subroutine mphys_alg( config,                                                &
                         mr_n, theta, dry_rho_in_w3, derived_fields,            &
                         microphysics_fields, cloud_fields, aerosol_fields,     &
-                        turbulence_fields, orography_fields, f_arr,            &
+                        turbulence_fields, orography_fields,                   &
+                        convection_fields, f_arr,                              &
                         dmr_mphys, dtheta_mphys,                               &
                         dcfl_mphys, dcff_mphys, dbcf_mphys, dt )
 
@@ -82,6 +84,7 @@ contains
     type( field_collection_type ), intent(in)    :: aerosol_fields
     type( field_collection_type ), intent(in)    :: turbulence_fields
     type( field_collection_type ), intent(in)    :: orography_fields
+    type( field_collection_type ), intent(in)    :: convection_fields
     type( field_type ),            intent(in)    :: f_arr
     real( kind=r_def ),            intent(in)    :: dt
 
@@ -128,6 +131,8 @@ contains
     type( field_type ), pointer :: dz_in_wth => null()
 
     type( field_type ), pointer :: sd_orog            => null()
+
+    type( field_type ), pointer :: conv_prog_precip
 
     type( field_type ) :: superc_liq
     type( field_type ) :: superc_rain
@@ -194,6 +199,8 @@ contains
 
     call orography_fields%get_field('sd_orog', sd_orog)
 
+    call convection_fields%get_field('conv_prog_precip', conv_prog_precip)
+
     call initialise_diags_for_mphys(superc_liq, superc_rain,                   &
                                     sfwater, sfrain, sfsnow,                   &
                                     refl_tot, refl_1km)
@@ -233,7 +240,8 @@ contains
                                      sd_orog,                                  &
                                      dmr_mphys(imr_v),  dmr_mphys(imr_cl),     &
                                      dmr_mphys(imr_s), dmr_mphys(imr_r),       &
-                                     dmr_mphys(imr_g), ls_rain, ls_snow,       &
+                                     dmr_mphys(imr_g),                         &
+                                     conv_prog_precip, ls_rain, ls_snow,       &
                                      ls_graup, lsca_2d, precfrac,              &
                                      ls_rain_3d, ls_snow_3d,                   &
                                      autoconv, accretion,                      &

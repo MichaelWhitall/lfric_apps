@@ -54,6 +54,7 @@ contains
     type( modeldb_type ), intent(in), target    :: modeldb
 
     type( field_collection_type ), pointer :: collection, turbulence_fields
+    type( field_collection_type ), pointer :: convection_fields
     type( field_type ),            pointer :: theta, rho, dtheta_mphys
     type( field_type )                     :: dmr_mphys(nummr), dcfl, dcff, dbcf
     type( field_array_type ),      pointer :: mr
@@ -82,6 +83,8 @@ contains
     mesh => theta%get_mesh()
 
     turbulence_fields => modeldb%fields%get_field_collection( "turbulence_fields" )
+    convection_fields => modeldb%fields                                        &
+                         %get_field_collection( "convection_fields" )
 
     ! Call the algorithm
     call log_event( "Running CASIM", LOG_LEVEL_INFO )
@@ -91,7 +94,8 @@ contains
                     microphysics_fields,                    &
                     cloud_fields,                           &
                     aerosol_fields,                         &
-                    turbulence_fields, mesh,                &
+                    turbulence_fields,                      &
+                    convection_fields, mesh,                &
                     dmr_mphys, dtheta_mphys, dcfl, dcff, dbcf )
     call log_event( "CASIM completed", LOG_LEVEL_INFO )
 

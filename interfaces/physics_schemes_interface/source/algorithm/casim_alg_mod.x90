@@ -45,6 +45,7 @@ contains
   !>@param[in]     cloud_fields           Fields for cloud scheme
   !>@param[in]     aerosol_fields         Fields for the aerosol schemes
   !>@param[in]     turbulence_fields      Fields for turbulence scheme
+  !>@param[in,out] convection_fields      Fields for convection scheme
   !>@param[in]     mesh                   Current mesh
   !>@param[in,out] dmr_mphys      Mixing ratio increment due to microphysics
   !>@param[in,out] theta_inc      Potential temperature increment in wth space
@@ -54,7 +55,7 @@ contains
   subroutine casim_alg( config,                                                &
                         mr_n, theta, dry_rho_in_w3, derived_fields,            &
                         microphysics_fields, cloud_fields, aerosol_fields,     &
-                        turbulence_fields, mesh,                               &
+                        turbulence_fields, convection_fields, mesh,            &
                         dmr_mphys, theta_inc, dcfl, dcff, dbcf )
 
     use casim_kernel_mod, only: casim_kernel_type
@@ -77,6 +78,7 @@ contains
     type( field_collection_type ), intent(in)    :: cloud_fields
     type( field_collection_type ), intent(in)    :: aerosol_fields
     type( field_collection_type ), intent(in)    :: turbulence_fields
+    type( field_collection_type ), intent(in)    :: convection_fields
 
     type( field_type ), intent( inout ) :: dmr_mphys ( nummr )
     type( field_type ), intent( inout ) :: theta_inc
@@ -114,6 +116,7 @@ contains
     type( field_type ), pointer :: murk                => null()
 
     type( field_type ), pointer :: wvar
+    type( field_type ), pointer :: conv_prog_precip
 
     type( field_type ), pointer :: height_w3 => null()
     type( field_type ), pointer :: height_wth => null()
@@ -171,6 +174,7 @@ contains
     call aerosol_fields%get_field('murk', murk)
 
     call turbulence_fields%get_field('wvar', wvar)
+    call convection_fields%get_field('conv_prog_precip', conv_prog_precip)
 
     height_w3  => get_height_fv(config, theta%get_mesh(), W3)
     height_wth => get_height_fv(config, theta%get_mesh(), Wtheta)
@@ -191,6 +195,7 @@ contains
                                      dmr_mphys(imr_v),  dmr_mphys(imr_cl),     &
                                      dmr_mphys(imr_ci), dmr_mphys(imr_r),      &
                                      dmr_mphys(imr_g), dmr_mphys(imr_s),       &
+                                     conv_prog_precip,                         &
                                      ls_rain, ls_snow, ls_graup, lsca_2d,      &
                                      ls_rain_3d, ls_snow_3d, ls_graup_3d,      &
                                      theta_inc, cloud_drop_no_conc, murk,      &

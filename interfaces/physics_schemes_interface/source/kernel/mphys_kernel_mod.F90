@@ -32,7 +32,7 @@ private
 
 type, public, extends(kernel_type) :: mphys_kernel_type
   private
-  type(arg_type) :: meta_args(48) = (/                                      &
+  type(arg_type) :: meta_args(49) = (/                                      &
        arg_type(GH_FIELD, GH_REAL, GH_READ,  WTHETA),                       & ! mv_wth
        arg_type(GH_FIELD, GH_REAL, GH_READ,  WTHETA),                       & ! ml_wth
        arg_type(GH_FIELD, GH_REAL, GH_READ,  WTHETA),                       & ! ms_wth
@@ -57,6 +57,7 @@ type, public, extends(kernel_type) :: mphys_kernel_type
        arg_type(GH_FIELD, GH_REAL, GH_READWRITE, WTHETA),                   & ! dms_wth
        arg_type(GH_FIELD, GH_REAL, GH_WRITE, WTHETA),                       & ! dmr_wth
        arg_type(GH_FIELD, GH_REAL, GH_WRITE, WTHETA),                       & ! dmg_wth
+       arg_type(GH_FIELD, GH_REAL, GH_READWRITE, WTHETA),                   & ! conv_prog_precip
        arg_type(GH_FIELD, GH_REAL, GH_WRITE, ANY_DISCONTINUOUS_SPACE_1),    & ! ls_rain_2d
        arg_type(GH_FIELD, GH_REAL, GH_WRITE, ANY_DISCONTINUOUS_SPACE_1),    & ! ls_snow_2d
        arg_type(GH_FIELD, GH_REAL, GH_WRITE, ANY_DISCONTINUOUS_SPACE_1),    & ! ls_graup_2d
@@ -118,6 +119,7 @@ contains
 !> @param[in,out] dms_wth             Increment to snow cloud mass mixing ratio
 !> @param[in,out] dmr_wth             Increment to rain mass mixing ratio
 !> @param[in,out] dmg_wth             Increment to graupel mass mixing ratio
+!> @param[in,out] conv_prog_precip    Time-damped 3D total precip rate
 !> @param[in,out] ls_rain_2d          Large scale rain from twod_fields
 !> @param[in,out] ls_snow_2d          Large scale snow from twod_fields
 !> @param[in,out] ls_graup_2d         Large scale graupel from twod_fields
@@ -175,6 +177,7 @@ subroutine mphys_code( nlayers, seg_len,            &
                        sd_orog,                     &
                        dmv_wth,  dml_wth,  dms_wth, &
                        dmr_wth,  dmg_wth,           &
+                       conv_prog_precip,            &
                        ls_rain_2d, ls_snow_2d,      &
                        ls_graup_2d, lsca_2d,        &
                        precfrac,                    &
@@ -209,6 +212,10 @@ subroutine mphys_code( nlayers, seg_len,            &
 
     use cloud_inputs_mod,           only: i_cld_vn, rhcrit
     use pc2_constants_mod,          only: i_cld_off, i_cld_pc2
+    use cv_run_mod,                 only: i_convection_vn, i_cv_comorph,       &
+                                          l_conv_prog_precip,                  &
+                                          tau_conv_prog_precip
+    use timestep_mod,               only: timestep
 
     use ls_ppn_mod,                 only: ls_ppn
 
@@ -273,6 +280,7 @@ subroutine mphys_code( nlayers, seg_len,            &
     real(kind=r_def), intent(inout), dimension(undf_wth) :: dms_wth
     real(kind=r_def), intent(inout), dimension(undf_wth) :: dmr_wth
     real(kind=r_def), intent(inout), dimension(undf_wth) :: dmg_wth
+    real(kind=r_def), intent(inout), dimension(undf_wth) :: conv_prog_precip
     real(kind=r_def), intent(inout), dimension(undf_2d)  :: ls_rain_2d
     real(kind=r_def), intent(inout), dimension(undf_2d)  :: ls_snow_2d
     real(kind=r_def), intent(inout), dimension(undf_2d)  :: ls_graup_2d
@@ -332,6 +340,8 @@ subroutine mphys_code( nlayers, seg_len,            &
     real(r_um), dimension(1,1,1) :: sea_salt_film, sea_salt_jet
 
     real(r_um), parameter :: alt_1km = 1000.0_r_um ! metres
+
+    real(r_um) :: decay_amount  ! Used for relaxing conv_prog_precip
 
     logical, dimension(seg_len,1) :: land_sea_mask
 
@@ -783,6 +793,23 @@ subroutine mphys_code( nlayers, seg_len,            &
     end do ! k
     do i = 1, seg_len
       precfrac(map_wth(1,i)+0) = precfrac(map_wth(1,i)+1)
+    end do
+  end if
+
+  ! Update conv precip prognostic used for convective organisation.
+  ! if using comorph, the prognostic is relaxed towards 3D total precip rate
+  if ( l_conv_prog_precip .and. i_convection_vn == i_cv_comorph ) then
+    decay_amount = min( timestep/tau_conv_prog_precip, 1.0 )
+    do k = 1, nlayers
+      do i = 1, seg_len
+        conv_prog_precip(map_wth(1,i)+k)                                       &
+           = (1.0-decay_amount) * conv_prog_precip(map_wth(1,1)+k)             &
+           + decay_amount       * ( ls_rain3d(i,j,k)                           &
+                                  + ls_snow3d(i,j,k) )
+      end do
+    end do
+    do i = 1, seg_len
+      conv_prog_precip(map_wth(1,i)+0) = conv_prog_precip(map_wth(1,i)+1)
     end do
   end if
 
